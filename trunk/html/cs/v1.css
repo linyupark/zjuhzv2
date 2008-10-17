@@ -1,0 +1,18 @@
+@import url("yui/reset.css");
+@import url("yui/base.css");
+@import url("yui/fonts.css");
+@import url("yui/grids.css");
+@import url("alp/common.css");
+@import url("alp/link-sky.css");
+@import url("alp/boxy.css");
+@import url("nicejform/niceforms-default.css");
+
+
+body{ background:url(/im/v1/bg.jpg) repeat-x top; }
+table td{ border:none; }
+
+#hd{ padding-top:20px; }
+#bd{ }
+
+.section{ padding:10px; background:#f7f7f7; border:2px solid #eee; }
+.valid_tip{ color:red; font-size:12px; }

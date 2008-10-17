@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <?= $this->headTitle('杭州浙江大校友会_zjuhz.com')->setSeparator('_'); ?>
+    <script type="text/javascript" src="/js/common.js"></script>
+    <?= $this->headScript() ?>
+    <link rel="stylesheet" type="text/css" href="/cs/v1.css" />
+    <?= $this->headLink() ?>
+</head>
+<body id="doc2">
+    <div id="hd" class="yui-g">
+        <div class="yui-u first">
+            <a href=""><img src="/im/v1/logo.gif" /></a>
+        </div>
+        <div class="yui-u">
+            <?= $this->partial('topnav.phtml') ?>
+        </div>
+    </div>
+    <div id="bd">
+    <?= $this->layout()->content ?>
+    </div>
+    <div id="ft">
+        <?= $this->partial('footer.phtml') ?>
+    </div>
+</body>
+</html>

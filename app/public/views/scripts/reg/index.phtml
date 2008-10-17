@@ -1,0 +1,13 @@
+<?php $this->headTitle('新校友注册') ?>
+<div id="yui-main">
+    <div class="yui-b">
+        <h2 class="section">新校友注册</h2>
+        <?= $this->render('reg/form.phtml') ?>
+    </div>
+</div>
+<div class="yui-b">
+    <textarea style="width:95%" class="quiet"><?= $this->render('reg/agreement.phtml') ?></textarea>
+</div>
+<script>
+    $('#doc2').addClass('yui-t6');
+</script>

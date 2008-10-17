@@ -1,0 +1,81 @@
+<form id="reg_form" method="post" class="mgl10 niceform" onsubmit="return reg_form()">
+    <table>
+        <tr>
+            <td><b class="f14">登录帐号</b></td>
+            <td>
+                <input size="30" type="text" name="account" maxlength="16" /> 
+                <span class="valid_tip" id="account"></span>
+            </td>
+        </tr>
+        <tr>
+            <td><b class="f14">真实姓名</b></td>
+            <td>
+                <input size="30" type="text" name="username" maxlength="4" /> 
+                <span class="valid_tip" id="username"></span>
+            </td>
+        </tr>
+        <tr>
+            <td><b class="f14">登录密码</b></td>
+            <td>
+                <input size="30" type="password" name="password" />
+                <span class="valid_tip" id="password"></span>
+            </td>
+        </tr>
+        <tr>
+            <td><b class="f14">密码确认</b></td>
+            <td>
+                <input size="30" type="password" name="password2" />
+            </td>
+        </tr>
+        <tr>
+            <td><b class="f14">电子邮箱</b></td>
+            <td>
+                <input size="30" type="text" name="email" maxlength="40" />
+                <span class="valid_tip" id="email"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="option1"><input type="radio" name="sex" id="option1" value="男" checked="checked" /> <b>男</b></label>
+                <br />
+                <label for="option2"><input type="radio" name="sex" id="option2" value="女" /> <b>女</b></label>
+            </td>
+            <td>
+                <input type="hidden" name="sid" value="<?= Zend_Session::getId() ?>" />
+                <input type="hidden" name="ucode" value="<?= $this->ucode ?>" />
+                <input type="hidden" name="scode" value="<?= $this->scode ?>" />
+                <input type="submit" value="同意注册协议，提交注册信息" />
+                <span class="quiet f12" id="form_action"></span>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<script type="text/javascript">
+$(document).ready(function(){
+$.NiceJForms.build({
+		imagesPath:"/cs/nicejform/images/default/"
+	})
+});
+function reg_form()
+{
+    $('.valid_tip').empty();
+    $.getJSON(
+        '/public/reg/doreg',
+        $('#reg_form').serializeArray(),
+        function(data){
+            if(data.isregistered == 'yes')
+            {
+                location.href='/public/login?account='+data.account;
+            }
+            else
+            {
+                $.each(data, function(name, value){
+                    $('#'+name).html(value);
+                });
+            }
+        }
+    );
+    return false;
+}
+</script>

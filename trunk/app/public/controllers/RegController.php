@@ -41,24 +41,24 @@
                         // 邀请注册更新
                         if(isset($params['ucode']) && isset($params['scode']))
                         {
-                            $friend = Alp_String::decrypt($params['ucode']);
-                            if(Logic_User_Reg::isRegistered('uid', $friend))
+                            // 检查邀请人id
+                            $invite_id = Alp_String::decrypt($params['ucode']);
+                            if(Logic_User_Reg::isRegistered('uid', $invite_id))
                             {
-                                
+                                // 注册后归入邀请人分组
                                 $sort = Alp_String::decrypt($params['scode']);
-                                // 
+                                // 好友关系事件，两人互加好友，当前用户身份转换
+                                // .....
                             }
                         }
-                        
-                        
-                        echo Zend_Json::encode(array('isregistered'=>'yes','account'=>$account));
-                        exit();
+                        Alp_Sys::msg('isregistered', 'yes');
+                        Alp_Sys::msg('account', $account);
                     }
                 }
             }
             else
             {
-                Alp_Sys::msg('form_action','注册有效时间已过，请刷新页面重新注册');
+                Alp_Sys::msg('form_action','超时，请刷新页面后重新登录');
             }
             echo Alp_Sys::getMsgJson();
         }

@@ -9,7 +9,7 @@
   <string id="import_type">useFolders</string>
   <string id="javascriptExtraPaths"></string>
   <string id="perlExtraPaths"></string>
-  <string id="phpExtraPaths">E:\www\vhosts\ZSLIB</string>
+  <string id="phpExtraPaths"></string>
   <string id="pythonExtraPaths"></string>
   <string id="rubyExtraPaths"></string>
 </preference-set>

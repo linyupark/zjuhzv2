@@ -1,0 +1,51 @@
+<form id="login_form" class="mgl10 niceform" method="post" onsubmit="return login_form()">
+    <table>
+        <tr>
+            <td><b class="f14">登录帐号</b></td>
+            <td>
+                <input size="30" type="text" name="account" value="<?= $this->account ?>" maxlength="16" />
+                <span class="valid_tip" id="account"></span>
+            </td>
+        </tr>
+        <tr>
+            <td><b class="f14">登录密码</b></td>
+            <td>
+                <input size="30" type="password" name="password" />
+                <span class="valid_tip" id="password"></span>
+            </td>
+        </tr>
+        <tr>
+            <td><input name="rememberme" type="checkbox" id="rememberme" /><label for="rememberme">下次自动登录</label></td>
+            <td>
+                <input type="hidden" name="sid" value="<?= Zend_Session::getId() ?>" />
+                <input type="submit" value="登录" />
+                <span class="valid_tip" id="check_msg"></span>
+            </td>
+        </tr>
+    </table>
+</form>
+<script type="text/javascript">
+$(document).ready(function(){
+$.NiceJForms.build({
+		imagesPath:"/cs/nicejform/images/default/"
+	})
+});
+function login_form()
+{
+    $('.valid_tip').empty();
+    $.getJSON(
+        '/public/login/dologin',
+        $('#login_form').serializeArray(),
+        function(data){
+            if(data.islogin == 'yes') location.href='/public/';
+            else
+            {
+                $.each(data, function(name, value){
+                    $('#'+name).html(value);
+                });
+            }
+        }
+    );
+    return false;
+}
+</script>

@@ -7,7 +7,7 @@
         {
             $acl = new Zend_Acl();
             
-            $role = Zend_Registry::get('sess')->role;
+            $role = Cmd::getSess('profile', 'role');
             if($role == null) $role = 'guest';
             
             $resource = $request->getModuleName();

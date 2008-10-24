@@ -18,7 +18,7 @@
             <td><input name="rememberme" type="checkbox" id="rememberme" /><label for="rememberme">下次自动登录</label></td>
             <td>
                 <input type="hidden" name="sid" value="<?= Zend_Session::getId() ?>" />
-                <input type="submit" value="登录" />
+                <input class="btn" type="submit" value="登录" />
                 <span class="valid_tip" id="check_msg"></span>
             </td>
         </tr>
@@ -33,6 +33,7 @@ $.NiceJForms.build({
 function login_form()
 {
     $('.valid_tip').empty();
+    $('.btn').val('登录中..');
     $.getJSON(
         '/public/login/dologin',
         $('#login_form').serializeArray(),
@@ -43,6 +44,7 @@ function login_form()
                 $.each(data, function(name, value){
                     $('#'+name).html(value);
                 });
+                $('.btn').val('登录');
             }
         }
     );

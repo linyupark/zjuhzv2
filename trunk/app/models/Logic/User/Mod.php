@@ -6,6 +6,7 @@
         static function role($uid, $role)
         {
             parent::dao()->update('tb_base', array('role'=>$role), 'uid = '.(int)$uid);
+            
         }
     }
 

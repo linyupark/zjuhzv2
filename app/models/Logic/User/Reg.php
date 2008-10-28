@@ -1,36 +1,47 @@
 <?php
 
-    class Logic_User_Reg extends UserModel
+    class Logic_User_Reg extends DbModel
     {
-        # 指定的字段是否已经注册 ---------------------------------------------
-        static function isRegistered($col, $value)
+    	
+        /**
+         * 是否已经在用户数据库中存在
+         *
+         * @param string $col
+         * @param string $value
+         * @return unknown
+         */
+        public static function isRegistered($col, $value)
         {
-            if($col == 'account')
-            return parent::dao()->fetchRow('SELECT `uid` FROM `tb_base` WHERE `account` = ?', $value);
-            if($col == 'email')
-            return parent::dao()->fetchRow('SELECT `uid` FROM `tb_contact` WHERE `email` = ?', $value);
-            if($col == 'uid')
-            return parent::dao()->fetchRow('SELECT `uid` FROM `tb_contact` WHERE `uid` = ?', $value);
+        	$User = parent::User();
+        	
+        	switch ($col)
+        	{
+        		case 'account' : return $User->fetchRow('SELECT `uid` FROM `tb_base` WHERE `account` = ?', $value); break;
+        		case 'email' : return $User->fetchRow('SELECT `uid` FROM `tb_contact` WHERE `email` = ?', $value); break;
+        		case 'uid' : return $User->fetchRow('SELECT `uid` FROM `tb_base` WHERE `uid` = ?', $value); break;
+        		default : return null; break;
+        	}
         }
-        # 注册用户数据 --------------------------------------------------------
-        static function insert($data)
+        
+        /**
+         * 插入新注册用户数据,以及相关处理
+         *
+         * @param array $data
+         * @return unknown
+         */
+        public static function insert($data)
         {
-            $db = parent::dao();
-            $db->beginTransaction();
+            $User = parent::User();
+            $User->beginTransaction();
             try
             {
-                $email = $data['email'];
-                unset($data['email']);
-                $db->insert('tb_base', $data);
-                $uid = $db->lastInsertId();
-                $db->insert('tb_contact', array('uid'=>$uid,'email'=>$email));
-                $db->commit();
-                return $uid;
-            }
-            catch(Exception $e)
-            {
-                $db->rollBack();
-                return $e->getMessage();
+            	$User->insert('tb_base', array(
+            		'account' => $data['account'],
+            		'password' => md5($data['password']),
+            		'username' => $data['username'],
+            		'sex' => $data['sex'],
+            		
+            	));
             }
         }
     }

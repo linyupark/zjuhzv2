@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: zjuhzv2_user
 Target Host: localhost
 Target Database: zjuhzv2_user
-Date: 2008-10-17 ÏÂÎç 03:48:23
+Date: 2008/10/28 14:33:08
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -26,7 +26,7 @@ CREATE TABLE `tb_base` (
   `city` char(30) default NULL,
   PRIMARY KEY  (`uid`),
   UNIQUE KEY `ix_account` (`account`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for tb_career
@@ -95,3 +95,5 @@ CREATE TABLE `tb_intro` (
 -- ----------------------------
 -- Records 
 -- ----------------------------
+INSERT INTO `tb_base` VALUES ('1', 'linyupark', '4297f44b13955235245b2497399d7a93', 'æž—å®‡', 'ç”·', 'bench', '1224574322', '0', null, null, null, null);
+INSERT INTO `tb_contact` VALUES ('1', 'linyupark@gmail.com', null, null, null, null, null, null);

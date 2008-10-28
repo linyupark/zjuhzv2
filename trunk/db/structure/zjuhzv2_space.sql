@@ -4,18 +4,31 @@ Source Host: localhost
 Source Database: zjuhzv2_space
 Target Host: localhost
 Target Database: zjuhzv2_space
-Date: 2008-10-17 ÏÂÎç 03:48:17
+Date: 2008/10/28 14:32:35
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+-- ----------------------------
+-- Table structure for tb_comment
+-- ----------------------------
+CREATE TABLE `tb_comment` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `tid` int(10) unsigned NOT NULL,
+  `uid` int(10) unsigned NOT NULL,
+  `content` text NOT NULL,
+  `time` int(10) unsigned NOT NULL,
+  `whisper` tinyint(1) unsigned NOT NULL default '0',
+  `deny` tinyint(1) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 -- ----------------------------
 -- Table structure for tb_events
 -- ----------------------------
 CREATE TABLE `tb_events` (
   `tid` int(10) unsigned NOT NULL,
-  `sign` int(10) unsigned NOT NULL,
-  `start` int(10) unsigned NOT NULL,
-  `end` int(10) unsigned NOT NULL,
+  `limit` int(10) unsigned default NULL,
+  `time` int(10) unsigned NOT NULL,
   `address` varchar(255) NOT NULL,
   `content` text NOT NULL,
   `member` text
@@ -35,7 +48,8 @@ CREATE TABLE `tb_friends` (
 -- ----------------------------
 CREATE TABLE `tb_friends_sort` (
   `uid` int(10) unsigned NOT NULL,
-  `sorts` text
+  `sid` int(10) unsigned NOT NULL,
+  `name` char(24) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -45,9 +59,11 @@ CREATE TABLE `tb_group` (
   `gid` int(10) unsigned NOT NULL auto_increment,
   `name` char(30) NOT NULL,
   `member` text NOT NULL,
+  `manager` text,
   `creater` int(10) unsigned NOT NULL,
   `createtime` int(10) unsigned NOT NULL,
   `visit` int(10) unsigned NOT NULL,
+  `todayvisitor` text,
   `intro` varchar(255) default NULL,
   `point` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`gid`)
@@ -111,20 +127,6 @@ CREATE TABLE `tb_photo` (
   `description` tinytext,
   `private` tinyint(1) unsigned NOT NULL default '0' COMMENT '0:self;1:member;2:group;3:friends;4:all'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for tb_reply
--- ----------------------------
-CREATE TABLE `tb_reply` (
-  `rid` int(10) unsigned NOT NULL auto_increment,
-  `tid` int(10) unsigned NOT NULL,
-  `uid` int(10) unsigned NOT NULL,
-  `content` text NOT NULL,
-  `time` int(10) unsigned NOT NULL,
-  `whisper` tinyint(1) unsigned NOT NULL default '0',
-  `deny` tinyint(1) unsigned NOT NULL default '0',
-  PRIMARY KEY  (`rid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for tb_tbar

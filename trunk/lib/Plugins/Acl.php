@@ -28,7 +28,7 @@
             $acl->allow('guest', 'public');
             
             // 无权限转向
-            if(!$acl->isAllowed($role, $resource, $action))
+            if(!$acl->isAllowed($role, $resource, $controller))
             {
                 $request->setModuleName('public');
                 $request->setControllerName('error');

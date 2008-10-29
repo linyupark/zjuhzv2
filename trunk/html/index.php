@@ -5,6 +5,8 @@
 						 . PATH_SEPARATOR . '../app/sapce'
 						 . PATH_SEPARATOR . '../app/models');
 	
+	define('SQLITEROOT', '../db/sqlite/');
+						 
 	require_once 'Zend/Loader.php';
 	Zend_Loader::registerAutoload();
 	
@@ -15,16 +17,22 @@
 	Zend_Registry::set('config', $config);
 	
 	$controller = Zend_Controller_Front::getInstance();
-	$modules = Alp_Sys::lsdir('../app/space');
+	$space_mods = Alp_Sys::lsdir('../app/space');
+	$addon_mods = Alp_Sys::lsdir('../app/addon');
 
-	foreach($modules as $mod)
-	{
-		$controller->addControllerDirectory('../app/space/'.$mod.'/controllers', 'space_'.$mod);
-	}
+	foreach($space_mods as $mod)
+	$controller->addControllerDirectory('../app/space/'.$mod.'/controllers', 'space_'.$mod);
+	
+	foreach($addon_mods as $mod)
+	$controller->addControllerDirectory('../app/addon/'.$mod.'/controllers', 'addon_'.$mod);
+
 	$controller->addControllerDirectory('../app/public/controllers', 'public');
 	$controller->addControllerDirectory('../app/console/controllers', 'console');
+	
 	$controller->registerPlugin(new Plugins_Layout());
 	$controller->registerPlugin(new Plugins_Acl());
+	
 	$controller->setDefaultModule('public');
+	
 	$controller->throwExceptions(false);
 	$controller->dispatch();

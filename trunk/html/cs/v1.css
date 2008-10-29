@@ -11,7 +11,9 @@
 body{ background:url(/im/v1/bg.jpg) repeat-x top; }
 table td{ border:none; }
 
-#hd{ padding-top:20px; }
+hr.dashed{ height:1px; border:none; border-bottom:1px dashed #ccc; margin:5px; }
+
+#hd{ padding-top:10px; }
 #bd{ }
 
 .section{ padding:10px; background:#f7f7f7; border:2px solid #eee; }

@@ -1,0 +1,30 @@
+<?php $this->headTitle($this->base['title'].'_投票') ?>
+<h2 class="section"><img src="<?= Alp_Url::img('icon/classic/vote.gif') ?>" class="vm"> <?= $this->base['title'] ?></h2>
+<div id="yui-main">
+	<div class="yui-b">
+		<table>
+			<?php foreach($this->options as $opt): ?>
+			<tr>
+				<td class="txtr"><?= $opt['value'] ?>：</td>
+				<td><?= $opt['rate'] ?></td>
+			</tr>
+			<?php endforeach; ?>
+		</table>
+	</div>
+</div>
+<div class="yui-b">
+	<table class="quiet">
+	    <tr>
+	    	<td class="txtr" width="100">发起时间：</td>
+	    	<td><?= Alp_Date::timespan($this->base['time']) ?>前</td>
+	    </tr>
+	    <tr>
+	    	<td class="txtr">已投票数：</td>
+	    	<td><?= $this->total_rate ?></td>
+	    </tr>
+	</table>
+</div>
+
+<script>
+$('#doc2').addClass('yui-t3');
+</script>

@@ -1,0 +1,70 @@
+<form id="vote_form" method="post" onsubmit="return create_vote()">
+	<table>
+		<tr>
+			<td class="txtr" width="100">投票主题：</td>
+			<td><input type="text" name="title" size="50" /> <a href="javascript:void(0)" id="memo_flag"> + 添加投票详细说明</a></td>
+		</tr>
+		<tr id="vote_memo" class="hide">
+			<td class="txtr">详细说明：</td>
+			<td><textarea name="memo" cols="80" rows="5"></textarea></td>
+		</tr>
+	</table>
+	<hr class="dashed" />
+	<table id="options_table">
+		<tr>
+			<td colspan="2" class="quiet txtr">刷新页面选项会变为初始数目，在提交投票前最好不要刷新页面</td>
+		</tr>
+		<?php for($i = 1; $i <=5; $i++): ?>
+		<tr class="option_item">
+			<td class="txtr" width="100">选项<?= $i ?>：</td>
+			<td><input name="options[]" type="text" size="50" /></td>
+		</tr>
+		<?php endfor; ?>
+	</table>
+	<p style="margin-left:65px"><a href="javascript:add_option()"> + 添加投票选项</a></p>
+	<hr class="dashed" />
+	<table>
+		<tr>
+			<td class="txtr" width="100">可投选项：</td>
+			<td><input name="mulit" type="text" size="2" value="1" onclick="this.focus()" /> <span class="quiet">数值1为单选</span></td>
+		</tr>
+		<tr>
+			<td width="100"></td>
+			<td>
+				<input type="submit" id="submit" class="btn" value="发起投票" />
+			</td>
+		</tr>
+	</table>
+	<span id="post_tip"></span>
+</form>
+<script>
+function create_vote()
+{
+	$('#submit').val('提交中..').attr('disabled', true);
+	$.post(
+		'/addon_vote/create/docreate',
+		$('#vote_form').serializeArray(),
+		function(data){
+			$('#post_tip').html(data).children().fadeOut(5000);
+			$('#submit').val('发起投票').attr('disabled', false);
+		}
+	);
+	return false;
+}
+$('#memo_flag').toggle(
+	function(){
+		$('#vote_memo').show();
+		$(this).html(' - 清除投票详细说明');
+	},
+	function(){
+		$('#vote_memo textarea').val('');
+		$('#vote_memo').hide();
+		$(this).html(' + 添加投票详细说明');
+	}
+);
+function add_option()
+{
+	var x = $('.option_item').length;
+	$('#options_table').append('<tr class="option_item"><td class="txtr" width="100">选项'+(x+1)+'：</td><td><input name="options[]" type="text" size="50" /></td></tr>');
+}
+</script>

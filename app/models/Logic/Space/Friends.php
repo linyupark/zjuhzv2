@@ -18,6 +18,19 @@
 		}
 		
 		/**
+		 * 指定用户是否包含该好友分组
+		 *
+		 * @param int $uid
+		 * @param int $sid
+		 * @return boolean
+		 */
+		public static function hasSort($uid, $sid)
+		{
+			$sorts = self::getSort($uid);
+			return isset($sorts[$sid]);
+		}
+		
+		/**
 		 * 获取指定用户的好友分组数据
 		 *
 		 * @param int $uid

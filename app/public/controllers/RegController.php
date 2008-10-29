@@ -13,9 +13,11 @@
             $params = $this->getRequest()->getParams();
             if($params['sid'] == Zend_Session::getId())
             {
+            	// 注册信息过滤
                 $params = Filter_User::reg($params);
                 if(Alp_Sys::getMsg() == null)
-                {
+                {	
+                	// 进行注册
                 	Logic_User_Reg::insert($params);
                 }
             }

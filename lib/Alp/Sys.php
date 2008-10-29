@@ -10,8 +10,9 @@
 		static function conv($key, $params = null, $namespace = null)
 		{
 			// 使用此函数前需要确认已经调用语言转换包
-			if(self::$pack == null)
-			self::$pack = include_once('Lang/'.self::$language.'.php');
+			$language_location = 'Lang/'.self::$language.'.php';
+			if(self::$pack == null && file_exists($language_location))
+			self::$pack = include_once($language_location);
 			
 			$string = self::$pack[$key];
 			if($params != null)
@@ -37,6 +38,7 @@
 				}
 				return $tmp;
 			}
+			return null;
 		}
 		
 		# 清除信息数组 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -77,6 +79,7 @@
 			else // 存放信息
 			{
 				self::$messages[$key] = $content;
+				return null;
 			}
 		}
 		
@@ -146,6 +149,7 @@
 				}
 				return $tmp;
 			}
+			return false;
 		}
 		
 		# 获取目录下的文件列表 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -162,6 +166,7 @@
 				}
 				return $tmp;
 			}
+			return false;
 		}
 		
 		# 软自动跳转 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::

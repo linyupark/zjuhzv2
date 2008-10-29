@@ -22,10 +22,11 @@
 			
 			// 要用到的校验器(函数)收集
 			$validatorArr = explode('|', $validator);
+			$match = array();
 			foreach ($validatorArr as $fun)
 			{
 				// eg. fun[arg,arg]|fun[arg,arg]
-				if(preg_match("/(.*)\[(.*)\]/", $fun, $match))
+				if(preg_match("/(.*)[(.*)]/", $fun, $match))
 				{
 					$fun = $match[1];
 					$arg = explode(",", $match[2]);
@@ -154,13 +155,6 @@
 	    	if (!ereg("^([a-zA-Z0-9_])+@([a-zA-Z0-9_])+((.)([a-zA-Z0-9_]))+", $value))
 	    	Alp_Sys::conv('valid_email', array($alias), $name);
 	    }
-        
-        # 有效url地址 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-        private function valid_url($name, $value, $alias)
-        {
-            if(!preg_match("/^http:\/\/[A-Za-z0-9]+\.[A-Za-z0-9]+[\/=\?%\-&_~`@[\]\':+!]*([^<>\"])*$/", $value))
-            Alp_Sys::conv('valid_url', array($alias), $name);
-        }
 	}
 
 ?>

@@ -13,7 +13,12 @@
             $resource = $request->getModuleName();
             $controller = $request->getControllerName();
             
+            // 资源列表
+            $acl->add(new Zend_Acl_Resource('public'));
+            $acl->add(new Zend_Acl_Resource('addon_vote'));
+            
             // 资源自动注册
+            if(!$acl->has($resource))
             $acl->add(new Zend_Acl_Resource($resource));
             
             // 角色列表
@@ -25,7 +30,7 @@
             $acl->addRole(new Zend_Acl_Role('master')); // 管理员
             
             // 访问控制定义
-            $acl->allow('guest', 'public');
+            $acl->allow('guest', array('public','addon_vote'));
             
             // 无权限转向
             if(!$acl->isAllowed($role, $resource, $controller))

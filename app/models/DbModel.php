@@ -23,6 +23,17 @@
         }
         
         /**
+         * 获取SQLITE适配器对象
+         *
+         * @param string $dbname
+         * @return object
+         */
+        public static function getSqlite($dbname)
+        {
+        	return Zend_Db::factory('PDO_SQLITE', array('dbname'=>SQLITEROOT.$dbname));
+        }
+        
+        /**
          * 获取用户数据库适配器
          *
          * @return object

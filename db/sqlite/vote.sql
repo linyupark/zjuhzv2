@@ -3,8 +3,7 @@ CREATE TABLE [base] (
 [title] VARCHAR(100)  UNIQUE NOT NULL,
 [time] INTEGER  NOT NULL,
 [memo] TEXT  NULL,
-[voter] TEXT  NULL,
-[mulit] INTEGER DEFAULT '1' NOT NULL
+[mulit] INTEGER  NOT NULL
 );
 
 CREATE TABLE [options] (

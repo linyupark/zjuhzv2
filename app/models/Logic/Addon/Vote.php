@@ -61,6 +61,34 @@
 		}
 		
 		/**
+		 * 投票处理
+		 *
+		 * @param array $params
+		 * @return boolean
+		 */
+		public static function doRate($params)
+		{
+			$db = parent::getSqlite('vote.s3db');
+			
+			$db->beginTransaction();
+			try {
+				foreach($params['oid'] as $oid)
+				{
+					$db->update('options', array('rate'=>new Zend_Db_Expr('rate + 1')), 'oid = '.$oid);
+				}
+				$db->commit();
+				// 保存投票记录
+				setcookie('zjuhz_addon_vote_'.$params['vid'],serialize($params['oid']),time()+3600*9999);
+				return true;
+					
+			} catch (Exception $e) {
+				$db->rollback();
+				Alp_Sys::msg('exception', $e->getMessage());
+			}
+			return false;
+		}
+		
+		/**
 		 * 插入新投票数据
 		 *
 		 * @param array $params

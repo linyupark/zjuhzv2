@@ -10,7 +10,7 @@
 		static function conv($key, $params = null, $namespace = null)
 		{
 			// 使用此函数前需要确认已经调用语言转换包
-			$language_location = 'Lang/'.self::$language.'.php';
+			$language_location = dirname(__FILE__).'/Lang/'.self::$language.'.php';
 			if(self::$pack == null && file_exists($language_location))
 			self::$pack = include_once($language_location);
 			

@@ -26,7 +26,7 @@
 			foreach ($validatorArr as $fun)
 			{
 				// eg. fun[arg,arg]|fun[arg,arg]
-				if(preg_match("/(.*)[(.*)]/", $fun, $match))
+				if(preg_match("/(.*)\[(.*)\]/", $fun, $match))
 				{
 					$fun = $match[1];
 					$arg = explode(",", $match[2]);
@@ -110,6 +110,13 @@
 			Alp_Sys::conv('valid_str_between', array($alias, $min, $max), $name);
 		}
         
+		# 数字大于
+		private function num_larger($name, $value, $alias, $arg)
+		{
+			if((int)$arg[0] >= (int)$value)
+			Alp_Sys::conv('valid_num_larger', array($alias, $arg[0]), $name);
+		}
+		
         # 数字范围 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
         private function num_between($name, $value, $alias, $arg)
         {

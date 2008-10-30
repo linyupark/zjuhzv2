@@ -2,6 +2,13 @@
 
 class Alp_Date
 {
+	static function normal($time)
+	{
+		if((time() - $time) > (3600*24))
+		return date('y年m月d日', $time);
+		else return self::timespan($time).'前';
+	}
+	
   #算时间间隔 $seconds : 比较老的时间戳 , $time : 要比较的时间戳 , 省略 $omit : 可选s
   static function timespan($seconds = 1, $time = '', $delimiter = '')
   {

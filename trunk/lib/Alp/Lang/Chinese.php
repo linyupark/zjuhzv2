@@ -14,6 +14,7 @@
 			'valid_aldash' 				=> '%0%必须由字母,数字,下划线组合而成',
 			'valid_email' 				=> '%0%必须为有效的电子邮箱地址',
 			'valid_url' 				=> '%0%必须为有效的URL地址',
+			'valid_num_larger'			=> '%0%的值必须大于%1%',
 			'valid_str_between' 		=> '%0%字符长度范围在%1%到%2%之间',
 			'valid_str_exact' 			=> '%0%字符长度必须为%1%',
 			'valid_num_between' 		=> '%0%的数值应该在%1%到%2%之间',

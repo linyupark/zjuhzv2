@@ -1,4 +1,12 @@
 <?php $this->headTitle($this->base['title'].'_投票') ?>
+<style>
+	.rate_bg{ background:#eee; width:180px; height:10px; }
+	.rate_0{ background:#E7AB6D; height:7px; width:0px; margin:1px; border:1px solid #C18F5A; }
+	.rate_1{ background:#5DBC5B; height:7px; width:0px; margin:1px; border:1px solid #478F45; }
+	.rate_2{ background:#6C81B6; height:7px; width:0px; margin:1px; border:1px solid #586E97; }
+	.rate_3{ background:#A5CBD6; height:7px; width:0px; margin:1px; border:1px solid #8AABB4; }
+	.rate_4{ background:#D843B3; height:7px; width:0px; margin:1px; border:1px solid #B0248D; }
+</style>
 <h2 class="section"><img src="<?= Alp_Url::img('icon/classic/vote.gif') ?>" class="vm"> <?= $this->base['title'] ?></h2>
 <div id="yui-main">
 	<div class="yui-b">
@@ -6,7 +14,8 @@
 			<?php foreach($this->options as $opt): ?>
 			<tr>
 				<td class="txtr"><?= $opt['value'] ?>：</td>
-				<td><?= $opt['rate'] ?></td>
+				<td><div class="rate_bg"></div></td>
+				<td><?= $opt['rate'].' ('.ceil(100*$opt['rate']/$this->total_rate).'%)' ?></td>
 			</tr>
 			<?php endforeach; ?>
 		</table>
@@ -16,7 +25,7 @@
 	<table class="quiet">
 	    <tr>
 	    	<td class="txtr" width="100">发起时间：</td>
-	    	<td><?= Alp_Date::timespan($this->base['time']) ?>前</td>
+	    	<td><?= Alp_Date::normal($this->base['time']) ?></td>
 	    </tr>
 	    <tr>
 	    	<td class="txtr">已投票数：</td>
@@ -26,5 +35,11 @@
 </div>
 
 <script>
-$('#doc2').addClass('yui-t3');
+$(document).ready(function(){
+	$('#doc2').addClass('yui-t3');
+	<?php foreach($this->options as $k => $opt): ?>
+	$('.rate_bg:eq(<?= $k ?>)').html('<div id="i_<?= $k ?>" class="rate_<?= $k%5 ?>"></div>');
+	$('#i_<?= $k ?>').animate({width:'<?= (180*$opt['rate']/$this->total_rate) ?>px'}, 1000);
+	<?php endforeach; ?>
+});
 </script>

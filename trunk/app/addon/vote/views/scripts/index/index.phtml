@@ -1,45 +1,119 @@
 <?php $this->headTitle($this->base['title'].'_投票') ?>
 <style>
 	.rate_bg{ background:#eee; width:180px; height:10px; }
-	.rate_0{ background:#E7AB6D; height:7px; width:0px; margin:1px; border:1px solid #C18F5A; }
-	.rate_1{ background:#5DBC5B; height:7px; width:0px; margin:1px; border:1px solid #478F45; }
-	.rate_2{ background:#6C81B6; height:7px; width:0px; margin:1px; border:1px solid #586E97; }
-	.rate_3{ background:#A5CBD6; height:7px; width:0px; margin:1px; border:1px solid #8AABB4; }
-	.rate_4{ background:#D843B3; height:7px; width:0px; margin:1px; border:1px solid #B0248D; }
+	.rate_0,.rate_1,.rate_2,.rate_3,.rate_4{ height:7px; width:0px; margin:1px; }
+	.rate_0{ background:#E7AB6D; border:1px solid #C18F5A; }
+	.rate_1{ background:#5DBC5B; border:1px solid #478F45; }
+	.rate_2{ background:#6C81B6; border:1px solid #586E97; }
+	.rate_3{ background:#A5CBD6; border:1px solid #8AABB4; }
+	.rate_4{ background:#D843B3; border:1px solid #B0248D; }
 </style>
-<h2 class="section"><img src="<?= Alp_Url::img('icon/classic/vote.gif') ?>" class="vm"> <?= $this->base['title'] ?></h2>
+<h2 class="section">
+	<img src="<?= Alp_Url::img('icon/classic/vote.gif') ?>" class="vm"> <?= $this->base['title'] ?>
+	(<?= ($this->base['mulit'] == 1)?'单选':'最多选'.$this->base['mulit'].'项' ?>)
+</h2>
 <div id="yui-main">
 	<div class="yui-b">
-		<table>
+	<form id="vote_form" method="post" onsubmit="return vote_form()">
+		<table width="650px">
+			<tr>
+				<td colspan="3" class="txtc quiet">
+				<?= ($this->base['memo'])?'<hr class="dashed">'.stripslashes($this->base['memo']).'<hr class="dashed">':''; ?>
+				</td>
+			</tr>
 			<?php foreach($this->options as $opt): ?>
 			<tr>
-				<td class="txtr"><?= $opt['value'] ?>：</td>
-				<td><div class="rate_bg"></div></td>
-				<td><?= $opt['rate'].' ('.ceil(100*$opt['rate']/$this->total_rate).'%)' ?></td>
+				<td class="txtr" width='150px'><?= $opt['value'] ?>：</td>
+				<td width='190px'><div class="rate_bg"></div></td>
+				<td class="txtl"><?= ($this->base['mulit'] == 1)?
+					'<input class="nob" name="oid[]" value="'.$opt['oid'].'" type="radio" />':
+					'<input class="nob item" onclick="count_mulite('.$opt['oid'].')" name="oid[]" value="'.$opt['oid'].'" type="checkbox" />' ?> 
+					<?php if($this->total_rate == 0): ?>
+					&nbsp; 0 (0%)
+					<?php else: ?>
+					&nbsp; <?= $opt['rate'].' ('.ceil(100*$opt['rate']/$this->total_rate).'%)' ?>
+					<?php endif; ?>
+				</td>
 			</tr>
 			<?php endforeach; ?>
+			<tr>
+				<td colspan="3" class="txtc"><input id="submit" class="btn" type="submit" value="进行投票" /></td>
+			</tr>
 		</table>
+	</form>
+	<span id="post_tip"></span>
 	</div>
 </div>
 <div class="yui-b">
 	<table class="quiet">
 	    <tr>
-	    	<td class="txtr" width="100">发起时间：</td>
-	    	<td><?= Alp_Date::normal($this->base['time']) ?></td>
+	    	<td class="txtr" width="80px">发起时间：</td>
+	    	<td width="120px"><?= Alp_Date::normal($this->base['time']) ?></td>
 	    </tr>
 	    <tr>
 	    	<td class="txtr">已投票数：</td>
-	    	<td><?= $this->total_rate ?></td>
+	    	<td><?= $this->total_rate ?>票</td>
+	    </tr>
+	    <tr>
+	    	<td class="txtr">您还可以投：</td>
+	    	<td><span id="check_limit"><?= $this->limit ?></span>票</td>
+	    </tr>
+	    <tr>
+	    	<td class="txtr">您投给了：</td>
+	    	<td>
+	    		<?php if($this->selected): foreach($this->options as $opt): if(in_array($opt['oid'], $this->selected)): ?>
+	    		"<?= $opt['value']; ?>"<br />
+	    		<?php endif; endforeach; else: ?>
+	    		还未投票
+	    		<?php endif; ?>
+	    	</td>
 	    </tr>
 	</table>
 </div>
 
 <script>
-$(document).ready(function(){
-	$('#doc2').addClass('yui-t3');
+function vote_form()
+{
+	$('#submit').val('投票提交中..').attr('disabled', true);
+	$.post(
+		'/addon_vote/?vid=<?= $this->base['vid'] ?>',
+		$('#vote_form').serializeArray(),
+		function(data)
+		{
+			$('#post_tip').html(data).children().fadeOut(5000);
+			$('#submit').val('进行投票').attr('disabled', false);
+		}
+	);
+	return false;
+}
+function count_rate()
+{
 	<?php foreach($this->options as $k => $opt): ?>
 	$('.rate_bg:eq(<?= $k ?>)').html('<div id="i_<?= $k ?>" class="rate_<?= $k%5 ?>"></div>');
-	$('#i_<?= $k ?>').animate({width:'<?= (180*$opt['rate']/$this->total_rate) ?>px'}, 1000);
+	<?php if($this->total_rate == 0): ?>
+	$('#i_<?= $k ?>').animate({width:'1px'}, 2000);
+	<?php else: ?>
+	$('#i_<?= $k ?>').animate({width:'<?= (180*$opt['rate']/$this->total_rate) ?>px'}, 2000);
+	<?php endif; ?>
 	<?php endforeach; ?>
-});
+}
+function count_mulite(oid)
+{
+	var limit = <?= $this->limit ?>;
+	var last = parseInt($('#check_limit').html());
+	var checked = parseInt($('.item:checked').length);
+	if(limit < checked)
+	{
+		alert('您已经不能继续投票了！');
+		$('.item[value="'+oid+'"]').attr('checked', false);
+	}
+	else
+	{
+		var result = (limit - checked);
+		if(result == 0) result = '0';
+		$('#check_limit').html(result);
+	}
+}
+$('#doc2').addClass('yui-t6');
+count_rate();
 </script>

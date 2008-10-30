@@ -40,7 +40,11 @@
             {
                 return Zend_Registry::get('sess')->$key;
             }
-            else return Zend_Registry::get('sess')->$key[$index];
+            else
+            {
+            	$data_set = Zend_Registry::get('sess')->$key;
+            	return $data_set[$index];
+            } 
         }
     }
 

@@ -4,7 +4,8 @@ class Alp_Date
 {
 	static function normal($time)
 	{
-		if((time() - $time) > (3600*24))
+		$now = time();
+		if(($now - $time) > (3600*24))
 		return date('y年m月d日', $time);
 		else return self::timespan($time).'前';
 	}
@@ -118,4 +119,3 @@ class Alp_Date
   }
 }
 
-?>

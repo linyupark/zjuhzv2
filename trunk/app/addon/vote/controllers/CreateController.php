@@ -21,8 +21,11 @@
 				{
 					$vid = Logic_Addon_Vote::insert($params);
 					if($vid != 0)
-					echo '<div class="success">提交成功, 系统将自动转向发起的投票</div>';
-					echo Alp_Sys::jump('/addon_vote/?vid='.$vid, 2);
+					{
+						echo '<div class="success">提交成功, 系统将自动转向发起的投票</div>';
+						echo Alp_Sys::jump('/addon_vote/?vid='.$vid, 2);
+					}
+					else echo '<script>alert("'.Alp_Sys::allMsg('*','\n').'");</script>';
 				}
 				else echo '<script>alert("'.Alp_Sys::allMsg('*','\n').'");</script>';
 			}

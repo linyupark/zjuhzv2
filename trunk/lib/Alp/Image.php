@@ -178,7 +178,7 @@
 		}
 		
 		# 文件输出 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-		function output($dst_image, $path = null, $quality = 100, $auto_delete = false)
+		function output($dst_image, $type = null, $path = null, $quality = 100, $auto_delete = false)
 		{
 			$output_function = array(
 				'jpg' => 'imagejpeg', 
@@ -187,16 +187,18 @@
 				'gif' => 'imagegif'
 			);
 			
+			if($type == null || !isset($output_function[$type])) $type = $this->type;
+			
 			if($path == null) 
 				$path = $this->path;
 			
 			// 输出图片完整地址
-			$output_image = $path.'/'.$dst_image.'.'.$this->type;
+			$output_image = $path.'/'.$dst_image.'.'.$type;
 				
 			if($this->type == 'jpeg')
-				$output_function[$this->type]($this->image_resource, $output_image, $quality);
+				$output_function[$type]($this->image_resource, $output_image, $quality);
 			else
-				$output_function[$this->type]($this->image_resource, $output_image); 
+				$output_function[$type]($this->image_resource, $output_image); 
 			
 			// 自动删除原始处理文件
 			if($auto_delete == true)

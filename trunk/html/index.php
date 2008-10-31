@@ -6,6 +6,7 @@
 						 . PATH_SEPARATOR . '../app/models');
 	
 	define('SQLITEROOT', '../db/sqlite/');
+	define('UPLOADROOT', $_SERVER['DOCUMENT_ROOT'].'/upload/');
 						 
 	require_once 'Zend/Loader.php';
 	Zend_Loader::registerAutoload();

@@ -6,6 +6,25 @@
 	 */
 	class Filter_Addon
 	{
+		/**
+		 * 赞助伙伴账号数据过滤
+		 *
+		 * @param unknown_type $params
+		 * @return unknown
+		 */
+		public static function partUser($params)
+		{
+			$params['username'] = Alp_Valid::of($params['username'], 'username', '账号', 'trim|aldash|str_between[4,16]');
+			$params['password'] = Alp_Valid::of($params['password'], 'password', '密码', 'trim|required');
+			return $params;
+		}
+		
+		/**
+		 * 投票数据过滤
+		 *
+		 * @param unknown_type $params
+		 * @return unknown
+		 */
 		public static function vote($params)
 		{
 			if(count($params['oid']) == 0)
@@ -22,6 +41,12 @@
 			return $params;
 		}
 		
+		/**
+		 * 创建投票的数据过滤
+		 *
+		 * @param unknown_type $params
+		 * @return unknown
+		 */
 		public static function createVote($params)
 		{
 			$params['title'] = Alp_Valid::of($params['title'], 'title', '投票主题', 'trim|required');

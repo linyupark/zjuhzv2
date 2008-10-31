@@ -1,0 +1,40 @@
+<form id="create_form" method="post" onsubmit="return create()">
+	<table>
+		<tr>
+			<td class="txtr">账号：</td>
+			<td><input type="text" name="username" size="20" /></td>
+		</tr>
+		<tr>
+			<td class="txtr">密码：</td>
+			<td><input type="password" name="password" size="20" /></td>
+		</tr>
+		<tr>
+			<td class="txtr">创建激活码：</td>
+			<td><input type="text" name="code" size="20" /></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>
+				<input class="btn" id="submit" type="submit" value="创建新用户" />
+				<input onclick="history.back()" class="btn" type="button" value="返回" />
+			</td>
+		</tr>
+	</table>
+	<span id="post_tip"></span>	
+</form>
+<script>
+	function create()
+	{
+		$('#submit').val('创建中...').attr('disabled', true);
+		$.post(
+			'/addon_partners/user/docreate',
+			$('#create_form').serializeArray(),
+			function(data)
+			{
+				$('#post_tip').html(data);
+				$('#submit').val('创建新用户').attr('disabled', false);
+			}
+		);
+		return false;
+	}
+</script>

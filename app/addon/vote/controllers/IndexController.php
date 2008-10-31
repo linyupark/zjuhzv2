@@ -32,10 +32,10 @@
 							{
 								echo '<div class="success">投票成功！系统即将刷新投票页</div>';
 								echo Alp_Sys::jump('/addon_vote/?vid='.$vid, 2);
+								exit();
 							}
-							else echo '<script>alert("'.Alp_Sys::allMsg('*','\n').'");</script>';
 						}
-						else echo '<script>alert("'.Alp_Sys::allMsg('*','\n').'");</script>';
+						echo '<script>alert("'.Alp_Sys::allMsg('*','\n').'");</script>';
 					}
 					else 
 					{

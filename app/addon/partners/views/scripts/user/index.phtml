@@ -1,0 +1,16 @@
+<div id="hd" class="yui-g">
+	<div class="yui-u first">
+		<a href=""><img src="/im/v1/logo.gif" /></a>
+	</div>
+	<div class="yui-u"></div>
+</div>
+<div id="bd">
+	<div id="yui-main">
+		<h2 class="section">赞助企业展示系统</h2>
+		<?php if($this->goto == 'create'): ?>
+		<?= $this->render('user/createform.phtml'); ?>
+		<?php else : ?>
+		<?= $this->render('user/loginform.phtml'); ?>
+		<?php endif; ?>
+	</div>
+</div>

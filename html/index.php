@@ -4,6 +4,8 @@
 						 . PATH_SEPARATOR . '../lib'
 						 . PATH_SEPARATOR . '../app/sapce'
 						 . PATH_SEPARATOR . '../app/models');
+	
+	define('SQLITEROOT', '../db/sqlite/');
 						 
 	require_once 'Zend/Loader.php';
 	Zend_Loader::registerAutoload();

@@ -4,7 +4,7 @@
 	{
 		function indexAction()
 		{
-			
+			echo phpinfo();
 		}
 	}
 

@@ -30,7 +30,7 @@
          */
         public static function getSqlite($dbname)
         {
-        	return Zend_Db::factory('PDO_SQLITE', array('dbname'=>SQLITEROOT.$dbname));
+        	return Zend_Db::factory('PDO_SQLITE', array('dbname'=>$_SERVER['DOCUMENT_ROOT'].'/sqlite/'.$dbname));
         }
         
         /**

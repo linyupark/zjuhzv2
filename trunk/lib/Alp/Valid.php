@@ -162,6 +162,12 @@
 	    	if (!ereg("^([a-zA-Z0-9_])+@([a-zA-Z0-9_])+((.)([a-zA-Z0-9_]))+", $value))
 	    	Alp_Sys::conv('valid_email', array($alias), $name);
 	    }
+	    
+	    private function valid_url($name, $value, $alias)
+	    {
+	    	if(!preg_match("/^http:\/\/[A-Za-z0-9]+\.[A-Za-z0-9]+[\/=\?%\-&_~`@[\]\':+!]*([^<>\"])*$/",$value))
+	    	Alp_Sys::conv('valid_url', array($alias), $name);
+	    }
 	}
 
 ?>

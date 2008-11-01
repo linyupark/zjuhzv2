@@ -1,0 +1,17 @@
+<form id="uploader" target="file_upload" action="/addon_partners/manage/upload" method="post" enctype="multipart/form-data">
+<table>
+	<tr>
+		<td class="txtr">图片上传：</td>
+		<td><input type="file" name="file[]" /> <input class="btn" type="button" onclick="$('#uploader').submit();" value="上传" /></td>
+	</tr>
+</table>
+</form>
+<form id="intro_form" target="file_upload" action="/addon_partners/manage/setup1" method="post" onsubmit="javascript:get_content();">
+	<?= Cmd::editor('intro', $this->intro,'300','100%'); ?>
+	<p class="txtr">
+		<input class="btn" type="button" value="取消" />
+		<input onclick="step(0)" class="btn" type="button" value="上一步" />
+		<input class="btn" type="submit" value="下一步" />
+	</p>
+</form>
+<iframe class="hide" id="file_upload" name="file_upload"></iframe>

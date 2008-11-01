@@ -24,7 +24,16 @@
          */
         public static function setSess($key, $data)
         {
+        	if($data == null)
+        	Zend_Registry::get('sess')->$key = null;
+        	if(is_string($data))
             Zend_Registry::get('sess')->$key = $data;
+            if(is_array($data))
+            {
+            	$datas = Zend_Registry::get('sess')->$key;
+            	$result = array_merge($datas, $data);
+            	Zend_Registry::get('sess')->$key = $result;
+            }
         }
         
         /**
@@ -45,6 +54,12 @@
             	$data_set = Zend_Registry::get('sess')->$key;
             	return $data_set[$index];
             } 
+        }
+        
+        public static function editor($key, $content=null, $h='320', $w = '100%')
+        {
+        	return '<textarea name="'.$key.'" style="display:none">'.$content.'</textarea>'.
+        			'<iframe ID="Editor" name="Editor" src="/editor/index.php?h='.($h-40).'px&w='.$w.'&ID='.$key.'" frameborder="0" marginHeight="0" marginWidth="0" scrolling="No" style="height:'.$h.'px;width:'.$w.'"></iframe>';
         }
     }
 

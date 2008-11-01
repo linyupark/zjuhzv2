@@ -203,7 +203,9 @@
 			// 自动删除原始处理文件
 			if($auto_delete == true)
 			{
-				$delete_image = $this->path.'/'.$this->image.'.'.$this->ext;
+				$delete_image = $this->path.'/'.$this->image;
+				@unlink($delete_image);
+				$delete_image .= '.'.$this->ext;
 				@unlink($delete_image);
 			}
 			

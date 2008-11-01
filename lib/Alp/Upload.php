@@ -96,7 +96,7 @@
 							return false;
 						}
 					}
-					
+					self::$filename = $filename;
 					return true;
 				}
 			}

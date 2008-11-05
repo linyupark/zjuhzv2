@@ -1,30 +1,17 @@
-<form target="contact" method="post" action="/addon_partners/manage/setup2">
-	<table class="mgt10">
-		<tr>
-			<td>电话：</td>
-			<td><input name="tel" type="text" size="50" value="<?= $this->tel ?>" /></td>
-		</tr>
-		<tr>
-			<td>地址：</td>
-			<td><input name="address" type="text" size="50" value="<?= $this->address ?>" /></td>
-		</tr>
-		<tr>
-			<td>网站：</td>
-			<td>
-				<input name="website" type="text" size="50" value="<?= $this->website ?>" />
-				<span class="quiet">(http://xxx.xxx.xxx)</span>
-			</td>
-		</tr>
-		<tr>
-			<td colspan="2"><hr class="dashed" /></td>
-		</tr>
-		<tr>
-			<td colspan="2" class="txtr">
-				<input class="btn" type="button" value="取消" />
-				<input onclick="step(1)" class="btn" type="button" value="上一步" />
-				<input class="btn" type="submit" value="下一步" />
-			</td>
-		</tr>
-	</table>
+<form id="uploader" target="file_upload" action="/addon_partners/manage/upload" method="post" enctype="multipart/form-data">
+<table>
+	<tr>
+		<td class="txtr">图片上传：</td>
+		<td><input type="file" name="file[]" /> <input class="btn" type="button" onclick="$('#uploader').submit();" value="上传" /></td>
+	</tr>
+</table>
 </form>
-<iframe class="hide" name="contact"></iframe>
+<form id="intro_form" target="file_upload" action="/addon_partners/manage/setup2" method="post" onsubmit="javascript:get_content();">
+	<?= Cmd::editor('intro', $this->intro,'300','100%'); ?>
+	<p class="txtr">
+		<input onclick="cancel()" class="btn" type="button" value="取消" />
+		<input onclick="step(1)" class="btn" type="button" value="上一步" />
+		<input class="btn" type="submit" value="下一步" />
+	</p>
+</form>
+<iframe class="hide" id="file_upload" name="file_upload"></iframe>

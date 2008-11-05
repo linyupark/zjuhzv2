@@ -17,6 +17,7 @@
             $acl->add(new Zend_Acl_Resource('public'));
             $acl->add(new Zend_Acl_Resource('addon_vote'));
             $acl->add(new Zend_Acl_Resource('addon_partners'));
+            $acl->add(new Zend_Acl_Resource('addon_console'));
             
             // 资源自动注册
             if(!$acl->has($resource))
@@ -31,7 +32,7 @@
             $acl->addRole(new Zend_Acl_Role('master')); // 管理员
             
             // 访问控制定义
-            $acl->allow('guest', array('public','addon_vote','addon_partners'));
+            $acl->allow('guest', array('public','addon_vote','addon_partners','addon_console'));
             
             // 无权限转向
             if(!$acl->isAllowed($role, $resource, $controller))

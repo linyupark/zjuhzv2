@@ -1,0 +1,55 @@
+<style>
+	.hotarea{ position:relative; }
+	.editor{ position:absolute; top:0; left:0; z-index:100; background:url(<?= Alp_Url::img('icon/classic/update.gif') ?>) no-repeat; height:24px; width:24px; display:block; }
+</style>
+<div id="hd">
+	<table>
+		<tr>
+			<td width="220"><div class="hotarea" id="corp_logo"><img src="<?= Logic_Addon_Partners::logo($this->corp['cid']) ?>" /></div></td>
+			<td><div class="hotarea f28 bold" id="corp_name"><?= $this->corp['name'] ?></div></td>
+		</tr>
+		<tr>
+			<td colspan="2"><div class="hotarea" id="corp_banner"><img src="<?= Logic_Addon_Partners::banner($this->corp['cid'])?>" /></div></td>
+		</tr>
+	</table>
+</div>
+<div id="bd">
+	<div id="yui-main">
+		<div class="yui-b">
+			<div class="hotarea mgl10" id="corp_intro">
+				<?= $this->corp['intro'] ?>
+			</div>
+		</div>
+	</div>
+	<div class="yui-b">
+		<table width="100%" style="border-left:1px dashed #ccc">
+			<tr>
+				<td class="f14"><img class="vm" src="<?= Alp_Url::img('icon/clean/tel.gif'); ?>" /> 
+				<?= $this->corp['tel'] ?></td>
+			</tr>
+			<tr>
+				<td class="f12"><img class="vm" src="<?= Alp_Url::img('icon/clean/position.gif'); ?>" /> 
+				<?= $this->corp['address'] ?></td>
+			</tr>
+			<tr>
+				<td class="f14"><img class="vm" src="<?= Alp_Url::img('icon/clean/home.gif'); ?>" /> 
+				<a href="<?= $this->corp['website'] ?>" target="_blank"><?= $this->corp['website'] ?></a></td>
+			</tr>
+		</table>
+	</div>
+</div>
+
+<script>
+	$('#doc2').addClass('yui-t5');
+	<?php if($this->manager): ?>
+	$('.hotarea').hover(
+		function()
+		{ 
+			var url = $(this).attr('id'); 
+			$(this).append('<a class="editor" href="javascript:'+url+'(<?= $this->corp['cid'] ?>)"></a>');
+			$('.editor').css('opacity', 0.5);
+		},
+		function(){ $('.editor').remove(); }
+	);
+	<?php endif; ?>
+</script>

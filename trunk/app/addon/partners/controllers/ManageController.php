@@ -14,6 +14,16 @@
 			else $this->uid = $uid;
 			
 			$this->params = $this->getRequest()->getParams();
+			//Zend_Debug::dump(Cmd::getSess('addon_partner_setup'));
+		}
+		
+		function delAction()
+		{
+			$this->getHelper('viewRenderer')->setNoRender();
+			if(Logic_Addon_Partners::delCorp($this->uid, $this->params['cid']))
+			{
+				echo 'success';
+			}
 		}
 		
 		/**
@@ -31,9 +41,12 @@
 					$this->view->name = $data['name'];
 				break;
 				case 1 :
-					$this->view->intro = htmlspecialchars(stripslashes($data['intro']));
+					
 				break;
 				case 2 :
+					$this->view->intro = htmlspecialchars(stripslashes($data['intro']));
+				break;
+				case 3 :
 					$this->view->tel = $data['tel'];
 					$this->view->address = $data['address'];
 					$this->view->website = $data['website'];
@@ -47,9 +60,14 @@
 					if($cid > 0)
 					{
 						$logo = UPLOADROOT.'addon/partners/logos/'.md5($this->uid).'.gif';
+						$banner = UPLOADROOT.'addon/partners/banner/'.md5($this->uid).'.gif';
 						if(file_exists($logo))
 						{
 							Alp_Image::init($logo)->output($cid, 'gif', null, null, true);
+						}
+						if(file_exists($banner))
+						{
+							Alp_Image::init($banner)->output($cid, 'gif', null, null, true);
 						}
 						Cmd::setSess('addon_partner_setup', null);
 					}
@@ -60,6 +78,10 @@
 			$this->view->uid = $this->uid;
 		}
 		
+		/**
+		 * 图片上传动作
+		 *
+		 */
 		function uploadAction()
 		{
 			$this->getHelper('viewRenderer')->setNoRender();
@@ -81,10 +103,10 @@
 		}
 		
 		/**
-		 * 建立第三步
+		 * 建立第4步
 		 *
 		 */
-		function setup2Action()
+		function setup3Action()
 		{
 			$tel = Alp_Valid::of($this->params['tel'], 'tel', '电话', 'trim|required');
 			$address = Alp_Valid::of($this->params['address'], 'address', '地址', 'trim|required');
@@ -96,17 +118,17 @@
 					'address' => $address,
 					'website' => $website
 				));
-				echo '<script>parent.step(3)</script>';
+				echo '<script>parent.step(4)</script>';
 			}
 			else
 			echo '<script>parent.alert(\''.Alp_Sys::allMsg('','\n').'\')</script>';
 		}
 		
 		/**
-		 * 建立第二步
+		 * 建立第3步
 		 *
 		 */
-		function setup1Action()
+		function setup2Action()
 		{
 			$this->getHelper('viewRenderer')->setNoRender();
 			$intro = Alp_Valid::of($this->params['intro'], 'intro', '企业介绍', 'trim|required');
@@ -115,6 +137,40 @@
 				Cmd::setSess('addon_partner_setup', array(
 					'intro' => $intro
 				));
+				echo '<script>parent.step(3)</script>';
+			}
+			else
+			echo '<script>parent.alert(\''.Alp_Sys::allMsg('','\n').'\')</script>';
+		}
+		
+		/**
+		 * 建立第2步(上传banner)
+		 *
+		 */
+		function setup1Action()
+		{
+			$this->getHelper('viewRenderer')->setNoRender();
+			$banner_path = UPLOADROOT.'addon/partners/banner/';
+			Alp_Upload::init(array(
+				'path' => $banner_path,
+				'type' => 'jpg|png|gif', 
+				'maxsize' => 1000,
+				'overwrite' => true,
+				'filename' => array(md5($this->uid))
+			));
+			Zend_Debug::dump($_FILES);
+			// 上传图片处理
+			if(!empty($_FILES['banner']['tmp_name'][0]))
+			{
+				if(Alp_Upload::handle('banner') == true)
+				{
+					Alp_Image::init($banner_path.md5($this->uid))->output(md5($this->uid), 'gif', null, null, true);
+					Alp_Image::init($banner_path.md5($this->uid).'.gif')->resize(md5($this->uid), 960, 115);
+					echo '<script>parent.change_banner("'.md5($this->uid).'.gif")</script>';
+				}
+			}
+			if(Alp_Sys::msg() == null)
+			{
 				echo '<script>parent.step(2)</script>';
 			}
 			else
@@ -122,7 +178,7 @@
 		}
 		
 		/**
-		 * 建立第一步
+		 * 建立第1步
 		 *
 		 */
 		function setup0Action()
@@ -137,12 +193,12 @@
 				'filename' => array(md5($this->uid))
 			));
 			// 上传图片处理
-			if(Alp_Upload::isUploaded('logo'))
+			if(!empty($_FILES['logo']['tmp_name'][0]))
 			{
 				if(Alp_Upload::handle('logo') == true)
 				{
 					Alp_Image::init($logo_path.md5($this->uid))->output(md5($this->uid), 'gif', null, null, true);
-					Alp_Image::init($logo_path.md5($this->uid).'.gif')->resize(md5($this->uid), 120, 120);
+					Alp_Image::init($logo_path.md5($this->uid).'.gif')->resize(md5($this->uid), 220, 78);
 					echo '<script>parent.change_logo("'.md5($this->uid).'.gif")</script>';
 				}
 			}

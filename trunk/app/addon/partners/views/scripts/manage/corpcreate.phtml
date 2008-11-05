@@ -3,9 +3,10 @@
 		<br /><br /><br />
 		<h2 class="mgl10">添加新企业信息</h2>
 		<hr class="dashed" />
-			<b class="step">第一步：提交企业LOGO，企业名称</b> &nbsp;&nbsp;&nbsp;
-			<b class="step">第二步：提交企业简介</b> &nbsp;&nbsp;&nbsp;
-			<b class="step">第三步：提交企业联系方式</b> &nbsp;&nbsp;&nbsp;
+			<b class="step">第一步：提交企业Logo，企业名称</b> &nbsp;&nbsp;&nbsp;
+			<b class="step">第二步：提交企业Banner</b> &nbsp;&nbsp;&nbsp;
+			<b class="step">第三步：提交企业简介</b> &nbsp;&nbsp;&nbsp;
+			<b class="step">第四步：提交企业联系方式</b> &nbsp;&nbsp;&nbsp;
 			<b class="step">完成：整合数据创建新企业</b>
 		<hr class="dashed" />
 		<?= $this->render('manage/setup'.$this->step.'.phtml'); ?>
@@ -26,5 +27,9 @@
 	function get_content()
 	{
 		window.frames["Editor"].AttachSubmit();
+	}
+	function cancel()
+	{
+		location.href='/addon_partners/list?uid=<?= $this->uid ?>';
 	}
 </script>

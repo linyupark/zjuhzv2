@@ -3,7 +3,7 @@
 		<tr>
 			<td><img id="logo" src="<?= Logic_Addon_Partners::setupLogo($this->uid); ?>" /></td>
 			<td>
-				<p class="quiet">企业 logo 图片格式必须为 gif,png,jpg</p>
+				<p class="quiet">企业 logo 图片有效格式为gif,png,jpg[尺寸最好为220*78像素]</p>
 				<input type="file" name="logo[]" size="20" />
 				<br /><br />
 				企业名称：<input type="text" name="name" value="<?= $this->name ?>" size="50" />
@@ -15,7 +15,7 @@
 		<tr>
 			<td></td>
 			<td class="txtr">
-				<input class="btn" type="button" value="取消" />
+				<input onclick="cancel()" class="btn" type="button" value="取消" />
 				<input class="btn" type="submit" value="下一步" />
 			</td>
 		</tr>

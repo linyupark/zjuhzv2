@@ -24,15 +24,19 @@
          */
         public static function setSess($key, $data)
         {
-        	if($data == null)
-        	Zend_Registry::get('sess')->$key = null;
-        	if(is_string($data))
-            Zend_Registry::get('sess')->$key = $data;
             if(is_array($data))
             {
             	$datas = Zend_Registry::get('sess')->$key;
-            	$result = array_merge($datas, $data);
-            	Zend_Registry::get('sess')->$key = $result;
+            	if($datas == null)
+            	Zend_Registry::get('sess')->$key = $data;
+            	else {
+            		$result = array_merge($datas, $data);
+            		Zend_Registry::get('sess')->$key = $result;
+            	}
+            }
+            else
+            {
+            	Zend_Registry::get('sess')->$key = $data;
             }
         }
         

@@ -35,6 +35,7 @@
 			$this->view->corps = Logic_Addon_Partners::getCorps($this->uid);
 			if($this->uid == $this->params['uid'])
 			$this->view->uid = $this->uid;
+			Cmd::setSess('addon_partner_setup', null);
 		}
 		
 		/**

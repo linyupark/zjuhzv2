@@ -1,0 +1,54 @@
+<style>
+	.corp_box{ float:left; margin:10px 0 5px 55px; border:1px solid #ccc }
+	.corp_active_box{ float:left; margin:10px 0 5px 55px; border:1px solid #559E0A }
+	.del_box{ position:absolute; top:-15px; right:-15px; z-index:100; }
+	.mod_box{ position:absolute; top:-15px; right:15px; z-index:100; }
+</style>
+<div id="hd" class="yui-g">
+	<div class="yui-u first">
+		<a href=""><img src="/im/v1/logo.gif" /></a>
+	</div>
+	<div class="yui-u"></div>
+</div>
+<div id="bd">
+	<div id="yui-main">
+		<h3 class="section">已登记的企业列表
+		<span class="quiet pdlr10 f12">欢迎您建立企业信息，加入杭州浙大校友会赞助企业库，有合适的活动或项目需要赞助，我们会主动联系您。</span>
+		</h3>
+		<p class="pdlr10 quiet">提示：当您的企业成功赞助杭州浙大校友会后企业的边框会变成绿色，您的企业将会在校友会网站的赞助商展示位上出现。</p>
+		<hr class="dashed" />
+		<?php foreach($this->corps as $corp): ?>
+		<table class="<?= ($corp['active'] == 0)? 'corp_box' : 'corp_active_box' ?>">
+			<tr>
+				<td>
+				<div style="position:relative">
+					<div class="del_box"><a href="javascript:del(<?= $corp['cid'] ?>)"><img src="<?= Alp_Url::img('icon/classic/del.gif'); ?>" /></a></div>
+					<div class="mod_box"><a href="/addon_partners/manage/corpmodify?cid=<?= $this->corp['cid'] ?>"><img src="<?= Alp_Url::img('icon/classic/update.gif'); ?>" /></a></div>
+					<a href="/addon_partners/?cid=<?= $corp['cid'] ?>"><img src="<?= Logic_Addon_Partners::Logo($corp['cid']) ?>" /></a>
+				</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="txtc"><a href="/addon_partners/?cid=<?= $corp['cid'] ?>"><?= $corp['name'] ?></a></td>
+			</tr>
+		</table>
+		<?php endforeach; ?>
+		<table class="corp_box">
+			<tr>
+				<td><a href="/addon_partners/manage/corpcreate">+ 添加新企业</a></td>
+			</tr>
+		</table>
+	</div>
+</div>
+<script>
+function del(cid)
+{
+	var c = confirm('确定删除该企业信息？');
+	if(c == true)
+	$.post(
+		'/addon_partners/manage/del?cid='+cid,
+		null,
+		function(data){ if(data == 'success'){alert('成功删除'); history.go(0); }   }
+	);
+}
+</script>

@@ -14,7 +14,7 @@
 		function indexAction()
 		{
 			$corp = Logic_Addon_Partners::getCorp($this->params['cid']);
-			if($corp == false)
+			if(($corp['active'] == 0 && $this->uid != $corp['uid']) || $corp == false)
 			{
 				$this->_redirect('/addon_partners/list');
 			}

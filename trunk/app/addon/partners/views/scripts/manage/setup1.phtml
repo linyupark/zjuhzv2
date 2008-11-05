@@ -1,8 +1,12 @@
 <form action="/addon_partners/manage/setup1" target="banner_upload" method="post" enctype="multipart/form-data">
 	<table class="mgt10">
 		<tr>
+			<?php $banner = Logic_Addon_Partners::setupBanner($this->uid); ?>
+			<?php if($banner == '/upload/addon/partners/banner/default.gif' && $this->cid): ?>
+			<td><img src="<?= Logic_Addon_Partners::banner($this->cid); ?>" /></td>
+			<?php else: ?>
 			<td><img id="banner" src="<?= Logic_Addon_Partners::setupBanner($this->uid); ?>" /></td>
-			
+			<?php endif; ?>
 		</tr>
 		<tr>
 			<td>

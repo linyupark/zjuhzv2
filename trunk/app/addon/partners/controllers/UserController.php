@@ -32,8 +32,8 @@
 				if($row != false)
 				{
 					Cmd::setSess('addon_partner', $row['uid']); // 保存账号id
-					echo '<div class="success">登陆成功，系统即将跳转至您所管理的<a href="/addon_partners/list?uid='.$row['uid'].'">企业列表</a></div>';
-					echo Alp_Sys::jump('/addon_partners/list'.$row['uid'], 2);
+					echo '<div class="success">登陆成功，系统即将跳转至您所管理的<a href="/addon_partners/manage/corplist?uid='.$row['uid'].'">企业列表</a></div>';
+					echo Alp_Sys::jump('/addon_partners/manage/corplist?uid='.$row['uid'], 2);
 					exit();
 				}
 				else Alp_Sys::msg('error', '账号密码错误');

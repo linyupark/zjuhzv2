@@ -4,22 +4,22 @@
 </style>
 <div id="hd" class="yui-g">
 	<div class="yui-u first">
-		<a href=""><img src="/im/v1/logo.gif" /></a>
+		<a href="http://www.zjuhz.com"><img src="/im/v1/logo.gif" /></a>
 	</div>
 	<div class="yui-u"></div>
 </div>
 <div id="bd">
 	<div id="yui-main">
-		<h2 class="section">杭州浙江大学校友会活动赞助企业</h2>
-		<?php foreach($this->corps as $corp): ?>
+		<h2 class="section">杭州浙江大学校友会活动赞助企业展示</h2>
+		<?php foreach($this->corps as $corp): if($corp['active'] == 1): ?>
 		<table class="corp_box">
 			<tr>
 				<td>
 				<div style="position:relative">
 					<?php if($this->uid): ?>
-					<div class="del_box"><a href="javascript:del(<?= $corp['cid'] ?>)"><img src="<?= Alp_Url::img('icon/classic/del.gif'); ?>" /></a></div>
+					<div class="del_box"><a target="_blank" href="javascript:del(<?= $corp['cid'] ?>)"><img src="<?= Alp_Url::img('icon/classic/del.gif'); ?>" /></a></div>
 					<?php endif; ?>
-					<a href="/addon_partners/?cid=<?= $corp['cid'] ?>"><img src="<?= Logic_Addon_Partners::Logo($corp['cid']) ?>" /></a>
+					<a target="_blank" href="/addon_partners/?cid=<?= $corp['cid'] ?>"><img src="<?= Logic_Addon_Partners::Logo($corp['cid']) ?>" /></a>
 				</div>
 				</td>
 			</tr>
@@ -27,14 +27,12 @@
 				<td class="txtc"><a href="/addon_partners/?cid=<?= $corp['cid'] ?>"><?= $corp['name'] ?></a></td>
 			</tr>
 		</table>
-		<?php endforeach; ?>
-		<?php if($this->uid): ?>
+		<?php endif; endforeach; ?>
 		<table class="corp_box">
 			<tr>
-				<td><a href="/addon_partners/manage/corpcreate">+ 添加新企业</a></td>
+				<td><a href="/addon_partners/manage/corpcreate">+ 申请加入</a></td>
 			</tr>
 		</table>
-		<?php endif; ?>
 	</div>
 </div>
 <script>

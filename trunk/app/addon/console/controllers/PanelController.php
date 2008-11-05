@@ -15,12 +15,12 @@
 			$this->_redirect('/addon_console/?key=');
 			
 			$this->params = $this->getRequest()->getParams();
-			$this->view->mod_name = $this->_getParam('mod', 'partners');
+			$this->view->mod_name = $this->_getParam('mod', 'partners'); // 默认选中模块
 		}
 		
 		function indexAction()
 		{
-			
+
 		}
 	}
 

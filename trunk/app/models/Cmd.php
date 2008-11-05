@@ -22,7 +22,7 @@
          * @param string $key 标识符
          * @param string/array $data 数据
          */
-        public static function setSess($key, $data)
+        public static function setSess($key, $data = null)
         {
             if(is_array($data))
             {
@@ -33,6 +33,10 @@
             		$result = array_merge($datas, $data);
             		Zend_Registry::get('sess')->$key = $result;
             	}
+            }
+            elseif($data == null)
+            {
+            	Zend_Registry::get('sess')->$key = null;
             }
             else
             {

@@ -52,6 +52,7 @@
 						$this->view->base = $base;
 						$this->view->options = Logic_Addon_Vote::options($vid);
 						$this->view->total_rate = Logic_Addon_Vote::totalRate($vid);
+						$this->view->headTitle($base['title'].'_投票');
 					}
 				} 
 				else echo Alp_Sys::jump('/addon_vote/?vid=0');

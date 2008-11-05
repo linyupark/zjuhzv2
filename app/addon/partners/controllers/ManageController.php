@@ -14,7 +14,6 @@
 			else $this->uid = $uid;
 			
 			$this->params = $this->getRequest()->getParams();
-			//Zend_Debug::dump(Cmd::getSess('addon_partner_setup'));
 		}
 		
 		function delAction()
@@ -24,6 +23,80 @@
 			{
 				echo 'success';
 			}
+		}
+		
+		/**
+		 * 创建的企业列表
+		 *
+		 */
+		function corplistAction()
+		{
+			$this->view->headTitle('赞助商企业信息库');
+			$this->view->corps = Logic_Addon_Partners::getCorps($this->uid);
+			if($this->uid == $this->params['uid'])
+			$this->view->uid = $this->uid;
+		}
+		
+		/**
+		 * 企业信息修改
+		 *
+		 */
+		function corpmodifyAction()
+		{
+			$this->view->headTitle('修改企业信息');
+			$step = $this->_getParam('step', 0);
+			$cid = Cmd::getSess('addon_partner_setup', 'cid');
+			// 将原有企业数据加载到session
+			if(!$cid)
+			{
+				$data = Logic_Addon_Partners::getCorp($this->params['cid']);
+				Cmd::setSess('addon_partner_setup', $data);
+			}
+			else $data = Cmd::getSess('addon_partner_setup');
+			
+			if($data == null || $data['uid'] != $this->uid)
+			$this->_redirect('/addon_partners/list');
+			
+			switch ($step)
+			{
+				case 0 : 
+					$this->view->name = $data['name'];
+				break;
+				case 1 :
+					
+				break;
+				case 2 :
+					$this->view->intro = htmlspecialchars(stripslashes($data['intro']));
+				break;
+				case 3 :
+					$this->view->tel = $data['tel'];
+					$this->view->address = $data['address'];
+					$this->view->website = $data['website'];
+					$this->view->contact = $data['contact'];
+				break;
+				default : 
+					$data['uid'] = $this->uid;
+					$result = Logic_Addon_Partners::modifyCorp($data);
+					if($result == true)
+					{
+						$logo = UPLOADROOT.'addon/partners/logos/'.md5($this->uid).'.gif';
+						$banner = UPLOADROOT.'addon/partners/banner/'.md5($this->uid).'.gif';
+						if(file_exists($logo))
+						{
+							Alp_Image::init($logo)->output($cid, 'gif', null, null, true);
+						}
+						if(file_exists($banner))
+						{
+							Alp_Image::init($banner)->output($cid, 'gif', null, null, true);
+						}
+						Cmd::setSess('addon_partner_setup', null);
+					}
+					else echo '<script>parent.alert(\''.Alp_Sys::allMsg('','\n').'\')</script>';
+				break;
+			}
+			$this->view->step = $step;
+			$this->view->uid = $this->uid;
+			$this->view->cid = $data['cid'];
 		}
 		
 		/**
@@ -50,10 +123,11 @@
 					$this->view->tel = $data['tel'];
 					$this->view->address = $data['address'];
 					$this->view->website = $data['website'];
+					$this->view->contact = $data['contact'];
 				break;
 				default : 
 					if($data == null)
-					$this->_redirect('/addon_partners/list');
+					$this->_redirect('/addon_partners/manage/corplist?uid='.$this->uid);
 					
 					$data['uid'] = $this->uid;
 					$cid = Logic_Addon_Partners::insertCorp($data);
@@ -96,7 +170,7 @@
 			{
 				if(Alp_Upload::handle('file') == true)
 				{
-					echo '<script>parent.insert_html("<img src=\'/upload/addon/partners/files/'.Alp_Upload::$filename[0].'\' />")</script>';
+					echo '<script>parent.insert_html("<img style="float:left; margin:8px;" src=\'/upload/addon/partners/files/'.Alp_Upload::$filename[0].'\' />")</script>';
 				}
 				else echo '<script>parent.alert(\''.Alp_Sys::allMsg('','\n').'\')</script>';
 			}
@@ -108,6 +182,7 @@
 		 */
 		function setup3Action()
 		{
+			$contact = Alp_Valid::of($this->params['contact'], 'contact', '联系人', 'trim|required');
 			$tel = Alp_Valid::of($this->params['tel'], 'tel', '电话', 'trim|required');
 			$address = Alp_Valid::of($this->params['address'], 'address', '地址', 'trim|required');
 			$website = Alp_Valid::of($this->params['website'], 'website', '网站', 'trim|valid_url');
@@ -116,7 +191,8 @@
 				Cmd::setSess('addon_partner_setup', array(
 					'tel' => $tel,
 					'address' => $address,
-					'website' => $website
+					'website' => $website,
+					'contact' => $contact
 				));
 				echo '<script>parent.step(4)</script>';
 			}

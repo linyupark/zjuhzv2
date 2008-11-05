@@ -111,6 +111,36 @@
 		}
 		
 		/**
+		 * 修改企业信息
+		 *
+		 * @param unknown_type $params
+		 */
+		public static function modifyCorp($params)
+		{
+			$db = parent::getSqlite('partners.s3db');
+			$db->beginTransaction();
+			try {
+				$db->update('corporation', array(
+					'intro' => $params['intro'],
+					'name' => $params['name'],
+					'time' => time(),
+					'tel' => $params['tel'],
+					'address' => $params['address'],
+					'website' => $params['website'],
+					'contact' => $params['contact'],
+					'active' => $params['active']
+				), 'cid = '.(int)$params['cid']);
+				$db->commit();
+				return true;
+				
+			} catch(Exception $e) {
+				$db->rollback();
+				Alp_Sys::msg('exception', $e->getMessage());
+			}
+			return false;
+		}
+		
+		/**
 		 * 创建新企业信息
 		 *
 		 * @param unknown_type $params
@@ -128,7 +158,9 @@
 					'time' => time(),
 					'tel' => $params['tel'],
 					'address' => $params['address'],
-					'website' => $params['website']
+					'website' => $params['website'],
+					'contact' => $params['contact'],
+					'active' => 0
 				));
 				$db->commit();
 				return $db->lastInsertId();

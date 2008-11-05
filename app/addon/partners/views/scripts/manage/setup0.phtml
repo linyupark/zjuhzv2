@@ -1,7 +1,12 @@
 <form action="/addon_partners/manage/setup0" target="logo_upload" method="post" enctype="multipart/form-data">
 	<table class="mgt10">
 		<tr>
-			<td><img id="logo" src="<?= Logic_Addon_Partners::setupLogo($this->uid); ?>" /></td>
+			<?php $logo = Logic_Addon_Partners::setupLogo($this->uid); ?>
+			<?php if($this->cid && $logo == '/upload/addon/partners/logos/default.gif'): ?>
+			<td><img src="<?= Logic_Addon_Partners::logo($this->cid); ?>" /></td>
+			<?php else: ?>
+			<td><img id="logo" src="<?= $logo ?>" /></td>
+			<?php endif; ?>
 			<td>
 				<p class="quiet">企业 logo 图片有效格式为gif,png,jpg[尺寸最好为220*78像素]</p>
 				<input type="file" name="logo[]" size="20" />

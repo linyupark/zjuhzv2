@@ -1,0 +1,57 @@
+<style>
+	.corp_box{ float:left; margin:10px 0 5px 25px; border:1px solid #ccc }
+	.corp_active_box{ float:left; margin:10px 0 5px 25px; border:1px solid #559E0A }
+	.tool_box{ position:absolute; top:-15px; right:-15px; z-index:100; display:block; height:16px; width:16px; }
+	.conn_box{ background:url(<?= Alp_Url::img('icon/1616/connect.gif') ?>);  }
+	.disconn_box{ background:url(<?= Alp_Url::img('icon/1616/disconnect.gif') ?>); }
+</style>
+
+<h2 class="section">所有已经入库的企业列表</h2>
+<p class="quiet pdlr10">提示： 绿色边框的企业为已经激活，会显示在赞助商展示列表中</p>
+<hr class="dashed" />
+<?php if($this->corps): foreach($this->corps as $corp): ?>
+<table id="corp_<?= $corp['cid'] ?>" class="<?= ($corp['active'] == 0)? 'corp_box' : 'corp_active_box' ?>">
+	<tr>
+		<td>
+		<div style="position:relative">
+		<a href="javascript:change_active(<?= $corp['cid'] ?>)" class="tool_box <?= ($corp['active'] == 0)? 'disconn_box' : 'conn_box' ?>"></a>
+		<a href="/addon_partners/?cid=<?= $corp['cid'] ?>"><img src="<?= Logic_Addon_Partners::Logo($corp['cid']) ?>" /></a>
+		</div>
+		</td>
+	</tr>
+	<tr>
+		<td class="txtc"><a href="/addon_partners/?cid=<?= $corp['cid'] ?>"><?= $corp['name'] ?></a></td>
+	</tr>
+</table>
+<?php endforeach; else: ?>
+<p>目前还没有企业入库</p>
+<?php endif; ?>
+
+<div class="pagination"><?= $this->pagination ?></div>
+
+<script>
+	function change_active(cid)
+	{
+		$.post(
+			'/addon_console/partners/changeactive',
+			{cid:cid},
+			function(data)
+			{
+				if(data == 1)
+				{
+					$('#corp_'+cid).attr('class','corp_active_box');
+					$('#corp_'+cid+' .tool_box').attr('class','tool_box conn_box');
+				}
+				else if(data == 0)
+				{
+					$('#corp_'+cid).attr('class','corp_box');
+					$('#corp_'+cid+' .tool_box').attr('class','tool_box disconn_box');
+				}
+				else
+				{
+					alert(data);
+				}
+			}
+		);
+	}
+</script>

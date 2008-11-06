@@ -14,7 +14,7 @@
 	<tr>
 		<td>
 		<div style="position:relative">
-		<a href="javascript:change_active(<?= $corp['cid'] ?>)" class="tool_box <?= ($corp['active'] == 0)? 'disconn_box' : 'conn_box' ?>"></a>
+		<a title="激活开关" href="javascript:change_active(<?= $corp['cid'] ?>)" class="tool_box <?= ($corp['active'] == 0)? 'disconn_box' : 'conn_box' ?>"></a>
 		<a href="/addon_partners/?cid=<?= $corp['cid'] ?>"><img src="<?= Logic_Addon_Partners::Logo($corp['cid']) ?>" /></a>
 		</div>
 		</td>

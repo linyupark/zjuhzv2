@@ -6,8 +6,8 @@
 	</tr>
 </table>
 </form>
-<form id="intro_form" target="file_upload" action="/addon_partners/manage/setup2" method="post" onsubmit="javascript:get_content();">
-	<?= Cmd::editor('intro', $this->intro,'300','100%'); ?>
+<form id="intro_form" target="file_upload" action="/addon_partners/manage/setup2" method="post">
+	<?= Cmd::fck('intro', $this->intro); ?>
 	<p class="txtr">
 		<input onclick="cancel()" class="btn" type="button" value="取消" />
 		<input onclick="step(1)" class="btn" type="button" value="上一步" />
@@ -15,3 +15,10 @@
 	</p>
 </form>
 <iframe class="hide" id="file_upload" name="file_upload"></iframe>
+<script>
+	function insert_html(html)
+	{
+		var oEditor = FCKeditorAPI.GetInstance("intro");
+		oEditor.InsertHtml(html);
+	}
+</script>

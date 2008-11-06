@@ -171,7 +171,7 @@
 			{
 				if(Alp_Upload::handle('file') == true)
 				{
-					echo '<script>parent.insert_html("<img style=\'float:left; margin:8px;\' src=\'/upload/addon/partners/files/'.Alp_Upload::$filename[0].'\' />")</script>';
+					echo '<script>parent.insert_html("<img src=\'/upload/addon/partners/files/'.Alp_Upload::$filename[0].'\' />")</script>';
 				}
 				else echo '<script>parent.alert(\''.Alp_Sys::allMsg('','\n').'\')</script>';
 			}

@@ -64,10 +64,18 @@
             } 
         }
         
-        public static function editor($key, $content=null, $h='320', $w = '100%')
+        public static function fck($key, $content = null, $h='320px', $w='100%', $toolbar = 'ZjuhzFront')
         {
-        	return '<textarea name="'.$key.'" style="display:none">'.$content.'</textarea>'.
-        			'<iframe ID="Editor" name="Editor" src="/editor/index.php?h='.($h-40).'px&w='.$w.'&ID='.$key.'" frameborder="0" marginHeight="0" marginWidth="0" scrolling="No" style="height:'.$h.'px;width:'.$w.'"></iframe>';
+        	return '<textarea name="'.$key.'">'.$content.'</textarea>
+        			<script type="text/javascript" src="/fck/fckeditor.js"></script>
+        			<script type="text/javascript">
+        				var oFCKeditor = new FCKeditor("'.$key.'");
+        				oFCKeditor.BasePath	= "/fck/";
+        				oFCKeditor.ToolbarSet = "'.$toolbar.'";
+        				oFCKeditor.Width = "'.$w.'";
+        				oFCKeditor.Height = "'.$h.'";
+        				oFCKeditor.ReplaceTextarea();
+        			</script>';
         }
     }
 

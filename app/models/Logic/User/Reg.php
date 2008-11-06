@@ -70,6 +70,7 @@
             	
             	// log数据
             	
+            	
             	// 好友关联
             } catch (Exception $e) {
             	

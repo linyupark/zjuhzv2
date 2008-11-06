@@ -20,14 +20,6 @@
 	{
 		location.href='/addon_partners/manage/corpmodify?step='+n;
 	}
-	function insert_html(html)
-	{
-		window.frames["Editor"].window.frames["HtmlEditor"].document.getElementsByTagName("BODY")[0].innerHTML += html;
-	}
-	function get_content()
-	{
-		window.frames["Editor"].AttachSubmit();
-	}
 	function cancel()
 	{
 		location.href='/addon_partners/manage/corplist?uid=<?= $this->uid ?>';

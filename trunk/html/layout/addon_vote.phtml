@@ -8,19 +8,22 @@
     <link rel="stylesheet" type="text/css" href="/cs/v1.css" />
     <?= $this->headLink() ?>
 </head>
-<body id="doc2">
+<body>
+<div id="doc2">
     <div id="hd" class="yui-g">
         <div class="yui-u first">
             <a href="http://www.zjuhz.com"><img src="/im/v1/logo.gif" /></a>
         </div>
-        <div class="yui-u">
-        </div>
+        <div class="yui-u hd-r"></div>
     </div>
     <div id="bd">
     <?= $this->layout()->content ?>
     </div>
+    	<div id="ft-l"></div>
+		<div id="ft-r"></div>
     <div id="ft">
         <?= $this->partial('footer.phtml') ?>
     </div>
+</div>
 </body>
 </html>

@@ -1,15 +1,9 @@
-<div id="hd">
-	<table>
-		<tr>
-			<td width="220"><img src="<?= Logic_Addon_Partners::logo($this->corp['cid']) ?>" /></td>
-			<td class="f28 bold"><?= $this->corp['name'] ?></td>
-		</tr>
-		<tr>
-			<td colspan="2"><img src="<?= Logic_Addon_Partners::banner($this->corp['cid'])?>" /></td>
-		</tr>
-	</table>
+<div id="hd" class="yui-g">
+	<div class="yui-u first" style="width:200px;"><a href=""><img src="<?= Logic_Addon_Partners::logo($this->corp['cid']) ?>" /></a></div>
+	<div class="yui-u hd-r" style="width:730px;"><h1 class="f28"><?= $this->corp['name'] ?></h1></div>
 </div>
 <div id="bd">
+	<a href="<?= $this->corp['website'] ?>"><img width="920" src="<?= Logic_Addon_Partners::banner($this->corp['cid'])?>" /></a>
 	<div id="yui-main">
 		<div class="yui-b">
 			<div class="mgl10">
@@ -27,24 +21,23 @@
 			</tr>
 			<?php endif; ?>
 			<tr>
-				<td class="f14"><img class="vm" src="<?= Alp_Url::img('icon/clean/talk.gif'); ?>" /> 
-				联系人：<?= $this->corp['contact'] ?></td>
+				<td class="f12">联系人：<?= $this->corp['contact'] ?></td>
 			</tr>
 			<tr>
-				<td class="f14"><img class="vm" src="<?= Alp_Url::img('icon/clean/tel.gif'); ?>" /> 
-				<?= $this->corp['tel'] ?></td>
+				<td class="f12">电话：<?= $this->corp['tel'] ?></td>
 			</tr>
 			<tr>
-				<td class="f14"><img class="vm" src="<?= Alp_Url::img('icon/clean/position.gif'); ?>" /> 
-				<?= $this->corp['address'] ?></td>
+				<td class="f12">地址：<?= $this->corp['address'] ?></td>
 			</tr>
 			<tr>
-				<td class="f14"><img class="vm" src="<?= Alp_Url::img('icon/clean/home.gif'); ?>" /> 
-				<a href="<?= $this->corp['website'] ?>" target="_blank"><?= $this->corp['website'] ?></a></td>
+				<td class="f12">网站：<a href="<?= $this->corp['website'] ?>" target="_blank"><?= $this->corp['website'] ?></a></td>
 			</tr>
 		</table>
 	</div>
 </div>
+
+<div id="ft-l"></div>
+<div id="ft-r"></div>
 
 <script>
 	$('#doc2').addClass('yui-t5');

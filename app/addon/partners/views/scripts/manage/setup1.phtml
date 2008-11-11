@@ -5,12 +5,12 @@
 			<?php if($banner == '/upload/addon/partners/banner/default.gif' && $this->cid): ?>
 			<td><img src="<?= Logic_Addon_Partners::banner($this->cid); ?>" /></td>
 			<?php else: ?>
-			<td><img id="banner" src="<?= Logic_Addon_Partners::setupBanner($this->uid); ?>" /></td>
+			<td><img id="banner" width="920" src="<?= Logic_Addon_Partners::setupBanner($this->uid); ?>" /></td>
 			<?php endif; ?>
 		</tr>
 		<tr>
 			<td>
-				<p class="quiet">企业 banner 图片有效格式为gif,png,jpg[尺寸最好为950*115像素]</p>
+				<p class="quiet">企业 banner 图片有效格式为gif,png,jpg[尺寸最好为920*115像素]</p>
 				<input type="file" name="banner[]" size="20" />
 			</td>
 		</tr>

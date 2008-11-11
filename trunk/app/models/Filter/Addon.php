@@ -14,7 +14,7 @@
 		 */
 		public static function partUser($params)
 		{
-			$params['username'] = Alp_Valid::of($params['username'], 'username', '账号', 'trim|aldash|str_between[4,16]');
+			$params['username'] = Alp_Valid::of($params['username'], 'username', '账号', 'trim|aldash|str_between[3,16]');
 			$params['password'] = Alp_Valid::of($params['password'], 'password', '密码', 'trim|required');
 			return $params;
 		}

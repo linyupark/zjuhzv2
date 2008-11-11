@@ -1,20 +1,22 @@
-@import url("yui/reset.css");
-@import url("yui/base.css");
-@import url("yui/fonts.css");
-@import url("yui/grids.css");
+@import url("alp/yui.css");
 @import url("alp/common.css");
 @import url("alp/link-sky.css");
-@import url("alp/boxy.css");
 @import url("nicejform/niceforms-default.css");
 
-
-body{ background:url(/im/v1/bg.jpg) repeat-x top; }
+html{ background:#CFE1ED }
+body{ background:#CFE1ED url(/im/v1/bg-top.gif) repeat-x top; padding-top:10px; }
 table td{ border:none; }
 
 hr.dashed{ height:1px; border:none; border-bottom:1px dashed #ccc; margin:5px; }
 
-#hd{ padding-top:10px; }
-#bd{ }
+#hd{ background:#fff; background:url(/im/v1/top.gif) repeat-x left top; height:80px; overflow:hidden; }
+.hd-r{ background:url(/im/v1/top.gif) repeat-x right top; height:80px; }
+#bd{ background:#fff; border-right:1px solid #A6C2D6; padding:15px;  }
+#ft{ margin-top:30px; color:#83ACCA; }
+#ft a{ font-weight:bold; color:#83ACCA;  }
+#ft a:hover{ color:#3D6C8E }
+#ft-l{ background:#fff url(/im/v1/footer.gif) repeat-x left bottom; height:9px; width:50%; float:left; clean:left; }
+#ft-r{ background:#fff url(/im/v1/footer.gif) repeat-x right bottom; height:9px; width:50%; float:left }
 
 .section{ padding:10px; background:#f7f7f7; border:2px solid #eee; }
 .valid_tip{ color:red; font-size:12px; }

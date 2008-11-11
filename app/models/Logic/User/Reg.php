@@ -68,12 +68,35 @@
             		'email' => $data['email']
             	));
             	
-            	// log数据
-            	
+            	// 注册成功log
+            	Logic_Log::insert('tb_user', array(
+            		'type' => 'add_user',
+            		'uid' => $self_uid,
+            		'value' => '',
+            		'time' => time()
+            	));
             	
             	// 好友关联
-            } catch (Exception $e) {
+            	if($data['role'] == 'member')
+            	{
+            		Logic_Log::insert('tb_space', array(
+            			'type' => 'add_friend',
+            			'uid' => $self_uid,
+            			'value' => $data['ucode'],
+            			'time' => time()
+            		));
+            		Logic_Log::insert('tb_space', array(
+            			'type' => 'add_friend',
+            			'uid' => $data['ucode'],
+            			'value' => $self_uid,
+            			'time' => time()
+            		));
+            	}
+            	$User->commit();
             	
+            } catch (Exception $e) {
+            	$User->rollback();
+            	Alp_Sys::msg('form_tip', $e->getMessage());
             }
         }
     }

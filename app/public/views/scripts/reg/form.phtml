@@ -1,4 +1,4 @@
-<form id="reg_form" method="post" class="mgl10 niceform" onsubmit="return reg_form()">
+<form id="reg_form" method="post" class="mgl10" onsubmit="return reg_form()">
     <table>
         <tr>
             <td><b>登录帐号</b></td>
@@ -44,22 +44,18 @@
                 <input type="hidden" name="sid" value="<?= Zend_Session::getId() ?>" />
                 <input type="hidden" name="ucode" value="<?= $this->ucode ?>" />
                 <input type="hidden" name="scode" value="<?= $this->scode ?>" />
-                <input type="submit" value="同意注册协议，提交注册信息" />
-                <span class="quiet f12" id="form_action"></span>
+                <input class="btn" id="submit" type="submit" value="同意注册协议，提交注册信息" />
+                <span class="quiet f12" id="form_tip"></span>
             </td>
         </tr>
     </table>
 </form>
 
 <script type="text/javascript">
-$(document).ready(function(){
-$.NiceJForms.build({
-		imagesPath:"/cs/nicejform/images/default/"
-	})
-});
 function reg_form()
 {
     $('.valid_tip').empty();
+    $('#submit').val('提交注册信息中....').attr('disabled', true);
     $.getJSON(
         '/public/reg/doreg',
         $('#reg_form').serializeArray(),
@@ -67,10 +63,11 @@ function reg_form()
         	$.each(data, function(name, value){
         		$('#'+name).html(value);
             });
-            if(data.form_action == '')
+            if(data.form_tip == '')
             {
             	location.href='/public/login?account='+data.account;
             }
+            $('#submit').val('同意注册协议，提交注册信息').attr('disabled', false);
         }
     );
     return false;

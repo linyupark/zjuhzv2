@@ -23,7 +23,7 @@
             }
             else
             {
-                Alp_Sys::msg('form_action','超时，请刷新页面后重新登录');
+                Alp_Sys::msg('form_tip','超时，请刷新页面后重新登录');
             }
             echo Alp_Sys::getMsgJson();
         }

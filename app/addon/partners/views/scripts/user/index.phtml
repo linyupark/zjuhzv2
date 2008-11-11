@@ -1,14 +1,11 @@
 <div id="hd" class="yui-g">
-	<div class="yui-u first">
-		<a href="http://www.zjuhz.com"><img src="/im/v1/logo.gif" /></a>
-	</div>
-	<div class="yui-u"></div>
+	<div class="yui-u first"><a href=""><img src="/im/v1/logo.gif" /></a></div>
+	<div class="yui-u hd-r"></div>
 </div>
 <div id="bd">
 	<div id="yui-main">
 		<h3 class="section">赞助企业展示系统</h3>
 		<p class="quiet pdlr10">提示：此账号有别于校友会网站账号，登录后才能进行企业入库操作。</p>
-		<hr class="dashed" />
 		<?php if($this->goto == 'create'): ?>
 		<?= $this->render('user/createform.phtml'); ?>
 		<?php else : ?>
@@ -16,3 +13,6 @@
 		<?php endif; ?>
 	</div>
 </div>
+
+<div id="ft-l"></div>
+<div id="ft-r"></div>

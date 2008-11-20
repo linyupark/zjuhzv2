@@ -27,3 +27,8 @@ hr.dashed{ height:1px; border:none; border-bottom:1px dashed #ccc; margin:5px; }
 
 .section{ padding:8px; background:#f7f7f7; border:1px solid #eee; border-left:3px solid #ccc; color:#336; margin:0 0 10px 0; }
 .valid_tip{ color:red; font-size:12px; }
+
+/* default layout style */
+.greybox{ background:#eee url(/im/v1/grey-bottom.jpg) no-repeat bottom; line-height:180%; padding-bottom:20px; }
+.greybox-top{ background:url(/im/v1/grey-top.jpg) no-repeat; width:270px; height:12px; }
+.greybox a{ color:#C34F00; }

@@ -35,7 +35,7 @@
         	$data['role'] = 'bench';
         	
         	// 邀请注册
-        	if(isset($data['ucode']) && isset($data['scode']))
+        	if(!empty($data['ucode']) && !empty($data['scode']))
         	{
         		// 是否为有效邀请
         		if(self::isRegistered('uid', $data['ucode']) != false 
@@ -46,7 +46,8 @@
         	}
         	
         	// 注册事务处理
-            $User = parent::User()->beginTransaction();
+            $User = parent::User();
+            $User->beginTransaction();
             try
             {
             	// 用户基础数据插入
@@ -93,6 +94,8 @@
             		));
             	}
             	$User->commit();
+            	Alp_Sys::msg('form_tip', 'success');
+            	Alp_Sys::msg('account', $data['account']);
             	
             } catch (Exception $e) {
             	$User->rollback();

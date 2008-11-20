@@ -7,8 +7,13 @@
         {
             $acl = new Zend_Acl();
             
+            // 默认身份设置
             $role = Cmd::getSess('profile', 'role');
-            if($role == null) $role = 'guest';
+            if($role == null)
+            {
+            	$role = 'guest';
+            	Cmd::setSess('profile', array('role' => $role));
+            }
             
             $resource = $request->getModuleName();
             $controller = $request->getControllerName();

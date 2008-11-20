@@ -1,13 +1,15 @@
-<?php $this->headTitle('新校友注册') ?>
-<div id="yui-main">
+<div class="yui-main">
     <div class="yui-b">
         <h2 class="section">新校友注册</h2>
+        <p class="quiet">
+        	<img src="<?= Alp_Url::img('icon/1616/att_s.gif') ?>" class="vm" /> 
+        	本站只允许浙江大学校友注册并采用实名制，如您是浙大校友烦请如实填写注册资料。
+        </p>
+        <hr class="dashed" />
         <?= $this->render('reg/form.phtml') ?>
     </div>
 </div>
-<div class="yui-b">
-    <textarea style="width:95%" class="quiet"><?= $this->render('reg/agreement.phtml') ?></textarea>
-</div>
+<div class="yui-b"><img src="<?= Alp_Url::img('v1/reg_bg.jpg') ?>" width="100px" /></div>
 <script>
-    $('#doc2').addClass('yui-t6');
+    $('.yui-d2f').addClass('yui-t1');
 </script>

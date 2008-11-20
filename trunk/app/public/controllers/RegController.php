@@ -28,9 +28,16 @@
             echo Alp_Sys::getMsgJson();
         }
         
+        # 注册协议
+        function agreementAction()
+        {
+        	$this->view->headTitle('杭州浙江大学校友会网站注册协议');
+        }
+        
         # 注册表单 ------------------------------------------------------------
         function indexAction()
         {
+        	$this->view->headTitle('新校友注册');
             $this->view->ucode = $this->_getParam('ucode'); // 邀请用户加密id
             $this->view->scode = $this->_getParam('scode'); // 加为好友后的分类id
         }

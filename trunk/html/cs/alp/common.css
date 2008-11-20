@@ -1,5 +1,3 @@
-@CHARSET "UTF-8";
-/**  * 甯哥敤鏍峰紡  */
 input { line-height:100% }
 hr{ height:1px; border:none; border-bottom:1px solid #ccc; }
 .hide { display:none; }
@@ -7,7 +5,8 @@ hr{ height:1px; border:none; border-bottom:1px solid #ccc; }
 .disblock { display:block; }
 .disinline { display:inline; }
 .vm { vertical-align:middle; }
-.a-span a{ margin-right:12px; }
+.a-span5 a{ margin-left:5px; }
+.a-span a{ margin-left:12px; }
 .f9 {font-size:9px;}
 .f12 {font-size:12px;}
 .f14 {font-size:14px;}
@@ -44,7 +43,7 @@ hr{ height:1px; border:none; border-bottom:1px solid #ccc; }
 
 .bold{ font-weight:bold; }
 
-/**  * 琛ㄥ崟鏍峰紡  */
+/**  * 表单样式  */
 input,textarea,select {border:1px solid #666; padding:3px;}
 .nob{ border:none; }
 .error, .notice, .success {padding:.8em;margin-bottom:1em;border:2px solid #ddd;}

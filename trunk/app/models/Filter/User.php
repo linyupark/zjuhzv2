@@ -26,7 +26,7 @@
                 Alp_Sys::msg('email','该邮箱已被注册');
                 
                 // 邀请是否为注册判断
-                if(isset($params['ucode']) && isset($params['scode']))
+                if(!empty($params['ucode']) && !empty($params['scode']))
                 {
                 	$params['ucode'] = Alp_String::decrypt($params['ucode']);
                 	$params['scode'] = Alp_String::decrypt($params['scode']);

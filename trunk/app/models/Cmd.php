@@ -5,7 +5,7 @@
      *
      */
     class Cmd
-    {
+    {	
     	/**
     	 * 获取自己的用户id
     	 *
@@ -14,6 +14,33 @@
     	public static function uid()
     	{
     		return (int)self::getSess('profile', 'uid');
+    	}
+    	
+    	public static function role()
+    	{
+    		return self::getSess('profile', 'role');
+    	}
+    	
+    	public static function rolename()
+    	{
+    		$role = self::role();
+    		return Zend_Registry::get('config')->user_role->$role;
+    	}
+    	
+    	/**
+    	 * 返回用户的头像
+    	 *
+    	 * @param unknown_type $uid
+    	 * @param unknown_type $size
+    	 * @param unknown_type $sex
+    	 * @return unknown
+    	 */
+    	public static function userhead($uid, $size = '40', $sex = 'male')
+    	{
+    		$dir = UPLOADROOT.'users/head/'.$uid;
+    		if(file_exists($dir.'/'.$size.'.gif'))
+    		return '/upload/users/head/'.$uid.'/'.$size.'.gif';
+    		else return Alp_Url::img('v1/'.$sex.'_'.$size.'.gif');
     	}
     	
         /**

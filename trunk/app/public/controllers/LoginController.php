@@ -18,9 +18,19 @@
                     if($row != false)
                     {
                         // 成功登录处理
-                        Alp_Sys::msg('islogin','yes');
+                        if(Logic_User_Login::treat($row['uid']) == true)
+                        {
+	                        // cookie 保存帐号密码
+	                        if($params['rememberme'] == 1)
+	                        setcookie(
+	                        	'zjuhz_remember', 
+	                        	Alp_String::encrypy(serialize(array($account, $password))), 
+	                        	(time()+3600*24*7), '/'
+	                        );
+	                        Alp_Sys::msg('form_tip','success');
+                        }
                     }
-                    else Alp_Sys::msg('check_msg','账号密码有误');
+                    else Alp_Sys::msg('form_tip','账号密码有误');
                 }
             }
             else
@@ -30,9 +40,26 @@
             echo Alp_Sys::getMsgJson();
         }
         
+        /**
+         * 退出登录
+         *
+         */
+        function outAction()
+        {
+        	Zend_Session::destroy();
+        	unset($_COOKIE['zjuhz_remember']);
+        	setcookie('zjuhz_remember', '', -100, '/');
+        	$this->_redirect('/');
+        }
+        
+        /**
+         * 登录表单
+         *
+         */
         function indexAction()
         {
-            $request = $this->getRequest();
+        	$request = $this->getRequest();
+        	$this->view->remember = unserialize(stripslashes(Alp_String::decrypt($_COOKIE['zjuhz_remember'])));
             $this->view->account = $request->getParam('account');
         }
     }

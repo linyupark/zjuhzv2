@@ -1,7 +1,7 @@
+<?= $this->render('head.phtml'); ?>
 <div id="bd">
-	<div id="yui-main">
-		<br /><br /><br />
-		<h2 class="mgl10">修改企业信息</h2>
+	<div class="yui-main">
+		<br />
 		<hr class="dashed" />
 			<b class="step">第一步：修改企业Logo，企业名称</b> &nbsp;&nbsp;&nbsp;
 			<b class="step">第二步：修改企业Banner</b> &nbsp;&nbsp;&nbsp;
@@ -12,6 +12,10 @@
 		<?= $this->render('manage/setup'.$this->step.'.phtml'); ?>
 	</div>
 </div>
+
+<div id="ft-l"></div>
+<div id="ft-r"></div>
+
 <script>
 	$('.step').css('color','#ccc');
 	$('.step:eq(<?= $this->step ?>)').css('color','#64931D');

@@ -1,5 +1,6 @@
+<?= $this->render('head.phtml'); ?>
 <div id="bd">
-	<div id="yui-main">
+	<div class="yui-main">
 		<br /><br /><br />
 		<h2 class="mgl10">添加新企业信息</h2>
 		<hr class="dashed" />
@@ -12,6 +13,10 @@
 		<?= $this->render('manage/setup'.$this->step.'.phtml'); ?>
 	</div>
 </div>
+
+<div id="ft-l"></div>
+<div id="ft-r"></div>
+
 <script>
 	$('.step').css('color','#ccc');
 	$('.step:eq(<?= $this->step ?>)').css('color','#64931D');

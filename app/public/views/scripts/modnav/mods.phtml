@@ -1,0 +1,27 @@
+<div class="yui-g quiet">
+	<?php if(Cmd::role() == 'bench'): ?>
+	<div class="yui-u first">
+		<img src="<?= Alp_Url::img('icon/1616/news.gif') ?>" class="vm" />
+		<a href="">阅读新闻</a>
+	</div>
+	<div class="yui-u">
+		<img src="<?= Alp_Url::img('icon/1616/talk.gif') ?>" class="vm" />
+		<a href="">公共帖吧</a>
+	</div>
+	<?php endif; ?>
+	
+	<?php if(Cmd::role() == 'member'): ?>
+	<div class="yui-u first">3</div>
+	<div class="yui-u">4</div>
+	<?php endif; ?>
+	
+	<?php if(Cmd::role() == 'power'): ?>
+	<div class="yui-u first">5</div>
+	<div class="yui-u">6</div>
+	<?php endif; ?>
+	
+	<?php if(Cmd::role() == 'master'): ?>
+	<div class="yui-u first">5</div>
+	<div class="yui-u">6</div>
+	<?php endif; ?>
+</div>

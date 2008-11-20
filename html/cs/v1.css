@@ -1,22 +1,29 @@
-@import url("alp/yui.css");
+@import url("alp/yui-reset.css");
+@import url("alp/yui-font.css");
+@import url("alp/yui-grid.css");
+@import url("alp/yui-base.css");
+
 @import url("alp/common.css");
 @import url("alp/link-sky.css");
+
 @import url("nicejform/niceforms-default.css");
 
 html{ background:#CFE1ED }
-body{ background:#CFE1ED url(/im/v1/bg-top.gif) repeat-x top; padding-top:10px; }
+body{ background:#CFE1ED url(/im/v1/bg-top.gif) repeat-x top; padding-top:10px; font-size:12px }
 table td{ border:none; }
 
 hr.dashed{ height:1px; border:none; border-bottom:1px dashed #ccc; margin:5px; }
 
 #hd{ background:#fff; background:url(/im/v1/top.gif) repeat-x left top; height:80px; overflow:hidden; }
 .hd-r{ background:url(/im/v1/top.gif) repeat-x right top; height:80px; }
-#bd{ background:#fff; border-right:1px solid #A6C2D6; padding:15px;  }
-#ft{ margin-top:30px; color:#83ACCA; }
+#bd{ background:#fff; border-right:1px solid #A6C2D6; padding:0 15px 15px 15px;  }
+#ft{ margin-top:20px; color:#83ACCA; }
 #ft a{ font-weight:bold; color:#83ACCA;  }
 #ft a:hover{ color:#3D6C8E }
-#ft-l{ background:#fff url(/im/v1/footer.gif) repeat-x left bottom; height:9px; width:50%; float:left; clean:left; }
-#ft-r{ background:#fff url(/im/v1/footer.gif) repeat-x right bottom; height:9px; width:50%; float:left }
+#ft-l{ background:#fff url(/im/v1/footer.gif) repeat-x left bottom; height:9px; font-size:5px; width:50%; float:left; clean:left; }
+#ft-r{ background:#fff url(/im/v1/footer.gif) repeat-x right bottom; height:9px; font-size:5px; width:50%; float:left }
 
-.section{ padding:10px; background:#f7f7f7; border:2px solid #eee; }
+.head40{ background:url(/im/v1/head_bg.gif) no-repeat; height:60px; width:60px; }
+
+.section{ padding:8px; background:#f7f7f7; border:1px solid #eee; border-left:3px solid #ccc; color:#336; margin:0 0 10px 0; }
 .valid_tip{ color:red; font-size:12px; }

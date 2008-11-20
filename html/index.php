@@ -20,12 +20,16 @@
 	$controller = Zend_Controller_Front::getInstance();
 	$space_mods = Alp_Sys::lsdir('../app/space');
 	$addon_mods = Alp_Sys::lsdir('../app/addon');
+	$api_mods = Alp_Sys::lsdir('../app/api');
 
 	foreach($space_mods as $mod)
 	$controller->addControllerDirectory('../app/space/'.$mod.'/controllers', 'space_'.$mod);
 	
 	foreach($addon_mods as $mod)
 	$controller->addControllerDirectory('../app/addon/'.$mod.'/controllers', 'addon_'.$mod);
+	
+	foreach($api_mods as $mod)
+	$controller->addControllerDirectory('../app/api/'.$mod.'/controllers', 'api_'.$mod);
 
 	$controller->addControllerDirectory('../app/public/controllers', 'public');
 	$controller->addControllerDirectory('../app/console/controllers', 'console');

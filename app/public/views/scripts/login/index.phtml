@@ -1,1 +1,12 @@
-<?= $this->render('login/form.phtml'); ?>
+<div class="yui-main">
+    <div class="yui-b">
+        <h2 class="section">欢迎登录杭州浙大校友会网站</h2>
+        <?= $this->render('login/form.phtml'); ?>
+    </div>
+</div>
+<div class="yui-b">
+	<img src="<?= Alp_Url::img('v1/login_bg.jpg') ?>" width="160px" />
+</div>
+<script>
+    $('.yui-d2f').addClass('yui-t1');
+</script>

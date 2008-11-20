@@ -2,14 +2,9 @@
 	.corp_box{ float:left; margin:10px 0 5px 55px; border:1px solid #ccc }
 	.del_box{ position:absolute; top:0; right:0; z-index:100; background:#fff; }
 </style>
-<div id="hd" class="yui-g">
-	<div class="yui-u first">
-		<a href="http://www.zjuhz.com"><img src="/im/v1/logo.gif" /></a>
-	</div>
-	<div class="yui-u hd-r"></div>
-</div>
+<?= $this->render('head.phtml'); ?>
 <div id="bd">
-	<div id="yui-main">
+	<div class="yui-main">
 		<h2 class="section">杭州浙江大学校友会活动赞助企业展示</h2>
 		<?php foreach($this->corps as $corp): if($corp['active'] == 1): ?>
 		<table class="corp_box">

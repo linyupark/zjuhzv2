@@ -1,4 +1,4 @@
-<form id="reg_form" method="post" class="mgl10" onsubmit="return reg_form()">
+<form id="reg_form" method="post" class="mgl10 niceform" onsubmit="return reg_form()">
     <table>
         <tr>
             <td><b>登录帐号</b></td>
@@ -44,7 +44,9 @@
                 <input type="hidden" name="sid" value="<?= Zend_Session::getId() ?>" />
                 <input type="hidden" name="ucode" value="<?= $this->ucode ?>" />
                 <input type="hidden" name="scode" value="<?= $this->scode ?>" />
-                <input class="btn" id="submit" type="submit" value="同意注册协议，提交注册信息" />
+                <img src="<?= Alp_Url::img('icon/1616/doc.gif') ?>" class="vm" /> 
+                <a href="/public/reg/agreement">查阅本站注册协议</a> <br /><br />
+                <input id="submit" type="submit" value="同意注册协议，提交注册信息" />
                 <span class="quiet f12" id="form_tip"></span>
             </td>
         </tr>
@@ -52,6 +54,12 @@
 </form>
 
 <script type="text/javascript">
+$(document).ready(function(){
+$.NiceJForms.build({
+		imagesPath:"/cs/nicejform/images/default/"
+	})
+});
+
 function reg_form()
 {
     $('.valid_tip').empty();
@@ -60,13 +68,13 @@ function reg_form()
         '/public/reg/doreg',
         $('#reg_form').serializeArray(),
         function(data){
-        	$.each(data, function(name, value){
-        		$('#'+name).html(value);
-            });
-            if(data.form_tip == '')
-            {
-            	location.href='/public/login?account='+data.account;
-            }
+        	if(data.form_tip != 'success')
+        	{
+        		$.each(data, function(name, value){
+        			$('#'+name).html(value);
+            	});
+        	}
+        	else location.href='/public/login?account='+data.account;
             $('#submit').val('同意注册协议，提交注册信息').attr('disabled', false);
         }
     );

@@ -1,10 +1,10 @@
 <div id="hd" class="yui-g">
-	<div class="yui-u first pd10" style="width:220px;"><a href=""><img src="<?= Logic_Addon_Partners::logo($this->corp['cid']) ?>" /></a></div>
+	<div class="yui-u first pd10" style="width:220px;"><a href="<?= $this->corp['website'] ?>"><img src="<?= Logic_Addon_Partners::logo($this->corp['cid']) ?>" /></a></div>
 	<div class="yui-u hd-r" style="width:700px;"><h1 class="f28"><?= $this->corp['name'] ?></h1></div>
 </div>
 <div id="bd">
 	<a href="<?= $this->corp['website'] ?>"><img width="920" src="<?= Logic_Addon_Partners::banner($this->corp['cid'])?>" /></a>
-	<div id="yui-main">
+	<div class="yui-main">
 		<div class="yui-b">
 			<div class="mgl10">
 				<?= stripslashes($this->corp['intro']) ?>
@@ -40,5 +40,5 @@
 <div id="ft-r"></div>
 
 <script>
-	$('#doc2').addClass('yui-t5');
+	$('.yui-d2f').addClass('yui-t5');
 </script>

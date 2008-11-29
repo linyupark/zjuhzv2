@@ -1,0 +1,31 @@
+<?= $this->render('header.phtml') ?>
+<?= $this->render('profile/tab.phtml') ?>
+
+<div class="yui-g">
+	<div class="yui-u first" style="width:20%; padding-left:25px;">
+		<div class="head80 pd10">
+			<img id="h80" class="mg10" src="<?= Cmd::userhead(Cmd::uid(), '80', Cmd::getSess('profile','sex')) ?>" />
+		</div>
+	</div>
+	<div class="yui-u" style="width:70%">
+		<h3>更换头像</h3>
+		<form method="post" target="head_upload" enctype="multipart/form-data" action="/public/upload?name=head">
+			<p class="quiet">照片文件需小于2MB，尺寸最好为80*80，支持JPG,GIF,PNG</p>
+			<input type="file" name="head[]" />
+			<input class="btn" type="submit" value="上传" />
+		</form>
+		<iframe name="head_upload" class="hide"></iframe>
+	</div>
+</div>
+
+<script type="text/javascript">
+	function ref()
+	{
+		var d = new Date();
+		var t = d.getTime();
+		$('#h80').attr('src', "/upload/users/head/<?= Cmd::uid() ?>/80.gif?v="+t);
+		$('#h40').attr('src', "/upload/users/head/<?= Cmd::uid() ?>/40.gif?v="+t);
+	}
+</script>
+
+<?= $this->render('sidebar.phtml') ?>

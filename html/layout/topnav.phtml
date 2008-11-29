@@ -8,11 +8,11 @@
     				本会宗旨：联络校友 帮助校友 回报母校 建设杭州
     			</span>
     		</td>
-    		<td class="pd10" valign="top">
+    		<td class="pd10 txtr" valign="top">
     			<?php if(isset($_COOKIE['zjuhz_remember'])):
     				$key = unserialize(stripslashes(Alp_String::decrypt($_COOKIE['zjuhz_remember'])));
     			?>
-    			<span id="login_hook"><img src="<?= Alp_Url::img('icon/loading/v3.gif'); ?>" /> 尝试自动登陆中...</span>
+    			<span id="login_hook"><img src="<?= Alp_Url::img('icon/loading/v3.gif'); ?>" /> 尝试登陆中..</span>
     			<script type="text/javascript">
     				$.getJSON(
 				        '/public/login/dologin',
@@ -20,6 +20,8 @@
 				        function(data){ 
 				        	if(data.form_tip == 'success')
 				        	history.go(0);
+				        	else
+				        	$('#login_hook').html('密码失效，请<a href="/public/login">手动登录</a>');
 				        }
 				    );
     			</script>
@@ -49,11 +51,13 @@
     			</p>
     			<a href=""><img class="vm" src="<?= Alp_Url::img('icon/1616/mail.gif') ?>" />消息[0]</a>
     			<a href=""><img class="vm" src="<?= Alp_Url::img('/icon/1616/heart.gif') ?>" />热心度</a>
-    			<a href=""><img class="vm" src="<?= Alp_Url::img('icon/1616/profile.gif') ?>" />设置</a>
-    			<a href=""><img class="vm" src="<?= Alp_Url::img('icon/1616/home.gif') ?>" />主页</a>
+    			<a href="/space_set/profile/"><img class="vm" src="<?= Alp_Url::img('icon/1616/profile.gif') ?>" />设置</a>
+    			<a href="/space_home/"><img class="vm" src="<?= Alp_Url::img('icon/1616/home.gif') ?>" />主页</a>
     		</td>
     		<td width="10%">
-    			<div class="head40"><img class="pd10" src="<?= Cmd::userhead(Cmd::uid()) ?>" /></div>
+    			<div class="head40">
+    				<a href="/space_set/profile/head"><img id="h40" class="pd10" src="<?= Cmd::userhead(Cmd::uid(), '40', Cmd::getSess('profile', 'sex')) ?>" /></a>
+    			</div>
     		</td>
     	</tr>
     </table>

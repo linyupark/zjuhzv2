@@ -1,0 +1,106 @@
+<?= $this->render('header.phtml') ?>
+<?= $this->render('profile/tab.phtml') ?>
+
+<form method="post" id="base_form" class="mg10" onsubmit="return set_base()">
+<table class="mgl10 table-dashed" width="97%">
+	<tr>
+		<td class="txtr" width="18%">姓名：</td>
+		<td><input type="text" name="username" value="<?= $this->base['username'] ?>" /></td>
+	</tr>
+	<tr>
+		<td class="txtr">昵称：</td>
+		<td><input type="text" name="nickname" value="<?= $this->base['nickname'] ?>" /></td>
+	</tr>
+	<tr>
+		<td class="txtr">性别：</td>
+		<td>
+			<select name="sex">
+				<option value="男" <?= ($this->base['sex'] == '男')?'selected="selected"':'' ?>>男</option>
+				<option value="女" <?= ($this->base['sex'] == '女')?'selected="selected"':'' ?>>女</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="txtr">出生日期：</td>
+		<td>
+			<select name="year">
+				<option value="">----</option>
+			<?php for($y=1900;$y<=2008;$y++): ?>
+				<?php if($y==1960): ?>
+					<option value="60后" <?= ($this->base['birthyear'] == '60后')?'selected="selected"':'' ?>>60后</option>
+				<?php endif; ?>
+				<?php if($y==1970): ?>
+					<option value="70后" <?= ($this->base['birthyear'] == '70后')?'selected="selected"':'' ?>>70后</option>
+				<?php endif; ?>
+				<?php if($y==1980): ?>
+					<option value="80后" <?= ($this->base['birthyear'] == '80后')?'selected="selected"':'' ?>>80后</option>
+				<?php endif; ?>
+				<?php if($y==1990): ?>
+					<option value="90后" <?= ($this->base['birthyear'] == '90后')?'selected="selected"':'' ?>>90后</option>
+				<?php endif; ?>
+				<option value="<?= $y ?>" <?= ($this->base['birthyear'] == $y)?'selected="selected"':'' ?>><?= $y ?></option>
+			<?php endfor; ?>
+			</select> 年
+			<select name="month">
+				<option value="">--</option>
+			<?php for($m=1;$m<=12;$m++): ?>
+				<option value="<?= $m ?>" <?= ($m==$this->base['birthmonth'])?'selected="selected"':'' ?>><?= ($m<10)?'0':'' ?><?= $m ?></option>
+			<?php endfor; ?>
+			</select> 月
+			<select name="day">
+				<option value="">--</option>
+			<?php for($d=1;$d<=31;$d++): ?>
+				<option value="<?= $d ?>" <?= ($d==$this->base['birthday'])?'selected="selected"':'' ?>><?= ($d<10)?'0':'' ?><?= $d ?></option>
+			<?php endfor; ?>
+			</select> 日
+		</td>
+	</tr>
+	<tr>
+		<td class="txtr">家乡：</td>
+		<td><input type="text" name="hometown" value="<?= $this->base['hometown'] ?>" /></td>
+	</tr>
+	<tr>
+		<td class="txtr">现居住地：</td>
+		<td><input type="text" name="city" value="<?= $this->base['city'] ?>" /></td>
+	</tr>
+	<tr>
+		<td class="txtr">婚姻：</td>
+		<td>
+			<select name="marriage">
+				<?php foreach(Zend_Registry::get('config')->marriage->v->toArray() as $k=>$v): ?>
+				<option value="<?= $k ?>" <?= ($k == $this->base['marriage'])?'selected="selected"':'' ?>><?= $v ?></option>
+				<?php endforeach; ?>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><input class="btn" type="submit" id="submit" value="保存设置" /></td>
+	</tr>
+</table>
+</form>
+
+<script type="text/javascript">
+	function set_base()
+	{
+		$('#submit').attr('disabled', true).val('保存设置中...');
+		$.post(
+			'/space_set/profile/base',
+			$('#base_form').serializeArray(),
+			function(data){
+				if(data == 'success') 
+				{
+					$('#submit').attr('disabled', false).val('信息已经成功保存');
+				}
+				else
+				{
+					alert(data);
+					$('#submit').attr('disabled', false).val('保存设置');
+				}
+			}
+		);
+		return false;
+	}
+</script>
+
+<?= $this->render('sidebar.phtml') ?>

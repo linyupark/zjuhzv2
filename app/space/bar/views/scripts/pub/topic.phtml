@@ -1,0 +1,22 @@
+<div class="yui-main">
+	<div class="yui-b">
+		<div class="mg5 section yui-g">
+			<div class="yui-u first">
+				<img class="vm mgr10" src="<?= Alp_Url::img('icon/mix/+.gif') ?>" /><b>发布新话题</b>
+			</div>
+			<div class="yui-u txtr"><a href="javascript:history.back()">返回上一页</a></div>
+		</div>
+		<div class="mglr10 a-span">
+			<?= $this->render('pub/type.phtml'); ?>
+		</div>
+		<hr class="dashed" />
+		<form id="topic_form" method="post">
+		<table class="mgl10 table-dashed" width="97%">
+			<tr>
+				<td width="15%" class="txtr">标题：</td>
+				<td><input type="text" name="title" size="90" /></td>
+			</tr>
+		</table>
+		</form>
+	</div>
+</div>

@@ -38,6 +38,8 @@
             
             // 访问控制定义
             $acl->allow('guest', array('public','addon_vote','addon_partners','addon_console'));
+            $acl->allow(array('bench','member'), null);
+            $acl->allow('master', null);
             
             // 无权限转向
             if(!$acl->isAllowed($role, $resource, $controller))

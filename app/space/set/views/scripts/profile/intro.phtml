@@ -1,0 +1,68 @@
+<?= $this->render('header.phtml') ?>
+<?= $this->render('profile/tab.phtml') ?>
+
+<form method="post" id="intro_form" class="mg10" onsubmit="return set_intro()">
+<table class="mgl10 table-dashed" width="97%">
+	<tr>
+		<td class="txtr" width="18%">兴趣爱好：</td>
+		<td><textarea name="interest" style="width:300px"><?= $this->intro['interest'] ?></textarea></td>
+	</tr>
+	<tr>
+		<td class="txtr">喜欢的书：</td>
+		<td><textarea name="book" style="width:300px"><?= $this->intro['book'] ?></textarea></td>
+	</tr>
+	<tr>
+		<td class="txtr">喜欢的电影：</td>
+		<td><textarea name="movie" style="width:300px"><?= $this->intro['movie'] ?></textarea></td>
+	</tr>
+	<tr>
+		<td class="txtr">喜欢的电视：</td>
+		<td><textarea name="tv" style="width:300px"><?= $this->intro['tv'] ?></textarea></td>
+	</tr>
+	<tr>
+		<td class="txtr">偶像：</td>
+		<td><textarea name="idol" style="width:300px"><?= $this->intro['idol'] ?></textarea></td>
+	</tr>
+	<tr>
+		<td class="txtr">座右铭：</td>
+		<td><input type="text" name="motto" style="width:300px" value="<?= $this->intro['motto'] ?>" /></td>
+	</tr>
+	<tr>
+		<td class="txtr">最近心愿：</td>
+		<td><input type="text" name="wish" style="width:300px" value="<?= $this->intro['wish'] ?>" /></td>
+	</tr>
+	<tr>
+		<td class="txtr">我的简介：</td>
+		<td><textarea name="intro" style="width:300px"><?= $this->intro['intro'] ?></textarea></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><input class="btn" type="submit" id="submit" value="保存设置" /></td>
+	</tr>
+</table>
+</form>
+
+<script type="text/javascript">
+	function set_intro()
+	{
+		$('#submit').attr('disabled', true).val('保存设置中...');
+		$.post(
+			'/space_set/profile/intro',
+			$('#intro_form').serializeArray(),
+			function(data){
+				if(data == 'success') 
+				{
+					$('#submit').attr('disabled', false).val('信息已经成功保存');
+				}
+				else
+				{
+					alert(data);
+					$('#submit').attr('disabled', false).val('保存设置');
+				}
+			}
+		);
+		return false;
+	}
+</script>
+
+<?= $this->render('sidebar.phtml') ?>

@@ -75,7 +75,10 @@
 				'png' => 'imagecreatefrompng', 
 				'gif' => 'imagecreatefromgif'
 			);
-			return $create_function[$type]($image);
+			$im = $create_function[$type]($image);
+			$bgcolor = ImageColorAllocate($im, 255,255,255);
+			imagecolortransparent($im, $bgcolor);
+			return $im;
 		}
 		
 		# 获取文件kb ::::::::::::::::::::::::::::::::::::::::::::::::::::::::

@@ -1,0 +1,118 @@
+<?= $this->render('header.phtml') ?>
+<?= $this->render('profile/tab.phtml') ?>
+
+<div class="mg10">
+<table class="mgl10 table-dashed" width="97%">
+	<tr>
+		<td colspan="4"><b class="f14">工作情况一览</b></td>
+	</tr>
+	<?php if($this->career): ?>
+	<tr class="section-sub">
+		<td class="quiet" width="45%">公司或机构(部门)</td>
+		<td class="quiet" width="20%">职业</td>
+		<td class="quiet" width="15%">在职时间</td>
+		<td>&nbsp;</td>
+	</tr>
+	<?php foreach($this->career as $v): ?>
+	<tr>
+		<td><?= $v['company'] ?><?= ($v['department'])?'('.$v['department'].')':'' ?></td>
+		<td><?= $v['job'] ?></td>
+		<td><?= date('y/m', $v['start']) ?> - <?= ($v['end']==0)?'至今':date('y/m', $v['end']) ?></td>
+		<td><a href="javascript:del_career(<?= $v['id'] ?>)">
+				<img src="<?= Alp_Url::img('icon/mix/x.gif') ?>" /> 删除</a>
+		</td>
+	</tr>
+	<?php endforeach; else: ?>
+	<tr>
+		<td>你还未填写工作情况</td>
+	</tr>
+	<?php endif; ?>
+</table>
+</div>
+<form method="post" id="career_form" class="mg10" onsubmit="return insert_career()">
+<table class="mgl10 table-dashed" width="97%">
+	<tr>
+		<td colspan="2" class="f14"><b>添加工作情况</b></td>
+	</tr>
+	<tr>
+		<td class="txtr" width="18%">公司或机构：</td>
+		<td><input type="text" name="company" value="" size="50" /></td>
+	</tr>
+	<tr>
+		<td class="txtr" width="18%">部门：</td>
+		<td><input type="text" name="department" value="" size="40" /></td>
+	</tr>
+	<tr>
+		<td class="txtr" width="18%">职业：</td>
+		<td><input type="text" name="job" value="" /></td>
+	</tr>
+	<tr>
+		<td class="txtr" width="18%">工作时间：</td>
+		<td>
+			<select name="start[]">
+				<?php for($y=date('Y',time());$y>=1930;$y--): ?>
+				<option value="<?= $y ?>"><?= $y ?></option>
+				<?php endfor; ?>
+			</select> 年
+			<select name="start[]">
+				<?php for($m=1;$m<=12;$m++): ?>
+				<option value="<?= $m ?>"><?= $m ?></option>
+				<?php endfor; ?>
+			</select> 月 
+			至
+			<select name="end[]">
+				<?php for($y=date('Y',time());$y>=1930;$y--): ?>
+				<option value="<?= $y ?>"><?= $y ?></option>
+				<?php endfor; ?>
+			</select> 年
+			<select name="end[]">
+				<?php for($m=1;$m<=12;$m++): ?>
+				<option value="<?= $m ?>"><?= $m ?></option>
+				<?php endfor; ?>
+			</select> 月 
+			[<label for="now"><input name="end" value="0" style="border:none" id="now" type="checkbox" />至今</label>]
+		</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><input class="btn" type="submit" id="submit" value="添加" /></td>
+	</tr>
+</table>
+</form>
+
+<script type="text/javascript">
+	function del_career(id)
+	{
+		$.post(
+			'/space_set/profile/career?del='+id,
+			null,
+			function(data)
+			{
+				if(data == 'success')
+				window.history.go(0);
+				else alert(data);
+			}
+		);
+	}
+	
+	function insert_career()
+	{
+		$('#submit').attr('disabled', true).val('添加中...');
+		$.post(
+			'/space_set/profile/career',
+			$('#career_form').serializeArray(),
+			function(data){
+				if(data == 'success')
+				window.history.go(0);
+				else
+				{
+					alert(data);
+					$('#submit').attr('disabled', false).val('添加');
+				}
+			}
+		);
+		return false;
+	}
+</script>
+
+<?= $this->render('sidebar.phtml') ?>

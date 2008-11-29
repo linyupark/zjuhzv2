@@ -35,8 +35,10 @@
     	 * @param unknown_type $sex
     	 * @return unknown
     	 */
-    	public static function userhead($uid, $size = '40', $sex = 'male')
+    	public static function userhead($uid, $size = '40', $sex = '男')
     	{
+    		if($sex == '男') $sex = 'male';
+    		else $sex = 'female';
     		$dir = UPLOADROOT.'users/head/'.$uid;
     		if(file_exists($dir.'/'.$size.'.gif'))
     		return '/upload/users/head/'.$uid.'/'.$size.'.gif';

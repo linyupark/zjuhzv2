@@ -1,0 +1,64 @@
+<?= $this->render('header.phtml') ?>
+<?= $this->render('profile/tab.phtml') ?>
+
+<form method="post" id="contact_form" class="mg10" onsubmit="return set_contact()">
+<table class="mgl10 table-dashed" width="97%">
+	<tr>
+		<td class="txtr" width="18%">E-mail：</td>
+		<td><input type="text" size="40" name="email" value="<?= $this->contact['email'] ?>" /></td>
+	</tr>
+	<tr>
+		<td class="txtr">地址：</td>
+		<td><input type="text" size="50" name="address" value="<?= $this->contact['address'] ?>" /></td>
+	</tr>
+	<tr>
+		<td class="txtr">邮编：</td>
+		<td><input type="text" name="zipcode" value="<?= $this->contact['zipcode'] ?>" /></td>
+	</tr>
+	<tr>
+		<td class="txtr">电话：</td>
+		<td><input type="text" name="tel" value="<?= $this->contact['tel'] ?>" /></td>
+	</tr>
+	<tr>
+		<td class="txtr">手机：</td>
+		<td><input type="text" name="mobile" value="<?= $this->contact['mobile'] ?>" /></td>
+	</tr>
+	<tr>
+		<td class="txtr">QQ：</td>
+		<td><input type="text" name="qq" value="<?= $this->contact['qq'] ?>" /></td>
+	</tr>
+	<tr>
+		<td class="txtr">MSN：</td>
+		<td><input type="text" size="40" name="msn" value="<?= $this->contact['msn'] ?>" /></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><input class="btn" type="submit" id="submit" value="保存设置" /></td>
+	</tr>
+</table>
+</form>
+
+<script type="text/javascript">
+	function set_contact()
+	{
+		$('#submit').attr('disabled', true).val('保存设置中...');
+		$.post(
+			'/space_set/profile/contact',
+			$('#contact_form').serializeArray(),
+			function(data){
+				if(data == 'success') 
+				{
+					$('#submit').attr('disabled', false).val('信息已经成功保存');
+				}
+				else
+				{
+					alert(data);
+					$('#submit').attr('disabled', false).val('保存设置');
+				}
+			}
+		);
+		return false;
+	}
+</script>
+
+<?= $this->render('sidebar.phtml') ?>

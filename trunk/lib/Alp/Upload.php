@@ -185,7 +185,7 @@
 					continue;
 				}
 				
-				$ext = Alp_String::stripFile($name);
+				$ext = strtolower(Alp_String::stripFile($name));
 				
 				if(!in_array($ext, $type_array)) // 不允许类型
 				{

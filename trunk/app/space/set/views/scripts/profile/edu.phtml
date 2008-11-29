@@ -1,0 +1,127 @@
+<?= $this->render('header.phtml') ?>
+<?= $this->render('profile/tab.phtml') ?>
+<div class="mg10">
+<table class="mgl10 table-dashed" width="97%">
+	<tr>
+		<td colspan="4"><b class="f14">教育情况一览</b></td>
+	</tr>
+	<?php if($this->edu): ?>
+	<tr class="section-sub">
+		<td class="quiet" width="40%">院系</td>
+		<td class="quiet" width="30%">班级</td>
+		<td class="quiet" width="15%">入学年份</td>
+		<td>&nbsp;</td>
+	</tr>
+	<?php foreach($this->edu as $v): ?>
+	<tr>
+		<td><?= $v['campus'] ?></td>
+		<td><?= $v['class'] ?></td>
+		<td><?= $v['year'] ?></td>
+		<td><a href="javascript:del_edu(<?= $v['id'] ?>)">
+				<img src="<?= Alp_Url::img('icon/mix/x.gif') ?>" /> 删除</a>
+		</td>
+	</tr>
+	<?php endforeach; else: ?>
+	<tr>
+		<td>你还未填写教育情况</td>
+	</tr>
+	<?php endif; ?>
+</table>
+</div>
+<form method="post" id="edu_form" class="mg10" onsubmit="return insert_edu()">
+<table class="mgl10 table-dashed" width="97%">
+	<tr>
+		<td colspan="2" class="f14"><b>添加教育情况</b></td>
+	</tr>
+	<tr>
+		<td class="txtr" width="18%">院系：</td>
+		<td>
+			<div style="position:relative">
+				<input size="30" onfocus="javascript:getcampus()" id="campus" type="text" name="campus" value="" /> 
+				<span id="campus_list" style="position:absolute;left:190px;top:0"></span>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td class="txtr" width="18%">班级：</td>
+		<td><input onfocus="$('#campus_list').fadeOut();" type="text" name="class" value="" /></td>
+	</tr>
+	<tr>
+		<td class="txtr" width="18%">入学年份：</td>
+		<td>
+			<select name="year">
+				<option value="">----</option>
+				<?php for($y=date('Y',time());$y>=1897;$y--): ?>
+				<option value="<?= $y ?>"><?= $y ?></option>
+				<?php endfor; ?>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><input class="btn" type="submit" id="submit" value="添加" /></td>
+	</tr>
+</table>
+</form>
+
+<script type="text/javascript">
+	function del_edu(id)
+	{
+		$.post(
+			'/space_set/profile/edu?del='+id,
+			null,
+			function(data)
+			{
+				if(data == 'success')
+				window.history.go(0);
+				else alert(data);
+			}
+		);
+	}
+	function insert_edu()
+	{
+		$('#submit').attr('disabled', true).val('添加中...');
+		$.post(
+			'/space_set/profile/edu',
+			$('#edu_form').serializeArray(),
+			function(data)
+			{
+				if(data == 'success')
+				window.history.go(0);
+				else
+				{
+					alert(data);
+					$('#submit').attr('disabled', false).val('添加');
+				}
+			}
+		);
+		return false;
+	}
+	function getcampus()
+	{
+		$('#campus_list').show();
+		$('#campus_list').empty().css({
+			'height':'132px',
+			'width':'180px',
+			'padding':'0 5px',
+			'overflow':'auto',
+			'background':'#eee',
+			'border':'1px solid #ccc'
+		});
+		$.getJSON(
+			'/space_set/profile/getcampus',
+			null, function(data){
+				$.each(data, function(i, v){
+					$('#campus_list').append('<a href="javascript:setcampus(\''+v+'\')" style="padding:3px 0;display:block">'+v+'</a>');
+				});
+			}
+		);
+	}
+	function setcampus(v)
+	{
+		$('#campus').val(v);
+		$('#campus_list').fadeOut();
+	}
+</script>
+
+<?= $this->render('sidebar.phtml') ?>

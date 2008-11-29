@@ -1,0 +1,5 @@
+<select name="<?= $this->name ?>">
+	<option value="0" <?= ($this->value == 0)?'selected="selected"':'' ?>>仅自己</option>
+	<option value="1" <?= ($this->value == 1)?'selected="selected"':'' ?>>仅好友</option>
+	<option value="2" <?= ($this->value == 2)?'selected="selected"':'' ?>>全校友</option>
+</select>

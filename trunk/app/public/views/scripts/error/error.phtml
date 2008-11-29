@@ -1,6 +1,11 @@
-<div style="padding:20px; font-size:14px; background:#ffc; border:1px solid #ccc;">
-	<p>
-	<span style="font-size:28px;">“<?= $this->message; ?>”</span>
-	</p>
-	<?= ($this->trace == null) ? '' : '<h2>Trace:</h2><p style="padding:10px;">'.$this->trace.'</p>'; ?>
+<div class="section-u txtc">
+	<h1>
+		<img class="vm" src="<?= Alp_Url::img('icon/cartoon/bomb.gif') ?>" />
+		<?= $this->message; ?>
+	</h1>
+	<h3 class="a-span">
+		<a href="javascript:history.back()">返回上一页</a>
+		<a href="/">返回首页</a>
+	</h3>
+	<?= ($this->trace == null) ? '' : '<h2 class="txtl">Trace:</h2><p style="padding:10px;" class="txtl">'.$this->trace.'</p>'; ?>
 </div>

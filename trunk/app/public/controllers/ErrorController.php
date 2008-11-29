@@ -9,7 +9,7 @@
 			{
 				case "EXCEPTION_NO_CONTROLLER" : 
 				case "EXCEPTION_NO_ACTION" : 
-					$this->view->message = 'Page not found, 页面没找到';
+					$this->view->message = '抱歉，您所请求的页面没找到。';
 				break;
 				
 				default:
@@ -18,12 +18,12 @@
 				break;
 			}
 			$this->view->type = $error->type;
+			$this->view->custom = $this->_getParam('custom');
 		}
 		
 		function denyAction()
 		{
-			$role = $this->_getParam('role');
-			echo $role;
+			
 		}
 	}
 

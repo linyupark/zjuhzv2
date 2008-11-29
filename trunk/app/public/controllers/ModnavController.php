@@ -16,6 +16,21 @@
 		{
 			
 		}
+		
+		function masterAction()
+		{
+			
+		}
+		
+		function memberAction()
+		{
+			
+		}
+		
+		function blackAction()
+		{
+			
+		}
 	}
 	
 ?>

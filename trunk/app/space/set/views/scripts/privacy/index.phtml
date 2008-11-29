@@ -1,0 +1,146 @@
+<?= $this->render('header.phtml') ?>
+<form id="privacy_form" method="post" onsubmit="return set_privacy()">
+<table class="mg10 table-dashed" width="97%">
+	<tr class="quiet">
+		<td width="15%"></td>
+		<td></td>
+		<td width="15%">哪些人可见?</td>
+		<td width="20%">显示在个人主页?</td>
+	</tr>
+	<tr>
+		<td class="txtr">个人主页：</td>
+		<td><a href="/space_home/"><img src="<?= Alp_Url::img('icon/1616/home.gif') ?>" /> 查看我的个人主页</a>
+		</td>
+		<td><?= $this->partial('privacy/select.phtml', 
+				array('name'=>'vhome', 'value'=>$this->access['vhome'])) ?></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td class="txtr">姓名：</td>
+		<td class="quiet"><?= $this->profile['username'] ?></td>
+		<td><?= $this->partial('privacy/select.phtml', 
+				array('name'=>'username', 'value'=>$this->access['username'])) ?></td>
+		<td>
+			<input id="home_username" type="checkbox" disabled="disabled" />
+			<input type="hidden" name="home[]" value="username" />
+		</td>
+	</tr>
+	<tr>
+		<td class="txtr">昵称：</td>
+		<td class="quiet"><?= ($this->profile['nickname'])?$this->profile['nickname']:'未填写' ?></td>
+		<td><?= $this->partial('privacy/select.phtml', 
+				array('name'=>'nickname', 'value'=>$this->access['nickname'])) ?></td>
+		<td><input id="home_nickname" type="checkbox" name="home[]" value="nickname" /></td>
+	</tr>
+	<tr>
+		<td class="txtr">性别：</td>
+		<td class="quiet"><?= $this->profile['sex'] ?></td>
+		<td><?= $this->partial('privacy/select.phtml', 
+				array('name'=>'sex', 'value'=>$this->access['sex'])) ?></td>
+		<td>
+			<input id="home_sex" type="checkbox" disabled="disabled" />
+			<input type="hidden" name="home[]" value="sex" />
+		</td>
+	</tr>
+	<tr>
+		<td class="txtr">出生日期：</td>
+		<td class="quiet">
+			<?php if($this->profile['birthyear'] && 
+					$this->profile['birthmonth'] && 
+					$this->profile['birthday']): ?>
+			<?= $this->profile['birthyear'] ?> - 
+			<?= $this->profile['birthmonth'] ?> - 
+			<?= $this->profile['birthday'] ?>
+			<?php else: ?>
+			未填写
+			<?php endif; ?>
+		</td>
+		<td><?= $this->partial('privacy/select.phtml', 
+				array('name'=>'birth', 'value'=>$this->access['birth'])) ?></td>
+		<td><input id="home_birth" type="checkbox" name="home[]" value="birth" /></td>
+	</tr>
+	<tr>
+		<td class="txtr">家乡：</td>
+		<td class="quiet"><?= ($this->profile['hometown'])?$this->profile['hometown']:'未填写' ?></td>
+		<td><?= $this->partial('privacy/select.phtml', 
+				array('name'=>'hometown', 'value'=>$this->access['hometown'])) ?></td>
+		<td><input id="home_hometown" type="checkbox" name="home[]" value="hometown" /></td>
+	</tr>
+	<tr>
+		<td class="txtr">现居住地：</td>
+		<td class="quiet"><?= ($this->profile['city'])?$this->profile['city']:'未填写' ?></td>
+		<td><?= $this->partial('privacy/select.phtml', 
+				array('name'=>'city', 'value'=>$this->access['city'])) ?></td>
+		<td><input id="home_city" type="checkbox" name="home[]" value="city" /></td>
+	</tr>
+	<tr>
+		<td class="txtr">婚姻：</td>
+		<td class="quiet"><?= ($this->profile['marriage'])?$this->profile['marriage']:'未填写' ?></td>
+		<td><?= $this->partial('privacy/select.phtml', 
+				array('name'=>'marriage', 'value'=>$this->access['marriage'])) ?></td>
+		<td><input id="home_marriage" type="checkbox" name="home[]" value="marriage" /></td>
+	</tr>
+	<tr>
+		<td class="txtr">教育情况：</td>
+		<td class="quiet"><a href="/space_set/profile/edu">查看</a></td>
+		<td><?= $this->partial('privacy/select.phtml', 
+				array('name'=>'edu', 'value'=>$this->access['edu'])) ?></td>
+		<td><input id="home_edu" type="checkbox" name="home[]" value="edu" /></td>
+	</tr>
+	<tr>
+		<td class="txtr">个人介绍：</td>
+		<td class="quiet"><a href="/space_set/profile/intro">查看</a></td>
+		<td><?= $this->partial('privacy/select.phtml', 
+				array('name'=>'intro', 'value'=>$this->access['intro'])) ?></td>
+		<td><input id="home_intro" type="checkbox" name="home[]" value="intro" /></td>
+	</tr>
+	<tr>
+		<td class="txtr">联系方式：</td>
+		<td class="quiet"><a href="/space_set/profile/contact">查看</a></td>
+		<td><?= $this->partial('privacy/select.phtml', 
+				array('name'=>'contact', 'value'=>$this->access['contact'])) ?></td>
+		<td><input id="home_contact" type="checkbox" name="home[]" value="contact" /></td>
+	</tr>
+	<tr>
+		<td class="txtr">工作情况：</td>
+		<td class="quiet"><a href="/space_set/profile/career">查看</a></td>
+		<td><?= $this->partial('privacy/select.phtml', 
+				array('name'=>'career', 'value'=>$this->access['career'])) ?></td>
+		<td><input id="home_career" type="checkbox" name="home[]" value="career" /></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td colspan="3">
+			<input class="btn" type="submit" id="submit" value="保存设置" />
+		</td>
+	</tr>
+</table>
+</form>
+
+<script type="text/javascript">
+
+	function set_privacy()
+	{
+		$('#submit').attr('disabled', true).val('保存隐私设置中...');
+		$.post(
+			'/space_set/privacy/',
+			$('#privacy_form').serializeArray(),
+			function(data)
+			{
+				if(data == 'success')
+				$('#submit').attr('disabled', false).val('设置已成功保存');
+				else
+				{
+					alert(data);
+					$('#submit').attr('disabled', false).val('保存设置');
+				}
+			}
+		);
+		return false;
+	}
+
+	<?php foreach($this->home as $v): ?>
+	$('#home_<?= $v ?>').attr('checked','checked');
+	<?php endforeach; ?>
+</script>
+<?= $this->render('sidebar.phtml') ?>

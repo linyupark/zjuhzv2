@@ -1,7 +1,7 @@
 <?php
 	
 	/**
-	 * 教育情况
+	 * 工作情况
 	 *
 	 */
 	class Logic_User_Career extends DbModel

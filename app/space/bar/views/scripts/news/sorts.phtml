@@ -1,0 +1,7 @@
+<?php if($this->sorts): ?>
+	<?php foreach($this->sorts as $v): ?>
+	<option value="<?= $v['sort'] ?>"><?= $v['name'] ?></option>
+	<?php endforeach; ?>
+<?php else: ?>
+	<option value="">请创建新分类</option>
+<?php endif; ?>

@@ -95,7 +95,7 @@
         
         public static function fck($key, $content = null, $h='320px', $w='100%', $toolbar = 'ZjuhzFront')
         {
-        	return '<textarea name="'.$key.'">'.$content.'</textarea>
+        	return '<textarea id="'.$key.'" name="'.$key.'">'.$content.'</textarea>
         			<script type="text/javascript" src="/fck/fckeditor.js"></script>
         			<script type="text/javascript">
         				var oFCKeditor = new FCKeditor("'.$key.'");

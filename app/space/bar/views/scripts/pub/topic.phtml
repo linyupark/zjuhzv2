@@ -6,17 +6,69 @@
 			</div>
 			<div class="yui-u txtr"><a href="javascript:history.back()">返回上一页</a></div>
 		</div>
-		<div class="mglr10 a-span">
-			<?= $this->render('pub/type.phtml'); ?>
-		</div>
-		<hr class="dashed" />
-		<form id="topic_form" method="post">
+		<form id="topic_form" method="post" onsubmit="return pub_topic()">
 		<table class="mgl10 table-dashed" width="97%">
 			<tr>
-				<td width="15%" class="txtr">标题：</td>
-				<td><input type="text" name="title" size="90" /></td>
+				<td width="10%" class="txtr">类型：</td>
+				<td class="a-span"><?= $this->render('pub/type.phtml'); ?></td>
+			</tr>
+			<tr>
+				<td class="txtr">标题：</td>
+				<td>
+					<input type="hidden" name="type" value="topic" />
+					<input type="text" name="title" size="90" />
+				</td>
+			</tr>
+			<tr>
+				<td class="txtr">图片：</td>
+				<td id="pic_upload">
+				</td>
+			</tr>
+			<tr>
+				<td class="txtr">内容：</td>
+				<td><?= Cmd::fck('content',null,'300px','99%') ?></td>
+			</tr>
+			<tr>
+				<td class="txtr">公开给：</td>
+				<td><?= $this->render('pub/private.phtml') ?>
+					<input type="hidden" name="nicky" value="0" />
+					<label for="nicky"><input type="checkbox" name="nicky" id="nicky" value="1" />使用昵称发布</label>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input id="submit" type="submit" value="发布帖子" class="btn" />
+					<input type="hidden" name="group" value="<?= $this->gp ?>" />
+				</td>
 			</tr>
 		</table>
 		</form>
+		<iframe name="pic_frame" class="hide" src="/public/upload/pic"></iframe>
 	</div>
 </div>
+
+<script type="text/javascript">
+	function pub_topic()
+	{
+		$('#submit').attr('disabled', true).val('正在发布帖子，请稍候...');
+		$('#content').val(FCKeditorAPI.GetInstance("content").GetXHTML());
+		$.getJSON(
+			'/space_bar/pub/topic',
+			$('#topic_form').serializeArray(),
+			function(data)
+			{
+				if(data.result == 'success')
+				window.location.href = '/space_bar/topic/?tid='+data.tid;
+				else 
+				{
+					alert(data.result);
+					$('#submit').attr('disabled', false).val('发布帖子');
+				}
+			}
+		);
+		return false;
+	}
+	function insert_html(html)
+	{
+		var oEditor = FCKeditorAPI.GetInstance("content");
+		oEditor.InsertHtml(html);
+	}
+	$('#pic_upload').load('/public/upload/form?for=pic');
+</script>

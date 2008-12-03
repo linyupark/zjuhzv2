@@ -29,5 +29,19 @@
         <?= $this->partial('footer.phtml') ?>
     </div>
 </div>
+
+<script type="text/javascript">
+	function check_msgbox()
+	{
+		$.getJSON('/api_json/msg/check',function(data){
+			if(parseInt(data.result) > 0){ $('#msgstate').attr('src', '<?= Alp_Url::img('icon/1616/newmail.gif') ?>'); }
+			else $('#msgstate').attr('src', '<?= Alp_Url::img('icon/1616/mail.gif') ?>');
+			$('#json_msgbox').text(data.result);
+		});
+	}
+	check_msgbox();
+	var msgbox = window.setInterval("check_msgbox()", 5000);
+</script>
+
 </body>
 </html>

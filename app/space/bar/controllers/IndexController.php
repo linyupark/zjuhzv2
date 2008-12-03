@@ -4,7 +4,6 @@
 	{
 		function init()
 		{
-			$this->view->headTitle('公共帖吧');
 			$this->view->type = $this->_getParam('type', 'topic');
 			$this->view->order = $this->_getParam('order', 'time'); // 排序方式
 			$this->view->pub = $this->_getParam('pub'); // 发布什么

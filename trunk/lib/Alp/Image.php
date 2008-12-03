@@ -97,12 +97,12 @@
 		}
 		
 		# 改图尺寸 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-		function resize($dst_image_name, $w, $h)
+		function resize($dst_image_name, $w, $h, $type=null)
 		{
 			$new_image = imagecreatetruecolor($w, $h);
 			imagecopyresampled($new_image, $this->image_resource, 0, 0, 0, 0, $w, $h, $this->width, $this->height);
 			$this->image_resource = $new_image;
-			$this->output($dst_image_name);
+			$this->output($dst_image_name, $type);
 		}
 		
 		# 添加水印 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::

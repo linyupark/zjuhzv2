@@ -11,7 +11,7 @@
 	<img src="<?= Alp_Url::img('icon/classic/vote.gif') ?>" class="vm"> <?= $this->base['title'] ?>
 	(<?= ($this->base['mulit'] == 1)?'单选':'最多选'.$this->base['mulit'].'项' ?>)
 </h2>
-<div id="yui-main">
+<div class="yui-main">
 	<div class="yui-b">
 	<form id="vote_form" method="post" onsubmit="return vote_form()">
 		<table width="650px">
@@ -113,6 +113,7 @@ function count_mulite(oid)
 		$('#check_limit').html(result);
 	}
 }
-$('#doc2').addClass('yui-t6');
+$('.yui-d3f').addClass('yui-t6');
+
 count_rate();
 </script>

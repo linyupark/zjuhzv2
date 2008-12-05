@@ -2,11 +2,11 @@
 	<div class="yui-b">
 		<div class="mg5 section yui-g">
 			<div class="yui-u first">
-				<img class="vm mgr10" src="<?= Alp_Url::img('icon/mix/+.gif') ?>" /><b>发布新话题</b>
+				<img class="vm mgr10" src="<?= Alp_Url::img('icon/mix/+.gif') ?>" /><b>发布共享帖</b>
 			</div>
 			<div class="yui-u txtr"><a href="javascript:history.back()">返回上一页</a></div>
 		</div>
-		<form id="topic_form" method="post" onsubmit="return pub_topic()">
+		<form id="share_form" method="post" onsubmit="return pub_share()">
 		<table class="mgl10 table-dashed" width="97%">
 			<tr>
 				<td width="10%" class="txtr">类型：</td>
@@ -19,14 +19,9 @@
 					<input type="text" name="title" size="90" />
 				</td>
 			</tr>
-			<tr>
-				<td class="txtr">图片：</td>
-				<td id="pic_upload">
-				</td>
-			</tr>
-			<tr>
-				<td class="txtr">内容：</td>
-				<td><?= Cmd::fck('content',null,'300px','99%') ?></td>
+			<tr id="breakline">
+				<td class="txtr">文件：</td>
+				<td id="file_upload"></td>
 			</tr>
 			<tr>
 				<td class="txtr">公开给：</td>
@@ -40,22 +35,21 @@
 			</tr>
 		</table>
 		</form>
-		<iframe name="pic_frame" class="hide" src="/public/upload/pic"></iframe>
+		<iframe name="file_frame" class="hide" src="/public/upload/file"></iframe>
 	</div>
 </div>
 
 <script type="text/javascript">
-	function pub_topic()
+	function pub_share()
 	{
 		$('#submit').attr('disabled', true).val('正在发布帖子，请稍候...');
-		$('#content').val(FCKeditorAPI.GetInstance("content").GetXHTML());
 		$.getJSON(
-			'/space_bar/pub/topic',
-			$('#topic_form').serializeArray(),
+			'/space_bar/pub/share',
+			$('#share_form').serializeArray(),
 			function(data)
 			{
 				if(data.result == 'success')
-				window.location.href = '/space_bar/topic/?tid='+data.tid;
+				window.location.href = '/space_bar/share/?tid='+data.tid;
 				else 
 				{
 					alert(data.result);
@@ -65,10 +59,16 @@
 		);
 		return false;
 	}
-	function insert_html(html)
+	function create_item(uid, file)
 	{
-		var oEditor = FCKeditorAPI.GetInstance("content");
-		oEditor.InsertHtml(html);
+		var x = $('.file_itme').length;
+		$('#breakline').after('<tr class="file_itme" id="f'+x+'"><td class="txtr">介绍：</td><td>文件'+(x+1)+'.<a href="/upload/share/'+uid+'/'+file+'">'+file+'</a><input type="hidden" name="files[]" value="'+file+'" />[<a href="javascript:del_item('+x+',\''+file+'\')">删除</a>]<br /><textarea name="intros[]" style="width:95%"></textarea></td></tr>');
 	}
-	$('#pic_upload').load('/public/upload/form?for=pic');
+	function del_item(x, file)
+	{
+		$.post('/public/upload/del_share?file='+file,null,function(data){ 
+			if(data=='success') $('#f'+x).fadeOut(500, function(){ $(this).empty(); });
+		});
+	}
+	$('#file_upload').load('/public/upload/form?for=file');
 </script>

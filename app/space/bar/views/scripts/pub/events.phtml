@@ -2,21 +2,51 @@
 	<div class="yui-b">
 		<div class="mg5 section yui-g">
 			<div class="yui-u first">
-				<img class="vm mgr10" src="<?= Alp_Url::img('icon/mix/+.gif') ?>" /><b>发布新话题</b>
+				<img class="vm mgr10" src="<?= Alp_Url::img('icon/mix/+.gif') ?>" /><b>发布活动帖</b>
 			</div>
 			<div class="yui-u txtr"><a href="javascript:history.back()">返回上一页</a></div>
 		</div>
-		<form id="topic_form" method="post" onsubmit="return pub_topic()">
+		<form id="events_form" method="post" onsubmit="return pub_events()">
 		<table class="mgl10 table-dashed" width="97%">
 			<tr>
 				<td width="10%" class="txtr">类型：</td>
 				<td class="a-span"><?= $this->render('pub/type.phtml'); ?></td>
 			</tr>
 			<tr>
-				<td class="txtr">标题：</td>
+				<td class="txtr">主题：</td>
 				<td>
 					<input type="hidden" name="type" value="<?= $this->pub ?>" />
 					<input type="text" name="title" size="90" />
+				</td>
+			</tr>
+			<tr>
+				<td class="txtr">开始：</td>
+				<td>
+					<input type="text" name="year" value="<?= date('y',time()); ?>" size="2" /> 年
+					<input type="text" name="month" value="<?= date('m',time()); ?>" size="2" /> 月
+					<input type="text" name="day" value="<?= date('d',time()); ?>" size="2" /> 日
+					<select name="hour">
+						<?php for($h=0;$h<=24;$h++): ?>
+						<option value="<?= $h ?>"><?= $h ?></option>
+						<?php endfor; ?>
+					</select> 点
+					<select name="min">
+						<?php for($m=0;$m<=59;$m=$m+5): ?>
+						<option value="<?= $m ?>"><?= $m ?></option>
+						<?php endfor; ?>
+					</select> 分
+				</td>
+			</tr>
+			<tr>
+				<td class="txtr">地点：</td>
+				<td>
+					<input type="text" name="address" size="90" />
+				</td>
+			</tr>
+			<tr>
+				<td class="txtr">人数：</td>
+				<td>
+					<input type="text" name="limit" size="20" /> (选填)
 				</td>
 			</tr>
 			<tr>
@@ -26,13 +56,12 @@
 			</tr>
 			<tr>
 				<td class="txtr">内容：</td>
-				<td><?= Cmd::fck('content',null,'300px','99%') ?></td>
+				<td><?= Cmd::fck('content',null,'250px','99%') ?></td>
 			</tr>
 			<tr>
 				<td class="txtr">公开给：</td>
 				<td><?= $this->render('pub/private.phtml') ?>
 					<input type="hidden" name="nicky" value="0" />
-					<label for="nicky"><input type="checkbox" name="nicky" id="nicky" value="1" />使用昵称发布</label>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<input id="submit" type="submit" value="发布帖子" class="btn" />
 					<input type="hidden" name="group" value="<?= $this->gp ?>" />
@@ -45,17 +74,17 @@
 </div>
 
 <script type="text/javascript">
-	function pub_topic()
+	function pub_events()
 	{
 		$('#submit').attr('disabled', true).val('正在发布帖子，请稍候...');
 		$('#content').val(FCKeditorAPI.GetInstance("content").GetXHTML());
 		$.getJSON(
-			'/space_bar/pub/topic',
-			$('#topic_form').serializeArray(),
+			'/space_bar/pub/events',
+			$('#events_form').serializeArray(),
 			function(data)
 			{
 				if(data.result == 'success')
-				window.location.href = '/space_bar/topic/?tid='+data.tid;
+				window.location.href = '/space_bar/events/?tid='+data.tid;
 				else 
 				{
 					alert(data.result);

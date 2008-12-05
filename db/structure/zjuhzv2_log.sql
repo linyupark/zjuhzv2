@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: zjuhzv2_log
 Target Host: localhost
 Target Database: zjuhzv2_log
-Date: 2008/10/28 14:33:19
+Date: 2008-12-5 ÏÂÎç 05:05:35
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,8 +31,10 @@ CREATE TABLE `tb_user` (
   `value` varchar(255) NOT NULL,
   `time` int(10) unsigned NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records 
 -- ----------------------------
+INSERT INTO `tb_user` VALUES ('1', '1', 'add_user', '', '1226972358');
+INSERT INTO `tb_user` VALUES ('2', '2', 'add_user', '', '1226972703');

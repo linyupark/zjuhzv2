@@ -33,6 +33,8 @@ hr.dashed{ height:1px; border:none; border-bottom:1px dashed #ccc; margin:5px; }
 
 .table-dashed td{ border-bottom:1px dashed #eee; }
 
+.mods .yui-u{ padding:1px 0; }
+
 /* default layout style */
 .greybox{ color:#666; background:#eee url(/im/v1/grey-bottom.jpg) no-repeat bottom; width:270px; overflow:hidden; padding-bottom:20px; }
 .greybox-top{ background:url(/im/v1/grey-top.jpg) no-repeat; width:270px; height:12px; }

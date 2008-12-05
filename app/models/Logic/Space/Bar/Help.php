@@ -1,6 +1,6 @@
 <?php
 
-	class Logic_Space_Bar_News extends DbModel
+	class Logic_Space_Bar_Help extends DbModel
 	{
 		/**
 		 * 获取分类
@@ -8,7 +8,7 @@
 		 */
 		public static function getSorts()
 		{
-			return parent::Space()->fetchAll('SELECT * FROM `tb_news_sort` ORDER BY `rate` DESC');
+			return parent::Space()->fetchAll('SELECT * FROM `tb_help_sort` ORDER BY `rate` DESC');
 		}
 		
 		/**
@@ -21,7 +21,7 @@
 			$db = parent::Space();
 			$db->beginTransaction();
 			try {
-				$db->insert('tb_news_sort', array(
+				$db->insert('tb_help_sort', array(
 					'name' => $sortname
 				));
 				$db->commit();
@@ -34,7 +34,7 @@
 		}
 		
 		/**
-		 * 发布新闻贴
+		 * 发布求助贴
 		 *
 		 * @param unknown_type $params
 		 * @return unknown
@@ -54,11 +54,11 @@
 					'nicky' => $params['nicky']
 				));
 				$tid = $db->lastInsertId();
-				$db->insert('tb_news', array(
+				$db->insert('tb_help', array(
 					'tid' => $tid,
 					'content' => $params['content'],
 					'sort' => $params['sort'],
-					'tags' => serialize($params['tags'])
+					'state' => 0
 				));
 				$db->commit();
 				return $tid;

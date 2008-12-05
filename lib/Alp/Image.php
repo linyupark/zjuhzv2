@@ -76,8 +76,7 @@
 				'gif' => 'imagecreatefromgif'
 			);
 			$im = $create_function[$type]($image);
-			$bgcolor = ImageColorAllocate($im, 255,255,255);
-			imagecolortransparent($im, $bgcolor);
+			imagecolortransparent($im, null);
 			return $im;
 		}
 		

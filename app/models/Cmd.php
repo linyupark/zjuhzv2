@@ -41,7 +41,7 @@
     		else $sex = 'female';
     		$dir = UPLOADROOT.'users/head/'.$uid;
     		if(file_exists($dir.'/'.$size.'.gif'))
-    		return '/upload/users/head/'.$uid.'/'.$size.'.gif';
+    		return '/upload/users/head/'.$uid.'/'.$size.'.gif?t='.time();
     		else return Alp_Url::img('v1/'.$sex.'_'.$size.'.gif');
     	}
     	

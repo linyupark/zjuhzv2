@@ -2,11 +2,11 @@
 	<div class="yui-b">
 		<div class="mg5 section yui-g">
 			<div class="yui-u first">
-				<img class="vm mgr10" src="<?= Alp_Url::img('icon/mix/+.gif') ?>" /><b>发布新闻帖</b>
+				<img class="vm mgr10" src="<?= Alp_Url::img('icon/mix/+.gif') ?>" /><b>发布求助帖</b>
 			</div>
 			<div class="yui-u txtr"><a href="javascript:history.back()">返回上一页</a></div>
 		</div>
-		<form id="news_form" method="post" onsubmit="return pub_news()">
+		<form id="help_form" method="post" onsubmit="return pub_help()">
 		<table class="mgl10 table-dashed" width="97%">
 			<tr>
 				<td width="10%" class="txtr">类型：</td>
@@ -15,10 +15,10 @@
 			<tr>
 				<td class="txtr">归类：</td>
 				<td>
-					<select name="sort" id="news_sorts">
+					<select name="sort" id="help_sorts">
 						
 					</select>
-					<input id="new_sort" type="text" name="sortname" value="" />
+					<input id="help_sort" type="text" name="sortname" value="" />
 					<input onclick="create_sort()" type="button" value="创建" class="btn" />
 				</td>
 			</tr>
@@ -39,18 +39,6 @@
 				<td><?= Cmd::fck('content',null,'300px','99%') ?></td>
 			</tr>
 			<tr>
-				<td class="txtr">关键字：</td>
-				<td>
-					<span id="tags_input"> 
-						<input type="text" name="tags[]" size="4" />
-						<input type="text" name="tags[]" size="4" />
-						<input type="text" name="tags[]" size="4" />
-					</span>
-					<span id="tags_ext"></span>
-					<a href="javascript:add_tags()">增加</a>
-				</td>
-			</tr>
-			<tr>
 				<td class="txtr">公开给：</td>
 				<td><?= $this->render('pub/private.phtml') ?>
 					<input type="hidden" name="nicky" value="0" />
@@ -67,17 +55,17 @@
 </div>
 
 <script type="text/javascript">
-	function pub_news()
+	function pub_help()
 	{
 		$('#submit').attr('disabled', true).val('正在发布帖子，请稍候...');
 		$('#content').val(FCKeditorAPI.GetInstance("content").GetXHTML());
 		$.getJSON(
-			'/space_bar/pub/news',
-			$('#news_form').serializeArray(),
+			'/space_bar/pub/help',
+			$('#help_form').serializeArray(),
 			function(data)
 			{
 				if(data.result == 'success')
-				window.location.href = '/space_bar/news/?tid='+data.tid;
+				window.location.href = '/space_bar/help/?tid='+data.tid;
 				else 
 				{
 					alert(data.result);
@@ -89,16 +77,16 @@
 	}
 	function create_sort()
 	{
-		var v = $('#new_sort').val();
+		var v = $('#help_sort').val();
 		$('.btn[type=button]').attr('disabled', true).val('创建中...');
 		$.post(
-			'/space_bar/news/create_sort',
+			'/space_bar/help/create_sort',
 			{sortname:v},
 			function(data)
 			{
 				if(data == 'success')
 				{
-					$('#news_sorts').load('/space_bar/news/sorts');
+					$('#help_sorts').load('/space_bar/help/sorts');
 					$('.btn[type=button]').attr('disabled', false).val('创建成功');
 				}
 				else 
@@ -110,15 +98,11 @@
 			}
 		);
 	}
-	function add_tags()
-	{
-		$('#tags_input').clone().appendTo('#tags_ext');
-	}
 	function insert_html(html)
 	{
 		var oEditor = FCKeditorAPI.GetInstance("content");
 		oEditor.InsertHtml(html);
 	}
 	$('#pic_upload').load('/public/upload/form?for=pic');
-	$('#news_sorts').load('/space_bar/news/sorts');
+	$('#help_sorts').load('/space_bar/help/sorts');
 </script>

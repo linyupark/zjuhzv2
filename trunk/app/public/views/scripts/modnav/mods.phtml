@@ -1,4 +1,4 @@
-<div class="yui-g">
+<div class="mods yui-g">
 	<div class="yui-u first">
 		<img src="<?= Alp_Url::img('icon/1616/talk.gif') ?>" class="vm" />
 		<a href="/space_bar/">公共帖吧</a>
@@ -38,8 +38,9 @@
 <?php endif; ?>
 	
 <?php if(Cmd::role() == 'black'): ?>
+<br />
 <b><?= 	Cmd::rolename() ?>附加权限：</b>
-<div class="yui-g">
+<div class="mods yui-g">
 	<div class="yui-u first">
 		<img src="<?= Alp_Url::img('icon/1616/inf.gif') ?>" class="vm" />
 		<a href="">申请解冻</a>
@@ -48,8 +49,9 @@
 <?php endif; ?>
 
 <?php if(Cmd::role() != 'black' && Cmd::role() != 'bench'): ?>
+<br />
 <b>正式成员权限：</b>
-<div class="yui-g">
+<div class="mods yui-g">
 	<div class="yui-u first">
 		<img src="<?= Alp_Url::img('icon/1616/search.gif') ?>" class="vm" />
 		<a href="">全站搜索</a>
@@ -62,8 +64,9 @@
 <?php endif; ?>
 	
 <?php if(Cmd::role() == 'power'): ?>
+<br />
 <b><?= 	Cmd::rolename() ?>附加权限：</b>
-<div class="yui-g">
+<div class="mods yui-g">
 	<div class="yui-u first">
 		<img src="<?= Alp_Url::img('icon/1616/s_mail.gif') ?>" class="vm" />
 		<a href="">群发消息</a>
@@ -72,8 +75,9 @@
 <?php endif; ?>
 	
 <?php if(Cmd::role() == 'master'): ?>
+<br />
 <b><?= 	Cmd::rolename() ?>附加权限：</b>
-<div class="yui-g">
+<div class="mods yui-g">
 	<div class="yui-u first">
 		<img src="<?= Alp_Url::img('icon/1616/f_user.gif') ?>" class="vm" />
 		<a href="">用户管理</a>

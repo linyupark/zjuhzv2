@@ -3,9 +3,9 @@
 	if($this->gp):
 	$gp = '&gp='.$this->gp;
 ?>
-<div class="quiet pd5">
+<div class="quiet pdb10">
 	<img src="<?= Alp_Url::img('icon/1616/att_s.gif'); ?>" />
-	当前为群组发帖，发布后只会显示在xxxx群组首页中。
+	当前为群组发帖，发布后只会显示在当前所在群组首页中。
 </div>
 <?php endif; ?>
 <a href="?pub=topic<?= $gp ?>" style="<?= ($this->pub == 'topic')?'color:#333;text-decoration:underline':''; ?>">
@@ -13,4 +13,19 @@
 </a>
 <a href="?pub=news<?= $gp ?>" style="<?= ($this->pub == 'news')?'color:#333;text-decoration:underline':''; ?>">
 	<img src="<?= Alp_Url::img('icon/1616/news.gif'); ?>" /> 新闻帖
+</a>
+<a href="?pub=help<?= $gp ?>" style="<?= ($this->pub == 'help')?'color:#333;text-decoration:underline':''; ?>">
+	<img src="<?= Alp_Url::img('icon/1616/smile.gif'); ?>" /> 求助帖
+</a>
+<a href="?pub=events<?= $gp ?>" style="<?= ($this->pub == 'events')?'color:#333;text-decoration:underline':''; ?>">
+	<img src="<?= Alp_Url::img('icon/1616/tea.gif'); ?>" /> 活动帖
+</a>
+<a href="?pub=vote<?= $gp ?>" style="<?= ($this->pub == 'vote')?'color:#333;text-decoration:underline':''; ?>">
+	<img src="<?= Alp_Url::img('icon/1616/vote.gif'); ?>" /> 投票帖
+</a>
+<a href="?pub=share<?= $gp ?>" style="<?= ($this->pub == 'share')?'color:#333;text-decoration:underline':''; ?>">
+	<img src="<?= Alp_Url::img('icon/1616/share.gif'); ?>" /> 共享帖
+</a>
+<a href="?pub=photo<?= $gp ?>" style="<?= ($this->pub == 'photo')?'color:#333;text-decoration:underline':''; ?>">
+	<img src="<?= Alp_Url::img('icon/1616/pic.gif'); ?>" /> 图片帖
 </a>

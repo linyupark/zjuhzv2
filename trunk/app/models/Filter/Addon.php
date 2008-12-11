@@ -7,6 +7,36 @@
 	class Filter_Addon
 	{
 		/**
+		 * 过滤在线订票的各项数据
+		 *
+		 * @param unknown_type $params
+		 * @return unknown
+		 */
+		public static function booking($params)
+		{
+			$params['title'] = Alp_Valid::of($params['title'], 'title', '活动主题', 'trim|required');
+			$params['year'] = Alp_Valid::of($params['year'], 'year', '年份', 'trim|numeric');
+			$params['month'] = Alp_Valid::of($params['month'], 'month', '月份', 'trim|numeric');
+			$params['day'] = Alp_Valid::of($params['day'], 'day', '日', 'trim|numeric');
+			$params['hour'] = Alp_Valid::of($params['hour'], 'hour', '小时', 'trim|numeric');
+			$params['min'] = Alp_Valid::of($params['min'], 'min', '分钟', 'trim|numeric');
+			$time = strtotime($params['year'].'-'.$params['month'].'-'.$params['day'].' '.$params['hour'].':'.$params['min']);
+			if(!$time) Alp_Sys::msg('time', '活动时间无效，请检查格式');
+			$params['time'] = $time;
+			$params['content'] = Alp_Valid::of($params['content'], 'content', '活动内容', 'trim|required');
+			$params['ticket'] = Alp_Valid::of($params['ticket'], 'ticket', '订票总数', 'trim|numeric');
+			$params['limit'] = Alp_Valid::of($params['limit'], 'limit', '领票上限', 'trim|numeric');
+			foreach($params['address'] as $id => $v)
+			{
+				$temp = strip_tags(trim($v));
+				if(empty($temp)) unset($params['address'][$id]);
+			}
+			if(count($params['address']) == 0) Alp_Sys::msg('address', '取票点不能为空');
+			$params['password'] = Alp_Valid::of($params['password'], 'password', '密码', 'trim|required');
+			return $params;
+		}
+		
+		/**
 		 * 赞助伙伴账号数据过滤
 		 *
 		 * @param unknown_type $params

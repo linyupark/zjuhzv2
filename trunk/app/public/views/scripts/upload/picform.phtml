@@ -1,5 +1,9 @@
-<form target="pic_frame" action="/public/upload/pic" method="post" enctype="multipart/form-data">
+<form target="pic_frame" action="/public/upload/pic" method="post" enctype="multipart/form-data" onsubmit="uping()">
 	<input type="file" name="pic[]" />
-	<input type="submit" value="上传" class="btn" /> 
+	<input id="upbtn" type="submit" value="上传" class="btn" /> 
 	<span class="quiet">支持jpg,png,gif 过大图片将自动缩减</span>
 </form>
+<script type="text/javascript">
+function uping(){$('#upbtn').attr('disabled', true).val('上传中..');}
+function upreload(){$('#upbtn').attr('disabled', false).val('上传');}
+</script>

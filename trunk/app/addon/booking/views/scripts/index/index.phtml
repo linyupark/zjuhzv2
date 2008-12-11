@@ -1,0 +1,59 @@
+<style>
+	.rate_bg{ background:#eee; width:582px; height:10px; overflow:hidden; border:1px solid #ccc; padding:1px }
+	.rate_1{ height:8px; width:0px; }
+	.rate_1{ background:#5DBC5B; border:1px solid #478F45; }
+</style>
+<div class="yui-main">
+	<h2 class="section-u">在线订票</h2>
+	<div class="pdlr10">
+		<table class="table-dashed" width="100%">
+			<tr>
+				<td width="100">订票剩余：</td>
+				<td width="580" class="txtl">
+					<div class="rate_bg"><div class="rate_1" style="width:<?= 580*($this->party['left']/$this->party['ticket'])  ?>px"></div></div>
+				</td>
+				<td>
+				<b class="f14">
+					(<?= $this->party['left'] .'/'. $this->party['ticket'] ?>)
+				</b>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" id="booking_box"></td>
+			</tr>
+		</table>
+	</div>
+	<h2 class="section-u">活动介绍 <span id="countor" class="f12" style="color:#333"></span></h2>
+	<div class="pdlr10"><?= stripslashes($this->party['content']) ?></div>
+</div>
+
+<script type="text/javascript">
+function booking_box()
+{
+	// v1
+	$('#booking_box').html('<td></td><td colspan="2"><img src="<?= Alp_Url::img('icon/loading/v3.gif') ?>" /></td>');
+	$.getJSON(
+		'http://www.zjuhz.com/group/api/?jsoncallback=?',null,
+		function(data)
+		{
+			if(data.result == 'success')
+			{
+				$('#booking_box').load('/addon_booking/index/bookingform?id=<?= $this->pid ?>', data);
+			}
+			else
+			{
+				$('#booking_box').html('<td colspan="3">您尚未登录本站无法进行在线订票，<a style="text-decoration:underline" href="http://www.zjuhz.com/member/login">请先登录网站</a></td>');
+			};
+		}
+	);
+}
+function countor()
+{
+	$('#countor').load('/addon_booking/index/countor?t=<?= $this->party['time'] ?>');
+}
+countor();
+var ct = window.setInterval('countor()', 5000);
+<?php if($this->party['left'] > 0): ?>
+booking_box();
+<?php endif; ?>
+</script>

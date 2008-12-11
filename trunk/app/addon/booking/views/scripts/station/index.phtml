@@ -1,0 +1,41 @@
+<div class="yui-main">
+<div class="yui-b">
+	<h3 class="section-u"><?= $this->station['address'] ?>领票名单 (共<?= $this->tickets ?>张)</h3>
+	<?php if($this->list): ?>
+	<table class="table-dashed" width="100%">
+		<tr class="section-sub">
+			<td width="15%"><b>姓名</b></td>
+			<td width="10%"><b>订票数</b></td>
+			<td width="30%"><b>基本信息</b></td>
+			<td><b>手机</b></td>
+			<td><a href="/addon_booking/station/xls?pid=<?= $this->pid ?>&id=<?= $this->id ?>&psw=<?= $this->psw ?>"><img src="<?= Alp_Url::img('icon/1616/xls.gif'); ?>" />导出Excel</a></td>
+		</tr>
+		<?php foreach($this->list as $uid => $v): if($v['tnum'] > 0): ?>
+		<tr>
+			<td><?= $v['rname'] ?></td>
+			<td><?= $v['tnum'] ?></td>
+			<td><?= Zend_Registry::get('config')->campus->name->$v['college'] ?><?= $v['major'] ?>(<?= $v['year'] ?>年)</td>
+			<td><?= $v['mobile'] ?></td>
+			<td></td>
+		</tr>
+		<?php endif; endforeach; ?>
+	</table>
+	<?php else: ?>
+	<p class="f14 mglr10">此取票点尚无订票信息</p>
+	<?php endif; ?>
+</div>
+</div>
+
+<div class="yui-b">
+	<h3 class="section">活动取票点</h3>
+	<table class="table-dashed" width="100%">
+		<?php foreach ($this->stations as $s): ?>
+		<tr><td <?=($s['id'] == $this->id)?'bgcolor="#eeeeee"':'' ?>>
+			<a href="?pid=<?= $this->pid ?>&id=<?= $s['id'] ?>&psw=<?= $this->psw ?>"><?= $s['address'] ?></a>
+		</td></tr>
+		<?php endforeach; ?>
+	</table>
+</div>
+<script>
+	$('.yui-d3f').addClass('yui-t2');
+</script>

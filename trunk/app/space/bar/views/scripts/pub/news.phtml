@@ -114,11 +114,7 @@
 	{
 		$('#tags_input').clone().appendTo('#tags_ext');
 	}
-	function insert_html(html)
-	{
-		var oEditor = FCKeditorAPI.GetInstance("content");
-		oEditor.InsertHtml(html);
-	}
+	function insert_html(html){FCKeditorAPI.GetInstance("content").InsertHtml(html);upreload();}
 	$('#pic_upload').load('/public/upload/form?for=pic');
 	$('#news_sorts').load('/space_bar/news/sorts');
 </script>

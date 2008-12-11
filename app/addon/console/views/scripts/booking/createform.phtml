@@ -1,0 +1,100 @@
+<hr class="dashed" />
+<form id="create_form" method="post" onsubmit="return create_booking()">
+	<table class="table-dashed" width="98%">
+		<tr>
+			<td width="14%" class="txtr">活动主题：</td>
+			<td>
+				<input type="text" name="title" size="100" />
+			</td>
+		</tr>
+		<tr>
+			<td class="txtr">开始时间：</td>
+			<td>
+				<input type="text" name="year" value="<?= date('y',time()); ?>" size="2" /> 年
+				<input type="text" name="month" value="<?= date('m',time()); ?>" size="2" /> 月
+				<input type="text" name="day" value="<?= date('d',time()); ?>" size="2" /> 日
+				<select name="hour">
+					<?php for($h=0;$h<=23;$h++): ?>
+					<option value="<?= $h ?>"><?= $h ?></option>
+					<?php endfor; ?>
+				</select> 点
+				<select name="min">
+					<?php for($m=0;$m<=59;$m=$m+5): ?>
+					<option value="<?= $m ?>"><?= $m ?></option>
+					<?php endfor; ?>
+				</select> 分
+			</td>
+		</tr>
+		<tr>
+			<td class="txtr">可订票总数：</td>
+			<td><input type="text" name="ticket" size="30" /></td>
+		</tr>
+		<tr>
+			<td class="txtr">每人领票上限：</td>
+			<td><input type="text" name="limit" size="30" /></td>
+		</tr>
+		<tr id="breaking">
+			<td class="txtr">取票点：</td>
+			<td>
+				<input type="text" name="address[]" size="90" /> 
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><a href="javascript:add_address()">+ 增加取票点</a></td>
+		</tr>
+		<tr>
+			<td class="txtr">取票点密码：</td>
+			<td>
+				<input name="password" type="password" />
+				<span class="quiet">查看订票名单操作密码，各取票点统一密码</span>
+			</td>
+		</tr>
+		<tr>
+			<td class="txtr">上传图片：</td>
+			<td id="upload_form"></td>
+		</tr>
+		<tr>
+			<td class="txtr">活动内容：</td>
+			<td>
+				<?= Cmd::fck('content',null,'450px','99%') ?>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><input id="submit" type="submit" value="创建活动订票" class="btn" /></td>
+		</tr>
+	</table>
+</form>
+
+<iframe name="pic_frame" src="/addon_console/booking/upload" class="hide"></iframe>
+<script type="text/javascript">
+	function create_booking()
+	{
+		$('#submit').attr('disabled', true).val('创建中...');
+		$('#content').val(FCKeditorAPI.GetInstance("content").GetXHTML());
+		$.post(
+			'/addon_console/booking/create',
+			$('#create_form').serializeArray(),
+			function(data){
+				if(data == 'success')
+				{
+					$('#submit').attr('disabled', true).val('创建成功');
+				}
+				else
+				{
+					alert(data);
+					$('#submit').attr('disabled', false).val('创建活动订票');
+				}
+			}
+		);
+		return false;
+	}
+	function add_address()
+	{
+		$('#breaking').after($('#breaking').clone());
+		$('#breaking input').val('');
+	}
+	function insert_html(html){FCKeditorAPI.GetInstance("content").InsertHtml(html);upreload();}
+	$('#upload_form').load('/addon_console/booking/uploadform');
+</script>

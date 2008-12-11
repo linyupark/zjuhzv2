@@ -1,0 +1,46 @@
+<form method="post" id="booking_form" onsubmit="return dobooking()">
+	<?php if($this->ticket): ?>
+	<b style="color:green"><?= $this->rname ?>校友，您已经成功订票</b>
+	<?php endif; ?>
+	预定票数：<select name="tnum">
+					<?php for($i=0;$i<=$this->party['limit'];$i++): ?>
+						<option value="<?= $i ?>" <?= ($i == $this->ticket) ? 'selected="selected"':'' ?>><?= $i ?></option>
+					<?php endfor; ?>
+			</select> 张；
+	取票点：<select name="address">
+					<?php foreach($this->stations as $v): ?>
+						<option value="<?= $v['id'] ?>" <?= ($v['id'] == $this->address) ? 'selected="selected"':'' ?>><?= htmlspecialchars(stripslashes($v['address'])) ?></option>
+					<?php endforeach; ?>
+			</select>
+			<input name="uid" type="hidden" value="<?= $this->uid ?>" />
+			<input name="rname" type="hidden" value="<?= $this->rname ?>" />
+			<input name="year" type="hidden" value="<?= $this->year ?>" />
+			<input name="college" type="hidden" value="<?= $this->college ?>" />
+			<input name="major" type="hidden" value="<?= $this->major ?>" />
+			<input name="mobile" type="hidden" value="<?= $this->mobile ?>" />
+			<input id="submit" class="btn" type="submit" value="<?= ($this->save)?$this->save:'确定订票'; ?>" />
+	</form>
+	<script type="text/javascript">
+		function dobooking()
+		{
+			$('#submit').attr('disabled',true).val('请求发送中..');
+			$.post(
+				'/addon_booking/index/update?pid=<?= $this->pid ?>',
+				$('#booking_form').serializeArray(),
+				function(data)
+				{
+					if(data == 'success')
+					{
+						window.history.go(0);
+					}
+					else
+					{
+						alert(data);
+						$('#submit').attr('disabled',false).val('<?= ($this->save)?$this->save:'确定订票'; ?>');
+					}
+				}
+			);
+			return false;
+		}
+	</script>
+</td>

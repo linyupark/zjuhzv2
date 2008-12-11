@@ -1,0 +1,8 @@
+<div class="yui-main">
+	<h3 class="section"><img src="<?= Alp_Url::img('icon/classic/set.gif') ?>" class="vm"> 活动订票</h3>
+	<div class="a-span">
+		<a href="?mod=booking&tab=create" <?= ($this->tab == 'create')?'style="color:#333;text-decoration:underline"':'' ?>>创建新活动</a>
+		<a href="?mod=booking&tab=modify" <?= ($this->tab == 'modify')?'style="color:#333;text-decoration:underline"':'' ?>>修改活动</a>
+	</div>
+	<?= $this->render('booking/'.$this->tab.'form.phtml') ?>
+</div>

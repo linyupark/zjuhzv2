@@ -1,0 +1,18 @@
+<div class="yui-main">
+<h3 class="section-u">请输入查询密码</h3>
+<form action="/addon_booking/station/" method="get">
+	<table class="table-dashed">
+		<tr>
+			<td class="txtr">密码：</td>
+			<td>
+				<input type="password" name="psw" />
+				<input type="hidden" name="pid" value="<?= $this->pid ?>" />
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><input type="submit" value="确定" class="btn" /></td>
+		</tr>
+	</table>
+</form>
+</div>

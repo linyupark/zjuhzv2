@@ -106,11 +106,7 @@
 		);
 		return false;
 	}
-	function insert_html(html)
-	{
-		var oEditor = FCKeditorAPI.GetInstance("memo");
-		oEditor.InsertHtml(html);
-	}
+	function insert_html(html){FCKeditorAPI.GetInstance("memo").InsertHtml(html);upreload();}
 	function add_option()
 	{
 		var x = $('.option_item').length;

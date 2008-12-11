@@ -9,25 +9,25 @@
     <?= $this->headLink() ?>
 </head>
 <body>
-<div class="yui-d2f">
-    <div id="hd" class="yui-g" style="height:70px;">
-    	<div class="yui-u first">
-    		<div class="pd10">
-            <img class="vm" src="<?= Alp_Url::img('icon/cartoon/tool.gif'); ?>" /><b>zjuhz.com 附加组件控制台</b>
-            </div>
+<div class="yui-d3f">
+	<div id="hd" class="yui-g">
+        <div class="yui-u first" style="width:200px">
+            <a href="/"><img src="/im/v1/logo.gif" /></a>
         </div>
-        <div class="yui-u hd-r"></div>
+        <div class="yui-u hd-r" style="width:580px; color:#336">
+        	<h1 style="font-size:28px;"><?= stripslashes($this->party['title']) ?></h1>
+        </div>
     </div>
     <div id="bd">
     <?= $this->layout()->content ?>
     </div>
-    
-    	<div id="ft-l"></div>
+
+		<div id="ft-l"></div>
 		<div id="ft-r"></div>
+
+    <div id="ft">
+        <?= $this->partial('footer.phtml') ?>
+    </div>
 </div>
 </body>
-
-<script type="text/javascript">
-	$('#mod_<?= $this->mod_name ?>').css({'font-weight':'bold', 'text-decoration':'underline'});
-</script>
 </html>

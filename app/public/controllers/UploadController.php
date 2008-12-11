@@ -54,12 +54,12 @@
 				));
 				if(!Alp_Upload::handle('file'))
 				{
-					echo "<script>alert('".Alp_Sys::allMsg('',"")."')</script>";
+					echo "<script>alert('".Alp_Sys::allMsg('',"")."');parent.upreload();</script>";
 				}
 				else
 				{
 					// 上传后的处理
-					echo '<script>parent.create_item('.Cmd::uid().',"'.Alp_Upload::$filename[0].'")</script>';
+					echo '<script>parent.create_item('.Cmd::uid().',"'.Alp_Upload::$filename[0].'");parent.upreload();</script>';
 				}
 			}
 		}
@@ -83,7 +83,7 @@
 				));
 				if(!Alp_Upload::handle('pic'))
 				{
-					echo "<script>alert('".Alp_Sys::allMsg('',"")."')</script>";
+					echo "<script>alert('".Alp_Sys::allMsg('',"")."');parent.upreload();</script>";
 				}
 				else
 				{
@@ -116,7 +116,7 @@
 				));
 				if(!Alp_Upload::handle('photo'))
 				{
-					echo "<script>alert('".Alp_Sys::allMsg('',"")."')</script>";
+					echo "<script>alert('".Alp_Sys::allMsg('',"")."');parent.upreload();</script>";
 				}
 				else
 				{
@@ -129,7 +129,7 @@
 						$h = $height*(600/$width);
 						$im->resize(Alp_String::stripFileExt(Alp_Upload::$filename[0]).'_resize', 600, $h, Alp_String::stripFile(Alp_Upload::$filename[0]));
 					}
-					echo '<script>parent.create_item('.Cmd::uid().',"'.Alp_Upload::$filename[0].'")</script>';
+					echo '<script>parent.create_item('.Cmd::uid().',"'.Alp_Upload::$filename[0].'");parent.upreload();</script>';
 				}
 			}
 		}

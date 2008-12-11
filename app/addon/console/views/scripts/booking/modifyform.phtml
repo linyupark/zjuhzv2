@@ -1,0 +1,151 @@
+<?php 
+if(!$this->pid):
+if($this->all_party): ?>
+<table class="table-dashed mg10" width="100%">
+	<tr class="section-sub">
+		<td>活动名称</td>
+		<td></td>
+	</tr>
+	<?php foreach ($this->all_party as $v): ?>
+	<tr id="p_<?= $v['id'] ?>">
+		<td><a href="/addon_booking/?id=<?= $v['id'] ?>"><?= stripslashes($v['title']) ?></a></td>
+		<td width="20%" class="a-span">
+			<a href="panel?mod=booking&tab=modify&pid=<?= $v['id'] ?>"><img src="<?= Alp_Url::img('icon/mix/tool.gif') ?>" /> 修改</a>
+			<a href="javascript:del(<?= $v['id'] ?>)"><img src="<?= Alp_Url::img('icon/mix/x.gif') ?>" /> 删除</a>
+		</td>
+	</tr>
+	<?php endforeach; ?>
+</table>
+<script type="text/javascript">
+	function del(pid)
+	{
+		var c = confirm('确定删除？');
+		if(c == true)
+		{
+			$.post(
+				'/addon_console/booking/del?id='+pid,
+				function(data)
+				{
+					if(data == 'success')
+					$('#p_'+pid).fadeOut();
+					else alert(data);
+				}
+			);
+		}
+	}
+</script>
+<?php else: ?>
+<p class="notice pd10 mg10">尚未建立任何可订票活动~</p>
+<?php endif; else: ?>
+<hr class="dashed" />
+<form id="modify_form" method="post" onsubmit="return modify_form()">
+	<table class="table-dashed" width="98%">
+		<tr>
+			<td width="14%" class="txtr">活动主题：</td>
+			<td>
+				<input type="text" name="title" size="100" value="<?= stripslashes($this->party['title']) ?>" />
+			</td>
+		</tr>
+		<tr>
+			<td class="txtr">开始时间：</td>
+			<td>
+				<input type="text" name="year" value="<?= date('y',$this->party['time']); ?>" size="2" /> 年
+				<input type="text" name="month" value="<?= date('m',$this->party['time']); ?>" size="2" /> 月
+				<input type="text" name="day" value="<?= date('d',$this->party['time']); ?>" size="2" /> 日
+				<select name="hour">
+					<?php for($h=0;$h<=23;$h++): ?>
+					<option value="<?= $h ?>" <?= (date('G',$this->party['time']) == $h)?'selected="selected"':'' ?>><?= $h ?></option>
+					<?php endfor; ?>
+				</select> 点
+				<select name="min">
+					<?php for($m=0;$m<=59;$m=$m+5): ?>
+					<option value="<?= $m ?>" <?= (date('i',$this->party['time']) == $m)?'selected="selected"':'' ?>><?= $m ?></option>
+					<?php endfor; ?>
+				</select> 分
+			</td>
+		</tr>
+		<tr>
+			<td class="txtr">可订票总数：</td>
+			<td>
+				<input type="hidden" name="oticket" size="30" value="<?= $this->party['ticket'] ?>" />
+				<input type="hidden" name="left" size="30" value="<?= $this->party['left'] ?>" />
+				<input type="text" name="ticket" size="30" value="<?= $this->party['ticket'] ?>" />
+			</td>
+		</tr>
+		<tr>
+			<td class="txtr">每人领票上限：</td>
+			<td><input type="text" name="limit" size="30" value="<?= $this->party['limit'] ?>" /></td>
+		</tr>
+		<tr id="breaking">
+			<td class="txtr">取票点：</td>
+			<td>
+				<input type="text" name="address[]" size="90" /> 
+			</td>
+		</tr>
+		<?php foreach ($this->stations as $v): ?>
+		<tr>
+			<td class="txtr">取票点：</td>
+			<td>
+				<input type="text" name="address[<?= $v['id'] ?>]" size="90" value="<?= stripslashes($v['address']) ?>" /> 
+			</td>
+		</tr>
+		<?php endforeach; ?>
+		<tr>
+			<td></td>
+			<td><a href="javascript:add_address()">+ 增加取票点</a></td>
+		</tr>
+		<tr>
+			<td class="txtr">取票点密码：</td>
+			<td>
+				<input name="password" type="password" value="<?= $this->party['password'] ?>" />
+			</td>
+		</tr>
+		<tr>
+			<td class="txtr">上传图片：</td>
+			<td id="upload_form"></td>
+		</tr>
+		<tr>
+			<td class="txtr">活动内容：</td>
+			<td>
+				<?= Cmd::fck('content',stripslashes($this->party['content']),'450px','99%') ?>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><input id="submit" type="submit" value="保存活动修改" class="btn" /></td>
+		</tr>
+	</table>
+</form>
+
+<iframe name="pic_frame" src="/addon_console/booking/upload" class="hide"></iframe>
+<script type="text/javascript">
+	function modify_form()
+	{
+		$('#submit').attr('disabled', true).val('保存中...');
+		$('#content').val(FCKeditorAPI.GetInstance("content").GetXHTML());
+		$.post(
+			'/addon_console/booking/modify?id=<?= $this->pid ?>',
+			$('#modify_form').serializeArray(),
+			function(data){
+				if(data == 'success')
+				{
+					window.history.go(0);
+				}
+				else 
+				{
+					alert(data);
+					$('#submit').attr('disabled', false).val('保存活动修改');
+				}
+			}
+		);
+		return false;
+	}
+	function add_address()
+	{
+		$('#breaking').after($('#breaking').clone());
+		$('#breaking input').val('');
+	}
+	function insert_html(html){FCKeditorAPI.GetInstance("content").InsertHtml(html);upreload();}
+	$('#upload_form').load('/addon_console/booking/uploadform');
+</script>
+<?php endif; ?>

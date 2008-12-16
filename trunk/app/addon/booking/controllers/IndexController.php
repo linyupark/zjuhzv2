@@ -20,7 +20,7 @@
 			$now = time();
 			if($time > $now)
 			{
-				echo '离开始还有：'.Alp_Date::timespan($now, $time);
+				echo '离活动开始还有：'.Alp_Date::timespan($now, $time);
 			}
 		}
 		

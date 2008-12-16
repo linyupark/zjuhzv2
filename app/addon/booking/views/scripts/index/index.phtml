@@ -4,7 +4,7 @@
 	.rate_1{ background:#5DBC5B; border:1px solid #478F45; }
 </style>
 <div class="yui-main">
-	<h2 class="section-u">在线订票</h2>
+	<h2 class="section-u">在线订票 <span id="countor" class="f12" style="color:#333"></span></h2>
 	<div class="pdlr10">
 		<table class="table-dashed" width="100%">
 			<tr>
@@ -23,7 +23,7 @@
 			</tr>
 		</table>
 	</div>
-	<h2 class="section-u">活动介绍 <span id="countor" class="f12" style="color:#333"></span></h2>
+	<h2 class="section-u">相关资料</h2>
 	<div class="pdlr10" style="line-height:150%"><?= stripslashes($this->party['content']) ?></div>
 </div>
 
@@ -42,7 +42,7 @@ function booking_box()
 			}
 			else
 			{
-				$('#booking_box').html('<td colspan="3">您尚未登录本站无法进行在线订票，<a style="text-decoration:underline" href="http://www.zjuhz.com/member/login">请先登录网站</a></td>');
+				$('#booking_box').html('您尚未登录本站无法进行在线订票，<a style="text-decoration:underline" href="http://www.zjuhz.com/member/login">请先登录网站</a>');
 			};
 		}
 	);

@@ -40,6 +40,7 @@
 			if(!$party){ $this->render('error'); }
 			else
 			{
+				$this->headTitle($party['title']);
 				$this->view->stations = $stations;
 				$this->view->party = $party;
 				$this->view->pid = $this->params['id'];

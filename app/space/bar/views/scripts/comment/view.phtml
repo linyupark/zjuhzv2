@@ -11,5 +11,5 @@
 		function(){ $('#comment_box').fadeTo(100,'1'); });	
 	}
 	$('#comment_box').html('<div class="txtc"><img src="<?= Alp_Url::img('icon/loading/v2.gif') ?>" /></div>');
-	$('#comment_box').load('/space_bar/comment/list?tid=<?= $this->row['tid'] ?>&p=1');	
+	$('#comment_box').load('/space_bar/comment/list?tid=<?= $this->row['tid'] ?>&p=<?= $this->page ?>');	
 </script>

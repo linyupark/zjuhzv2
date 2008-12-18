@@ -7,6 +7,29 @@
 	class Logic_Space_Friends extends DbModel 
 	{
 		/**
+		 * 返回指定的uid_b是否为uid_a的好友
+		 *
+		 * @param unknown_type $myid
+		 * @param unknown_type $uid
+		 * @return unknown
+		 */
+		public static function hasFriend($uid_a, $uid_b)
+		{
+			return parent::Space()->fetchRow('SELECT `friend` FROM `tb_friends` WHERE `uid` = ? AND `friend` = ?',array($uid_a, $uid_b));
+		}
+		
+		/**
+		 * 返回所有指定UID的好友
+		 *
+		 * @param unknown_type $uid
+		 * @return unknown
+		 */
+		public static function fetchAll($uid)
+		{
+			return parent::Space()->fetchAll('SELECT `friend` FROM `tb_friends` WHERE `uid` = ?', $uid);
+		}
+		
+		/**
 		 * 增加新的好友分组
 		 *
 		 * @param int $sid
@@ -14,7 +37,7 @@
 		 */
 		public static function addSort($sid, $name)
 		{
-			
+			return false;
 		}
 		
 		/**

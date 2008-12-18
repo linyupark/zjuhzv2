@@ -1,0 +1,52 @@
+
+	<form id="comment_form" onsubmit="return comment()">
+		<table class="mgl10 table-dashed" width="97%">
+			<tr>
+				<td id="pic_upload"></td>
+			</tr>
+			<tr>
+				<td><?= Cmd::fck('content',null,'200px','99%') ?></td>
+			</tr>
+			<tr>
+				<td><?= $this->render('pub/nicky.phtml') ?>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input id="submit" type="submit" value="回复帖子" class="btn" />
+					<input id="commentid" type="hidden" name="cid" value="0" />
+				</td>
+			</tr>
+		</table>
+	</form>
+<iframe name="pic_frame" class="hide" src="/public/upload/pic"></iframe>
+<script type="text/javascript">
+	function comment()
+	{
+		$('#submit').attr('disabled', true).val('正在回帖，请稍候...');
+		$('#content').val(FCKeditorAPI.GetInstance("content").GetXHTML());
+		$.post(
+			'/space_bar/comment/post?tid=<?= $this->row['tid'] ?>&uid=<?= Cmd::uid() ?>',
+			$('#comment_form').serializeArray(),
+			function(data)
+			{
+				if(data.result == 'success')
+				{
+					FCKeditorAPI.GetInstance("content").SetHTML(' ');
+					$('#submit').attr('disabled', false).val('回复成功');
+					load_comment(data.page);
+				}
+				else
+				{
+					alert(data.result);
+					$('#submit').attr('disabled', false).val('回复帖子');
+				}
+			},
+			'json'
+		);
+		return false;
+	}
+	function edit(id)
+	{
+		
+	}
+	function insert_html(html){FCKeditorAPI.GetInstance("content").InsertHtml(html);upreload();}
+	$('#pic_upload').load('/public/upload/form?for=pic');
+</script>

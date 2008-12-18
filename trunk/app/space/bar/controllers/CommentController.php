@@ -3,7 +3,7 @@
 	class Space_Bar_CommentController extends Zend_Controller_Action 
 	{
 		private $params;
-		private $pagesize = 5;
+		private $pagesize = 10;
 		
 		function init()
 		{
@@ -16,6 +16,7 @@
 		 */
 		function viewAction()
 		{
+			$this->view->page = $this->_getParam('p', 1);
 		}
 		
 		function listAction()

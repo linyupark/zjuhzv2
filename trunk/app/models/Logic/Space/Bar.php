@@ -3,6 +3,24 @@
 	class Logic_Space_Bar extends DbModel 
 	{
 		/**
+		 * 回复总数返回评论分页数
+		 *
+		 * @param unknown_type $replys
+		 */
+		public static function subpage($row, $pagesize = 10)
+		{
+			$cpage = ceil($row['reply'] / $pagesize);
+			$str = '';
+			if($cpage > 1)
+			{
+				$str = '<img class="vm" src="'.Alp_Url::img('icon/mix/subpage.gif').'" />&nbsp;';
+				for($cp = 1;$cp <= $cpage;$cp ++)
+				$str .= '<a href="/space_bar/'.$row['type'].'/view?tid='.$row['tid'].'&p='.$cp.'">'.$cp.'</a>&nbsp;';
+			}
+			return $str;
+		}
+		
+		/**
 		 * 是否允许查看
 		 *
 		 * @param unknown_type $private

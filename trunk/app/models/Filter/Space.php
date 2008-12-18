@@ -6,6 +6,19 @@
 	 */
 	class Filter_Space
 	{
+		/**
+		 * 评论
+		 *
+		 * @param unknown_type $params
+		 * @return unknown
+		 */
+		public static function comment($params)
+		{
+			$params['tid'] = Alp_Valid::of($params['tid'], 'tid', '指定帖子', 'trim|required');
+			$params['content'] = Alp_Valid::of($params['content'], 'content', '内容', 'trim|required');
+			return $params;
+		}
+		
 		public static function bar($params)
 		{
 			$params['title'] = Alp_Valid::of($params['title'], 'title', '标题主题', 'trim|strip_tags|str_between[3,90]');

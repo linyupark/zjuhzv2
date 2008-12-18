@@ -1,0 +1,48 @@
+<?php $this->headTitle(htmlspecialchars(stripcslashes($this->row['title']))); ?>
+<div class="yui-main">
+	<div class="yui-b">
+		<div class="mg5 section yui-g">
+			<div class="yui-u first" style="width:80%">
+				<img class="vm mgr10" src="<?= Alp_Url::img('icon/1616/talk.gif') ?>" /><b>公共帖吧</b> 
+				:: <?= stripcslashes($this->row['title']) ?>
+			</div>
+			<div class="yui-u txtr" style="width:20%"><a href="/space_bar/">返回话题列表</a></div>
+		</div>
+	</div>
+	<div class="yui-b">
+		<div class="yui-g">
+			<div class="yui-u first" style="width:14%;height:180px;">
+				<div class="head80 txtc">
+					<?php if($this->row['nicky']): ?>
+					<img class="mg10 pd10" src="<?= Cmd::userhead(0,80,Cmd::getSess('profile','sex')) ?>" />
+					<?= $this->row['unick'] ?>
+					<?php else: ?>
+					<a href="/space_home/?uid=<?= $this->row['puber'] ?>">
+					<img class="mg10 pd10" src="<?= Cmd::userhead($this->row['puber'],80) ?>" />
+					</a>
+					<br />
+					<a href="/space_home/?uid=<?= $this->row['puber'] ?>"><?= $this->row['uname'] ?></a>
+					<?php endif; ?>
+				</div>
+			</div>
+			<div class="yui-u" style="width:85%;">
+				<div class="yui-g section-sub pd10" style="width:100%">
+					<div class="yui-u first" style="width:80%">
+						<b class="f14"><?= stripcslashes($this->row['title']) ?></b>
+					</div>
+					<div class="yui-u txtr" style="width:20%">
+						<?= Alp_Date::normal($this->row['pubtime']) ?> 
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						楼主
+					</div>
+				</div>
+				<div class="f14 pd10" style="line-height:150%;">
+					<?= stripslashes($this->row['content']); ?>
+				</div>
+			</div>
+		</div>
+		
+		<?= $this->action('view', 'comment', 'space_bar') ?>
+	</div>
+	
+</div>

@@ -31,8 +31,7 @@
 			<tr>
 				<td class="txtr">公开给：</td>
 				<td><?= $this->render('pub/private.phtml') ?>
-					<input type="hidden" name="nicky" value="0" />
-					<label for="nicky"><input type="checkbox" name="nicky" id="nicky" value="1" />使用昵称发布</label>
+					<?= $this->render('pub/nicky.phtml') ?>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<input id="submit" type="submit" value="发布帖子" class="btn" />
 					<input type="hidden" name="group" value="<?= $this->gp ?>" />
@@ -49,7 +48,7 @@
 	{
 		$('#submit').attr('disabled', true).val('正在发布帖子，请稍候...');
 		$('#content').val(FCKeditorAPI.GetInstance("content").GetXHTML());
-		$.getJSON(
+		$.post(
 			'/space_bar/pub/topic',
 			$('#topic_form').serializeArray(),
 			function(data)
@@ -61,7 +60,8 @@
 					alert(data.result);
 					$('#submit').attr('disabled', false).val('发布帖子');
 				}
-			}
+			},
+			'json'
 		);
 		return false;
 	}

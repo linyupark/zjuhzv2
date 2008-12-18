@@ -35,6 +35,11 @@ hr.dashed{ height:1px; border:none; border-bottom:1px dashed #ccc; margin:5px; }
 
 .mods .yui-u{ padding:1px 0; }
 
+/* pagination style */
+.pg{ text-align:center; clear:both; float:none; margin:10px; }
+.pg a{ background:#f5f5f5; padding:5px; margin-left:5px; }
+.pg b{ padding:5px; background:#666; color:#fff; margin-left:5px; }
+
 /* default layout style */
 .greybox{ color:#666; background:#eee url(/im/v1/grey-bottom.jpg) no-repeat bottom; width:270px; overflow:hidden; padding-bottom:20px; }
 .greybox-top{ background:url(/im/v1/grey-top.jpg) no-repeat; width:270px; height:12px; }

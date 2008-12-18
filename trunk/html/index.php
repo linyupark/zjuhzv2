@@ -10,7 +10,6 @@
 						 
 	require_once 'Zend/Loader.php';
 	Zend_Loader::registerAutoload();
-	
 	Zend_Session::start();
 	Zend_Registry::set('sess', new Zend_Session_Namespace('zjuhz'));
 	

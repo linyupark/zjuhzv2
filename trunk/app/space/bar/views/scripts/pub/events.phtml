@@ -78,7 +78,7 @@
 	{
 		$('#submit').attr('disabled', true).val('正在发布帖子，请稍候...');
 		$('#content').val(FCKeditorAPI.GetInstance("content").GetXHTML());
-		$.getJSON(
+		$.post(
 			'/space_bar/pub/events',
 			$('#events_form').serializeArray(),
 			function(data)
@@ -90,7 +90,8 @@
 					alert(data.result);
 					$('#submit').attr('disabled', false).val('发布帖子');
 				}
-			}
+			},
+			'json'
 		);
 		return false;
 	}

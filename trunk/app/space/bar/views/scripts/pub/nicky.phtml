@@ -1,0 +1,7 @@
+<input type="hidden" name="nicky" value="0" />
+<?php if(Cmd::getSess('profile','nickname')): ?>
+<label for="nicky"><input type="checkbox" name="nicky" id="nicky" value="1" />使用昵称</label>
+<a target="_blank" href="/space_set/profile/">设置</a>
+<?php else: ?>
+如要使用昵称发布请先<a target="_blank" href="">设置</a>
+<?php endif; ?>

@@ -40,6 +40,9 @@ hr{ height:1px; border:none; border-bottom:1px solid #ccc; }
 .pdr10 { padding-right:10px; }
 .pdl10 { padding-left:10px; }
 
+.fleft{ float:left; }
+.fright{ float:right; }
+
 .bold{ font-weight:bold; }
 
 /**  * 表单样式  */

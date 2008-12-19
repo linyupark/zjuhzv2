@@ -1,4 +1,3 @@
-
 	<form id="comment_form" onsubmit="return comment()">
 		<table class="mgl10 table-dashed" width="97%">
 			<tr>
@@ -12,6 +11,7 @@
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<input id="submit" type="submit" value="回复帖子" class="btn" />
 					<input id="commentid" type="hidden" name="cid" value="0" />
+					<input id="curpage" type="hidden" name="page" value="<?= $this->page ?>" />
 				</td>
 			</tr>
 		</table>
@@ -20,7 +20,7 @@
 <script type="text/javascript">
 	function comment()
 	{
-		$('#submit').attr('disabled', true).val('正在回帖，请稍候...');
+		$('#submit').attr('disabled', true).val('正在执行，请稍候...');
 		$('#content').val(FCKeditorAPI.GetInstance("content").GetXHTML());
 		$.post(
 			'/space_bar/comment/post?tid=<?= $this->row['tid'] ?>&uid=<?= Cmd::uid() ?>',
@@ -29,9 +29,9 @@
 			{
 				if(data.result == 'success')
 				{
-					FCKeditorAPI.GetInstance("content").SetHTML(' ');
+					set_html('');
 					$('#submit').attr('disabled', false).val('回复成功');
-					load_comment(data.page);
+					$('#commentid').val(0);load_comment(data.page);
 				}
 				else
 				{
@@ -43,10 +43,7 @@
 		);
 		return false;
 	}
-	function edit(id)
-	{
-		
-	}
 	function insert_html(html){FCKeditorAPI.GetInstance("content").InsertHtml(html);upreload();}
+	function set_html(html){FCKeditorAPI.GetInstance("content").SetHTML(html);}
 	$('#pic_upload').load('/public/upload/form?for=pic');
 </script>

@@ -3,7 +3,7 @@
 <?php foreach ($this->comments as $i => $r): ?>
 <table width="100%">
   <tr>
-    <td rowspan="2" width="10%" valign="top">
+    <td rowspan="2" width="8%" valign="top">
     	<div class="head40 txtc">
 			<?php if($r['nicky']): ?>
 				<img class="mg10" src="<?= Cmd::userhead(0,40,Cmd::getSess('profile','sex')) ?>" />
@@ -14,29 +14,34 @@
 			<?php endif; ?>
 		</div>
     </td>
-    <td class="yui-g section-sub quiet" width="90%">
-    	<div class="yui-u first" style="width:80%">
+    <td class="yui-g section-sub quiet" width="92%">
+    	<div class="yui-u first" style="width:75%">
 			<?php if($r['nicky']): ?>
 			<?= $r['unick'] ?>
 			<?php else: ?>
 			<a href="/space_home/?uid=<?= $r['uid'] ?>"><?= $r['uname'] ?></a>
 			<?php endif; ?>说道：
 		</div>
-		<div class="yui-u txtr" style="width:20%">
+		<div class="yui-u txtr" style="width:25%">
 			<?= date('y-m-d H:i:s', $r['time']) ?>
 			&nbsp;&nbsp;&nbsp;&nbsp;
 			<?= ($i+2)+($this->offset) ?>楼
+			&nbsp;
+			<a href="javascript:scroll(0,0)">top</a>
 		</div>
     </td>
   </tr>
   <tr>
   	<td>
-  		<div style="line-height:150%;">
-			<?= stripslashes($r['content']); ?>
+  		<div id="comment_<?= $r['id'] ?>" style="line-height:150%;">
+  			<?= ($r['deny'] == 0) ? stripslashes($r['content']) : '<div class="quiet">****该回帖已被屏蔽****</div>'; ?>
 		</div>
+		<?= $this->action('toolbar', 'comment', 'space_bar', array('uid'=>$r['uid'],'cid'=>$r['id'])); ?>
   	</td>
   </tr>
 </table>
 <?php endforeach; ?>
 	<div class="pg"><?= $this->pagination ?></div>
+<?php else: ?>
+<p class="txtc f14 pd10">尚未有人回帖，可以抢占沙发哦!</p>
 <?php endif; ?>

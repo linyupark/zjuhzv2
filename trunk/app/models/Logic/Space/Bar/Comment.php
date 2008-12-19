@@ -14,6 +14,26 @@
 			return $row['numrows'];
 		}
 		
+		/**
+		 * 屏蔽指定评论
+		 *
+		 * @param unknown_type $cid
+		 * @return unknown
+		 */
+		public static function deny($cid)
+		{
+			if(Cmd::role() == 'master')
+			{
+				$r = parent::Space()->fetchRow('SELECT `deny` FROM `tb_comment` WHERE `id` = ?', $cid);
+				$deny = ($r['deny'] == 0) ? 1 : 0;
+				parent::Space()->update('tb_comment', array(
+					'deny' => $deny
+				), 'id = '.$cid);
+				return $deny;
+			}
+			return false;
+		}
+		
 		public static function save($params)
 		{
 			$db = parent::Space();
@@ -41,6 +61,12 @@
 					$db->rollback();
 					Alp_Sys::msg('exception', $e->getMessage());
 				}
+			}
+			else // 修改
+			{
+				$db->update('tb_comment', array(
+					'content' => $params['content']
+				), 'id = '.$params['cid']);
 			}
 		}
 	}

@@ -19,6 +19,21 @@
 			$this->view->page = $this->_getParam('p', 1);
 		}
 		
+		/**
+		 * 评论相关工具
+		 *
+		 */
+		function toolbarAction()
+		{
+			$this->view->role = Cmd::role();
+			$this->view->cid = $this->_getParam('cid');
+			$this->view->owner = $this->_getParam('uid'); // 获取评论的所有人
+		}
+		
+		/**
+		 * 评论列表
+		 *
+		 */
 		function listAction()
 		{
 			if($this->getRequest()->isXmlHttpRequest())
@@ -65,8 +80,15 @@
 					Logic_Space_Bar_Comment::save($params);
 					if(Alp_Sys::getMsg() == null)
 					{
-						$num = Logic_Space_Bar_Comment::num($params['tid']);
-						$page = ceil($num / $this->pagesize);
+						if($params['cid'] == 0) // 新评论
+						{
+							$num = Logic_Space_Bar_Comment::num($params['tid']);
+							$page = ceil($num / $this->pagesize);
+						}
+						else // 修改
+						{
+							$page = $params['page'];
+						}
 						echo Zend_Json::encode(array(
 							'result' => 'success',
 							'page' => $page
@@ -85,7 +107,11 @@
 		 */
 		function denyAction()
 		{
-			
+			if($this->getRequest()->isXmlHttpRequest())
+			{
+				$this->getHelper('viewRenderer')->setNoRender();
+				echo Logic_Space_Bar_Comment::deny($this->_getParam('cid'));
+			}
 		}
 	}
 

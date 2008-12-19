@@ -63,7 +63,32 @@
 			{
 				$history[$tid] = time();
 				Cmd::setSess('bar_history', $history);
+				parent::Space()->update('tb_tbar', array(
+					'click' => new Zend_Db_Expr('click + 1')
+				), 'tid = '.$tid);
 			}
+		}
+		
+		/**
+		 * 顶帖子
+		 *
+		 * @param unknown_type $tid
+		 * @param unknown_type $v
+		 */
+		public static function rate($tid, $v = 1)
+		{
+			$rate = Cmd::getSess('bar_rate');
+			if(!$rate) $rate = array(); // 如果不存在则初始化
+			if(!isset($rate[$tid]))
+			{
+				$rate[$tid] = time();
+				Cmd::setSess('bar_rate', $rate);
+				parent::Space()->update('tb_tbar', array(
+					'rate' => new Zend_Db_Expr('rate + '.$v)
+				), 'tid = '.$tid);
+				return true;
+			}
+			else return false;
 		}
 		
 		/**
@@ -88,13 +113,54 @@
 		}
 		
 		/**
-		 * 收藏的帖子
+		 * 是否为收藏帖
+		 *
+		 * @param unknown_type $row
+		 * @param unknown_type $uid
+		 * @return unknown
+		 */
+		public static function isFav($row, $uid)
+		{
+			$r = parent::Space()->fetchRow('SELECT `'.$row['type'].'` FROM `tb_tfav` WHERE `uid` = ?', $uid);
+			if($r == false) return false;
+			else 
+			{
+				$fav_arr = unserialize($r[$row['type']]);
+				if(isset($fav_arr[$row['tid']])) return true;
+				else return false; 
+			}
+		}
+		
+		/**
+		 * 收藏的帖子开关
 		 *
 		 * @param unknown_type $uid
 		 */
-		public static function fav($uid, $type)
+		public static function fav($row, $uid)
 		{
-			return parent::Space()->fetchRow('SELECT `'.$type.'` FROM `tb_tfav` WHERE `uid` = ?', $uid);
+			$r = parent::Space()->fetchRow('SELECT `'.$row['type'].'` FROM `tb_tfav` WHERE `uid` = ?', $uid);
+			if($r == false)
+			{
+				parent::Space()->insert('tb_tfav', array('uid' => $uid));
+			}
+			$fav_arr = unserialize($r[$row['type']]);
+			if(self::isFav($row, $uid))
+			{
+				// 取消收藏
+				unset($fav_arr[$row['tid']]);
+				parent::Space()->update('tb_tfav', array(
+					$row['type'] => serialize($fav_arr)
+				), 'uid = '.$uid);
+				return 'off';
+			}
+			else 
+			{
+				$fav_arr[$row['tid']] = time();
+				parent::Space()->update('tb_tfav', array(
+					$row['type'] => serialize($fav_arr)
+				), 'uid = '.$uid);
+				return 'on';
+			}
 		}
 	}
 

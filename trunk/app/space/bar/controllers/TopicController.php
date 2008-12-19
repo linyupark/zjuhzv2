@@ -55,8 +55,8 @@
 				case 'time' : // 发布时间
 					$select->order('pubtime DESC');
 				break;
-				case 'reply' : // 回复时间
-					$select->order('replytime DESC');
+				case 'reply' : // 回复数
+					$select->order('reply DESC');
 				break;
 				case 'click' : // 点击率
 					$select->order('click DESC');
@@ -101,6 +101,7 @@
 			if(!Logic_Space_Bar::isAllowed($row[0]['private'], $row[0]['puber'])) // 有对应帖子判断阅读权限
 			$this->_forward('deny', 'error', 'public');
 
+			Logic_Space_Bar::click($tid);
 			$this->view->row = $row[0];
 			$this->view->page = $page;
 		}

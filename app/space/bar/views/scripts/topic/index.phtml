@@ -31,7 +31,7 @@
 				</td>
 				<td class="txtc quiet">
 					<?= ($r['replytime']) ? Alp_Date::normal($r['replytime']):'-' ?><br />
-					<?= ($r['rnicky']) ? $r['replynick']:$r['replyname']; ?>
+					<?= ($r['rnicky']) ? $r['replynick']:'<a href="/space_home/?uid='.$r['replyer'].'">'.$r['replyname'].'</a>'; ?>
 				</td>
 			</tr>
 			<?php endforeach; else: ?>
@@ -40,5 +40,6 @@
 			</tr>
 			<?php endif; ?>
 		</table>
+		<div class="pg"><?= $this->pagination ?></div>
 	</div>
 </div>

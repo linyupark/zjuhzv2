@@ -150,8 +150,7 @@
 					else 
 					$db->insert('station', array(
 						'pid' => $pid,
-						'address' => $address,
-						'ticket' => 0
+						'address' => $address
 					));
 				}
 				$db->commit();

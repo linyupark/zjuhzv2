@@ -1,4 +1,7 @@
 <div class="txtr a-span">
+	<?php if($this->row['modtime']): ?>
+	<span class="quiet f14">***该帖最后编辑于<?= Alp_Date::normal($this->row['modtime']); ?>***</span>
+	<?php endif; ?>
 	<a href="javascript:load_rate(<?= $this->row['rate'] ?>)">
 		<img id="rate_icon" src="<?= Alp_Url::img('icon/mix/ding.gif'); ?>" />
 		顶(<span id="rate_box"><?= $this->row['rate'] ?></span>)
@@ -8,36 +11,15 @@
 	<?php else: ?>
 	<a href="javascript:load_fav('on')"><img id="fav_icon" src="<?= Alp_Url::img('icon/mix/fav_off.gif'); ?>" />收藏</a>
 	<?php endif; ?>
+	<?php if(Cmd::role() == 'master'): ?>
+	<a href="javascript:deny_bar(<?= $this->row['tid'] ?>)"><img src="<?= Alp_Url::img('icon/mix/lock.gif'); ?>" />屏蔽</a>
+	<a href="javascript:edit_bar(<?= $this->row['tid'] ?>)"><img src="<?= Alp_Url::img('icon/mix/edit.gif'); ?>" />修改</a>
+	<?php elseif($this->row['puber'] == Cmd::uid()): ?>
+	<a href="javascript:edit_bar(<?= $this->row['tid'] ?>)"><img src="<?= Alp_Url::img('icon/mix/edit.gif'); ?>" />修改</a>
+	<?php endif; ?>
 </div>
 <script type="text/javascript">
-	function load_rate(v)
-	{
-		$.post(
-			'/space_bar/toolbar/rate?tid=<?= $this->row['tid'] ?>',
-			function(data)
-			{ 
-				if(data == 'success') 
-				{
-					$('#rate_icon').fadeOut(500,function(){ $(this).fadeIn(500) });
-					$('#rate_box').html(v+1);
-				}
-				else alert('不能连续顶帖哦');
-			}
-		);
-	}
-	function load_fav(v)
-	{
-		$.post(
-			'/space_bar/toolbar/fav?tid=<?= $this->row['tid'] ?>&type=<?= $this->row['type'] ?>',
-			function(data)
-			{
-				if(data == 'on')
-				$('#fav_icon').attr('src', '<?= Alp_Url::img('icon/mix/fav.gif'); ?>');
-				else if(data == 'off')
-				$('#fav_icon').attr('src', '<?= Alp_Url::img('icon/mix/fav_off.gif'); ?>');
-				else
-				alert(data);
-			}
-		);
-	}
+function load_rate(v){$.post('/space_bar/toolbar/rate?tid=<?= $this->row['tid'] ?>',function(data){ if(data == 'success') {$('#rate_icon').fadeOut(500,function(){ $(this).fadeIn(500) });$('#rate_box').html(v+1);} else alert('不能连续顶帖哦');});}
+function load_fav(v){$.post('/space_bar/toolbar/fav?tid=<?= $this->row['tid'] ?>&type=<?= $this->row['type'] ?>',function(data){if(data == 'on')$('#fav_icon').attr('src', '<?= Alp_Url::img('icon/mix/fav.gif'); ?>');else if(data == 'off')$('#fav_icon').attr('src', '<?= Alp_Url::img('icon/mix/fav_off.gif'); ?>'); else alert(data);});}
+function edit_bar(tid){ window.location.href = '/space_bar/mod/topic?tid='+tid+'&gp=<?= $this->row['group'] ?>'; }
 </script>

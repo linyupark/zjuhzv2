@@ -99,6 +99,7 @@
 				break;
 				case 'intro' : 
 					$str = '';
+					if(count($intro) > 0 && $intro != false)
 					foreach($intro as $k => $v)
 					{
 						if($intro[$k] && $trans_intro[$k])
@@ -110,6 +111,7 @@
 				break;
 				case 'contact' : 
 					$str = '';
+					if(count($contact) > 0)
 					foreach($contact as $k => $v)
 					{
 						if($contact[$k] && $trans_contact[$k])

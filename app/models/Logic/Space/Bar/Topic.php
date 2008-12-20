@@ -7,6 +7,37 @@
 	class Logic_Space_Bar_Topic extends DbModel 
 	{	
 		/**
+		 * 更新帖子内容
+		 *
+		 * @param unknown_type $params
+		 * @param unknown_type $tid
+		 */
+		public static function mod($params, $tid)
+		{
+			$db = parent::Space();
+			$db->beginTransaction();
+			try {
+				
+				$db->update('tb_tbar', array(
+					'title' => $params['title'],
+					'private' => $params['private'],
+					'nicky' => $params['nicky']
+				), 'tid = '.$tid);
+				
+				$db->update('tb_topic', array(
+					'content' => $params['content'],
+					'modtime' => time()
+				), 'tid = '.$tid);
+				$db->commit();
+				
+			} catch (Exception $e) {
+				
+				$db->rollback();
+				Alp_Sys::msg('exception', $e->getMessage());
+			}
+		}
+		
+		/**
 		 * 查看话题贴
 		 *
 		 * @param unknown_type $tid

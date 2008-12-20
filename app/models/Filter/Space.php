@@ -162,6 +162,12 @@
 			$params['content'] = Alp_Valid::of($params['content'], 'content', '内容', 'trim|required');
 			return $params;
 		}
+		public static function modtopic($params)
+		{
+			$params['title'] = Alp_Valid::of($params['title'], 'title', '标题主题', 'trim|strip_tags|str_between[3,90]');
+			$params['content'] = Alp_Valid::of($params['content'], 'content', '内容', 'trim|required');
+			return $params;
+		}
 		
 		//----------------------------------------------------------------------------------------------
 		

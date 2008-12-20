@@ -1,2 +1,11 @@
-<?= ($this->pub) ? $this->action($this->pub, 'pub', 'space_bar') : $this->action('index', $this->type, 'space_bar'); ?>
-<?= $this->render('sidebar.phtml'); ?>
+<?php
+	if($this->pub)
+	{
+		echo $this->action($this->pub, 'pub', 'space_bar');
+	}
+	else 
+	{
+		echo $this->action('index', $this->type, 'space_bar');
+		echo $this->render('sidebar.phtml');
+	}
+?>

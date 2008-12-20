@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: zjuhzv2_space
 Target Host: localhost
 Target Database: zjuhzv2_space
-Date: 2008-12-5 ÏÂÎç 05:05:08
+Date: 2008-12-20 ÏÂÎç 05:11:46
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -17,7 +17,7 @@ CREATE TABLE `tb_comment` (
   `uid` int(10) unsigned NOT NULL,
   `content` text NOT NULL,
   `time` int(10) unsigned NOT NULL,
-  `whisper` tinyint(1) unsigned NOT NULL default '0',
+  `nicky` tinyint(1) unsigned NOT NULL default '0',
   `deny` tinyint(1) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -98,8 +98,7 @@ CREATE TABLE `tb_home` (
   `uid` int(10) unsigned NOT NULL,
   `ing` varchar(255) default NULL,
   `guests` text,
-  `groups` text,
-  `favor` text
+  `groups` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -172,16 +171,38 @@ CREATE TABLE `tb_tbar` (
   `pubtime` int(10) unsigned NOT NULL,
   `click` int(10) unsigned NOT NULL default '0',
   `reply` int(10) unsigned NOT NULL default '0',
+  `rnicky` tinyint(1) NOT NULL default '0',
   `replyer` int(10) unsigned default NULL,
   `replytime` int(10) unsigned default NULL,
   `rate` int(10) unsigned NOT NULL default '0',
   `group` int(10) NOT NULL default '0',
-  `freeze` tinyint(1) unsigned NOT NULL default '0',
+  `deny` tinyint(1) unsigned NOT NULL default '0',
   `private` tinyint(3) unsigned NOT NULL COMMENT '0:self;1:friend;2:group;3:member;4:all',
   `nicky` tinyint(1) unsigned NOT NULL default '0',
   PRIMARY KEY  (`tid`),
   UNIQUE KEY `ix_title` (`title`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for tb_tfav
+-- ----------------------------
+CREATE TABLE `tb_tfav` (
+  `uid` int(10) unsigned NOT NULL,
+  `topic` text,
+  `news` text,
+  `help` text,
+  `photo` text,
+  `events` text,
+  `share` text
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for tb_tjoin
+-- ----------------------------
+CREATE TABLE `tb_tjoin` (
+  `uid` int(10) unsigned NOT NULL,
+  `tid` longtext
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for tb_topic

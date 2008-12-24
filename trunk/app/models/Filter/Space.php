@@ -179,12 +179,12 @@
 		 */
 		public static function newsSort($sortname)
 		{
-			return Alp_Valid::of($sortname, 'sortname', '新闻分类', 'trim|strip_tags|str_between[2,30]');
+			return Alp_Valid::of($sortname, 'sortname', '新闻分类', 'trim|strip_tags|str_between[2,10]');
 		}
 		
 		public static function helpSort($sortname)
 		{
-			return Alp_Valid::of($sortname, 'sortname', '求助分类', 'trim|strip_tags|str_between[2,30]');
+			return Alp_Valid::of($sortname, 'sortname', '求助分类', 'trim|strip_tags|str_between[2,10]');
 		}
 	}
 

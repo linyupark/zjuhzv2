@@ -56,6 +56,8 @@
 						'rnicky' => $params['nicky'],
 						'replytime' => time()
 					), 'tid = '.$params['tid']);
+					if(!Logic_Space_Bar::isJoin($params['tid'], $params['uid']))
+					Logic_Space_Bar::join($params['tid'], $params['uid']);
 					$db->commit();
 				} catch (Exception $e) {
 					$db->rollback();
@@ -65,7 +67,8 @@
 			else // 修改
 			{
 				$db->update('tb_comment', array(
-					'content' => $params['content']
+					'content' => $params['content'],
+					'nicky' => $params['nicky']
 				), 'id = '.$params['cid']);
 			}
 		}

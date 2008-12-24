@@ -56,10 +56,21 @@
             if(is_array($data))
             {
             	$datas = Zend_Registry::get('sess')->$key;
-            	if($datas == null)
+            	if($datas == null) // 数据为空则直接写入
             	Zend_Registry::get('sess')->$key = $data;
             	else {
-            		$result = array_merge($datas, $data);
+            		if(is_array($data))
+            		{
+            			foreach ($data as $k => $r) // 循环新加数组
+            			{
+            				if(array_key_exists($k, $datas))
+            				{
+            					$datas[$k] = $r;
+            					unset($data[$k]); // 重复数组内容更新后注销
+            				}
+            			}
+            		}
+            		$result = $datas + $data;
             		Zend_Registry::get('sess')->$key = $result;
             	}
             }

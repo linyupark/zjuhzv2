@@ -1,0 +1,10 @@
+<?php if($this->sorts): ?>
+<select name="sort" onchange="$('#tab_form').submit();">
+<option value="all" <?= ($this->sort == 'all') ? 'selected="selected"':'' ?>>所有分类</option>
+<?php foreach ($this->sorts as $sort): ?>
+<option value="<?= $sort['sort'] ?>" <?= ($this->sort == $sort['sort']) ? 'selected="selected"':'' ?>><?= $sort['name'] ?>(<?= $sort['rate'] ?>)</option>
+<?php endforeach; ?>
+</select>
+<?php else: ?>
+
+<?php endif; ?>

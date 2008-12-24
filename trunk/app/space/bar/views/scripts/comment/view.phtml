@@ -14,4 +14,5 @@
 	$('#comment_box').load('/space_bar/comment/list?tid=<?= $this->row['tid'] ?>&p=<?= $this->page ?>');
 	function edit_comment(id){var h = $('#comment_'+id).html();window.scroll(0,99999);set_html(h);$('#commentid').val(id);$('#submit').val('保存修改');}
 	function deny_comment(id){ $.post('/space_bar/comment/deny?cid='+id,function(data){ if(data == '1')$('#comment_'+id).html('<div class="quiet">****该回帖已被屏蔽****</div>'); else if(data == '0'){ var p = $('#page').val(); load_comment(p); } else alert(data);}); }	
+	function q_comment(id){ var h = $('#comment_'+id).children().not('.quote').text(); var q = $('#quote_'+id).html(); window.scroll(0,99999);set_html('<div class="quote"><b>引用：</b>'+q+h.substr(0,130)+'...'+'</div>&nbsp;'); }
 </script>

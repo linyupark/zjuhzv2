@@ -15,7 +15,7 @@
 		</div>
     </td>
     <td class="yui-g section-sub quiet" width="92%">
-    	<div class="yui-u first" style="width:75%">
+    	<div id="quote_<?= $r['id'] ?>" class="yui-u first" style="width:75%">
 			<?php if($r['nicky']): ?>
 			<?= $r['unick'] ?>
 			<?php else: ?>
@@ -43,5 +43,5 @@
 <?php endforeach; ?>
 	<div class="pg"><?= $this->pagination ?></div>
 <?php else: ?>
-<p class="txtc f14 pd10">尚未有人回帖，可以抢占沙发哦!</p>
+<p class="txtc f14 pd10 tp11">尚未有人回帖，可以抢占沙发哦!</p>
 <?php endif; ?>

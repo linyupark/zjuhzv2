@@ -3,6 +3,22 @@
 	class Logic_Space_Bar_News extends DbModel
 	{
 		/**
+		 * 查看新闻
+		 *
+		 */
+		public static function view($tid)
+		{
+			$select = parent::Space()->select();
+			$select->from(array('bar' => 'tb_tbar'))->where('bar.tid = ?', $tid);
+			$select->joinLeft(array('news' => 'tb_news'), 'bar.tid = news.tid');
+			$select->joinLeft(array('u'=>'zjuhzv2_user.tb_base'), 'bar.puber = u.uid', 
+							  array('uname'=>'u.username','unick'=>'u.nickname'));
+			$select->joinLeft(array('s'=>'zjuhzv2_space.tb_news_sort'), 'news.sort = s.sort', 
+							  array('sortname' => 's.name'));
+			return $select->query()->fetchAll();
+		}
+		
+		/**
 		 * 获取分类
 		 *
 		 */
@@ -60,6 +76,9 @@
 					'sort' => $params['sort'],
 					'tags' => serialize($params['tags'])
 				));
+				$db->update('tb_news_sort', array(
+					'rate' => new Zend_Db_Expr('rate + 1')
+				), 'sort = '.$params['sort']);
 				$db->commit();
 				return $tid;
 				

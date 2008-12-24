@@ -52,7 +52,7 @@
 					if($row != false)
 					{
 						$tid_arr = unserialize($row['topic']);
-						if(count($tid_arr) > 0)
+						if(count($tid_arr) > 0 && $tid_arr != false)
 						{
 							$i = 0;
 							foreach ($tid_arr as $tid => $time)

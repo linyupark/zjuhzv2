@@ -50,6 +50,39 @@
 		}
 		
 		/**
+		 * 修改新闻帖
+		 *
+		 * @param unknown_type $params
+		 */
+		public static function mod($params, $tid)
+		{
+			$db = parent::Space();
+			$db->beginTransaction();
+			try {
+				
+				$db->update('tb_tbar', array(
+					'title' => $params['title'],
+					'private' => $params['private'],
+					'nicky' => $params['nicky']
+				), 'tid = '.$tid);
+				
+				$db->update('tb_news', array(
+					'content' => $params['content'],
+					'modtime' => time(),
+					'tags' => serialize($params['tags']),
+					'sort' => $params['sort']
+				), 'tid = '.$tid);
+				$db->commit();
+				
+			} catch (Exception $e) {
+				
+				$db->rollback();
+				Alp_Sys::msg('exception', $e->getMessage());
+			}
+		}
+		
+		
+		/**
 		 * 发布新闻贴
 		 *
 		 * @param unknown_type $params

@@ -162,10 +162,33 @@
 			$params['content'] = Alp_Valid::of($params['content'], 'content', '内容', 'trim|required');
 			return $params;
 		}
+		
+		/**
+		 * 修改相关过滤
+		 *
+		 * @param unknown_type $params
+		 * @return unknown
+		 */
 		public static function modtopic($params)
 		{
 			$params['title'] = Alp_Valid::of($params['title'], 'title', '标题主题', 'trim|strip_tags|str_between[3,90]');
 			$params['content'] = Alp_Valid::of($params['content'], 'content', '内容', 'trim|required');
+			return $params;
+		}
+		
+		public static function modnews($params)
+		{
+			$params['title'] = Alp_Valid::of($params['title'], 'title', '标题主题', 'trim|strip_tags|str_between[3,90]');
+			$params['content'] = Alp_Valid::of($params['content'], 'content', '内容', 'trim|required');
+			$params['sort'] = Alp_Valid::of($params['sort'], 'sort', '归类', 'trim|required');
+			$tags = array();
+			foreach($params['tags'] as $v)
+			{
+				$temp = strip_tags(trim($v));
+				if(!empty($temp)) $tags[] = $temp;
+			}
+			if(count($tags) == 0) Alp_Sys::msg('tags', '关键字不能为空，请填写新闻相关的关键字');
+			$params['tags'] = $tags;
 			return $params;
 		}
 		

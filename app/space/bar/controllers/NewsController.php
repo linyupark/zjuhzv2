@@ -45,11 +45,11 @@
 					else $select->where('bar.tid = ?', 0);
 				break;
 				case 'fav' : // 我的收藏帖
-					$row = Logic_Space_Bar::getFav('topic', Cmd::uid());
+					$row = Logic_Space_Bar::getFav('news', Cmd::uid());
 					if($row != false)
 					{
-						$tid_arr = unserialize($row['topic']);
-						if(count($tid_arr) > 0)
+						$tid_arr = unserialize($row['news']);
+						if(count($tid_arr) > 0 && $tid_arr != false)
 						{
 							$i = 0;
 							foreach ($tid_arr as $tid => $time)
@@ -135,6 +135,7 @@
 			if($this->getRequest()->isXmlHttpRequest())
 			{
 				$this->view->sorts = Logic_Space_Bar_News::getSorts(); // 获取新闻分类
+				$this->view->sid = $this->_getParam('sort');
 				$this->render('sorts');
 			}
 		}

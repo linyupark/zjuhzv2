@@ -18,7 +18,7 @@
 			<?php if($this->rows): foreach($this->rows as $i => $r): ?>
 			<tr <?= ($i%2 == 1) ? 'bgcolor="#f5f5f5"' : '' ?>>
 				<td class="txtl">
-					<a style="color:#666" href="<?= $r['sid'] ?>"><?= $r['sortname'] ?></a>
+					<a style="color:#666" href="/space_bar/?type=news&sort=<?= $r['sid'] ?>"><?= $r['sortname'] ?></a>
 					<a class="bold" href="/space_bar/<?= $r['type'] ?>/view?tid=<?= $r['tid'] ?>"><?= stripslashes($r['title']) ?></a>
 					<?= $cpage = Logic_Space_Bar::subpage($r); ?>
 				</td>

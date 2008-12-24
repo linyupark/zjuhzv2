@@ -1,0 +1,9 @@
+<?php if($this->history): ?>
+<table class="table-dashed">
+	<?php foreach ($this->history as $t): ?>
+	<tr><td><a href="/space_bar/topic/view?tid=<?= $t['tid'] ?>"><?= stripslashes($t['title']) ?></a></td></tr>
+	<?php endforeach; ?>
+</table>
+<?php else: ?>
+<p class="quiet pd5">目前还没有您的帖子浏览记录</p>
+<?php endif; ?>

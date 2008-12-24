@@ -21,5 +21,5 @@
 <script type="text/javascript">
 function load_rate(v){$.post('/space_bar/toolbar/rate?tid=<?= $this->row['tid'] ?>',function(data){ if(data == 'success') {$('#rate_icon').fadeOut(500,function(){ $(this).fadeIn(500) });$('#rate_box').html(v+1);} else alert('不能连续顶帖哦');});}
 function load_fav(v){$.post('/space_bar/toolbar/fav?tid=<?= $this->row['tid'] ?>&type=<?= $this->row['type'] ?>',function(data){if(data == 'on')$('#fav_icon').attr('src', '<?= Alp_Url::img('icon/mix/fav.gif'); ?>');else if(data == 'off')$('#fav_icon').attr('src', '<?= Alp_Url::img('icon/mix/fav_off.gif'); ?>'); else alert(data);});}
-function edit_bar(tid){ window.location.href = '/space_bar/mod/topic?tid='+tid+'&gp=<?= $this->row['group'] ?>'; }
+function edit_bar(tid){ window.location.href = '/space_bar/mod/<?= $this->row['type'] ?>?tid='+tid+'&gp=<?= $this->row['group'] ?>'; }
 </script>

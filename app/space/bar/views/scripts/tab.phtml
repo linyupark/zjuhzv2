@@ -1,17 +1,24 @@
 <div class="mglr10 yui-g a-span">
-	<div class="yui-u first" style="width:60%">
-		<select name="where" onchange="location.href='?type=<?= $this->type ?>&order=<?= $this->order ?>&where='+this.value">
+	<div class="yui-u first" style="width:65%">
+	<form method="get" id="tab_form">
+	筛选：
+		<?= ($this->type == 'news') ? $this->action('sortlist', 'news', 'space_bar'):'' ?>
+		<select name="where" onchange="$('#tab_form').submit();">
 			<option value="all" <?= ($this->where == 'all') ? 'selected="selected"':'' ?>>所有帖子</option>
 			<option value="pub" <?= ($this->where == 'pub') ? 'selected="selected"':'' ?>>我的帖子</option>
 			<option value="join" <?= ($this->where == 'join') ? 'selected="selected"':'' ?>>我参与的</option>
 			<option value="fav" <?= ($this->where == 'fav') ? 'selected="selected"':'' ?>>我收藏的</option>
 		</select>
-		<a href="?type=<?= $this->type ?>&order=time" style="<?= ($this->order == 'time')?'color:#333;text-decoration:underline':''; ?>">发布时间</a>
-		<a href="?type=<?= $this->type ?>&order=reply" style="<?= ($this->order == 'reply')?'color:#333;text-decoration:underline':''; ?>">回复数量</a>
-		<a href="?type=<?= $this->type ?>&order=click" style="<?= ($this->order == 'click')?'color:#333;text-decoration:underline':''; ?>">查看次数</a>
-		<a href="?type=<?= $this->type ?>&order=rate" style="<?= ($this->order == 'rate')?'color:#333;text-decoration:underline':''; ?>">被顶次数</a>
+		<select name="order" onchange="$('#tab_form').submit();">
+			<option value="time" <?= ($this->order == 'time') ? 'selected="selected"':'' ?>>发布时间</option>
+			<option value="reply" <?= ($this->order == 'reply') ? 'selected="selected"':'' ?>>回复数量</option>
+			<option value="click" <?= ($this->order == 'click') ? 'selected="selected"':'' ?>>查看次数</option>
+			<option value="rate" <?= ($this->order == 'rate') ? 'selected="selected"':'' ?>>被顶次数</option>
+		</select>
+		<input type="hidden" name="type" value="<?= $this->type ?>" />
+	</form>
 	</div>
-	<div class="yui-u txtr" style="width:40%">
+	<div class="yui-u txtr" style="width:35%">
 		<a href="/space_bar/?pub=<?= $this->type ?>">
 			<img class="vm" src="<?= Alp_Url::img('icon/mix/+.gif') ?>" /> 发布新帖</a>
 		<a href="">

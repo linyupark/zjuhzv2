@@ -30,7 +30,10 @@
  * The "body" styles should match your editor web site, mainly regarding
  * background color and font family and size.
  */
-
+@import url("/cs/alp/yui-base.css");
+@import url("/cs/alp/common.css");
+@import url("/cs/alp/link-sky.css");
+.quote{ background:#FFFFDF; padding:2px 8px; border:1px dashed #D4DFA7; margin-bottom:5px }
 body
 {
 	background-color: #ffffff;

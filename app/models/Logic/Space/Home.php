@@ -90,7 +90,7 @@
 				break;
 				case 'edu' : 
 					$str = '';
-					if(count($edu) > 0)
+					if(count($edu) > 0 && $edu != false)
 					foreach($edu as $v)
 					{
 						$str .= '<tr><td class="quiet txtr">教育情况：</td><td>'.$v['campus'].'('.$v['class'].')'.$v['year'].'入学</td></tr>';
@@ -111,7 +111,7 @@
 				break;
 				case 'contact' : 
 					$str = '';
-					if(count($contact) > 0)
+					if(count($contact) > 0 && $contact != false)
 					foreach($contact as $k => $v)
 					{
 						if($contact[$k] && $trans_contact[$k])
@@ -123,7 +123,7 @@
 				break;
 				case 'career' : 
 					$str = '';
-					if(count($career) > 0)
+					if(count($career) > 0 && $career != false)
 					foreach($career as $i => $v)
 					{
 						$start = date('y/m', $v['start']);

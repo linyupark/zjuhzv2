@@ -58,15 +58,14 @@
 		public static function click($tid)
 		{
 			$history = Cmd::getSess('bar_history');
-			if(!$history) $history = array(); // 如果不存在则初始化
 			if(!isset($history[$tid]))
 			{
-				$history[$tid] = time();
-				Cmd::setSess('bar_history', $history);
 				parent::Space()->update('tb_tbar', array(
 					'click' => new Zend_Db_Expr('click + 1')
 				), 'tid = '.$tid);
 			}
+			$history[$tid] = time();
+			Cmd::setSess('bar_history', $history);
 		}
 		
 		/**
@@ -107,9 +106,45 @@
 		 *
 		 * @param unknown_type $uid
 		 */
-		public static function join($uid)
+		public static function getJoin($uid)
 		{
 			return parent::Space()->fetchRow('SELECT `tid` FROM `tb_tjoin` WHERE `uid` = ?', $uid);
+		}
+		
+		public static function isJoin($tid, $uid)
+		{
+			$r = self::getJoin($uid);
+			if($r == false) return false;
+			else
+			{
+				$tid_arr = unserialize($r['tid']);
+				if(isset($tid_arr[$tid])) return true;
+				else return false; 
+			}
+		}
+		
+		public static function join($tid, $uid)
+		{
+			$r = self::getJoin($uid);
+			if($r == false)
+			{
+				parent::Space()->insert('tb_tjoin', array('uid' => $uid));
+			}
+			$join_arr = unserialize($r['tid']);
+			$join_arr[$tid] = time();
+			parent::Space()->update('tb_tjoin', array('tid' => serialize($join_arr)), 'uid = '.$uid);
+		}
+		
+		/**
+		 * 获取指定类型的收藏帖
+		 *
+		 * @param unknown_type $type
+		 * @param unknown_type $uid
+		 * @return unknown
+		 */
+		public static function getFav($type, $uid)
+		{
+			return parent::Space()->fetchRow('SELECT `'.$type.'` FROM `tb_tfav` WHERE `uid` = ?', $uid);
 		}
 		
 		/**
@@ -121,7 +156,7 @@
 		 */
 		public static function isFav($row, $uid)
 		{
-			$r = parent::Space()->fetchRow('SELECT `'.$row['type'].'` FROM `tb_tfav` WHERE `uid` = ?', $uid);
+			$r = self::getFav($row['type'], $uid);
 			if($r == false) return false;
 			else 
 			{
@@ -138,7 +173,7 @@
 		 */
 		public static function fav($row, $uid)
 		{
-			$r = parent::Space()->fetchRow('SELECT `'.$row['type'].'` FROM `tb_tfav` WHERE `uid` = ?', $uid);
+			$r = self::getFav($row['type'], $uid);
 			if($r == false)
 			{
 				parent::Space()->insert('tb_tfav', array('uid' => $uid));

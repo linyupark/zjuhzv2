@@ -13,6 +13,30 @@
 		function indexAction()
 		{
 		}
+		
+		/**
+		 * 获取帖子浏览记录
+		 *
+		 */
+		function historyAction()
+		{
+			$history = Cmd::getSess('bar_history');
+			if($history != null)
+			{
+				arsort($history); // 根据浏览更新时间来排序
+				$select = DbModel::Space()->select()->from('tb_tbar');
+				$i = 0;
+				foreach ($history as $tid => $time)
+				{
+					if($i == 9) break;
+					if($i == 0) $select->where('tid = ?', $tid);
+					else $select->orWhere('tid = ?', $tid);
+					$i++;
+				}
+				$history = $select->query()->fetchAll();
+			}
+			$this->view->history = $history;
+		}
 	}
 
 ?>

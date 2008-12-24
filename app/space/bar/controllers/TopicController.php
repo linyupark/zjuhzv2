@@ -29,22 +29,42 @@
 					$select->where('puber = ?', Cmd::uid());
 				break;
 				case 'join' : // 我参与的帖
-					$row = Logic_Space_Bar::join(Cmd::uid());
-					$tid_arr = unserialize($row['tid']);
-					if(is_array($tid_arr))
+					$row = Logic_Space_Bar::getJoin(Cmd::uid());
+					if($row != false)
 					{
-						foreach ($tid_arr as $tid)
-						$select->where('tid = ?', $tid);
+						$tid_arr = unserialize($row['tid']);
+						if(count($tid_arr) > 0)
+						{
+							$i = 0;
+							foreach ($tid_arr as $tid => $time)
+							{
+								if($i == 0) $select->where('bar.tid = ?', $tid);
+								else $select->orWhere('bar.tid = ?', $tid);
+								$i++;
+							}
+						}
+						else $select->where('bar.tid = ?', 0);
 					}
+					else $select->where('bar.tid = ?', 0);
 				break;
 				case 'fav' : // 我的收藏帖
-					$row = Logic_Space_Bar::fav(Cmd::uid(), $where);
-					$tid_arr = unserialize($row[$where]);
-					if(is_array($tid_arr))
+					$row = Logic_Space_Bar::getFav('topic', Cmd::uid());
+					if($row != false)
 					{
-						foreach ($tid_arr as $tid)
-						$select->where('tid = ?', $tid);
+						$tid_arr = unserialize($row['topic']);
+						if(count($tid_arr) > 0)
+						{
+							$i = 0;
+							foreach ($tid_arr as $tid => $time)
+							{
+								if($i == 0) $select->where('bar.tid = ?', $tid);
+								else $select->orWhere('bar.tid = ?', $tid);
+								$i++;
+							}
+						}
+						else $select->where('bar.tid = ?', 0);
 					}
+					else $select->where('bar.tid = ?', 0);
 				break;
 				default: // 所有帖子
 					
@@ -70,7 +90,7 @@
 			$select->joinLeft(array('ruser' => 'zjuhzv2_user.tb_base'), 'ruser.uid = bar.replyer', 
 							  array('replyname' => 'username', 'replynick' => 'nickname'));
 			$rows = $select->query()->fetchAll();
-			$pagesize = Alp_Page::$pagesize = 20;
+			$pagesize = Alp_Page::$pagesize = 10;
 			if(count($rows) > $pagesize)
 			{
 				Alp_Page::create(array(

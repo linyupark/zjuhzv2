@@ -27,6 +27,34 @@
 		}
 		
 		/**
+		 * 活动
+		 *
+		 */
+		function eventsAction()
+		{
+			$this->view->headTitle('修改活动');
+			$tid = $this->view->tid;
+			$row = Logic_Space_Bar_Events::view($tid);
+			if($this->getRequest()->isXmlHttpRequest() && $this->isAllowed($tid)) // 处理保存
+			{
+				$this->getHelper('viewRenderer')->setNoRender();
+				$params = $this->getRequest()->getParams();
+				$params = Filter_Space::modevents($params);
+				if(Alp_Sys::getMsg() == null)
+				{
+					Logic_Space_Bar_Events::mod($params, $tid);
+					if(Alp_Sys::getMsg() == null)
+					{
+						echo Zend_Json::encode(array('result'=>'success', 'tid' => $tid));
+						exit();
+					}
+				}
+				echo Zend_Json::encode(array('result'=>Alp_Sys::allMsg('* ',"\n")));
+			}
+			$this->view->row = $row[0];
+		}
+		
+		/**
 		 * 新闻
 		 *
 		 */

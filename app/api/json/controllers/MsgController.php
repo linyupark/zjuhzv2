@@ -18,7 +18,14 @@
 		 */
 		function checkAction()
 		{
-			echo Zend_Json::encode(array('result'=>Logic_Space_Msg::hasnew(Cmd::uid())));
+			// 在线成员更新
+			$uid = Cmd::uid();
+			$db = DbModel::getSqlite('online.s3db');
+			$row = $db->fetchRow('SELECT `uid` FROM `ol` WHERE `uid` = ?', $uid);
+			if($row == false) $db->insert('ol', array('uid' => $uid, 'time' => time()));
+			else $db->update('ol', array('time' => time()), 'uid = '.$uid);
+			// 返回新信息数
+			echo Zend_Json::encode(array('result'=>Logic_Space_Msg::hasnew($uid)));
 		}
 	}
 

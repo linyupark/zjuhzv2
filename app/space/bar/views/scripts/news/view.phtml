@@ -5,7 +5,10 @@
 			<img class="vm mgr10" src="<?= Alp_Url::img('icon/1616/talk.gif') ?>" /><b>新闻快递</b> 
 			:: <a href="/space_bar/?type=news&sort=<?= $this->row['sort'] ?>"><?= $this->row['sortname'] ?></a> / <?= stripcslashes($this->row['title']) ?>
 		</div>
-		<div class="yui-u txtr" style="width:20%"><a href="/space_bar/?type=news">返回话题列表</a></div>
+		<div class="yui-u txtr a-span" style="width:20%">
+			<a href="javascript:history.back()">返回上一页</a>
+			<a href="/space_bar/?type=news">返回新闻列表</a>
+		</div>
 	</div>
 	<table width="100%">
 		<tr>
@@ -24,6 +27,7 @@
 					<?= stripslashes($this->row['content']); ?>
 					<p class="txtr f12 quiet">
 						新闻发布人：
+						<img class="online_state" src="<?= Alp_Url::img('icon/1616/offline.gif') ?>" rel="<?= $this->row['puber'] ?>" />
 						<?php if($this->row['nicky']): ?>
 						<?= $this->row['unick'] ?>
 						<?php else: ?>

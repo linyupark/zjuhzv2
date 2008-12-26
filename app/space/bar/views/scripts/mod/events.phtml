@@ -2,37 +2,32 @@
 	<div class="yui-b">
 		<div class="mg5 section yui-g">
 			<div class="yui-u first">
-				<img class="vm mgr10" src="<?= Alp_Url::img('icon/mix/+.gif') ?>" /><b>发布活动帖</b>
+				<img class="vm mgr10" src="<?= Alp_Url::img('icon/mix/edit.gif') ?>" /><b>修改活动帖</b>
 			</div>
 			<div class="yui-u txtr"><a href="javascript:history.back()">返回上一页</a></div>
 		</div>
 		<form id="events_form" method="post" onsubmit="return pub_events()">
 		<table class="mgl10 table-dashed" width="97%">
 			<tr>
-				<td width="10%" class="txtr">类型：</td>
-				<td class="a-span"><?= $this->render('pub/type.phtml'); ?></td>
-			</tr>
-			<tr>
 				<td class="txtr">主题：</td>
 				<td>
-					<input type="hidden" name="type" value="<?= $this->pub ?>" />
-					<input type="text" name="title" size="90" />
+					<input type="text" name="title" size="90" value="<?= stripslashes($this->row['title']); ?>" />
 				</td>
 			</tr>
 			<tr>
 				<td class="txtr">开始：</td>
 				<td>
-					<input type="text" name="year" value="<?= date('y',time()); ?>" size="2" /> 年
-					<input type="text" name="month" value="<?= date('m',time()); ?>" size="2" /> 月
-					<input type="text" name="day" value="<?= date('d',time()); ?>" size="2" /> 日
+					<input type="text" name="year" value="<?= date('y',$this->row['time']); ?>" size="2" /> 年
+					<input type="text" name="month" value="<?= date('m',$this->row['time']); ?>" size="2" /> 月
+					<input type="text" name="day" value="<?= date('d',$this->row['time']); ?>" size="2" /> 日
 					<select name="hour">
 						<?php for($h=0;$h<=24;$h++): ?>
-						<option value="<?= $h ?>"><?= $h ?></option>
+						<option value="<?= $h ?>" <?= (date('H',$this->row['time']) == $h) ? 'selected="selected"':'' ?>><?= $h ?></option>
 						<?php endfor; ?>
 					</select> 点
 					<select name="min">
 						<?php for($m=0;$m<=59;$m=$m+5): ?>
-						<option value="<?= $m ?>"><?= $m ?></option>
+						<option value="<?= $m ?>" <?= (date('i',$this->row['time']) == $m) ? 'selected="selected"':'' ?>><?= $m ?></option>
 						<?php endfor; ?>
 					</select> 分
 				</td>
@@ -40,13 +35,13 @@
 			<tr>
 				<td class="txtr">地点：</td>
 				<td>
-					<input type="text" name="address" size="90" />
+					<input type="text" name="address" size="90" value="<?= stripslashes($this->row['address']); ?>" />
 				</td>
 			</tr>
 			<tr>
 				<td class="txtr">人数：</td>
 				<td>
-					<input type="text" name="limit" size="20" /> (选填)
+					<input type="text" name="limit" size="20" value="<?= $this->row['limit'] ?>" /> (选填)
 				</td>
 			</tr>
 			<tr>
@@ -56,14 +51,14 @@
 			</tr>
 			<tr>
 				<td class="txtr">内容：</td>
-				<td><?= Cmd::fck('content',null,'250px','99%') ?></td>
+				<td><?= Cmd::fck('content',stripslashes($this->row['content']),'250px','99%') ?></td>
 			</tr>
 			<tr>
 				<td class="txtr">公开给：</td>
-				<td><?= $this->render('pub/private.phtml') ?>
+				<td><?= $this->render('mod/private.phtml') ?>
 					<input type="hidden" name="nicky" value="0" />
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input id="submit" type="submit" value="发布帖子" class="btn" />
+					<input id="submit" type="submit" value="保存修改" class="btn" />
 					<input type="hidden" name="group" value="<?= $this->gp ?>" />
 				</td>
 			</tr>
@@ -76,10 +71,10 @@
 <script type="text/javascript">
 	function pub_events()
 	{
-		$('#submit').attr('disabled', true).val('正在发布帖子，请稍候...');
+		$('#submit').attr('disabled', true).val('正在保存帖子，请稍候...');
 		$('#content').val(FCKeditorAPI.GetInstance("content").GetXHTML());
 		$.post(
-			'/space_bar/pub/events',
+			'/space_bar/mod/events?tid=<?= $this->row['tid'] ?>',
 			$('#events_form').serializeArray(),
 			function(data)
 			{
@@ -88,7 +83,7 @@
 				else 
 				{
 					alert(data.result);
-					$('#submit').attr('disabled', false).val('发布帖子');
+					$('#submit').attr('disabled', false).val('保存修改');
 				}
 			},
 			'json'

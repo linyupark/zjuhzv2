@@ -1,0 +1,4 @@
+<select name="sort" onchange="$('#tab_form').submit();">
+<option value="start" <?= ($this->sort == 'start') ? 'selected="selected"':'' ?>>即将开始</option>
+<option value="over" <?= ($this->sort == 'over') ? 'selected="selected"':'' ?>>最近结束</option>
+</select>

@@ -1,0 +1,15 @@
+<?php if($this->sorts): ?>
+<select name="sort" onchange="$('#tab_form').submit();">
+<option value="all" <?= ($this->sort == 'all') ? 'selected="selected"':'' ?>>所有分类</option>
+<?php foreach ($this->sorts as $sort): ?>
+<option value="<?= $sort['sort'] ?>" <?= ($this->sort == $sort['sort']) ? 'selected="selected"':'' ?>><?= $sort['name'] ?>(<?= $sort['rate'] ?>)</option>
+<?php endforeach; ?>
+</select>
+<?php else: ?>
+
+<?php endif; ?>
+
+<select name="state" onchange="$('#tab_form').submit();">
+	<option value="unsolved" <?= ($this->state == 'unsolved') ? 'selected="selected"':'' ?>>待解决</option>
+	<option value="solved" <?= ($this->state == 'solved') ? 'selected="selected"':'' ?>>已解决</option>
+</select>

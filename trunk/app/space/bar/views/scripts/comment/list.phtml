@@ -16,6 +16,7 @@
     </td>
     <td class="yui-g section-sub quiet" width="92%">
     	<div id="quote_<?= $r['id'] ?>" class="yui-u first" style="width:75%">
+    		<img class="online_state" src="<?= Alp_Url::img('icon/1616/offline.gif') ?>" rel="<?= $r['uid'] ?>" />
 			<?php if($r['nicky']): ?>
 			<?= $r['unick'] ?>
 			<?php else: ?>
@@ -43,5 +44,6 @@
 <?php endforeach; ?>
 	<div class="pg"><?= $this->pagination ?></div>
 <?php else: ?>
-<p class="txtc f14 pd10 tp11">尚未有人回帖，可以抢占沙发哦!</p>
+<p class="f12 quiet" style="padding-left:20px">尚未有人回帖，可以抢占沙发哦!</p>
 <?php endif; ?>
+<script>online_state();</script>

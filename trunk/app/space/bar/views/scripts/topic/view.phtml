@@ -5,7 +5,10 @@
 			<img class="vm mgr10" src="<?= Alp_Url::img('icon/1616/talk.gif') ?>" /><b>公共帖吧</b> 
 			:: <?= stripcslashes($this->row['title']) ?>
 		</div>
-		<div class="yui-u txtr" style="width:20%"><a href="/space_bar/">返回话题列表</a></div>
+		<div class="yui-u txtr a-span" style="width:20%">
+			<a href="javascript:history.back()">返回上一页</a>
+			<a href="/space_bar/">返回话题列表</a>
+		</div>
 	</div>
 	<table width="100%">
 		<tr>
@@ -13,15 +16,17 @@
 				<div class="head80">
 					<?php if($this->row['nicky']): ?>
 					<img class="mg10 pd10" src="<?= Cmd::userhead(0,80,Cmd::getSess('profile','sex')) ?>" />
+					<img class="online_state" src="<?= Alp_Url::img('icon/1616/offline.gif') ?>" rel="<?= $this->row['puber'] ?>" />
 					<?= $this->row['unick'] ?>
 					<?php else: ?>
 					<a href="/space_home/?uid=<?= $this->row['puber'] ?>">
 					<img class="mg10 pd10" src="<?= Cmd::userhead($this->row['puber'],80) ?>" />
 					</a>
-					<br />
+					<img class="online_state" src="<?= Alp_Url::img('icon/1616/offline.gif') ?>" rel="<?= $this->row['puber'] ?>" />
 					<a href="/space_home/?uid=<?= $this->row['puber'] ?>"><?= $this->row['uname'] ?></a>
 					<?php endif; ?>
 				</div>
+				<br /><br /><br />
 			</td>
 		</tr>
 		<tr>

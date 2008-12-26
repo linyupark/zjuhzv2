@@ -3,6 +3,22 @@
 	class Logic_Space_Bar_Help extends DbModel
 	{
 		/**
+		 * 查看求助信息
+		 *
+		 */
+		public static function view($tid)
+		{
+			$select = parent::Space()->select();
+			$select->from(array('bar' => 'tb_tbar'))->where('bar.tid = ?', $tid);
+			$select->joinLeft(array('help' => 'tb_help'), 'bar.tid = help.tid');
+			$select->joinLeft(array('u'=>'zjuhzv2_user.tb_base'), 'bar.puber = u.uid', 
+							  array('uname'=>'u.username','unick'=>'u.nickname'));
+			$select->joinLeft(array('s'=>'zjuhzv2_space.tb_help_sort'), 'help.sort = s.sort', 
+							  array('sortname' => 's.name'));
+			return $select->query()->fetchAll();
+		}
+		
+		/**
 		 * 获取分类
 		 *
 		 */
@@ -60,6 +76,9 @@
 					'sort' => $params['sort'],
 					'state' => 0
 				));
+				$db->update('tb_help_sort', array(
+					'rate' => new Zend_Db_Expr('rate + 1')
+				), 'sort = '.$params['sort']);
 				$db->commit();
 				return $tid;
 				

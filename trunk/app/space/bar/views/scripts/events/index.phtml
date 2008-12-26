@@ -3,11 +3,57 @@
 		<div class="mg5 section yui-g">
 			<div class="yui-u first" style="width:80%">
 				<img class="vm mgr10" src="<?= Alp_Url::img('icon/1616/tea.gif') ?>" /><b>校友活动</b>
-				 :: 丰富校友活动精彩你的人生
+				 :: 丰富校友活动精彩你的生活
 			</div>
 			<div class="yui-u txtr" style="width:20%"><a href="javascript:history.back()">返回上一页</a></div>
 		</div>
 		<?= $this->render('tab.phtml'); ?>
-		<hr class="dashed" />
+		<table width="100%" class="mgt10 table-dashed">
+			<?php if(count($this->rows) > 0): foreach ($this->rows as $i => $r): ?>
+			<tr>
+				<td class="txtc" width="10%">
+					<div class="head40">
+						<?php if($r['nicky']): ?>
+						<img class="pd10" src="<?= Cmd::userhead(0,40,Cmd::getSess('profile','sex')) ?>" />
+						<?php else: ?>
+						<a href="/space_home/?uid=<?= $r['puber'] ?>">
+						<img class="pd10" src="<?= Cmd::userhead($r['puber'],40) ?>" />
+						</a>
+						<?php endif; ?>
+					</div>
+				</td>
+				<td <?= ($i%2 == 1) ? 'bgcolor="#f5f5f5"' : '' ?> style="line-height:150%">
+					<?= ($r['nicky']) ? $r['pubnick'] : '<a href="/space_home/?uid='.$r['puber'].'">'.$r['pubname'].'</a>'; ?>
+					<img src="<?= Alp_Url::img('icon/mix/quote2.gif'); ?>" />
+					<a href="/space_bar/events/view?tid=<?= $r['tid'] ?>" class="f14"><?= stripcslashes($r['title']) ?></a>
+					<span class="quiet">
+						<br />
+						地点：<?= $r['address']; ?>
+						<br />	
+						<?php if($r['time'] > time()): ?>
+						距开始<span class="tp5"><?= Alp_Date::timespan(time(), $r['time']); ?></span>
+						<?php else: ?>
+						已结束<span class="tp5"><?= Alp_Date::timespan($r['time']); ?></span>
+						<?php endif; ?>
+						&nbsp;&nbsp;
+						查看<span class="f9">(<?= $r['click'] ?>)</span>
+						&nbsp;&nbsp;
+						回复<span class="f9">(<?= $r['reply'] ?>)</span>
+						&nbsp;&nbsp;
+						顶<span class="f9">(<?= $r['rate'] ?>)</span>
+						&nbsp;&nbsp;
+						报名<span class="f9">(<?= unserialize($r['member']) ? count(unserialize($r['member'])):0 ?>)</span>
+						&nbsp;&nbsp;
+						<?= ($r['limit'] > 0) ? '人数限制<span class="f9">('.$r['limit'].')</span>':'' ?>
+					</span>
+				</td>
+			</tr>
+			<?php endforeach; else: ?>
+			<tr>
+				<td><img class="vm" src="<?= Alp_Url::img('icon/1616/att.gif'); ?>" /> 没有找到任何相关的帖子</td>
+			</tr>
+			<?php endif; ?>
+		</table>
+		<div class="pg"><?= $this->pagination ?></div>
 	</div>
 </div>

@@ -2,6 +2,8 @@
 	<?php if($this->row['modtime']): ?>
 	<span class="quiet f14">***该帖最后编辑于<?= Alp_Date::normal($this->row['modtime']); ?>***</span>
 	<?php endif; ?>
+	
+	<!-- 通用按钮 -->
 	<a href="javascript:load_rate(<?= $this->row['rate'] ?>)">
 		<img id="rate_icon" src="<?= Alp_Url::img('icon/mix/ding.gif'); ?>" />
 		顶(<span id="rate_box"><?= $this->row['rate'] ?></span>)
@@ -17,6 +19,7 @@
 	<?php elseif($this->row['puber'] == Cmd::uid()): ?>
 	<a href="javascript:edit_bar(<?= $this->row['tid'] ?>)"><img src="<?= Alp_Url::img('icon/mix/edit.gif'); ?>" />修改</a>
 	<?php endif; ?>
+	<!-- /通用按钮 -->
 </div>
 <script type="text/javascript">
 function load_rate(v){$.post('/space_bar/toolbar/rate?tid=<?= $this->row['tid'] ?>',function(data){ if(data == 'success') {$('#rate_icon').fadeOut(500,function(){ $(this).fadeIn(500) });$('#rate_box').html(v+1);} else alert('不能连续顶帖哦');});}

@@ -1,0 +1,8 @@
+<div class="a-span f12 pd5 mgt5 quiet" style="border:1px dashed #ccc; background:#f5f5f5">
+报名单：
+<?php if($this->members): foreach($this->members as $uid => $name): ?>
+<a href="/space_home/?uid=<?= $uid ?>"><?= $name ?></a>
+<?php endforeach; else: ?>
+还没有人报名哦
+<?php endif; ?>
+</div>

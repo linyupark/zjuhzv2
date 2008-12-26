@@ -1,7 +1,7 @@
 <?php if($this->history): ?>
 <table class="table-dashed">
 	<?php foreach ($this->history as $t): ?>
-	<tr><td><a href="/space_bar/topic/view?tid=<?= $t['tid'] ?>"><?= stripslashes($t['title']) ?></a></td></tr>
+	<tr><td><a href="/space_bar/<?= $t['type'] ?>/view?tid=<?= $t['tid'] ?>"><?= stripslashes($t['title']) ?></a></td></tr>
 	<?php endforeach; ?>
 </table>
 <?php else: ?>

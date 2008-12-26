@@ -1,0 +1,33 @@
+<?php if($this->time > time()): ?>
+	<?php if(!$this->limit || $this->limit > count($this->members) || isset($this->members[$this->myid])): ?>
+	<?php if(isset($this->members[$this->myid])){ $f = 0; $v = '取消报名'; $color = '#F9C0AA'; } else { $f = 1; $v = '我要报名'; $color = '#E3F9AA'; } ?>
+	<input id="sign_btn" onclick="do_sign(<?= $f ?>)" class="btn pd10" type="button" value="距活动开始还有<?= Alp_Date::timespan(time(), $this->time).'，'.$v ?>" style="background:<?= $color ?>" />
+	<?php else: ?>
+	<input id="sign_btn" class="btn" type="button" value="距活动开始还有<?= Alp_Date::timespan(time(), $this->time) ?>，报名人数已达上限" disabled="disabled" />
+	<?php endif; ?>
+<?php else: ?>
+	<input id="sign_btn" class="btn" type="button" value="活动报名已经结束" disabled="disabled" />
+<?php endif; ?>
+<span id="sign_box"></span>
+<script type="text/javascript">
+	function load_sign()
+	{
+		$('#sign_box').load('/space_bar/events/signbox?tid=<?= $this->tid ?>');
+	}
+	function do_sign(f)
+	{
+		$.post('/space_bar/events/sign?tid=<?= $this->tid ?>&f='+f, 
+			function(data){
+				if(data == 'success')
+				{
+					if(f == 1)
+					$('#sign_btn').css('background','#F9C0AA').val('成功报名').attr('disabled', true);
+					if(f == 0)
+					$('#sign_btn').css('background','#E3F9AA').val('成功取消报名').attr('disabled', true);
+					load_sign();
+				}
+			}
+		);
+	}
+	load_sign();
+</script>

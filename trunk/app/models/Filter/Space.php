@@ -176,6 +176,25 @@
 			return $params;
 		}
 		
+		public static function modevents($params)
+		{
+			$params['title'] = Alp_Valid::of($params['title'], 'title', '标题主题', 'trim|strip_tags|str_between[3,90]');
+			$params['content'] = Alp_Valid::of($params['content'], 'content', '内容', 'trim|required');
+			if(!empty($params['limit']))
+			$params['limit'] = Alp_Valid::of($params['limit'], 'limit', '人数限制', 'trim|numeric');
+			else $params['limit'] = null;
+			$params['year'] = Alp_Valid::of($params['year'], 'year', '年份', 'trim|numeric');
+			$params['month'] = Alp_Valid::of($params['month'], 'month', '月份', 'trim|numeric');
+			$params['day'] = Alp_Valid::of($params['day'], 'day', '日', 'trim|numeric');
+			$params['hour'] = Alp_Valid::of($params['hour'], 'hour', '小时', 'trim|numeric');
+			$params['min'] = Alp_Valid::of($params['min'], 'min', '分钟', 'trim|numeric');
+			$time = strtotime($params['year'].'-'.$params['month'].'-'.$params['day'].' '.$params['hour'].':'.$params['min']);
+			if(!$time) Alp_Sys::msg('time', '活动时间无效，请检查格式');
+			else $params['time'] = $time;
+			$params['address'] = Alp_Valid::of($params['address'], 'address', '活动地址', 'trim|required');
+			return $params;
+		}
+		
 		public static function modnews($params)
 		{
 			$params['title'] = Alp_Valid::of($params['title'], 'title', '标题主题', 'trim|strip_tags|str_between[3,90]');

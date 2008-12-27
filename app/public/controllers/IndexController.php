@@ -6,6 +6,11 @@
 		{
 			
 		}
+		
+		function docAction()
+		{
+			$this->view->of = $this->_getParam('of');
+		}
 	}
 
 ?>

@@ -22,7 +22,9 @@
 			$where = $this->_getParam('where', 'all');
 			$order = $this->view->order;
 			$page = $this->_getParam('p', 1); // 默认显示页
-			$select = DbModel::Space()->select()->from(array('bar' => 'zjuhzv2_space.tb_tbar'))->where('`group` = ?', 0);
+			$select = DbModel::Space()->select()->from(array('bar' => 'zjuhzv2_space.tb_tbar'))
+												->where('`group` = ?', 0)
+												->order('ding DESC');
 			switch ($where)
 			{
 				case 'pub' : // 我发布的帖子

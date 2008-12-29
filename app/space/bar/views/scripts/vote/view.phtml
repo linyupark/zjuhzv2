@@ -1,3 +1,136 @@
-<?php
+<?php $this->headTitle(htmlspecialchars(stripcslashes($this->row['title']))); ?>
+<style>
+	.rate_bg{ background:#eee; width:220px; height:10px; }
+	.rate_0,.rate_1,.rate_2,.rate_3,.rate_4{ height:7px; width:0px; margin:1px; }
+	.rate_0{ background:#E7AB6D; border:1px solid #C18F5A; }
+	.rate_1{ background:#5DBC5B; border:1px solid #478F45; }
+	.rate_2{ background:#6C81B6; border:1px solid #586E97; }
+	.rate_3{ background:#A5CBD6; border:1px solid #8AABB4; }
+	.rate_4{ background:#D843B3; border:1px solid #B0248D; }
+</style>
+<div class="yui-main">
+	<div class="mg5 section yui-g">
+		<div class="yui-u first" style="width:80%">
+			<img class="vm mgr10" src="<?= Alp_Url::img('icon/1616/vote.gif') ?>" /><b>投票调查</b> 
+			:: <?= stripcslashes($this->row['title']) ?>
+		</div>
+		<div class="yui-u txtr a-span" style="width:20%">
+			<a href="javascript:history.back()">返回上一页</a>
+			<a href="/space_bar/">返回投票列表</a>
+		</div>
+	</div>
+	<table width="100%">
+		<tr>
+			<td rowspan="2" width="15%" valign="top" class="txtc">
+				<div class="head80">
+					<?php if($this->row['nicky']): ?>
+					<img class="mg10 pd10" src="<?= Cmd::userhead(0,80,Cmd::getSess('profile','sex')) ?>" />
+					<img class="online_state" src="<?= Alp_Url::img('icon/1616/offline.gif') ?>" rel="<?= $this->row['puber'] ?>" />
+					<?= $this->row['unick'] ?>
+					<?php else: ?>
+					<a href="/space_home/?uid=<?= $this->row['puber'] ?>">
+					<img class="mg10 pd10" src="<?= Cmd::userhead($this->row['puber'],80) ?>" />
+					</a>
+					<img class="online_state" src="<?= Alp_Url::img('icon/1616/offline.gif') ?>" rel="<?= $this->row['puber'] ?>" />
+					<a href="/space_home/?uid=<?= $this->row['puber'] ?>"><?= $this->row['uname'] ?></a>
+					<?php endif; ?>
+				</div>
+				<br /><br /><br />
+			</td>
+		</tr>
+		<tr>
+			<td width="85%">
+				<div class="yui-g section-sub">
+					<div class="yui-u first" style="width:80%">
+						<b class="f14">
+							<?= stripcslashes($this->row['title']) ?>
+							(<?= ($this->row['maxselect'] == 1)?'单选':'最多选'.$this->base['mulit'].'项' ?>)
+						</b>
+					</div>
+					<div class="yui-u txtr" style="width:20%">
+						<?= Alp_Date::normal($this->row['pubtime']) ?> 
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						楼主
+					</div>
+				</div>
+				<div class="f14 pd10" style="line-height:150%;">
+					<?= stripslashes($this->row['memo']); ?>
+					<form id="vote_form" method="post" onsubmit="return do_vote()">
+					<table class="table-dashed f12" width="99%">
+					<?php 
+					$rates = unserialize($this->row['rates']);
+					$options = unserialize($this->row['options']);
+					foreach($options as $id => $opt): ?>
+					<tr>
+						<td class="txtr"><?= $opt ?>：</td>
+						<td width='190px'><div class="rate_bg"></div></td>
+						<td class="txtl"><?= ($this->row['maxselect'] == 1)?
+							'<input name="oid[]" value="'.$id.'" type="radio" />':
+							'<input name="oid[]" value="'.$id.'" type="checkbox" />' ?> 
+							<?php if($rates[$id] == 0): ?>
+							&nbsp; 0 (0%)
+							<?php else: ?>
+							&nbsp; <?= $rates[$id].' ('.ceil(100*$rates[$id]/$this->row['votenum']).'%)' ?>
+							<?php endif; ?>
+						</td>
+					</tr>
+					<?php endforeach; ?>
+					<tr>
+						<td colspan="3" class="txtc">
+							<input name="max_select" value="<?= $this->row['maxselect'] ?>" type="hidden" />
+							<input id="vote_submit" class="btn" type="submit" value="进行投票" />
+							<div id="vote_box" class="pd10 txtl quiet"></div>
+						</td>
+					</tr>
+					</table>
+					</form>
+				</div>
+				<?= $this->render('toolbar.phtml'); ?>
+			</td>
+		</tr>
+	</table>
+	<?= $this->action('view', 'comment', 'space_bar') ?>
+</div>
+<script type="text/javascript">
+function do_vote()
+{
+	$('#vote_submit').val('投票提交中..').attr('disabled', true);
+	$.getJSON(
+		'/space_bar/vote/dovote?tid=<?= $this->row['tid'] ?>',
+		$('#vote_form').serializeArray(),
+		function(data)
+		{
+			if(data.result == 'success')
+			{
+				$('#vote_submit').val('成功投票');
+				history.go(0);
+			}
+			else 
+			{
+				alert(data.result);
+				$('#vote_submit').val('进行投票').attr('disabled', false);
+			}
+			
+		}
+	);
+	return false;
+}
 
-?>
+<?php if($this->voters[Cmd::uid()]): ?>
+$('#vote_submit').val('已成功投票').attr('disabled', true);
+$('#vote_box').load('/space_bar/vote/view?tid=<?= $this->row['tid'] ?>');
+<?php endif; ?>
+
+function count_rate()
+{
+	<?php foreach($options as $k => $opt): ?>
+	$('.rate_bg:eq(<?= $k ?>)').html('<div id="i_<?= $k ?>" class="rate_<?= $k%5 ?>"></div>');
+	<?php if($this->row['votenum'] == 0): ?>
+	$('#i_<?= $k ?>').animate({width:'1px'}, 500);
+	<?php else: ?>
+	$('#i_<?= $k ?>').animate({width:'<?= (220*$rates[$k]/$this->row['votenum']) ?>px'}, 500);
+	<?php endif; ?>
+	<?php endforeach; ?>
+}
+count_rate();
+</script>

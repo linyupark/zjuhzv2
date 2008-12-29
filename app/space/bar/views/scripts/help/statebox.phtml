@@ -1,0 +1,5 @@
+<?php if($this->state == 0): ?>
+<input onclick="$('#state_box').attr('rel',1);load_statebox()" type="button" class="btn" value="已得到满意的答复，变为已解决帖" style="background:#E3F9AA" />
+<?php else: ?>
+<input onclick="$('#state_box').attr('rel',0);load_statebox()" type="button" class="btn" value="还未得到满意答复，变为未解决帖" style="background:#F9C0AA" />
+<?php endif; ?>

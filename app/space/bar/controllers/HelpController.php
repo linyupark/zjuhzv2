@@ -6,6 +6,31 @@
 	 */
 	class Space_Bar_HelpController extends Zend_Controller_Action
 	{
+		function memoAction()
+		{
+			$tid = $this->_getParam('tid');
+			$memo = $this->_getParam('memo');
+			if($this->getRequest()->isXmlHttpRequest())
+			{
+				$data = Alp_String::html(trim($this->_getParam('data')));
+				Logic_Space_Bar_Help::memo($tid, $data);
+			}
+			$this->view->tid = $tid;
+			$this->view->memo = $memo;
+		}
+		
+		/**
+		 * 求助状态
+		 *
+		 */
+		function stateboxAction()
+		{
+			$tid = $this->_getParam('tid');
+			$state = $this->_getParam('state');
+			Logic_Space_Bar_Help::state($tid, $state);
+			$this->view->state = $state;
+		}
+		
 		/**
 		 * 求助列表
 		 *

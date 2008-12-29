@@ -37,6 +37,8 @@ hr.dashed{ height:1px; border:none; border-bottom:1px dashed #ccc; margin:5px; }
 
 .quote{ background:#FFFFDF; padding:2px 8px; border:1px dashed #D4DFA7; margin-bottom:5px }
 
+.memo{ background:#eee; padding:5px; border:1px dashed #ccc; margin-bottom:8px; }
+
 /* pagination style */
 .pg{ text-align:center; clear:both; float:none; margin:10px; }
 .pg a{ background:#f5f5f5; padding:5px; margin-left:5px; }

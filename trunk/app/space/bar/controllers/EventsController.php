@@ -77,7 +77,8 @@
 			$page = $this->_getParam('p', 1); // 默认显示页
 			$select = DbModel::Space()->select()
 									  ->from(array('bar' => 'zjuhzv2_space.tb_tbar'))
-									  ->where('bar.group = ?', 0);
+									  ->where('bar.group = ?', 0)
+									  ->order('ding DESC');
 			
 			$select->joinLeft(array('puser' => 'zjuhzv2_user.tb_base'), 'puser.uid = bar.puber', 
 							  array('pubname' => 'username', 'pubnick' => 'nickname'));

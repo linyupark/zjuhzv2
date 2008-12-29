@@ -3,6 +3,26 @@
 	class Logic_Space_Bar_Help extends DbModel
 	{
 		/**
+		 * 更新备注
+		 *
+		 */
+		public static function memo($tid, $memo)
+		{
+			parent::Space()->update('tb_help', array('memo' => $memo), 'tid = '.$tid);
+		}
+		
+		/**
+		 * 切换求助帖状态
+		 *
+		 * @param unknown_type $tid
+		 * @param unknown_type $state
+		 */
+		public static function state($tid, $state)
+		{
+			parent::Space()->update('tb_help', array('state' => $state), 'tid = '.$tid);
+		}
+		
+		/**
 		 * 查看求助信息
 		 *
 		 */

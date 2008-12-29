@@ -33,7 +33,9 @@
 			<td width="85%">
 				<div class="yui-g section-sub">
 					<div class="yui-u first" style="width:80%">
-						<b class="f14"><?= stripcslashes($this->row['title']) ?></b>
+						<b class="f14">
+						【<span id="state_t" class="tp0"><?= ($this->row['state'] == 0) ? '待解决' : '已解决';  ?></span>】
+						<?= stripcslashes($this->row['title']) ?></b>
 					</div>
 					<div class="yui-u txtr" style="width:20%">
 						<?= Alp_Date::normal($this->row['pubtime']) ?> 
@@ -43,6 +45,13 @@
 				</div>
 				<div class="f14 pd10" style="line-height:150%;">
 					<?= stripslashes($this->row['content']); ?>
+						<?php if($this->row['memo']): ?>
+						<b>互助补充：</b>
+						<div class="memo">
+							<?= stripslashes($this->row['memo']); ?>
+						</div>
+						<?php endif; ?>
+					<span id="state_box" rel=<?= $this->row['state'] ?>></span>
 				</div>
 				<?= $this->render('toolbar.phtml'); ?>
 			</td>
@@ -50,3 +59,12 @@
 	</table>
 	<?= $this->action('view', 'comment', 'space_bar') ?>
 </div>
+<script type="text/javascript">
+<?php if($this->row['puber'] == Cmd::uid()): ?>
+	function memo(){ var data = $('#memo_v').val(); $.post('/space_bar/help/memo?tid=<?= $this->row['tid'] ?>', {'data':data}, function(){ history.go(0); }); }
+	function load_statebox(){ var state = $('#state_box').attr('rel'); $('#state_box').load('/space_bar/help/statebox?tid=<?= $this->row['tid'] ?>&state='+state, function(){ if(state == 0) $('#state_t').text('待解决');else $('#state_t').text('已解决'); }); }
+	load_statebox();
+	if($('.memo').length == 0){$('#state_box').before('<div class="memo">点击此处添加互助备注</div>');}
+	$('.memo').one('click', function(){ var h = $(this).text(); h = h.replace(/(^\s*)|(\s*$)/g, ""); if(h == '点击此处添加互助备注') h = ''; $(this).html('<textarea id="memo_v" style="width:99%;height:80px">'+h+'</textarea><p class="txtr mg5"><input onclick="memo()" type="button" class="btn" value="保存" /></p>'); }).mouseover(function(){$(this).css('background','#ffc');}).mouseout(function(){$(this).css('background','#fff')});
+<?php endif; ?>
+</script>

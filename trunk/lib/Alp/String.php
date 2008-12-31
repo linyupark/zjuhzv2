@@ -94,6 +94,12 @@
 	    	return array_pop($parts);
 	    }
 	    
+	    # 文件名加后缀::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	    static function appendFileName($string, $v)
+	    {
+	    	return self::stripFileExt($string).$v.'.'.self::stripFile($string);
+	    }
+	    
 		# 保留后缀名::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	    static function stripFile($string)
 	    {

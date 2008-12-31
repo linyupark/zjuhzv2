@@ -62,7 +62,7 @@
 	function create_item(uid, file)
 	{
 		var x = $('.file_itme').length;
-		$('#breakline').after('<tr class="file_itme" id="f'+x+'"><td class="txtr">介绍：</td><td>图片'+(x+1)+'.<a href="/upload/photo/'+uid+'/'+file+'">'+file+'</a><input type="hidden" name="photos[]" value="'+file+'" />[<a href="javascript:del_item('+x+',\''+file+'\')">删除</a>]<br /><textarea name="intros[]" style="width:95%"></textarea></td></tr>');
+		$('#breakline').after('<tr class="file_itme" id="f'+x+'"><td class="txtr">介绍：</td><td>图片'+(x+1)+'.<a href="/upload/photo/'+uid+'/'+file+'">'+file+'</a><input type="hidden" name="photos[]" value="'+file+'" />[<a href="javascript:del_item('+x+',\''+file+'\')">删除</a>]<br /><textarea name="intros[]" style="width:95%;height:120px"></textarea></td></tr>');
 	}
 	function del_item(x, file)
 	{

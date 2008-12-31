@@ -6,6 +6,15 @@
 	 */
 	class Logic_Space_Bar_Photo extends DbModel
 	{
+		public static function view($tid)
+		{
+			$select = parent::Space()->select();
+			$select->from(array('bar' => 'tb_tbar'))->where('bar.tid = ?', $tid);
+			$select->joinLeft(array('u'=>'zjuhzv2_user.tb_base'), 'bar.puber = u.uid', 
+							  array('uname'=>'u.username','unick'=>'u.nickname'));
+			return $select->query()->fetchAll();
+		}
+		
 		public static function insert($params)
 		{
 			$db = parent::Space();
@@ -20,13 +29,14 @@
 					'private' => $params['private'],
 					'nicky' => $params['nicky']
 				));
+				
 				$tid = $db->lastInsertId();
 				foreach($params['photos'] as $k => $file)
 				{
 					$db->insert('tb_photo', array(
 						'tid' => $tid,
 						'file' => $file,
-						'intro' => $params['intros'][$k]
+						'intro' => Alp_String::html($params['intros'][$k])
 					));
 				}
 				

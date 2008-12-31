@@ -175,6 +175,31 @@
 			$params['content'] = Alp_Valid::of($params['content'], 'content', '内容', 'trim|required');
 			return $params;
 		}
+		/**
+		 * 修改投票
+		 *
+		 * @param unknown_type $params
+		 * @return unknown
+		 */
+		public static function modvote($params)
+		{
+			$params['title'] = Alp_Valid::of($params['title'], 'title', '主题', 'trim|strip_tags|str_between[3,90]');
+			$params['memo'] = trim($params['memo']);
+			$options = array();
+			$rates = array();
+			foreach ($params['options'] as $opt)
+			{
+				$value = strip_tags(trim($opt));
+				if(!empty($value))
+				{
+					$options[] = $value;
+					$rates[] = 0;
+				}
+			}
+			$params['rates'] = $rates;
+			$params['options'] = $options;
+			return $params;
+		}
 		
 		public static function modevents($params)
 		{

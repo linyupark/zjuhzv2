@@ -1,0 +1,97 @@
+<div class="yui-main">
+	<div class="yui-b">
+		<div class="mg5 section yui-g">
+			<div class="yui-u first">
+				<img class="vm mgr10" src="<?= Alp_Url::img('icon/mix/edit.gif') ?>" /><b>修改投票帖</b>
+			</div>
+			<div class="yui-u txtr"><a href="javascript:history.back()">返回上一页</a></div>
+		</div>
+		<form id="vote_form" method="post" onsubmit="return pub_vote()">
+		<table class="mgl10 table-dashed" width="97%">
+			<tr>
+				<td class="txtr">主题：</td>
+				<td>
+					<input type="text" name="title" size="90" value="<?= stripslashes($this->row['title']); ?>" />
+				</td>
+			</tr>
+			<tr>
+				<td class="txtr">选项：</td>
+				<td class="quiet">
+					只可添加新选项
+				</td>
+			</tr>
+			<?php foreach ($this->options as $i => $v): ?>
+			<tr class="option_item">
+				<td class="txtr"><?= $i+1 ?>：</td>
+				<td><input name="options[]" type="text" size="90" value="<?= stripslashes($v); ?>" disabled="disabled" /></td>
+			</tr>
+			<?php endforeach; ?>
+			<tr>
+				<td></td>
+				<td><a href="javascript:add_option()">+ 增加选项</a></td>
+			</tr>
+			<tr>
+				<td class="txtr">可选：</td>
+				<td>
+					<select name="maxselect" id="maxselect">
+						<?php for($x=1;$x<=5;$x++): ?>
+						<option value="<?= $x ?>" <?= ($x == $this->row['maxselect'])?'selected="selected"':'' ?> ><?= $x ?>项</option>
+						<?php endfor; ?>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td class="txtr">图片：</td>
+				<td id="pic_upload">
+				</td>
+			</tr>
+			<tr>
+				<td class="txtr">说明：</td>
+				<td><?= Cmd::fck('memo',stripslashes($this->row['memo']),'200px','99%') ?></td>
+			</tr>
+			<tr>
+				<td class="txtr">公开给：</td>
+				<td><?= $this->render('mod/private.phtml') ?>
+					<?= $this->render('mod/nicky.phtml') ?>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input id="submit" type="submit" value="保存修改" class="btn" />
+					<input type="hidden" name="group" value="<?= $this->gp ?>" />
+				</td>
+			</tr>
+		</table>
+		</form>
+		<iframe name="pic_frame" class="hide" src="/public/upload/pic"></iframe>
+	</div>
+</div>
+
+<script type="text/javascript">
+	function pub_vote()
+	{
+		$('#submit').attr('disabled', true).val('正在保存帖子，请稍候...');
+		$('#memo').val(FCKeditorAPI.GetInstance("memo").GetXHTML());
+		$.post(
+			'/space_bar/mod/vote?tid=<?= $this->row['tid'] ?>',
+			$('#vote_form').serializeArray(),
+			function(data)
+			{
+				if(data.result == 'success')
+				window.location.href = '/space_bar/vote/view?tid='+data.tid;
+				else 
+				{
+					alert(data.result);
+					$('#submit').attr('disabled', false).val('保存修改');
+				}
+			},
+			'json'
+		);
+		return false;
+	}
+	function insert_html(html){FCKeditorAPI.GetInstance("memo").InsertHtml(html);upreload();}
+	function add_option()
+	{
+		var x = $('.option_item').length;
+		$('.option_item:last').after('<tr class="option_item"><td class="txtr">'+(x+1)+'：</td><td><input name="options[]" type="text" size="90" /></td></tr>');
+		$('#maxselect').append('<option value="'+(x)+'">'+(x)+'项</option>');
+	}
+	$('#pic_upload').load('/public/upload/form?for=pic');
+</script>

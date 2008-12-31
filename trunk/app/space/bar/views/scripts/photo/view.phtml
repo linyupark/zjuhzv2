@@ -1,3 +1,40 @@
-<?php
-
-?>
+<?php $this->headTitle(htmlspecialchars(stripcslashes($this->row['title']))); ?>
+<div class="yui-main">
+	<div class="mg5 section yui-g">
+		<div class="yui-u first" style="width:80%">
+			<img class="vm mgr10" src="<?= Alp_Url::img('icon/1616/talk.gif') ?>" /><b>看图论事</b> 
+			:: <?= stripcslashes($this->row['title']) ?>
+		</div>
+		<div class="yui-u txtr a-span" style="width:20%">
+			<a href="javascript:history.back()">返回上一页</a>
+			<a href="/space_bar/?type=photo">返回图片列表</a>
+		</div>
+	</div>
+	<table width="100%">
+		<tr>
+			<td>
+				<div class="yui-g section-sub">
+					<div class="yui-u first" style="width:80%">
+						<img class="online_state" src="<?= Alp_Url::img('icon/1616/offline.gif') ?>" rel="<?= $this->row['puber'] ?>" />
+						<?php if($this->row['nicky']): ?>
+						<?= $this->row['unick'] ?>
+						<?php else: ?>
+						<a href="/space_home/?uid=<?= $this->row['puber'] ?>"><?= $this->row['uname'] ?></a>
+						<?php endif; ?>：
+						<b class="f14"><?= stripcslashes($this->row['title']) ?></b>
+					</div>
+					<div class="yui-u txtr" style="width:20%">
+						<?= Alp_Date::normal($this->row['pubtime']) ?> 
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						楼主
+					</div>
+				</div>
+				<div class="f14 pd10" style="line-height:150%;">
+					<?= $this->action('show', 'photo', 'space_bar', array('row' => $this->row)); ?>
+				</div>
+				<?= $this->render('toolbar.phtml'); ?>
+			</td>
+		</tr>
+	</table>
+	<?= $this->action('view', 'comment', 'space_bar') ?>
+</div>

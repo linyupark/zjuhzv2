@@ -20,7 +20,7 @@
 				<td class="txtl">
 					<img class="vm" src="<?= Alp_Url::img('icon/1616/'.$this->icons[$r['type']]); ?>" />
 					<a <?= ($r['ding'] == 1)?'style="color:red"':''; ?> href="/space_bar/<?= $r['type'] ?>/view?tid=<?= $r['tid'] ?>"><?= stripslashes($r['title']) ?></a>
-					<?= $cpage = Logic_Space_Bar::subpage($r); ?>
+					<?= Logic_Space_Bar::subpage($r); ?>
 				</td>
 				<td class="txtc quiet">
 					<?= ($r['nicky']) ? $r['pubnick']:'<a href="/space_home/?uid='.$r['puber'].'">'.$r['pubname'].'</a>' ?><br />

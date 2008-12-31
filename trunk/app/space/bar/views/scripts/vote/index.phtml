@@ -17,6 +17,7 @@
 					<?= ($r['nicky']) ? $r['pubnick'] : '<a href="/space_home/?uid='.$r['puber'].'">'.$r['pubname'].'</a>'; ?>
 					<img src="<?= Alp_Url::img('icon/mix/quote2.gif'); ?>" />
 					<a href="/space_bar/vote/view?tid=<?= $r['tid'] ?>" class="f14"><?= stripcslashes($r['title']) ?></a>
+					<?= Logic_Space_Bar::subpage($r); ?>
 					<br />
 					<span class="quiet">
 						<span class="tp5"><?= Alp_Date::normal($r['pubtime']); ?></span>

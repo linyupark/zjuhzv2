@@ -26,8 +26,9 @@
 					<?= ($r['nicky']) ? $r['pubnick'] : '<a href="/space_home/?uid='.$r['puber'].'">'.$r['pubname'].'</a>'; ?>
 					<img src="<?= Alp_Url::img('icon/mix/quote2.gif'); ?>" />
 					<a <?= ($r['ding'] == 1)?'style="color:red"':''; ?> href="/space_bar/events/view?tid=<?= $r['tid'] ?>" class="f14"><?= stripcslashes($r['title']) ?></a>
+					<?= Logic_Space_Bar::subpage($r); ?>
+					<br />
 					<span class="quiet">
-						<br />
 						地点：<?= $r['address']; ?>
 						<br />	
 						<?php if($r['time'] > time()): ?>

@@ -2,6 +2,37 @@
 
 	class Logic_Space_Bar_Vote extends DbModel
 	{
+		public static function mod($params, $tid)
+		{
+			$db = parent::Space();
+			$db->beginTransaction();
+			try {
+				$row = $db->fetchRow('SELECT `options`,`rates` FROM `tb_vote` WHERE `tid` = ?', $tid);
+				$options = unserialize($row['options']);
+				$rates = unserialize($row['rates']);
+				$options = array_merge($options, $params['options']);
+				$rates = array_merge($rates, $params['rates']);
+				$db->update('tb_tbar', array(
+					'title' => $params['title'],
+					'private' => $params['private'],
+					'nicky' => $params['nicky']
+				), 'tid = '.$tid);
+				
+				$db->update('tb_vote', array(
+					'memo' => $params['memo'],
+					'rates' => serialize($rates),
+					'maxselect' => $params['maxselect'],
+					'options' => serialize($options)
+				), 'tid = '.$tid);
+				
+				$db->commit();
+			} catch (Exception $e) {
+				
+				$db->rollback();
+				Alp_Sys::msg('exception', $e->getMessage());
+			}
+		}
+		
 		/**
 		 * 发送本人的投票信息
 		 *

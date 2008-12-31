@@ -1,0 +1,18 @@
+<table class="table-dashed f12" width="40%">
+<tr class="section-u">
+	<td>跟
+	<?php foreach ($this->tags as $t): ?>
+	<a href=""><?= $t ?></a> 
+	<?php endforeach; ?>
+	相关的新闻：</td>
+</tr>
+<?php if(count($this->rows) > 0): foreach ($this->rows as $r): ?>
+<tr>
+	<td><a href="/space_bar/news/view?tid=<?= $r['tid'] ?>"><?= $r['title'] ?></a></td>
+</tr>
+<?php endforeach; else: ?>
+<tr>
+	<td class="quiet">未找到</td>
+</tr>
+<?php endif; ?>
+</table>

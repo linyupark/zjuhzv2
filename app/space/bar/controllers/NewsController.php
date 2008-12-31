@@ -7,6 +7,28 @@
 	class Space_Bar_NewsController extends Zend_Controller_Action
 	{
 		/**
+		 * 相关文章
+		 *
+		 */
+		function relativeAction()
+		{
+			$tags = $this->_getParam('tags');
+			$select = DbModel::Space()->select()
+									  ->from(array('bar' => 'tb_tbar'))
+									  ->where('bar.group = 0 AND bar.type = "news" AND bar.tid != ?', $this->_getParam('tid'));
+			$sql = '';
+			foreach ($tags as $i => $t)
+			{
+				$sql .= 'bar.title LIKE "%'.$t.'%"';
+				if(($i+1) < count($tags)) $sql .= ' OR ';
+			}
+			$select->where($sql)->order('pubtime DESC')->limit(5);
+			$rows = $select->query()->fetchAll();
+			$this->view->rows = $rows;
+			$this->view->tags = $tags;
+		}
+		
+		/**
 		 * 新闻列表
 		 *
 		 */

@@ -1,0 +1,19 @@
+<div class="yui-main">
+	<div class="yui-b">
+		<div class="mg5 section yui-g">
+			<div class="yui-u first">
+				<img class="vm mgr10" src="<?= Alp_Url::img('icon/1616/att.gif') ?>" /><b>访问权限阻止</b>
+			</div>
+			<div class="yui-u txtr a-span">
+				<a href="javascript:history.back()">返回上一页</a>
+			</div>
+		</div>
+		<?php if($this->params['group']): ?>
+		<?= $this->action('info', 'home', 'space_group', array('group'=>$this->params['group'])); ?>
+		<?php endif; ?>
+		<h1 class="notice">
+			您当前的权限不足以访问该群组内容~
+		</h1>
+	</div>
+</div>
+<?= $this->render('sidebar.phtml'); ?>

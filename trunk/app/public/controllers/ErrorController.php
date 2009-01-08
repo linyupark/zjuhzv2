@@ -23,7 +23,8 @@
 		
 		function denyAction()
 		{
-			
+			$this->view->params = $this->_getAllParams();
+			$this->render($this->_getParam('position'));
 		}
 	}
 

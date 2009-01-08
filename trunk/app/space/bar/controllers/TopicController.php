@@ -50,17 +50,22 @@
 					else $select->where('bar.tid = ?', 0);
 				break;
 				case 'fav' : // 我的收藏帖
-					$row = Logic_Space_Bar::getFav('topic', Cmd::uid());
+					$row = DbModel::Space()->fetchRow('SELECT * FROM `tb_tfav` WHERE `uid` = ?', Cmd::uid());
 					if($row != false)
 					{
-						$tid_arr = unserialize($row['topic']);
-						if(count($tid_arr) > 0 && $tid_arr != false)
+						$tid_arr = array();
+						foreach ($row as $r)
+						{
+							if(unserialize($r)) $tid_arr[] = unserialize($r);
+						}
+						
+						if(count($tid_arr) > 0)
 						{
 							$i = 0;
-							foreach ($tid_arr as $tid => $time)
+							foreach ($tid_arr as $v)
 							{
-								if($i == 0) $select->where('bar.tid = ?', $tid);
-								else $select->orWhere('bar.tid = ?', $tid);
+								if($i == 0) $select->where('bar.tid = ?', array_keys($v));
+								else $select->orWhere('bar.tid = ?',  array_keys($v));
 								$i++;
 							}
 						}
@@ -75,16 +80,19 @@
 			switch ($order)
 			{
 				case 'time' : // 发布时间
-					$select->order('pubtime DESC');
+					$select->order('bar.pubtime DESC');
+				break;
+				case 'rtime' : // 回复时间
+					$select->order('bar.replytime DESC');
 				break;
 				case 'reply' : // 回复数
-					$select->order('reply DESC');
+					$select->order('bar.reply DESC');
 				break;
 				case 'click' : // 点击率
-					$select->order('click DESC');
+					$select->order('bar.click DESC');
 				break;
 				default : // 被顶数
-					$select->order('rate DESC');
+					$select->order('bar.rate DESC');
 				break;
 			}
 			$select->joinLeft(array('puser' => 'zjuhzv2_user.tb_base'), 'puser.uid = bar.puber', 

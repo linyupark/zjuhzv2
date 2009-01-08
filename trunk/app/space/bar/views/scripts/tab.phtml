@@ -13,6 +13,7 @@
 		</select>
 		<select name="order" onchange="$('#tab_form').submit();">
 			<option value="time" <?= ($this->order == 'time') ? 'selected="selected"':'' ?>>新发布</option>
+			<option value="rtime" <?= ($this->order == 'rtime') ? 'selected="selected"':'' ?>>新回复</option>
 			<option value="reply" <?= ($this->order == 'reply') ? 'selected="selected"':'' ?>>回复数</option>
 			<option value="click" <?= ($this->order == 'click') ? 'selected="selected"':'' ?>>查看数</option>
 			<option value="rate" <?= ($this->order == 'rate') ? 'selected="selected"':'' ?>>被顶数</option>

@@ -6,6 +6,44 @@
 	 */
 	class Logic_Space_Bar_Photo extends DbModel
 	{
+		public static function del($id)
+		{
+			parent::Space()->delete('tb_photo', 'id = '.$id);
+		}
+		
+		/**
+		 * 返回含有照片总数
+		 *
+		 * @param unknown_type $tid
+		 * @return unknown
+		 */
+		public static function num($tid)
+		{
+			$row = parent::Space()->fetchRow('SELECT COUNT(`id`) AS `numrow` FROM `tb_photo` WHERE `tid` = ?', $tid);
+			return $row['numrow'];
+		}
+		
+		public static function mod($params, $tid)
+		{
+			$db = parent::Space();
+			foreach ($params['ids'] as $id)
+			{
+				$db->update('tb_photo', array(
+					'intro' => Alp_String::html($params['intros'][$id])
+				), 'id ='.$id);
+			}
+			
+			if(isset($params['n_photo']))
+			foreach($params['n_photo'] as $k => $file)
+			{
+				$db->insert('tb_photo', array(
+					'tid' => $tid,
+					'file' => $file,
+					'intro' => Alp_String::html($params['n_intros'][$k])
+				));
+			}
+		}
+		
 		public static function view($tid)
 		{
 			$select = parent::Space()->select();

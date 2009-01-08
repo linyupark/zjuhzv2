@@ -1,0 +1,87 @@
+<div class="yui-main">
+	<div class="yui-b">
+		<div class="mg5 section yui-g">
+			<div class="yui-u first">
+				<img class="vm mgr10" src="<?= Alp_Url::img('icon/mix/edit.gif') ?>" /><b>修改图片帖</b>
+			</div>
+			<div class="yui-u txtr"><a href="javascript:history.back()">返回上一页</a></div>
+		</div>
+		<form id="photo_form" method="post" onsubmit="return pub_photo()">
+		<table class="mgl10 table-dashed" width="97%">
+			<tr>
+				<td class="txtr">标题：</td>
+				<td>
+					<input type="text" name="title" size="90" value="<?= $this->row['title'] ?>" />
+				</td>
+			</tr>
+			<tr id="breakline">
+				<td class="txtr">图片：</td>
+				<td id="photo_upload"></td>
+			</tr>
+			<?php foreach ($this->photos as $i => $r): ?>
+			<tr class="file_itme" id="f<?= $i+1 ?>">
+				<td class="txtc"><img src="/upload/photo/<?= $this->row['puber'] ?>/<?= $r['file'] ?>" width="120" />
+					<input type="hidden" name="photos[]" value="<?= $r['file'] ?>" />
+					<input type="hidden" name="ids[]" value="<?= $r['id'] ?>" />
+					<br />
+					[<a href="javascript:del_item('<?= $i+1 ?>','<?= $r['file'] ?>',<?= $r['id'] ?>)">删除</a>]</td>
+				<td>
+					<textarea name="intros[<?= $r['id'] ?>]" style="width:75%;height:120px"><?= strip_tags(stripslashes($r['intro'])) ?></textarea>
+				</td>
+				</tr>
+			<?php endforeach; ?>
+			<tr>
+				<td class="txtr">公开给：</td>
+				<td><?= $this->render('mod/private.phtml') ?>
+					<?= $this->render('mod/nicky.phtml') ?>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input id="submit" type="submit" value="保存修改" class="btn" />
+					<input type="hidden" name="group" value="<?= $this->gp ?>" />
+				</td>
+			</tr>
+		</table>
+		</form>
+		<iframe name="photo_frame" class="hide" src="/public/upload/photo"></iframe>
+	</div>
+</div>
+
+<script type="text/javascript">
+	function pub_photo()
+	{
+		$('#submit').attr('disabled', true).val('正在保存帖子，请稍候...');
+		$.post(
+			'/space_bar/mod/photo?tid=<?= $this->row['tid'] ?>',
+			$('#photo_form').serializeArray(),
+			function(data)
+			{
+				if(data.result == 'success')
+				window.location.href = '/space_bar/photo/view?tid='+data.tid;
+				else 
+				{
+					alert(data.result);
+					$('#submit').attr('disabled', false).val('保存修改');
+				}
+			},
+			'json'
+		);
+		return false;
+	}
+	function create_item(uid, file)
+	{
+		var x = $('.file_itme').length;
+		$('#breakline').after('<tr class="file_itme" id="f'+x+'"><td class="txtc"><img src="/upload/photo/'+uid+'/'+file+'" width="150" /><input type="hidden" name="n_photos[]" value="'+file+'" /><br />[<a href="javascript:del_item('+x+',\''+file+'\')">删除</a>]</td><td><textarea name="n_intros[]" style="width:75%;height:120px"></textarea></td></tr>');
+	}
+	function del_item(x, file, id)
+	{
+		var c =confirm('确定删除？');
+		if(c ==true)
+		$.post('/public/upload/del_photo?file='+file,{uid:<?= $this->row['puber'] ?>},function(data){ 
+			if(data=='success') 
+			{
+				$.post('/space_bar/mod/delphoto?id='+id);
+				$('#f'+x).fadeOut(500, function(){ $(this).empty(); });
+			}
+		});
+	}
+	$('#photo_upload').load('/public/upload/form?for=photo');
+</script>

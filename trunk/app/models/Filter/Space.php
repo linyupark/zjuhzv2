@@ -175,6 +175,21 @@
 			$params['content'] = Alp_Valid::of($params['content'], 'content', '内容', 'trim|required');
 			return $params;
 		}
+		
+		public static function modshare($params)
+		{
+			$params['title'] = Alp_Valid::of($params['title'], 'title', '标题', 'trim|strip_tags|str_between[3,90]');
+			if(count($params['files']) == 0 && count($params['n_files']) == 0) Alp_Sys::msg('files', '请上传想要共享的文件');
+			return $params;
+		}
+		
+		public static function modphoto($params)
+		{
+			$params['title'] = Alp_Valid::of($params['title'], 'title', '标题', 'trim|strip_tags|str_between[3,90]');
+			if(count($params['photos']) == 0 && count($params['n_photos']) == 0) Alp_Sys::msg('files', '请上传要展示的图片文件');
+			return $params;
+		}
+		
 		/**
 		 * 修改投票
 		 *

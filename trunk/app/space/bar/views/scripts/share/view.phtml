@@ -1,3 +1,72 @@
-<?php
-
-?>
+<?php $this->headTitle(htmlspecialchars(stripcslashes($this->row['title']))); ?>
+<div class="yui-main">
+	<div class="mg5 section yui-g">
+		<div class="yui-u first" style="width:80%">
+			<img class="vm mgr10" src="<?= Alp_Url::img('icon/1616/share.gif') ?>" /><b>文件共享</b> 
+			:: <?= stripcslashes($this->row['title']) ?>
+		</div>
+		<div class="yui-u txtr a-span" style="width:20%">
+			<a href="javascript:history.back()">返回上一页</a>
+			<a href="/space_bar/?type=share">返回共享列表</a>
+		</div>
+	</div>
+	<table width="100%">
+		<tr>
+			<td rowspan="2" width="15%" valign="top" class="txtc">
+				<div class="head80">
+					<?php if($this->row['nicky']): ?>
+					<img class="mg10 pd10" src="<?= Cmd::userhead(0,80,Cmd::getSess('profile','sex')) ?>" />
+					<img class="online_state" src="<?= Alp_Url::img('icon/1616/offline.gif') ?>" rel="<?= $this->row['puber'] ?>" />
+					<?= $this->row['unick'] ?>
+					<?php else: ?>
+					<a href="/space_home/?uid=<?= $this->row['puber'] ?>">
+					<img class="mg10 pd10" src="<?= Cmd::userhead($this->row['puber'],80) ?>" />
+					</a>
+					<img class="online_state" src="<?= Alp_Url::img('icon/1616/offline.gif') ?>" rel="<?= $this->row['puber'] ?>" />
+					<a href="/space_home/?uid=<?= $this->row['puber'] ?>"><?= $this->row['uname'] ?></a>
+					<?php endif; ?>
+				</div>
+				<br /><br /><br />
+			</td>
+		</tr>
+		<tr>
+			<td width="85%">
+				<div class="yui-g section-sub">
+					<div class="yui-u first" style="width:80%">
+						<b class="f14"><?= stripcslashes($this->row['title']) ?></b>
+					</div>
+					<div class="yui-u txtr" style="width:20%">
+						<?= Alp_Date::normal($this->row['pubtime']) ?> 
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						楼主
+					</div>
+				</div>
+				<div class="f14 pd10" style="line-height:150%;">
+					<table class="f12" width="80%">
+					<?php foreach ($this->items as $item): ?>
+					<tr class="section-sub">
+						<td class="txtr quiet" width="90">下载地址：</td>
+						<td><a onclick="inc_download(<?= $item['id'] ?>)" href="<?= Alp_Url::upload('share/'.$this->row['puber'].'/'.$item['file']) ?>"><?= $item['file'] ?></a></td>
+					</tr>
+					<?php if($item['intro']): ?>
+					<tr>
+						<td class="txtr quiet">说明：</td>
+						<td><?= stripslashes($item['intro']) ?></td>
+					</tr>
+					<?php endif; ?>
+					<tr>
+						<td class="txtr quiet">已被下载：</td>
+						<td><span id="download_num"><?= $item['download'] ?></span>次</td>
+					</tr>
+					<?php endforeach; ?>
+					</table>
+				</div>
+				<?= $this->render('toolbar.phtml'); ?>
+			</td>
+		</tr>
+	</table>
+	<?= $this->action('view', 'comment', 'space_bar') ?>
+</div>
+<script type="text/javascript">
+	function inc_download(id){$.post('/space_bar/share/download?id='+id);}
+</script>

@@ -1,0 +1,54 @@
+<div class="yui-main">
+	<div class="yui-b">
+		<div class="mg5 section yui-g">
+			<div class="yui-u first">
+				<img class="vm mgr10" src="<?= Alp_Url::img('icon/mix/+.gif') ?>" /><b>创建群组俱乐部</b>
+			</div>
+			<div class="yui-u txtr a-span">
+				<a href="javascript:history.back()">返回上一页</a>
+			</div>
+		</div>
+		
+		<div class="pdlr10">
+			<h3>请选择群的隐私类型：</h3>
+			<table width="100%">
+				<tr>
+					<td width="32%" bgcolor="#f5f5f5" valign="top" style="border-right:2px solid #fff">
+						<p class="pd10 f14 txtc"><b class="tp6">公开</b>，允许任何人加入</p>
+							<p class="pdlr5 quiet">
+								* 任何人都能看群里的内容<br />
+								* 任何人都能自由加入<br />
+								* 适合于公开的话题讨论
+							</p>
+						<p class="txtc">
+							<input onclick="location.href='/space_group/pub/?type=open'" type="button" class="btn" value="创建" />
+						</p>
+					</td>
+					<td width="32%" bgcolor="#f5f5f5" valign="top" style="border-right:2px solid #fff">
+						<p class="pd10 f14 txtc"><b class="tp6">公开</b>，需经我批准才能加入</p>
+							<p class="pdlr5 quiet">
+								* 任何人都能看群里的内容<br />
+								* 加入后才能发言，加入需经你批准<br />
+								* 适合于建立一般的网络人际圈
+							</p>
+						<p class="txtc">
+							<input onclick="location.href='/space_group/pub/?type=limit'" type="button" class="btn" value="创建" />
+						</p>
+					</td>
+					<td width="32%" bgcolor="#f5f5f5" valign="top">
+						<p class="pd10 f14 txtc"><b class="tp0">私密</b>，仅好友可加入</p>
+							<p class="pdlr5 quiet">
+								* 非群成员不能进入本群<br />
+								* 本群不会被搜索出来<br />
+								* 适合于建立好友之间的私密人际圈
+							</p>
+						<p class="txtc">
+							<input onclick="location.href='/space_group/pub/?type=close'" type="button" class="btn" value="创建" />
+						</p>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>
+<?= $this->render('sidebar.phtml'); ?>

@@ -29,12 +29,12 @@
 	</div>
 	<div class="yui-u">
 		<img src="<?= Alp_Url::img('icon/1616/group.gif') ?>" class="vm" />
-		<a href="/space_bar/group/">群组俱乐部</a>
+		<a href="/space_group/">群组俱乐部</a>
 	</div>
 </div>
 	
 <?php if(Cmd::role() == 'bench'): ?>
-	
+	<?= $this->controllername; ?>
 <?php endif; ?>
 	
 <?php if(Cmd::role() == 'black'): ?>

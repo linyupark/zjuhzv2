@@ -154,6 +154,9 @@
 				case 'time' : // 发布时间
 					$select->order('bar.pubtime DESC');
 				break;
+				case 'rtime' : // 回复时间
+					$select->order('bar.replytime DESC');
+				break;
 				case 'reply' : // 回复数
 					$select->order('bar.reply DESC');
 				break;
@@ -170,7 +173,7 @@
 			if(count($rows) > $pagesize)
 			{
 				Alp_Page::create(array(
-					'href_open' => '<a href="?type=news&order='.$order.'&where='.$where.'&p=%d">',
+					'href_open' => '<a href="?type=news&order='.$order.'&where='.$where.'&sort='.$sort.'&p=%d">',
 					'href_close' => '</a>',
 					'num_rows' => count($rows),
 					'cur_page' => $page

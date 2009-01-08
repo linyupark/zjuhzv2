@@ -5,7 +5,7 @@
 		function init()
 		{
 			if(Cmd::role() == 'guest') exit();
-			Zend_Layout::getMvcInstance()->disableLayout();
+			//Zend_Layout::getMvcInstance()->disableLayout();
 			$this->getHelper('viewRenderer')->setNoRender();
 		}
 		
@@ -48,7 +48,7 @@
 				if(!file_exists($path)) mkdir($path, 0777);
 				Alp_Upload::init(array(
 					'type' => 'rar|zip|doc|xls|ppt|7z|mp3',
-					'maxsize' => 5000,
+					'maxsize' => 8000,
 					'random' => true,
 					'path' => $path.'/'
 				));
@@ -136,16 +136,18 @@
 		
 		function delshareAction()
 		{
-			$path = UPLOADROOT.'/share/'.Cmd::uid();
+			$uid = $this->_getParam('uid', Cmd::uid());
+			$path = UPLOADROOT.'/share/'.$uid;
 			$file = $path.'/'.$this->_getParam('file');
 			if(unlink($file)) echo 'success';
 		}
 		function delphotoAction()
 		{
 			$arg = $this->_getParam('file');
-			$path = UPLOADROOT.'/photo/'.Cmd::uid();
+			$uid = $this->_getParam('uid', Cmd::uid());
+			$path = UPLOADROOT.'/photo/'.$uid;
 			$file = $path.'/'.$arg;
-			$resize = $path.'/'.Alp_String::stripFileExt($arg).'_resize.'.Alp_String::stripFile($arg);
+			$resize = $path.'/'.Alp_String::appendFileName($arg, '_resize');
 			if(file_exists($resize)) @unlink($resize);
 			if(unlink($file)) echo 'success';
 		}

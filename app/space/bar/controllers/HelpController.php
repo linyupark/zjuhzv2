@@ -121,6 +121,9 @@
 				case 'time' : // 发布时间
 					$select->order('bar.pubtime DESC');
 				break;
+				case 'rtime' : // 回复时间
+					$select->order('bar.replytime DESC');
+				break;
 				case 'reply' : // 回复数
 					$select->order('bar.reply DESC');
 				break;

@@ -48,7 +48,7 @@
 			function(data)
 			{
 				if(data.result == 'success')
-				window.location.href = '/space_bar/photo/?tid='+data.tid;
+				window.location.href = '/space_bar/photo/view?tid='+data.tid;
 				else 
 				{
 					alert(data.result);
@@ -62,7 +62,7 @@
 	function create_item(uid, file)
 	{
 		var x = $('.file_itme').length;
-		$('#breakline').after('<tr class="file_itme" id="f'+x+'"><td class="txtr">介绍：</td><td>图片'+(x+1)+'.<a href="/upload/photo/'+uid+'/'+file+'">'+file+'</a><input type="hidden" name="photos[]" value="'+file+'" />[<a href="javascript:del_item('+x+',\''+file+'\')">删除</a>]<br /><textarea name="intros[]" style="width:95%;height:120px"></textarea></td></tr>');
+		$('#breakline').after('<tr class="file_itme" id="f'+x+'"><td class="txtc"><img src="/upload/photo/'+uid+'/'+file+'" width="150" /><input type="hidden" name="photos[]" value="'+file+'" /><br />[<a href="javascript:del_item('+x+',\''+file+'\')">删除</a>]</td><td><textarea name="intros[]" style="width:75%;height:120px"></textarea></td></tr>');
 	}
 	function del_item(x, file)
 	{

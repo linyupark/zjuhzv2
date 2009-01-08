@@ -1,0 +1,84 @@
+<div class="yui-main">
+	<div class="yui-b">
+		<div class="mg5 section yui-g">
+			<div class="yui-u first">
+				<img class="vm mgr10" src="<?= Alp_Url::img('icon/mix/edit.gif') ?>" /><b>修改共享帖</b>
+			</div>
+			<div class="yui-u txtr"><a href="javascript:history.back()">返回上一页</a></div>
+		</div>
+		<form id="share_form" method="post" onsubmit="return pub_share()">
+		<table class="mgl10 table-dashed" width="97%">
+			<tr>
+				<td class="txtr">标题：</td>
+				<td>
+					<input type="text" name="title" size="90" value="<?= $this->row['title'] ?>" />
+				</td>
+			</tr>
+			<tr id="breakline">
+				<td class="txtr">文件：</td>
+				<td id="file_upload"></td>
+			</tr>
+			<?php foreach($this->items as $i => $r): ?>
+			<tr class="file_itme" id="f<?= $i+1 ?>">
+				<td class="txtr">介绍：</td>
+				<td>文件<?= $i+1 ?>.<a href="/upload/share/<?= $this->row['puber'] ?>/<?= $r['file'] ?>"><?= $r['file'] ?></a>
+				<input type="hidden" name="files[]" value="<?= $r['file'] ?>" />
+				<input type="hidden" name="ids[]" value="<?= $r['id'] ?>" />
+				[<a href="javascript:del_item(<?= $i+1 ?>,'<?= $r['file'] ?>',<?= $r['id'] ?>)">删除</a>]
+				<br /><textarea name="intros[<?= $r['id'] ?>]" style="width:95%"><?= strip_tags(stripslashes($r['intro'])) ?></textarea></td></tr>
+			<?php endforeach; ?>
+			<tr>
+				<td class="txtr">公开给：</td>
+				<td><?= $this->render('mod/private.phtml') ?>
+					<?= $this->render('mod/nicky.phtml') ?>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input id="submit" type="submit" value="保存修改" class="btn" />
+					<input type="hidden" name="group" value="<?= $this->gp ?>" />
+				</td>
+			</tr>
+		</table>
+		</form>
+		<iframe name="file_frame" class="hide" src="/public/upload/file"></iframe>
+	</div>
+</div>
+
+<script type="text/javascript">
+	function pub_share()
+	{
+		$('#submit').attr('disabled', true).val('正在修改帖子，请稍候...');
+		$.post(
+			'/space_bar/mod/share?tid=<?= $this->row['tid'] ?>',
+			$('#share_form').serializeArray(),
+			function(data)
+			{
+				if(data.result == 'success')
+				window.location.href = '/space_bar/share/view?tid='+data.tid;
+				else 
+				{
+					alert(data.result);
+					$('#submit').attr('disabled', false).val('保存修改');
+				}
+			},
+			'json'
+		);
+		return false;
+	}
+	function create_item(uid, file)
+	{
+		var x = $('.file_itme').length;
+		$('#breakline').after('<tr class="file_itme" id="f'+x+'"><td class="txtr">介绍：</td><td>文件'+(x+1)+'.<a href="/upload/share/'+uid+'/'+file+'">'+file+'</a><input type="hidden" name="n_files[]" value="'+file+'" />[<a href="javascript:del_item('+x+',\''+file+'\')">删除</a>]<br /><textarea name="n_intros[]" style="width:95%"></textarea></td></tr>');
+	}
+	function del_item(x, file, id)
+	{
+		var c =confirm('确定删除？');
+		if(c ==true)
+		$.post('/public/upload/del_share?file='+file,{uid:<?= $this->row['puber'] ?>},function(data){ 
+			if(data=='success') 
+			{
+				$.post('/space_bar/mod/delshare?id='+id);
+				$('#f'+x).fadeOut(500, function(){ $(this).empty(); });
+			}
+		});
+	}
+	$('#file_upload').load('/public/upload/form?for=file');
+</script>

@@ -27,6 +27,86 @@
 		}
 		
 		/**
+		 * 删除共享单元
+		 *
+		 */
+		function delshareAction()
+		{
+			$this->getHelper('viewRenderer')->setNoRender();
+			$id = $this->_getParam('id');
+			Logic_Space_Bar_Share::del($id);
+		}
+		
+		/**
+		 * 修改共享帖
+		 *
+		 */
+		function shareAction()
+		{
+			$this->view->headTitle('修改共享帖');
+			$tid = $this->view->tid;
+			$row = Logic_Space_Bar_Share::view($tid);
+			if($this->getRequest()->isXmlHttpRequest() && $this->isAllowed($tid)) // 处理保存
+			{
+				$this->getHelper('viewRenderer')->setNoRender();
+				$params = $this->getRequest()->getParams();
+				$params = Filter_Space::modshare($params);
+				if(Alp_Sys::getMsg() == null)
+				{
+					Logic_Space_Bar_Share::mod($params, $tid);
+					if(Alp_Sys::getMsg() == null)
+					{
+						echo Zend_Json::encode(array('result'=>'success', 'tid' => $tid));
+						exit();
+					}
+				}
+				echo Zend_Json::encode(array('result'=>Alp_Sys::allMsg('* ',"\n")));
+			}
+			$this->view->row = $row[0];
+			$this->view->items = DbModel::Space()->fetchAll('SELECT * FROM `tb_share` WHERE `tid` = ? ORDER BY `id` ASC', $tid);
+		}
+		
+		/**
+		 * 删除图片帖单元数据
+		 *
+		 */
+		function delphotoAction()
+		{
+			$this->getHelper('viewRenderer')->setNoRender();
+			$id = $this->_getParam('id');
+			Logic_Space_Bar_Photo::del($id);
+		}
+		
+		/**
+		 * 修改图片讨论帖
+		 *
+		 */
+		function photoAction()
+		{
+			$this->view->headTitle('修改图片帖');
+			$tid = $this->view->tid;
+			$row = Logic_Space_Bar_Photo::view($tid);
+			if($this->getRequest()->isXmlHttpRequest() && $this->isAllowed($tid)) // 处理保存
+			{
+				$this->getHelper('viewRenderer')->setNoRender();
+				$params = $this->getRequest()->getParams();
+				$params = Filter_Space::modphoto($params);
+				if(Alp_Sys::getMsg() == null)
+				{
+					Logic_Space_Bar_Photo::mod($params, $tid);
+					if(Alp_Sys::getMsg() == null)
+					{
+						echo Zend_Json::encode(array('result'=>'success', 'tid' => $tid));
+						exit();
+					}
+				}
+				echo Zend_Json::encode(array('result'=>Alp_Sys::allMsg('* ',"\n")));
+			}
+			$this->view->row = $row[0];
+			$this->view->photos = DbModel::Space()->fetchAll('SELECT * FROM `tb_photo` WHERE `tid` = ? ORDER BY `id` ASC', $tid);
+		}
+		
+		/**
 		 * 修改投票调查
 		 *
 		 */

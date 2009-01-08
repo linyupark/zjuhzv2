@@ -16,16 +16,27 @@
     		return (int)self::getSess('profile', 'uid');
     	}
     	
+    	/**
+    	 * 角色名
+    	 *
+    	 * @return unknown
+    	 */
     	public static function role()
     	{
     		return self::getSess('profile', 'role');
     	}
     	
+    	/**
+    	 * 角色中文名
+    	 *
+    	 * @return unknown
+    	 */
     	public static function rolename()
     	{
     		$role = self::role();
     		return Zend_Registry::get('config')->user_role->$role;
     	}
+    	
     	
     	/**
     	 * 返回用户的头像
@@ -43,6 +54,21 @@
     		if(file_exists($dir.'/'.$size.'.gif'))
     		return '/upload/users/head/'.$uid.'/'.$size.'.gif?t='.time();
     		else return Alp_Url::img('v1/'.$sex.'_'.$size.'.gif');
+    	}
+    	
+    	/**
+    	 * 群组图标
+    	 *
+    	 * @param unknown_type $gid
+    	 * @param unknown_type $size
+    	 * @return unknown
+    	 */
+    	public static function groupicon($gid, $size = '40')
+    	{
+    		$dir = UPLOADROOT.'group/'.$gid;
+    		if(file_exists($dir.'/'.$size.'.gif'))
+    		return '/upload/group/'.$gid.'/'.$size.'.gif?t='.time();
+    		else return Alp_Url::img('v1/group_'.$size.'.gif');
     	}
     	
         /**
@@ -104,6 +130,16 @@
             } 
         }
         
+        /**
+         * FCK编辑器
+         *
+         * @param unknown_type $key
+         * @param unknown_type $content
+         * @param unknown_type $h
+         * @param unknown_type $w
+         * @param unknown_type $toolbar
+         * @return unknown
+         */
         public static function fck($key, $content = null, $h='320px', $w='100%', $toolbar = 'ZjuhzFront')
         {
         	return '<textarea id="'.$key.'" name="'.$key.'">'.$content.'</textarea>

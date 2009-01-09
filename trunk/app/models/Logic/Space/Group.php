@@ -7,21 +7,27 @@
 	class Logic_Space_Group extends DbModel 
 	{	
 		/**
+		 * 更新最后访问时间
+		 *
+		 */
+		public static function visit($gid, $uid)
+		{
+			parent::Space()->update('tb_group_member', 
+				array('lastvisit' => time()), "gid = {$gid} AND uid = {$uid}");
+		}
+		
+		/**
 		 * 是否有群组访问权限
 		 *
 		 */
 		public static function isAllowedVisit($gid, $uid)
 		{
 			$group = self::info($gid);
-			switch ($group['type'])
-			{
-				case 'close' : 
-					return Logic_Space_Group_Member::isManager($gid, $uid);
-				break;
-				default :
-					return true;
-				break;
-			}
+			if(!$group) return false;
+			if($group['type'] == 'close')
+			return Logic_Space_Group_Member::isMemeber($gid, $uid);
+			
+			return true;
 		}
 		
 		/**
@@ -34,6 +40,7 @@
 		{
 			return parent::Space()->fetchRow('SELECT * FROM `tb_group` WHERE `gid` = ?', $gid);
 		}
+		
 		
 		/**
 		 * 建立新群组

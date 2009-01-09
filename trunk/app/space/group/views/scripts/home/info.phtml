@@ -4,12 +4,12 @@
 		<td>
 			<b class="f14"><?= stripslashes($this->group['name']); ?></b><br />
 			<span class="quiet">
-			成员：<?= count(Logic_Space_Group_Member::num($this->group['gid'])); ?><br />
+			成员：<?= Logic_Space_Group_Member::num($this->group['gid']); ?><br />
 			创建：<?= date('Y年m月d日',$this->group['createtime']); ?><br />
 			介绍：<?= stripslashes($this->group['intro']) ?>
 			</span>
 		</td>
-		<td width="200">
+		<td width="120" valign="top" style="line-height:160%">
 			<!-- 群组工具条 -->
 			<?= $this->action('toolbar', 'home', 'space_group', array('type' => $this->group['type'])); ?>
 		</td>

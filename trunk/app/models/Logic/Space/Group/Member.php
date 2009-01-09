@@ -3,6 +3,20 @@
 	class Logic_Space_Group_Member extends DbModel 
 	{	
 		/**
+		 * 获取用户所在群组的角色
+		 *
+		 * @param unknown_type $gid
+		 * @param unknown_type $uid
+		 * @return unknown
+		 */
+		public static function role($gid, $uid)
+		{
+			$row = parent::Space()->fetchRow('SELECT `role` FROM `tb_group_member` 
+												WHERE `gid` = ? AND `uid` = ?', 
+			array($gid, $uid)); return $row['role'];
+		}
+		
+		/**
 		 * 是否为群组的创建者
 		 *
 		 * @param unknown_type $gid

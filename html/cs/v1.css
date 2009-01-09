@@ -56,8 +56,8 @@ hr.dashed{ height:1px; border:none; border-bottom:1px dashed #ccc; margin:5px; }
 .tb-on,.tb-of,.tb-rbg{ display:block; float:left; height:29px; }
 .tb-on,.tb-of{ font-size:14px; overflow:hidden; text-align:center; line-height:200%; margin-left:-5px; }
 .tb-rbg{ width:5px; background:url(/im/v1/tb_rbg.gif); }
-.tb-on{ width:115px; background:url(/im/v1/tb_on.gif) left top; }
-.tb-of{ width:115px; background:url(/im/v1/tb_of.gif) left top; }
+.tb-on{ padding:0 18px; background:url(/im/v1/tb_on.gif) left top; }
+.tb-of{ padding:0 18px; background:url(/im/v1/tb_of.gif) left top; }
 a.tb-on{ color:#333; }
 
 /* temp style */

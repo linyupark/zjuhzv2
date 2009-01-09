@@ -1,0 +1,19 @@
+<?php if($this->type != 'close' && !$this->role): ?>
+	<a href=""><img class="vm" src="<?= Alp_Url::img('icon/1616/door.gif') ?>" /> 加入该群</a><br />
+<?php endif; ?>
+
+<?php if($this->role && $this->role != 'join' && $this->role != 'invite'): ?>
+	<a href=""><img class="vm" src="<?= Alp_Url::img('icon/1616/add_m.gif') ?>" /> 邀请好友加入群</a><br />
+<?php endif; ?>
+
+<?php if($this->role == 'member'): ?>
+	<a href=""><img class="vm" src="<?= Alp_Url::img('icon/1616/out.gif') ?>" /> 脱离该群</a><br />
+<?php endif; ?>
+
+<?php if($this->role == 'creater' || $this->role == 'manager'): ?>
+	<a href=""><img class="vm" src="<?= Alp_Url::img('icon/1616/mana.gif') ?>" /> 管理该群</a><br />
+<?php endif; ?>
+
+<?php if($this->role == 'creater') : ?>
+<a href=""><img class="vm" src="<?= Alp_Url::img('icon/1616/rbs.gif') ?>" /> 删除该群</a>
+<?php endif; ?>

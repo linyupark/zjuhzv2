@@ -11,9 +11,17 @@
 		<?php if($this->params['group']): ?>
 		<?= $this->action('info', 'home', 'space_group', array('group'=>$this->params['group'])); ?>
 		<?php endif; ?>
-		<h1 class="notice">
-			您当前的权限不足以访问该群组内容~
-		</h1>
+		<div class="notice">
+			<h2>无法访问该群组的内容，发生的原因有：</h2>
+			<ul>
+				<li>您没有足够的权限访问</li>
+				<li>所请求访问的群组并不存在</li>
+			</ul>
+		</div>
+		<h3 class="a-span">
+			<a href="javascript:history.back()">返回上一页</a>
+			<a href="/">返回首页</a>
+		</h3>
 	</div>
 </div>
 <?= $this->render('sidebar.phtml'); ?>

@@ -2,13 +2,21 @@
 	<div class="yui-b">
 		<div class="mg5 section yui-g">
 			<div class="yui-u first">
-				<img class="vm mgr10" src="<?= Alp_Url::img('icon/1616/att.gif') ?>" /><b>访问权限阻止</b>
+				<img class="vm mgr10" src="<?= Alp_Url::img('icon/1616/group.gif') ?>" />
+				<b><?= stripslashes($this->group['name']); ?></b>
 			</div>
 			<div class="yui-u txtr a-span">
 				<a href="javascript:history.back()">返回上一页</a>
 			</div>
 		</div>
 		<?= $this->action('info', 'home', 'space_group', array('group'=>$this->group)); ?>
+		<?= $this->render('tab.phtml'); ?>
+		<!-- 群公告 -->
+		<?php if($this->group['notice']): ?>
+		<div class="notice"><?= stripslashes($this->group['notice']) ?></div>
+		<?php endif; ?>
+		<!-- 群帖子快速一览 -->
+		<?= $this->action('topic', 'home', 'space_group'); ?>
 	</div>
 </div>
-<?= $this->render('sidebar.phtml'); ?>
+<?= $this->render('home/sidebar.phtml'); ?>

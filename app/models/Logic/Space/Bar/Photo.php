@@ -63,6 +63,7 @@
 					'title' => $params['title'],
 					'puber' => Cmd::uid(),
 					'pubtime' => time(),
+					'replytime' => time(),
 					'group' => $params['group'],
 					'private' => $params['private'],
 					'nicky' => $params['nicky']

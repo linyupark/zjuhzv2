@@ -27,10 +27,10 @@
 			$row = Logic_Space_Bar_Share::view($tid);
 			if(!$row[0]) // 无效帖子
 			$this->_forward('error', 'error', 'public');
-			if(!Logic_Space_Bar::isAllowed($row[0]['private'], $row[0]['puber'])) // 有对应帖子判断阅读权限
+			if(!Logic_Space_Bar::isAllowed($row[0]['private'], $row[0]['puber'], $row[0]['group'])) // 有对应帖子判断阅读权限
 			$this->_forward('deny', 'error', 'public');
 
-			Logic_Space_Bar::click($tid);
+			Logic_Space_Bar::click($tid, $row[0]['group']);
 			$this->view->row = $row[0];
 			$this->view->page = $page;
 			$this->view->items = Logic_Space_Bar_Share::items($tid);

@@ -3,7 +3,7 @@
 		<div class="greybox-top"></div>
 		<?php if(Cmd::role() != 'guest') echo $this->action(Cmd::role(), 'modnav'); ?>
 	</div>
-	<?= ($this->pub) ? $this->render('pub/sidebar.phtml') : $this->render($this->type.'/sidebar.phtml'); ?>
+	<?= ($this->pub) ? '' : $this->render($this->type.'/sidebar.phtml'); ?>
 </div>
 <script type="text/javascript">
 	$('.yui-d3f').addClass('yui-t6');

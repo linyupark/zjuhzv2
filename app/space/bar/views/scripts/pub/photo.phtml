@@ -4,7 +4,12 @@
 			<div class="yui-u first">
 				<img class="vm mgr10" src="<?= Alp_Url::img('icon/mix/+.gif') ?>" /><b>发布图片帖</b>
 			</div>
-			<div class="yui-u txtr"><a href="javascript:history.back()">返回上一页</a></div>
+			<div class="yui-u txtr a-span">
+				<a href="javascript:history.back()">返回上一页</a>
+				<?php if($this->gp): ?>
+					<a href="/space_group/home/?id=<?= $this->gp ?>">返回群组首页</a>
+				<?php endif; ?>
+			</div>
 		</div>
 		<form id="photo_form" method="post" onsubmit="return pub_photo()">
 		<table class="mgl10 table-dashed" width="97%">
@@ -37,7 +42,7 @@
 		<iframe name="photo_frame" class="hide" src="/public/upload/photo"></iframe>
 	</div>
 </div>
-
+<?= $this->render('sidebar.phtml'); ?>
 <script type="text/javascript">
 	function pub_photo()
 	{

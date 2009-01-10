@@ -36,10 +36,10 @@
 					return $puber == Cmd::uid() ?  true : false;
 				break;
 				case 1 : // 好友
-					return Logic_Space_Friends::hasFriend($puber, Cmd::uid()) == false ? false : true;
+					return Logic_Space_Friends::hasFriend($puber, Cmd::uid());
 				break;
 				case 2 : // 群组
-					return Logic_Space_Group_Member::has($group, Cmd::uid());
+					return Logic_Space_Group_Member::isMemeber($group, Cmd::uid());
 				break;
 				case 3 : // 成员
 					return Cmd::uid();
@@ -55,9 +55,12 @@
 		 *
 		 * @param unknown_type $tid
 		 */
-		public static function click($tid)
+		public static function click($tid, $gid = 0)
 		{
-			$history = Cmd::getSess('bar_history');
+			if($gid == 0) $name = 'bar_history';
+			else $name = 'group_'.$gid.'_history';
+			
+			$history = Cmd::getSess($name);
 			if(!isset($history[$tid]))
 			{
 				parent::Space()->update('tb_tbar', array(
@@ -65,7 +68,7 @@
 				), 'tid = '.$tid);
 			}
 			$history[$tid] = time();
-			Cmd::setSess('bar_history', $history);
+			Cmd::setSess($name, $history);
 		}
 		
 		/**

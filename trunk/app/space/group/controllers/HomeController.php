@@ -42,7 +42,7 @@
 			$gid = $this->view->gid;
 			$select = DbModel::Space()->select()->from(array('bar' => 'zjuhzv2_space.tb_tbar'))
 												->where('`group` = ?', $gid)
-												->order('ding DESC')->order('bar.replytime DESC')->order('bar.pubtime DESC');
+												->order('ding DESC')->order('bar.replytime DESC');
 			$select->joinLeft(array('puser' => 'zjuhzv2_user.tb_base'), 'puser.uid = bar.puber', 
 							  array('pubname' => 'username', 'pubnick' => 'nickname'));
 			$select->joinLeft(array('ruser' => 'zjuhzv2_user.tb_base'), 'ruser.uid = bar.replyer', 

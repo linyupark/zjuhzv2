@@ -10,6 +10,61 @@
 			</div>
 		</div>
 		<?= $this->render('tab.phtml'); ?>
+		<br />
+		<div class="mglr10 yui-g a-span">
+			<div class="yui-u first" style="width:75%">
+			<form method="get" id="tab_form">
+			筛选：
+				<select name="where" onchange="$('#tab_form').submit();">
+					<option value="all" <?= ($this->where == 'all') ? 'selected="selected"':'' ?>>所有的</option>
+					<option value="pub" <?= ($this->where == 'pub') ? 'selected="selected"':'' ?>>我发布的</option>
+					<option value="join" <?= ($this->where == 'join') ? 'selected="selected"':'' ?>>我参与的</option>
+					<option value="fav" <?= ($this->where == 'fav') ? 'selected="selected"':'' ?>>我收藏的</option>
+				</select>
+				<select name="order" onchange="$('#tab_form').submit();">
+					<option value="time" <?= ($this->order == 'time') ? 'selected="selected"':'' ?>>新发布</option>
+					<option value="rtime" <?= ($this->order == 'rtime') ? 'selected="selected"':'' ?>>新回复</option>
+					<option value="reply" <?= ($this->order == 'reply') ? 'selected="selected"':'' ?>>回复数</option>
+					<option value="click" <?= ($this->order == 'click') ? 'selected="selected"':'' ?>>查看数</option>
+					<option value="rate" <?= ($this->order == 'rate') ? 'selected="selected"':'' ?>>被顶数</option>
+				</select>
+				<input type="hidden" name="id" value="<?= $this->gid ?>" />
+			</form>
+			</div>
+		</div>
+		<table class="table-dashed mg5" width="98%">
+			<tr class="section-sub">
+				<td width="50%">标题</td>
+				<td width="15%" class="txtc">作者</td>
+				<td width="20%" class="txtc">回复/点击/顶</td>
+				<td width="15%" class="txtc">最后发表</td>
+			</tr>
+			<?php if($this->rows): foreach($this->rows as $i => $r): ?>
+			<tr <?= ($i%2 == 1) ? 'bgcolor="#f5f5f5"' : '' ?>>
+				<td class="txtl">
+					<img class="vm" src="<?= Alp_Url::img('icon/1616/'.$this->icons[$r['type']]); ?>" />
+					<a <?= ($r['ding'] == 1)?'style="color:red"':''; ?> href="/space_bar/<?= $r['type'] ?>/view?tid=<?= $r['tid'] ?>"><?= stripslashes($r['title']) ?></a>
+					<?= Logic_Space_Bar::subpage($r); ?>
+				</td>
+				<td class="txtc quiet">
+					<?= ($r['nicky']) ? $r['pubnick']:'<a href="/space_home/?uid='.$r['puber'].'">'.$r['pubname'].'</a>' ?><br />
+					<span class="tp5"><?= Alp_Date::normal($r['pubtime']) ?></span>
+				</td>
+				<td class="txtc quiet">
+					<span class="tp7"><?= $r['reply'] ?></span> / <?= $r['click'] ?> / <span class="tp3"><?= $r['rate'] ?></span>
+				</td>
+				<td class="txtc quiet">
+					<?= ($r['replytime']) ? Alp_Date::normal($r['replytime']):'-' ?><br />
+					<?= ($r['rnicky']) ? $r['replynick']:'<a href="/space_home/?uid='.$r['replyer'].'">'.$r['replyname'].'</a>'; ?>
+				</td>
+			</tr>
+			<?php endforeach; else: ?>
+			<tr>
+				<td><img class="vm" src="<?= Alp_Url::img('icon/1616/att.gif'); ?>" /> 没有找到任何相关的帖子</td>
+			</tr>
+			<?php endif; ?>
+		</table>
+		<div class="pg"><?= $this->pagination ?></div>
 	</div>
 </div>
 <div class="yui-b">
@@ -17,6 +72,9 @@
 		<div class="greybox-top"></div>
 		<?php if(Cmd::role() != 'guest') echo $this->action(Cmd::role(), 'modnav'); ?>
 	</div>
+	<br />
+	<h3 class="section">最近浏览</h3>
+	<?= $this->action('history', 'topic', 'space_group'); ?>
 </div>
 
 <script type="text/javascript">

@@ -7,8 +7,8 @@
 		</div>
 	</div>
 	<div class="yui-u txtr a-span" style="width:25%">
-		<?php if($this->tab != 'memeber'): ?>
-		<a href="/space_group/pub"><img class="vm" src="<?= Alp_Url::img('icon/mix/+.gif') ?>" /> 发布新帖</a>
+		<?php if($this->tab != 'member'): ?>
+		<a href="/space_bar/?pub=topic&gp=<?= $this->gid ?>"><img class="vm" src="<?= Alp_Url::img('icon/mix/+.gif') ?>" /> 发布新帖</a>
 		<a href=""><img class="vm" src="<?= Alp_Url::img('icon/mix/search.gif') ?>" /> 搜索帖</a>
 		<?php else: ?>
 		<a href=""><img class="vm" src="<?= Alp_Url::img('icon/mix/search.gif') ?>" /> 搜索成员</a>

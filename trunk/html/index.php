@@ -5,6 +5,8 @@
 						 . PATH_SEPARATOR . '../app/sapce'
 						 . PATH_SEPARATOR . '../app/models');
 	
+	date_default_timezone_set('Asia/Shanghai');					 
+						 
 	define('SQLITEROOT', '../db/sqlite/');
 	define('UPLOADROOT', $_SERVER['DOCUMENT_ROOT'].'/upload/');
 						 

@@ -2,6 +2,7 @@
 	<tr>
 		<td width="100" class="txtc"><img class="cccborder" src="<?= CMd::groupicon($this->group['gid'], 80) ?>" /></td>
 		<td>
+			<?= ($this->group['type'] == 'close')?'<img src="'.Alp_Url::img('icon/mix/lock.gif').'" />':'' ?>
 			<b class="f14"><?= stripslashes($this->group['name']); ?></b><br />
 			<span class="quiet">
 			成员：<?= Logic_Space_Group_Member::num($this->group['gid']); ?><br />

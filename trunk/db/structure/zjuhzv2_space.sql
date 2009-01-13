@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: zjuhzv2_space
 Target Host: localhost
 Target Database: zjuhzv2_space
-Date: 2008-12-20 ÏÂÎç 05:11:46
+Date: 2009/1/10 10:52:38
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,7 +31,8 @@ CREATE TABLE `tb_events` (
   `time` int(10) unsigned NOT NULL,
   `address` varchar(255) NOT NULL,
   `content` text NOT NULL,
-  `member` text
+  `member` text,
+  `modtime` int(11) default NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -58,15 +59,23 @@ CREATE TABLE `tb_friends_sort` (
 CREATE TABLE `tb_group` (
   `gid` int(10) unsigned NOT NULL auto_increment,
   `name` char(30) NOT NULL,
-  `member` text NOT NULL,
-  `manager` text,
-  `creater` int(10) unsigned NOT NULL,
   `createtime` int(10) unsigned NOT NULL,
-  `visit` int(10) unsigned NOT NULL,
-  `todayvisitor` text,
-  `intro` varchar(255) default NULL,
-  `point` int(10) unsigned NOT NULL default '0',
+  `intro` text NOT NULL,
+  `notice` text,
+  `point` int(11) unsigned NOT NULL default '0',
+  `type` char(5) NOT NULL default '',
   PRIMARY KEY  (`gid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for tb_group_member
+-- ----------------------------
+CREATE TABLE `tb_group_member` (
+  `uid` int(11) NOT NULL,
+  `gid` int(11) NOT NULL,
+  `role` char(7) NOT NULL default '0' COMMENT 'creater;member;join;invite;manager',
+  `lastvisit` int(10) unsigned default NULL,
+  `jointime` int(10) unsigned default NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -87,7 +96,7 @@ CREATE TABLE `tb_help` (
 CREATE TABLE `tb_help_sort` (
   `sort` int(10) unsigned NOT NULL auto_increment,
   `name` char(30) default NULL,
-  `rate` int(10) unsigned NOT NULL default '1',
+  `rate` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`sort`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -126,8 +135,7 @@ CREATE TABLE `tb_news` (
   `sort` int(10) unsigned NOT NULL,
   `content` mediumtext NOT NULL,
   `modtime` int(10) unsigned default NULL,
-  `tags` tinytext NOT NULL,
-  `public` tinyint(1) unsigned NOT NULL default '0'
+  `tags` tinytext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -136,7 +144,7 @@ CREATE TABLE `tb_news` (
 CREATE TABLE `tb_news_sort` (
   `sort` int(10) unsigned NOT NULL auto_increment,
   `name` char(30) NOT NULL,
-  `rate` int(10) unsigned NOT NULL default '1',
+  `rate` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`sort`),
   UNIQUE KEY `ix_sortname` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -145,19 +153,23 @@ CREATE TABLE `tb_news_sort` (
 -- Table structure for tb_photo
 -- ----------------------------
 CREATE TABLE `tb_photo` (
+  `id` int(10) unsigned NOT NULL auto_increment,
   `tid` int(10) unsigned NOT NULL,
   `file` char(80) NOT NULL,
-  `intro` tinytext
+  `intro` text,
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for tb_share
 -- ----------------------------
 CREATE TABLE `tb_share` (
+  `id` int(10) unsigned NOT NULL auto_increment,
   `tid` int(10) unsigned NOT NULL,
   `file` char(50) NOT NULL,
-  `intro` tinytext NOT NULL,
-  `download` int(10) unsigned NOT NULL default '0'
+  `intro` tinytext,
+  `download` int(10) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -165,7 +177,7 @@ CREATE TABLE `tb_share` (
 -- ----------------------------
 CREATE TABLE `tb_tbar` (
   `tid` int(10) unsigned NOT NULL auto_increment,
-  `type` char(5) NOT NULL,
+  `type` char(8) NOT NULL,
   `title` char(90) NOT NULL,
   `puber` int(10) unsigned NOT NULL,
   `pubtime` int(10) unsigned NOT NULL,
@@ -173,12 +185,13 @@ CREATE TABLE `tb_tbar` (
   `reply` int(10) unsigned NOT NULL default '0',
   `rnicky` tinyint(1) NOT NULL default '0',
   `replyer` int(10) unsigned default NULL,
-  `replytime` int(10) unsigned default NULL,
+  `replytime` int(10) unsigned NOT NULL,
   `rate` int(10) unsigned NOT NULL default '0',
   `group` int(10) NOT NULL default '0',
   `deny` tinyint(1) unsigned NOT NULL default '0',
   `private` tinyint(3) unsigned NOT NULL COMMENT '0:self;1:friend;2:group;3:member;4:all',
   `nicky` tinyint(1) unsigned NOT NULL default '0',
+  `ding` tinyint(1) unsigned NOT NULL default '0',
   PRIMARY KEY  (`tid`),
   UNIQUE KEY `ix_title` (`title`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -193,7 +206,8 @@ CREATE TABLE `tb_tfav` (
   `help` text,
   `photo` text,
   `events` text,
-  `share` text
+  `share` text,
+  `vote` text
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------

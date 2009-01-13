@@ -33,10 +33,11 @@
 			$params = $this->getRequest()->getParams();
 			if($params['uid'] == Cmd::uid() || !isset($params['uid']))
 			{
+				// 访问自己的主页
 				Logic_Space_Home::init(Cmd::uid());
 				$this->_forward('index', 'my');
 			}
-			else 
+			else // 其他人访问
 			{
 				// 是否为有效uid
 				if(!Logic_User_Base::check($params['uid']))
@@ -48,12 +49,25 @@
 					Logic_Space_Home::init($params['uid']);
 					// 获取该用户权限
 					$access = Logic_User_Privacy::getAccess($params['uid']);
-					switch ($access['home'])
+					switch ($access['vhome'])
 					{
-						case 0 : $this->_forward('index', 'deny'); break;
+						case 0 : 
+							$this->_forward('deny', 'error', 'public', 
+											array(
+												'position'=>'space_home',
+												'uid'=>$params['uid']
+											));
+						break;
 						case 1 : 
 							// 判断访问用户是否为好友
-							
+							if(Logic_Space_Friends::hasFriend($params['uid'], Cmd::uid()))
+							$this->_forward('index', 'user');
+							else 
+							$this->_forward('deny', 'error', 'public', 
+											array(
+												'position'=>'space_home',
+												'uid'=>$params['uid']
+											));
 						break;
 						case 2 : $this->_forward('index', 'user'); break;
 					}

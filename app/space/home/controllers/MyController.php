@@ -16,7 +16,6 @@
 			$this->getHelper('viewRenderer')->setNoRender();
 			$ing = strip_tags(trim($this->_getParam('ing')));
 			Logic_Space_Home::ing($ing, Cmd::uid());
-			//Zend_Debug::dump($this->getRequest()->getParams());
 		}
 		
 		function indexAction()

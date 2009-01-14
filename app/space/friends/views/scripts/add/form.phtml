@@ -1,0 +1,44 @@
+<div class="yui-main">
+<form id="friend_add_form" onsubmit="return makef()">
+	<table style="line-height:180%">
+		<tr>
+			<td width="90" valign="top">
+			<div class="head40">
+    				<img class="pd10" src="<?= Cmd::userhead($this->incept['uid'], '40', $this->incept['sex']) ?>" />
+    			</div>
+			</td>
+			<td>
+				需通过<?= $this->incept['username'] ?>的验证才能加他为好友。<br />
+  				给他的附加信息：<br />
+  				<textarea class="mgb10" name="content" style="width:250px;height:60px;"></textarea>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td class="txtr">
+				<input class="btn" type="submit" value="确定" />
+			</td>
+		</tr>
+	</table>
+</form>
+</div>
+<script type="text/javascript">
+	function makef()
+	{
+		$('input:submit').val('发送中..').attr('disabled', true);
+		$.post('/space_friends/add/submit/?incept=<?= $this->incept['uid'] ?>', 
+			$('#friend_add_form').serializeArray(), 
+			function(data){
+				if(data == 'success')
+				{
+					$.facebox.close();
+				}
+				else
+				{
+					alert(data);
+					$('input:submit').val('确定').attr('disabled', false);
+				}
+			});
+		return false;
+	}
+</script>

@@ -36,7 +36,7 @@
 					return $puber == Cmd::uid() ?  true : false;
 				break;
 				case 1 : // 好友
-					return Logic_Space_Friends::hasFriend($puber, Cmd::uid());
+					return (Logic_Space_Friends::hasFriend($puber, Cmd::uid()) == 1) ? true : false;
 				break;
 				case 2 : // 群组
 					return Logic_Space_Group_Member::isMemeber($group, Cmd::uid());

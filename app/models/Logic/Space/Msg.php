@@ -1,7 +1,7 @@
 <?php
 
 	class Logic_Space_Msg extends DbModel 
-	{
+	{	
 		/**
 		 * 返回新信息数目
 		 *

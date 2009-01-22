@@ -1,0 +1,48 @@
+<div class="yui-main">
+	<form id="friend_pass_form" method="post" onsubmit="return friend_pass()">
+	<table width="100%" class="table-dashed f14">
+		<tr>
+			<td colspan="2">
+				<img src="<?= Alp_Url::img('icon/1616/f_user.gif') ?>" /> 
+				<b>好友归类：</b>
+				<hr class="dashed" />
+			</td>
+		</tr>
+		<?php foreach ($this->sorts as $i => $s): ?>
+		<?php if($i%2==1): ?>
+		<tr>
+		<?php endif; ?>
+			<td>
+				<input id="sort<?= $i ?>" type="radio" name="sort" value="<?= $i ?>" />
+				<label for="sort<?= $i ?>"><?= $s ?></label>
+			</td>
+		<?php if($i%2==0): ?>
+		</tr>
+		<?php endif; ?>
+		<?php endforeach; ?>
+	</table>
+	<p class="txtr mgr10">
+		<input type="hidden" name="sender" value="<?= $this->sender ?>" />
+		<input type="submit" class="btn" value="确定" />
+		<input onclick="$.facebox.close()" type="button" class="btn" value="取消" />
+	</p>
+	</form>
+</div>
+<span id="error_box"></span>
+<script type="text/javascript">
+	function friend_pass()
+	{
+		$.post('/space_friends/pass/', $('#friend_pass_form').serializeArray(), function(data){
+			if(data == 'success')
+			{
+				state_box(<?= $this->sender ?>, '<div class="success">已经通过请求，成为好友</div>');
+				$.facebox.close();
+			}
+			else
+			{
+				$('#error_box').html(data);
+			}
+		});
+		return false;
+	}
+</script>

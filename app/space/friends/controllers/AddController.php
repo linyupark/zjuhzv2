@@ -49,7 +49,7 @@
 					$this->render('unblock');
 				break;
 				default : // 进行申请成为好友处理
-					if(Logic_Space_Friends::hasFriend($uid, $myid) == 2)
+					if(Logic_Space_Friends::hasFriend($uid, $myid) == 'block')
 					$this->render('deny');
 					else 
 					{

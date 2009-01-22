@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: zjuhzv2_space
 Target Host: localhost
 Target Database: zjuhzv2_space
-Date: 2009/1/10 10:52:38
+Date: 2009/1/22 15:49:31
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -41,7 +41,9 @@ CREATE TABLE `tb_events` (
 CREATE TABLE `tb_friends` (
   `uid` int(10) unsigned NOT NULL,
   `friend` int(10) unsigned NOT NULL,
-  `sort` int(10) unsigned NOT NULL default '0'
+  `sort` int(10) unsigned NOT NULL default '0',
+  `type` char(6) NOT NULL default 'wait' COMMENT 'wait;pass;block',
+  `time` int(11) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -115,15 +117,15 @@ CREATE TABLE `tb_home` (
 -- ----------------------------
 CREATE TABLE `tb_msg` (
   `mid` bigint(20) unsigned NOT NULL auto_increment,
-  `type` tinyint(1) unsigned NOT NULL default '0' COMMENT '0:pm;1:system;2:guestbook',
+  `type` char(6) NOT NULL default 'pm' COMMENT 'pm;gbook;friend',
   `parent` bigint(20) unsigned NOT NULL default '0',
-  `content` text NOT NULL,
+  `content` text,
   `sender` int(10) unsigned NOT NULL,
   `incept` int(11) NOT NULL,
   `time` int(10) unsigned NOT NULL,
   `isread` tinyint(1) unsigned NOT NULL default '0',
-  `sendbox` tinyint(1) unsigned NOT NULL default '1',
-  `inceptbox` tinyint(1) unsigned NOT NULL default '1',
+  `sbox` tinyint(1) unsigned NOT NULL default '1',
+  `ibox` tinyint(1) unsigned NOT NULL default '1',
   PRIMARY KEY  (`mid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -214,9 +216,9 @@ CREATE TABLE `tb_tfav` (
 -- Table structure for tb_tjoin
 -- ----------------------------
 CREATE TABLE `tb_tjoin` (
-  `uid` int(10) unsigned NOT NULL,
+  `uid` int(11) NOT NULL,
   `tid` longtext
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for tb_topic

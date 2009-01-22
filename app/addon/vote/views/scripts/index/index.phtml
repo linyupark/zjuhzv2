@@ -22,7 +22,7 @@
 			</tr>
 			<?php foreach($this->options as $opt): ?>
 			<tr>
-				<td class="txtr" width='150px'><?= $opt['value'] ?>：</td>
+				<td class="txtr"><?= $opt['value'] ?>：</td>
 				<td width='190px'><div class="rate_bg"></div></td>
 				<td class="txtl"><?= ($this->base['mulit'] == 1)?
 					'<input class="nob" name="oid[]" value="'.$opt['oid'].'" type="radio" />':

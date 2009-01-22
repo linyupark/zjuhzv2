@@ -19,29 +19,36 @@
 		 */
 		function indexAction()
 		{
+			$myid = Cmd::uid();
 			$where = $this->_getParam('where', 'all');
 			$order = $this->view->order;
 			$page = $this->_getParam('p', 1); // 默认显示页
-			$select = DbModel::Space()->select()->from(array('bar' => 'zjuhzv2_space.tb_tbar'))
-												->where('`group` = ?', 0)
+			$select = DbModel::Space()->select()->from(array('bar' => 'zjuhzv2_space.tb_tbar'), 
+													   array('numrows' => new Zend_Db_Expr('COUNT(bar.tid)')))
+												->where('bar.group = ?', 0)
 												->order('ding DESC');
 			switch ($where)
 			{
 				case 'pub' : // 我发布的帖子
-					$select->where('puber = ?', Cmd::uid());
+					$select->where('puber = ?', $myid);
 				break;
 				case 'join' : // 我参与的帖
-					$row = Logic_Space_Bar::getJoin(Cmd::uid());
+					$row = DbModel::Space()->fetchRow('SELECT * FROM `tb_tjoin` WHERE `uid` = ?', $myid);
 					if($row != false)
 					{
-						$tid_arr = unserialize($row['tid']);
+						$tid_arr = array();
+						foreach ($row as $r)
+						{
+							if(unserialize($r)) $tid_arr[] = unserialize($r);
+						}
+						
 						if(count($tid_arr) > 0)
 						{
 							$i = 0;
-							foreach ($tid_arr as $tid => $time)
+							foreach ($tid_arr as $v)
 							{
-								if($i == 0) $select->where('bar.tid = ?', $tid);
-								else $select->orWhere('bar.tid = ?', $tid);
+								if($i == 0) $select->where('bar.tid = ?', array_keys($v));
+								else $select->orWhere('bar.tid = ?',  array_keys($v));
 								$i++;
 							}
 						}
@@ -50,7 +57,7 @@
 					else $select->where('bar.tid = ?', 0);
 				break;
 				case 'fav' : // 我的收藏帖
-					$row = DbModel::Space()->fetchRow('SELECT * FROM `tb_tfav` WHERE `uid` = ?', Cmd::uid());
+					$row = DbModel::Space()->fetchRow('SELECT * FROM `tb_tfav` WHERE `uid` = ?', $myid);
 					if($row != false)
 					{
 						$tid_arr = array();
@@ -95,24 +102,27 @@
 					$select->order('bar.rate DESC');
 				break;
 			}
+			$row = $select->query()->fetchAll();
+			$select->reset(Zend_Db_Select::COLUMNS)->columns('*');
+			$pagesize = 10;
+			if($row[0]['numrows'] > $pagesize)
+			{
+				Alp_Page::$pagesize = $pagesize;
+				Alp_Page::create(array(
+					'href_open' => '<a href="?type=topic&order='.$order.'&where='.$where.'&p=%d">',
+					'href_close' => '</a>',
+					'num_rows' => $row[0]['numrows'],
+					'cur_page' => $page
+				));
+				$select->limit($pagesize, Alp_Page::$offset);
+				$this->view->pagination = Alp_Page::$page_str;
+			}
 			$select->joinLeft(array('puser' => 'zjuhzv2_user.tb_base'), 'puser.uid = bar.puber', 
 							  array('pubname' => 'username', 'pubnick' => 'nickname'));
 			$select->joinLeft(array('ruser' => 'zjuhzv2_user.tb_base'), 'ruser.uid = bar.replyer', 
 							  array('replyname' => 'username', 'replynick' => 'nickname'));
 			$rows = $select->query()->fetchAll();
-			$pagesize = Alp_Page::$pagesize = 10;
-			if(count($rows) > $pagesize)
-			{
-				Alp_Page::create(array(
-					'href_open' => '<a href="?type=topic&order='.$order.'&where='.$where.'&p=%d">',
-					'href_close' => '</a>',
-					'num_rows' => count($rows),
-					'cur_page' => $page
-				));
-				$select->limit($pagesize, Alp_Page::$offset);
-				$rows = $select->query()->fetchAll();
-				$this->view->pagination = Alp_Page::$page_str;
-			}
+			
 			$this->view->rows = $rows;
 			$this->view->where = $where;
 		}

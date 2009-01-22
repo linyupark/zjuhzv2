@@ -1,0 +1,24 @@
+<div style="position:absolute; left:100px; top:25px; border:1px solid #97AFC6; padding:2px; width:330px;">
+	<table width="100%">
+		<tr bgcolor="#F2F6FB">
+			<td>选择要发送的对象</td>
+			<td class="txtr">
+				<select name="sort" onchange="">
+					<?php foreach ($this->sorts as $i => $s): ?>
+					<option value="<?= $i ?>"><?= $s ?></option>
+					<?php endforeach; ?>
+				</select>
+			</td>
+		</tr>
+		<tr id="friends_td">
+			
+		</tr>
+	</table>
+</div>
+
+<script type="text/javascript">
+	function load_friends_td(sort)
+	{
+		$('#friends_td').load();
+	}
+</script>

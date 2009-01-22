@@ -1,0 +1,7 @@
+<?php $uid = Cmd::uid(); ?>
+<div class="mglr10 tb-box" style="height:28px;overflow:hidden">
+	<a href="?type=pm" <?= ($this->type == 'pm')?'class="tb-on"':'class="tb-of"' ?>>短消息(<?= Logic_Space_Msg::hasnew($uid, 'pm') ?>)</a><span class="tb-rbg"></span>
+	<a href="?type=gbook" <?= ($this->type == 'gbook')?'class="tb-on"':'class="tb-of"' ?>>留言板(<?= Logic_Space_Msg::hasnew($uid, 'gbook') ?>)</a><span class="tb-rbg"></span>
+	<a href="?type=friend" <?= ($this->type == 'friend')?'class="tb-on"':'class="tb-of"' ?>>好友请求(<?= Logic_Space_Msg::hasnew($uid, 'friend') ?>)</a><span class="tb-rbg"></span>
+	<a href="?type=group" <?= ($this->type == 'group')?'class="tb-on"':'class="tb-of"' ?>>群组消息(<?= Logic_Space_Msg::hasnew($uid, 'group') ?>)</a><span class="tb-rbg"></span>
+</div>

@@ -7,6 +7,27 @@
 	class Logic_Space_Friends extends DbModel 
 	{	
 		/**
+		 * 拒绝好友请求
+		 *
+		 * @param unknown_type $params
+		 */
+		public static function reject($params)
+		{
+			$db = parent::Space();
+			$db->beginTransaction();
+			try{
+				$db->delete('tb_friends', 'uid = '.$params['sender']);
+				$db->delete('tb_msg', 'sender = '.$params['sender'].' AND incept = '.$params['uid'].' AND type = "friend"');
+				$db->commit();
+				
+			} catch (Exception $e){
+				
+				$db->rollback();
+				Alp_Sys::msg('exception', $e->getMessage());
+			}
+		}
+		
+		/**
 		 * 解除黑名单状态
 		 *
 		 * @param unknown_type $uid_a
@@ -17,6 +38,41 @@
 			parent::Space()->update('tb_friends', array(
 				'type' => 1,
 			), '`uid` = '.$uid_a.' AND `friend` = '.$uid_b);
+		}
+		
+		/**
+		 * 好友请求通过
+		 *
+		 * @param unknown_type $params
+		 */
+		public static function pass($params)
+		{
+			$db = parent::Space();
+			$db->beginTransaction();
+			try{
+				// 更新对方关系表
+				$db->update('tb_friends', array(
+					'type' => 'pass',
+					'time' => $params['time'],
+					'sort' => $params['sort'],
+				), 'uid = '.$params['sender'].' AND friend = '.$params['uid']);
+				
+				// 给对方发送确认信息
+				if(Logic_Space_Msg::unique('friend', $params['uid'], $params['sender']) == false)	
+				$db->insert('tb_msg', array(
+					'type' => 'friend',
+					'content' => '系统提示：该用户已经同意了你的好友请求',
+					'sender' => $params['uid'],
+					'incept' => $params['sender'],
+					'time' => $params['time']
+				));
+				$db->commit();
+				
+			} catch (Exception $e) {
+				
+				$db->rollback();
+				Alp_Sys::msg('exception', $e->getMessage());
+			}
 		}
 		
 		/**
@@ -34,7 +90,7 @@
 					'friend' => $params['incept'],
 					'sort' => 0,
 					'type' => 'wait',
-					'time' => time()
+					'time' => $params['time']
 				));
 				// 系统站内信发送
 				$db->insert('tb_msg', array(
@@ -55,6 +111,38 @@
 		}
 		
 		/**
+		 * 直接成为朋友关系
+		 *
+		 */
+		public static function rel($uid_a, $uid_b)
+		{
+			$db = parent::Space();
+			$db->beginTransaction();
+			try{
+				if(self::hasFriend($uid_a, $uid_b) == false)
+				$db->insert('tb_friends' ,array(
+					'uid' => $uid_a,
+					'friend' => $uid_b,
+					'sort' => 0,
+					'type' => 'pass',
+					'time' => time()
+				));
+				else 
+				$db->update('tb_friends' ,array(
+					'type' => 'pass',
+					'time' => time()
+				), 'uid = '.$uid_a.' AND friend = '.$uid_b);
+					
+				$db->commit();
+					
+			} catch (Exception $e) {
+					
+				$db->rollback();
+				Alp_Sys::msg('exception', $e->getMessage());
+			}
+		}
+		
+		/**
 		 * 返回指定的uid_b是否为uid_a的好友
 		 *
 		 * @param unknown_type $myid
@@ -65,17 +153,6 @@
 		{
 			$row = parent::Space()->fetchRow('SELECT `type` FROM `tb_friends` WHERE `uid` = ? AND `friend` = ?',array($uid_a, $uid_b));
 			return $row ? $row['type'] : false;
-		}
-		
-		/**
-		 * 返回所有指定UID的好友
-		 *
-		 * @param unknown_type $uid
-		 * @return unknown
-		 */
-		public static function fetchAll($uid)
-		{
-			return parent::Space()->fetchAll('SELECT `friend` FROM `tb_friends` WHERE `uid` = ?', $uid);
 		}
 		
 		/**

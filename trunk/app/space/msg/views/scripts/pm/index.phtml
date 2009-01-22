@@ -3,12 +3,26 @@
 		<div class="mg5 section yui-g">
 			<div class="yui-u first">
 				<img class="mgr10" src="<?= Alp_Url::img('icon/1616/mail.gif') ?>" />
-				<b>消息中心</b>
+				<b>站内消息(私密对话)</b>
 			</div>
 			<div class="yui-u txtr"><a href="javascript:history.back()">返回上一页</a></div>
 		</div>
-		<?= $this->render('index/type.phtml'); ?>
-		<?= $this->render('index/'.$this->type.'.phtml'); ?>
+		
+		<form id="pm_form" onsubmit="return pm()">
+		<table width="90%">
+			<tr>
+				<td class="txtr">发送给：</td>
+				<td>
+					<div id="incept_box" style="position:relative;">
+					<input type="text" name="incept" size="70" /> 
+					<a href="javascript:friends_box()">发送对象</a>
+						<span id="friends_box"></span>
+					</div>
+				</td>
+			</tr>
+		</table>
+		</form>
+		
 	</div>
 </div>
 <div class="yui-b">
@@ -19,4 +33,5 @@
 </div>
 <script type="text/javascript">
 	$('.yui-d3f').addClass('yui-t6');
+	$('#friends_box').load('/space_msg/pm/friends');
 </script>

@@ -73,18 +73,25 @@
 		 */
 		function indexAction()
 		{
+			$myid = Cmd::uid();
 			$where = $this->_getParam('where', 'all');
 			$order = $this->view->order;
 			$page = $this->_getParam('p', 1); // 默认显示页
-			$select = DbModel::Space()->select()->from(array('bar' => 'zjuhzv2_space.tb_tbar'))->where('`group` = ?', 0);
+			$select = DbModel::Space()->select()
+									  ->from(array('bar' => 'zjuhzv2_space.tb_tbar'), 
+											 array('numrows' => new Zend_Db_Expr('COUNT(bar.tid)')))
+									  ->where('`group` = ?', 0)->group('bar.tid');
+									  
+			$select->joinLeft(array('vote' => 'zjuhzv2_space.tb_vote'), 'bar.tid = vote.tid');						  
+			
 			switch ($where)
 			{
 				case 'pub' : // 我发布的帖子
 					$select->where('bar.type = ?', 'vote');
-					$select->where('puber = ?', Cmd::uid());
+					$select->where('puber = ?', $myid);
 				break;
 				case 'join' : // 我参与的帖
-					$row = Logic_Space_Bar::getJoin(Cmd::uid());
+					$row = Logic_Space_Bar::getJoin($myid);
 					if($row != false)
 					{
 						$tid_arr = unserialize($row['tid']);
@@ -103,7 +110,7 @@
 					else $select->where('vote.tid = ?', 0);
 				break;
 				case 'fav' : // 我的收藏帖
-					$row = Logic_Space_Bar::getFav('vote', Cmd::uid());
+					$row = Logic_Space_Bar::getFav('vote', $myid);
 					if($row != false)
 					{
 						$tid_arr = unserialize($row['vote']);
@@ -143,25 +150,29 @@
 					$select->order('bar.rate DESC');
 				break;
 			}
-			$select->joinLeft(array('puser' => 'zjuhzv2_user.tb_base'), 'puser.uid = bar.puber', 
-							  array('pubname' => 'username', 'pubnick' => 'nickname'));
-			$select->joinLeft(array('ruser' => 'zjuhzv2_user.tb_base'), 'ruser.uid = bar.replyer', 
-							  array('replyname' => 'username', 'replynick' => 'nickname'));
-			$select->joinLeft(array('vote' => 'zjuhzv2_space.tb_vote'), 'bar.tid = vote.tid');
-			$rows = $select->query()->fetchAll();
-			$pagesize = Alp_Page::$pagesize = 10;
-			if(count($rows) > $pagesize)
+			
+			$row = $select->query()->fetchAll();
+			$select->reset(Zend_Db_Select::COLUMNS)->columns(array('bar.*','vote.votenum'));
+			$pagesize = 10;
+			if($row[0]['numrows'] > $pagesize)
 			{
 				Alp_Page::create(array(
 					'href_open' => '<a href="?type=vote&order='.$order.'&where='.$where.'&p=%d">',
 					'href_close' => '</a>',
-					'num_rows' => count($rows),
+					'num_rows' => $row[0]['numrows'],
 					'cur_page' => $page
 				));
 				$select->limit($pagesize, Alp_Page::$offset);
-				$rows = $select->query()->fetchAll();
 				$this->view->pagination = Alp_Page::$page_str;
 			}
+			
+			$select->joinLeft(array('puser' => 'zjuhzv2_user.tb_base'), 'puser.uid = bar.puber', 
+							  array('pubname' => 'username', 'pubnick' => 'nickname'));
+			$select->joinLeft(array('ruser' => 'zjuhzv2_user.tb_base'), 'ruser.uid = bar.replyer', 
+							  array('replyname' => 'username', 'replynick' => 'nickname'));
+			$select->reset(Zend_Db_Select::GROUP);
+			
+			$rows = $select->query()->fetchAll();
 			$this->view->rows = $rows;
 			$this->view->where = $where;
 		}

@@ -1,0 +1,51 @@
+<?php foreach ($this->rows as $r): ?>
+<table class="table-dashed" width="90%" style="line-height:170%">
+	<tr>
+		<td width="50">
+			<div class="head40">
+	    		<img class="pd10" src="<?= Cmd::userhead($r['sender'], '40', $r['ssex']) ?>" />
+	    	</div>
+		</td>
+		<td>
+			<a href="/space_home/?uid=<?= $r['sender'] ?>"><?= $r['sname'] ?></a>于<span class="quiet"><?= Alp_Date::normal($r['time']) ?></span>请求加你为好友：<br />
+			<img src="<?= Alp_Url::img('icon/mix/quote2.gif') ?>" />
+			<?= stripslashes($r['content']); ?>
+		</td>
+		<td width="180" id="msg_f_<?= $r['sender'] ?>" <?= ($r['isread'] == 0)?'style="background:url('.Alp_Url::img('v1/newmsg.gif').') no-repeat right bottom"':'' ?>>
+			<?php if($r['ftype'] == 'pass'): ?>
+			<div class="success">已经通过请求，成为好友</div>
+			<?php elseif($r['ftype'] == 'wait' || !$r['ftype']): ?>
+			<input onclick="friend_pass_form(<?= $r['sender'] ?>)" class="btn" type="button" value="同意" /> 
+			<input onclick="friend_reject(<?= $r['sender'] ?>)" class="btn" type="button" value="拒绝" /> 
+			<?php endif; ?>
+		</td>
+	</tr>
+</table>
+<?php endforeach; ?>
+
+<script type="text/javascript">
+	function state_box(id, html)
+	{
+		$('#msg_f_'+id).html(html);
+	}
+
+	function friend_pass_form(uid)
+	{
+		$('.btn').attr('disabled', true);
+		$.post('/space_friends/pass/form?sender='+uid, function(data){ 
+			$.facebox(data); 
+			$('.btn').attr('disabled', false);
+		})
+	}
+	
+	function friend_reject(uid)
+	{
+		$('.btn').attr('disabled', true);
+		$.post('/space_friends/reject/?sender='+uid, function(data){ 
+			if(data == 'success') 
+			state_box(uid, '<div class="error">已经拒绝请求，信息将被删除</div>');
+			else alert(data);
+			$('.btn').attr('disabled', false);
+		})
+	}
+</script>

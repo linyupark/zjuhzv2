@@ -1,17 +1,18 @@
-<div style="position:absolute; left:100px; top:25px; border:1px solid #97AFC6; padding:2px; width:330px;">
+<div style="position:absolute; background:#fff; overflow:auto; left:100px; top:25px; border:1px solid #97AFC6; padding:2px; width:330px; height:300px;">
 	<table width="100%">
 		<tr bgcolor="#F2F6FB">
 			<td>选择要发送的对象</td>
 			<td class="txtr">
-				<select name="sort" onchange="">
+				<select name="sort" onchange="load_friends_td(this.value)">
+					<option value="0">全部</option>
 					<?php foreach ($this->sorts as $i => $s): ?>
 					<option value="<?= $i ?>"><?= $s ?></option>
 					<?php endforeach; ?>
 				</select>
 			</td>
 		</tr>
-		<tr id="friends_td">
-			
+		<tr>
+			<td colspan="2" id="friends_td"></td>
 		</tr>
 	</table>
 </div>
@@ -19,6 +20,7 @@
 <script type="text/javascript">
 	function load_friends_td(sort)
 	{
-		$('#friends_td').load();
+		$('#friends_td').html('<span class="quiet">加载中...</span>').load('/space_friends/sort/load/?id='+sort);
 	}
+	load_friends_td(0);
 </script>

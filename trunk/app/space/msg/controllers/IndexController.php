@@ -45,7 +45,7 @@
 			switch ($type)
 			{
 				case 'friend' : // 好友请求
-					$select->joinLeft(array('f' => 'tb_friends'), 'f.uid = msg.incept',
+					$select->joinLeft(array('f' => 'tb_friends'), 'f.friend = '.$uid.' AND f.uid = msg.sender',
 							array('ftype' => 'f.type'));
 				break;
 				

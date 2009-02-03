@@ -34,17 +34,6 @@
         	// 自行注册
         	$data['role'] = 'bench';
         	
-        	// 邀请注册
-        	if(!empty($data['ucode']) && !empty($data['scode']))
-        	{
-        		// 是否为有效邀请
-        		if(self::isRegistered('uid', $data['ucode']) != false 
-        		&& Logic_Space_Friends::hasSort($data['ucode'], $data['scode']) == true)
-        		{
-        			$data['role'] = 'member';
-        		}
-        	}
-        	
         	// 注册事务处理
             $User = parent::User();
             $User->beginTransaction();
@@ -69,30 +58,21 @@
             		'email' => $data['email']
             	));
             	
-            	// 注册成功log
-            	Logic_Log::insert('tb_user', array(
-            		'type' => 'add_user',
-            		'uid' => $self_uid,
-            		'value' => '',
-            		'time' => time()
-            	));
+            	// 注册成功log - add_user
             	
-            	// 好友关联
-            	if($data['role'] == 'member')
-            	{
-            		Logic_Log::insert('tb_space', array(
-            			'type' => 'add_friend',
-            			'uid' => $self_uid,
-            			'value' => $data['ucode'],
-            			'time' => time()
-            		));
-            		Logic_Log::insert('tb_space', array(
-            			'type' => 'add_friend',
-            			'uid' => $data['ucode'],
-            			'value' => $self_uid,
-            			'time' => time()
-            		));
-            	}
+            	
+	            // 邀请注册好友关联
+	        	if(!empty($data['ucode']) && !empty($data['scode']))
+	        	{
+	        		// 是否为有效邀请
+	        		if(self::isRegistered('uid', $data['ucode']) != false 
+	        		&& Logic_Space_Friends::hasSort($data['ucode'], $data['scode']) == true)
+	        		{
+	        			// 关联
+	        			time();
+	        			// log记录 - add_friend
+	        		}
+	        	}
             	$User->commit();
             	Alp_Sys::msg('form_tip', 'success');
             	Alp_Sys::msg('account', $data['account']);

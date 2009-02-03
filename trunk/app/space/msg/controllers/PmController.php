@@ -12,7 +12,9 @@
 		 */
 		function indexAction()
 		{
-			$this->view->incept = $this->_getParam('uid');
+			$uid = $this->_getParam('uid');
+			$incept = Logic_User_Base::get($uid);
+			$this->view->incept = $incept;
 		}
 		
 		/**

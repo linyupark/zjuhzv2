@@ -1,0 +1,40 @@
+<table class="table-dashed" width="100%">
+<?php if(count($this->rows) > 0): ?>
+	<?php foreach($this->rows as $i => $r): ?>
+		<?php if($i%4 == 0): ?><tr><?php endif; ?>
+		<td width="24%">
+			<input title="<?= $r['uname'] ?>" value="<?= $r['friend'] ?>" class="vm incept_opt" type="checkbox" name="incept[]" id="i_<?= $i ?>" />
+			<label for="i_<?= $i ?>"><?= $r['uname'] ?></label></td>
+		<?php if($i%4 == 3): ?></tr><?php endif; ?>
+	<?php endforeach; ?>
+	<tr>
+		<td colspan="2">
+			<a href="javascript:selall()">全选</a> / <a href="javascript:unselall()">取消</a>
+		</td>
+		<td colspan="2" class="txtr">
+			<input onclick="fill()" type="button" value="确定" class="btn" />
+			<input onclick="$('#friends_box').empty()" type="button" value="取消" class="btn" />
+		</td>
+	</tr>
+<?php else: ?>
+	<tr>
+		<td class="quiet">该分类没有好友</td>
+	</tr>
+<?php endif; ?>
+</table>
+<script type="text/javascript">
+	function fill(){
+		var ids = '';
+		var names = '';
+		$('.incept_opt:checked').each(function(){
+			names += $(this).attr('title')+' ';
+			ids += $(this).val()+',';
+		});
+		ids = ids.substr(0, ids.length-1);
+		$('#uname_box').val(names);
+		$('#incepter').val(ids);
+		$('#friends_box').empty();
+	}
+	function selall(){$('.incept_opt').attr('checked',true);}
+	function unselall(){$('.incept_opt').attr('checked',false);}
+</script>

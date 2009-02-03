@@ -19,8 +19,8 @@
 				$params = Filter_Friends::pass($params);
 				if(Alp_Sys::getMsg() == null)
 				{
+					Logic_Space_Friends::rel($params['sender'], $params['uid']);
 					Logic_Space_Friends::pass($params);
-					Logic_Space_Friends::rel($params['uid'], $params['sender']);
 					if(Alp_Sys::getMsg() == null)
 					{
 						echo 'success';

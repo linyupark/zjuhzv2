@@ -9,18 +9,19 @@
 		</div>
 		
 		<form id="pm_form" onsubmit="return pm()">
-		<table width="90%">
-			<tr>
-				<td class="txtr">发送给：</td>
-				<td>
-					<div id="incept_box" style="position:relative;">
-					<input type="text" name="incept" size="70" /> 
-					<a href="javascript:friends_box()">发送对象</a>
-						<span id="friends_box"></span>
-					</div>
-				</td>
-			</tr>
-		</table>
+			<table width="90%">
+				<tr>
+					<td class="txtr">发送给：</td>
+					<td>
+						<div id="incept_box" style="position:relative;">
+						<input name="uname" id="uname_box" type="text" value="<?= $this->incept['username'] ?>" size="70" /> 
+						<a href="javascript:friends_box()">发送对象</a>
+							<span id="friends_box"></span>
+						</div>
+					</td>
+				</tr>
+			</table>
+			<input id="incepter" type="hidden" name="incept" value="<?= $this->incept['uid'] ?>" />
 		</form>
 		
 	</div>
@@ -33,5 +34,5 @@
 </div>
 <script type="text/javascript">
 	$('.yui-d3f').addClass('yui-t6');
-	$('#friends_box').load('/space_msg/pm/friends');
+	function friends_box(){ $('#friends_box').load('/space_msg/pm/friends'); }
 </script>

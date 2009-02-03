@@ -7,6 +7,26 @@
 	class Logic_Space_Friends extends DbModel 
 	{	
 		/**
+		 * 获取指定用户指定好友分类列表信息
+		 *
+		 * @param unknown_type $uid
+		 * @param unknown_type $sort
+		 * @return unknown
+		 */
+		public static function fetch($uid, $sort = 0)
+		{
+			$select = parent::Space()->select();
+			$select->from(array('f' => 'tb_friends'))
+				   ->where('f.type = ?', 'pass')->where('f.uid = ?', $uid);
+			// 分类筛选
+			if($sort != 0)
+			$select->where('f.sort = ?', $sort);
+			$select->joinLeft(array('u' => 'zjuhzv2_user.tb_base'), 'f.friend = u.uid', 
+							  array('uname' => 'u.username', 'usex' => 'u.sex'));
+			return $select->query()->fetchAll();
+		}
+		
+		/**
 		 * 拒绝好友请求
 		 *
 		 * @param unknown_type $params
@@ -55,7 +75,7 @@
 					'type' => 'pass',
 					'time' => $params['time'],
 					'sort' => $params['sort'],
-				), 'uid = '.$params['sender'].' AND friend = '.$params['uid']);
+				), 'uid = '.$params['uid'].' AND friend = '.$params['sender']);
 				
 				// 给对方发送确认信息
 				if(Logic_Space_Msg::unique('friend', $params['uid'], $params['sender']) == false)	

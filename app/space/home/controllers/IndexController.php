@@ -60,7 +60,7 @@
 						break;
 						case 1 : 
 							// 判断访问用户是否为好友
-							if(Logic_Space_Friends::hasFriend($params['uid'], Cmd::uid()) == 1)
+							if(Logic_Space_Friends::hasFriend($params['uid'], Cmd::uid()) == 'pass')
 							$this->_forward('index', 'user');
 							else 
 							$this->_forward('deny', 'error', 'public', 

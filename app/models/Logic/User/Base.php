@@ -7,6 +7,24 @@
 	class Logic_User_Base extends DbModel
 	{
 		/**
+		 * 根据用户名获取其id
+		 *
+		 * @param unknown_type $uname
+		 */
+		static function uid($uname)
+		{
+			$db = parent::User();
+			if(is_array($uname))
+			{
+				$select = $db->select();
+				$select->from('tb_base', 'uid');
+				foreach ($uname as $u) $select->orWhere('username = ?', $u);
+				return $select->query()->fetchAll();
+			}
+			else return $db->fecthAll('SELECT `uid` FROM `tb_base` WHERE `username` = ?', $uname);
+		}
+		
+		/**
 		 * 检查用户id有效性
 		 *
 		 * @param unknown_type $uid

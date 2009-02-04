@@ -1,0 +1,32 @@
+<?php foreach ($this->rows as $r): ?>
+<table class="table-dashed" width="90%" style="line-height:170%">
+	<tr>
+		<td width="50">
+			<div class="head40">
+	    		<img class="pd10" src="<?= Cmd::userhead($r['incept'], '40', $r['isex']) ?>" />
+	    	</div>
+		</td>
+		<td>
+			<span class="quiet"><?= Alp_Date::normal($r['time']) ?></span> 发给
+			<a href="/space_home/?uid=<?= $r['incept'] ?>"><?= $r['iname'] ?></a> 的
+			<?php switch ($r['type']){
+				case 'friend' :
+					echo '好友请求';
+				break;
+				case 'pm' :
+					echo '消息';
+				break;
+				case 'gbook' :
+					echo '留言';
+				break;
+			} ?>
+			<br />
+			<img src="<?= Alp_Url::img('icon/mix/quote2.gif') ?>" />
+			<?= stripslashes($r['content']); ?>
+		</td>
+		<td width="180" <?= ($r['isread'] == 0)?'style="background:url('.Alp_Url::img('v1/newmsg.gif').') no-repeat right bottom"':'' ?>></td>
+	</tr>
+</table>
+<?php endforeach; ?>
+
+<div class="pagination"><?= $this->pagination ?></div>

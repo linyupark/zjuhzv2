@@ -17,7 +17,7 @@
 			$pagesize = 10;
 			
 			$select = DbModel::Space()->select();
-			$select->from(array('msg' => 'tb_msg', array('numrows' => new Zend_Db_Expr('COUNT(mid)'))));
+			$select->from(array('msg' => 'tb_msg'), array('numrows' => new Zend_Db_Expr('COUNT(mid)')));
 			$select->where('msg.incept = ?', $uid);
 			$select->where('msg.type = ?', $type);
 			
@@ -38,8 +38,8 @@
 			}
 			
 			$select->order('time DESC');
-			$select->joinLeft(array('user' => 'zjuhzv2_user.tb_base'), 'user.uid = msg.sender', 
-							array('sname' => 'user.username', 'ssex' => 'user.sex'));
+			$select->joinLeft(array('su' => 'zjuhzv2_user.tb_base'), 'su.uid = msg.sender', 
+							array('sname' => 'su.username', 'ssex' => 'su.sex'));
 							
 			// 根据类型进行联合查询
 			switch ($type)
@@ -48,18 +48,26 @@
 					$select->joinLeft(array('f' => 'tb_friends'), 'f.friend = '.$uid.' AND f.uid = msg.sender',
 							array('ftype' => 'f.type'));
 				break;
-				
+				case 'sendbox' : // 发件箱
+					$select->reset(Zend_Db_Select::WHERE);
+					$select->where('msg.sbox = 1 AND msg.parent = 0 AND msg.sender = '.$uid);
+					$select->joinLeft(array('iu' => 'zjuhzv2_user.tb_base'), 'iu.uid = msg.incept', 
+							array('iname' => 'iu.username', 'isex' => 'iu.sex'));
+				break;
 				default : 
 				break;
 			}
-							
+			
 			$rows = $select->query()->fetchAll();
 			
-			// 将未读的变为已读
-			foreach ($rows as $r)
+			if($type != 'sendbox')
 			{
-				if($r['isread'] == 0)
-				Logic_Space_Msg::reading($r['mid']);
+				// 将未读的变为已读
+				foreach ($rows as $r)
+				{
+					if($r['isread'] == 0)
+					Logic_Space_Msg::reading($r['mid']);
+				}
 			}
 			
 			$this->view->rows = $rows;

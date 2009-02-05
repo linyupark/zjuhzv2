@@ -1,0 +1,64 @@
+<div class="yui-main">
+	<div class="yui-b">
+		<div class="mg5 section yui-g">
+			<div class="yui-u first">
+				<img class="mgr10" src="<?= Alp_Url::img('icon/1616/mail.gif') ?>" />
+				<b>我和
+					<a href="/space_home/?uid=<?= $this->pm_user['uid'] ?>">
+						<?= $this->pm_user['username'] ?>
+					</a>
+					之间的私秘对话</b>
+			</div>
+			<div class="yui-u txtr"><a href="javascript:history.back()">返回上一页</a></div>
+		</div>
+		<?= $this->render('index/type.phtml'); ?>
+		<?php foreach ($this->rows as $r): ?>
+		<table class="table-dashed" width="90%" style="line-height:170%">
+			<tr>
+				<td width="50">
+					<div class="head40">
+			    		<img class="pd10" src="<?= Cmd::userhead($r['sender'], '40', $r['ssex']) ?>" />
+			    	</div>
+				</td>
+				<td>
+					<a href="/space_home/?uid=<?= $r['sender'] ?>"><?= $r['sname'] ?></a>于<span class="quiet"><?= Alp_Date::normal($r['time']) ?></span>：<br />
+					<img src="<?= Alp_Url::img('icon/mix/quote2.gif') ?>" />
+					<?= stripslashes($r['content']); ?>
+				</td>
+				<td width="180" <?= ($r['isread'] == 0 && $r['sender'] == $this->pm_user['uid'])?'style="background:url('.Alp_Url::img('v1/newmsg.gif').') no-repeat right bottom"':'' ?>>
+				</td>
+			</tr>
+		</table>
+		<?php endforeach; ?>
+		<form id="pm_form" method="post" onsubmit="return postmsg()">
+			<table width="90%">
+				<tr>
+					<td class="txtr" valign="top">回复：</td>
+					<td>
+						<textarea name="content" style="width:380px; height:120px"></textarea>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" class="txtc">
+						<input class="btn" type="submit" value="确定发送" />
+					</td>
+				</tr>
+			</table>
+			<input id="incepter" type="hidden" name="incept" value="<?= $this->pm_user['uid'] ?>" />
+			<input type="hidden" name="parent" value="<?= $r['parent'] ?>" />
+		</form>
+	</div>
+</div>
+<?= $this->render('sidebar.phtml'); ?>
+
+<script type="text/javascript">
+	function postmsg(){
+		$('input:submit').val('发送中..').attr('disabled', true);
+		$.post('/space_msg/pm/reply', $('#pm_form').serializeArray(), function(data){
+			if(data != 'success') {alert(data); $('input:submit').val('确定发送').attr('disabled', false);}
+			else { $('input:submit').val('发送成功'); history.go(0); }
+		});
+		return false;
+	}
+	window.scrollTo(0,99999);
+</script>

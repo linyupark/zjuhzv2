@@ -1,3 +1,24 @@
-<?php
+<?php foreach ($this->rows as $r): $children = Logic_Space_Msg::childnum($r['parent']); ?>
+<table class="table-dashed" width="90%" style="line-height:170%">
+	<tr>
+		<td width="50">
+			<div class="head40">
+	    		<img class="pd10" src="<?= Cmd::userhead($r['sender'], '40', $r['ssex']) ?>" />
+	    	</div>
+		</td>
+		<td>
+			<a href="/space_home/?uid=<?= $r['sender'] ?>"><?= $r['sname'] ?></a>于<span class="quiet"><?= Alp_Date::normal($r['time']) ?></span>：<br />
+			<img src="<?= Alp_Url::img('icon/mix/quote2.gif') ?>" />
+			<?= stripslashes($r['content']); ?>
+		</td>
+		<td width="180" <?= (Logic_Space_Msg::newReply($r['parent']))?'style="background:url('.Alp_Url::img('v1/newmsg.gif').') no-repeat right bottom"':'' ?>>
+			<?php if($children > 0): ?>
+				<a href="/space_msg/pm/view?mid=<?= $r['mid'] ?>&rel=<?= $r['parent'] ?>">
+					@展开<?= $children ?>条会话</a><br />
+			<?php endif; ?>
+		</td>
+	</tr>
+</table>
+<?php endforeach; ?>
 
-?>
+<div class="pagination"><?= $this->pagination ?></div>

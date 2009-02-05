@@ -38,22 +38,16 @@
 		
 	</div>
 </div>
-<div class="yui-b">
-	<div class="greybox mgb10">
-		<div class="greybox-top"></div>
-		<?php if(Cmd::role() != 'guest') echo $this->action(Cmd::role(), 'modnav'); ?>
-	</div>
-</div>
+<?= $this->render('sidebar.phtml'); ?>
 
 <script type="text/javascript">
 	function postmsg(){
 		$('input:submit').val('发送中..').attr('disabled', true);
 		$.post('/space_msg/pm/post', $('#pm_form').serializeArray(), function(data){
 			if(data != 'success') {alert(data); $('input:submit').val('确定发送').attr('disabled', false);}
-			else $('input:submit').val('发送成功');
+			else { $('input:submit').val('发送成功'); location.href="/space_msg/?type=sendbox"; }
 		});
 		return false;
 	}
-	$('.yui-d3f').addClass('yui-t6');
 	function friends_box(){ $('#friends_box').load('/space_msg/pm/friends'); }
 </script>

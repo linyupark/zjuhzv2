@@ -1,0 +1,14 @@
+<div class="yui-g mglr10">
+	<div class="yui-u first" style="width:85%">
+		<div class="tb-box">
+			<a href="?type=list" <?= ($this->type == 'list')?'class="tb-on"':'class="tb-of"' ?>>我的好友</a><span class="tb-rbg"></span>
+			<a href="?type=mana" <?= ($this->type == 'mana')?'class="tb-on"':'class="tb-of"' ?>>好友管理</a><span class="tb-rbg"></span>
+			<a href="?type=stat" <?= ($this->type == 'stat')?'class="tb-on"':'class="tb-of"' ?>>好友状态</a><span class="tb-rbg"></span>
+			<a href="?type=visit" <?= ($this->type == 'visit')?'class="tb-on"':'class="tb-of"' ?>>来看过我的</a><span class="tb-rbg"></span>
+		</div>
+	</div>
+	<div class="yui-u txtr a-span" style="width:15%">
+		<a href="/space_search/user/">
+			<img class="vm" src="<?= Alp_Url::img('icon/mix/search.gif') ?>" /> 搜索</a>
+	</div>
+</div>

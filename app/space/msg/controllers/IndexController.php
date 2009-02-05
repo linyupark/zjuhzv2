@@ -28,7 +28,7 @@
 			{
 				Alp_Page::$pagesize = $pagesize;
 				Alp_Page::create(array(
-					'href_open' => '<a href="/space_msg/?type='.$type.'&p='.$page.'">',
+					'href_open' => '<a href="/space_msg/?type='.$type.'&p=%d">',
 					'href_close' => '</a>',
 					'num_rows' => $row[0]['numrows'],
 					'cur_page' => $page
@@ -37,7 +37,7 @@
 				$this->view->pagination = Alp_Page::$page_str;
 			}
 			
-			$select->order('time DESC');
+			$select->order('mid DESC');
 			$select->joinLeft(array('su' => 'zjuhzv2_user.tb_base'), 'su.uid = msg.sender', 
 							array('sname' => 'su.username', 'ssex' => 'su.sex'));
 							
@@ -50,9 +50,13 @@
 				break;
 				case 'sendbox' : // 发件箱
 					$select->reset(Zend_Db_Select::WHERE);
-					$select->where('msg.sbox = 1 AND msg.parent = 0 AND msg.sender = '.$uid);
+					$select->where('msg.sbox = 1 AND msg.sender = '.$uid);
 					$select->joinLeft(array('iu' => 'zjuhzv2_user.tb_base'), 'iu.uid = msg.incept', 
 							array('iname' => 'iu.username', 'isex' => 'iu.sex'));
+				break;
+				case 'pm' : // 收件箱
+					$select->columns(array('mid' => new Zend_Db_Expr('max(msg.mid)')));
+					$select->where('msg.parent != 0')->group('msg.parent');
 				break;
 				default : 
 				break;
@@ -60,7 +64,7 @@
 			
 			$rows = $select->query()->fetchAll();
 			
-			if($type != 'sendbox')
+			if($type != 'sendbox' && $type != 'pm')
 			{
 				// 将未读的变为已读
 				foreach ($rows as $r)

@@ -16,15 +16,12 @@
 				case 'pm' :
 					echo '消息';
 				break;
-				case 'gbook' :
-					echo '留言';
-				break;
 			} ?>
+			<?= ($r['isread'] == 0)?'<span class="quiet">(未读)</span>':'' ?>
 			<br />
 			<img src="<?= Alp_Url::img('icon/mix/quote2.gif') ?>" />
 			<?= stripslashes($r['content']); ?>
 		</td>
-		<td width="180" <?= ($r['isread'] == 0)?'style="background:url('.Alp_Url::img('v1/newmsg.gif').') no-repeat right bottom"':'' ?>></td>
 	</tr>
 </table>
 <?php endforeach; ?>

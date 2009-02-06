@@ -29,6 +29,22 @@
 				echo Alp_Sys::allMsg('* ', "\n");
 			}
 		}
+		
+		/**
+		 * 删除好友
+		 *
+		 */
+		function delAction()
+		{
+			$this->getHelper('viewRenderer')->setNoRender();
+			if($this->getRequest()->isXmlHttpRequest())
+			{
+				$fid = $this->_getParam('fid');
+				$uid = Cmd::uid();
+				DbModel::Space()->delete('tb_friends', 'uid = '.$uid.' AND friend = '.$fid);
+				echo 'success';
+			}
+		}
 	}
 
 ?>

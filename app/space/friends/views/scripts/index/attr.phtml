@@ -1,0 +1,43 @@
+<form id="friend_attr_form" method="post" onsubmit="return friend_attr()">
+	<table width="100%" class="table-dashed f14">
+		<tr>
+			<td colspan="2">
+				<img src="<?= Alp_Url::img('icon/1616/f_user.gif') ?>" /> 
+				<b><?= $this->friend['username'] ?>是你的：</b>
+				<hr class="dashed" />
+			</td>
+		</tr>
+		<?php foreach ($this->sorts as $i => $s): ?>
+		<?php if($i%2==1): ?>
+		<tr>
+		<?php endif; ?>
+			<td>
+				<input <?= ($this->sort == $i)?'checked="checked"':'' ?> id="sort<?= $i ?>" type="radio" name="sort" value="<?= $i ?>" />
+				<label for="sort<?= $i ?>"><?= $s ?></label>
+			</td>
+		<?php if($i%2==0): ?>
+		</tr>
+		<?php endif; ?>
+		<?php endforeach; ?>
+	</table>
+	<p class="txtr mgr10">
+		<input type="submit" class="btn" value="确定" />
+		<input type="hidden" name="fid" value="<?= $this->friend['uid'] ?>" />
+		<input onclick="$.facebox.close()" type="button" class="btn" value="取消" />
+	</p>
+</form>
+
+<script type="text/javascript">
+	function friend_attr()
+	{
+		$('input:submit').val('提交中..').attr('disabled', true);
+		$.post('/space_friends/sort/change',$('#friend_attr_form').serializeArray(),function(data){
+			if(data == 'success') 
+			{
+				$('input:submit').val('分组成功');
+				history.go(0);
+			}
+		});
+		return false;
+	}
+</script>

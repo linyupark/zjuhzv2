@@ -20,12 +20,46 @@
 		}
 		
 		/**
-		 * 好友分组管理首页
+		 * 好友分组添加
 		 *
 		 */
-		function indexAction()
+		function createAction()
 		{
-			
+			$this->getHelper('viewRenderer')->setNoRender();
+			if($this->getRequest()->isXmlHttpRequest())
+			{
+				$uid = Cmd::uid();
+				$params = Filter_Friends::sort($this->_getAllParams());
+				if(Alp_Sys::getMsg() == null)
+				{
+					$sorts = Logic_Space_Friends::getSort($uid);
+					if(in_array($params['val'], $sorts))
+					Alp_Sys::msg('error', '该分组已经存在');
+					if(Alp_Sys::getMsg() == null)
+					{
+						Logic_Space_Friends::addSort($params);
+						echo 'success';
+						exit();
+					}
+				}
+				echo Alp_Sys::allMsg('* ', "\n");
+			}
+		}
+		
+		/**
+		 * 好友分组改变
+		 *
+		 */
+		function changeAction()
+		{
+			$this->getHelper('viewRenderer')->setNoRender();
+			if($this->getRequest()->isXmlHttpRequest())
+			{
+				$params = $this->getRequest()->getParams();
+				$uid = Cmd::uid();
+				Logic_Space_Friends::sort($uid, $params['fid'], $params['sort']);
+				echo 'success';
+			}
 		}
 	}
 

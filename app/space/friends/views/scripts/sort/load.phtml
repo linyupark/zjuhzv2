@@ -2,7 +2,7 @@
 <?php if(count($this->rows) > 0): ?>
 	<?php foreach($this->rows as $i => $r): ?>
 		<?php if($i%4 == 0): ?><tr><?php endif; ?>
-		<td width="24%">
+		<td width="25%">
 			<input title="<?= $r['uname'] ?>" value="<?= $r['friend'] ?>" class="vm incept_opt" type="checkbox" name="incept[]" id="i_<?= $i ?>" />
 			<label for="i_<?= $i ?>"><?= $r['uname'] ?></label></td>
 		<?php if($i%4 == 3): ?></tr><?php endif; ?>

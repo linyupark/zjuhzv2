@@ -78,6 +78,7 @@
 				{
 					$unames = explode(' ', $params['uname']);
 					$incept = Logic_User_Base::uid($unames);
+					/*
 					$friends = Logic_Space_Friends::fetch($uid);
 					$fid = array();
 					foreach ($friends as $f)
@@ -90,6 +91,7 @@
 						if(!in_array($u['uid'], $fid))
 						unset($incept[$i]);
 					}
+					*/
 				}
 				else $incept = explode(',', $params['incept']);
 				

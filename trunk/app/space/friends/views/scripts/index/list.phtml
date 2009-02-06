@@ -1,3 +1,53 @@
-<div class="yui-main">
-	
-</div>
+<p class="a-span pd5" style="border-bottom:1px dashed #ccc">
+	<a href="/space_friends/?type=list" 
+	<?= ($this->sort == 0)?'style="color:#333;text-decoration:underline"':'' ?>>全部</a>
+	<?php foreach ($this->sorts as $i => $s): ?>
+	<a href="/space_friends/?type=list&sort=<?= $i ?>" 
+	<?= ($this->sort == $i)?'style="color:#333;text-decoration:underline"':'' ?>><?= $s ?></a>
+	<?php endforeach; ?>
+</p>
+<table width="100%">
+	<?php if(count($this->rows) > 0) : foreach ($this->rows as $i => $r): ?>
+	<?php if($i%4 == 0): ?><tr><?php endif; ?>
+	<td width="25%">
+		<table class="table-dashed">
+			<tr>
+				<td width="50">
+					<div class="head40">
+						<a href="/space_home/?uid=<?= $r['friend'] ?>">
+				    	<img class="pd10" src="<?= Cmd::userhead($r['friend'], '40', $r['usex']) ?>" />
+				    	</a>
+				    </div>
+				</td>
+				<td>
+					<img class="online_state" src="<?= Alp_Url::img('icon/1616/offline.gif') ?>" rel="<?= $r['friend'] ?>" />
+					<a href="/space_home/?uid=<?= $r['friend'] ?>"><?= $r['uname'] ?></a>
+					<br />
+					<a href="/space_msg/pm/?uid=<?= $r['friend'] ?>" style="color:#999">短信</a>
+					<a href="javascript:fattr(<?= $r['friend'].','.$r['sort'] ?>)" style="color:#999">分组</a>
+					<a href="javascript:del(<?= $r['friend'] ?>)" style="color:#999">x</a>
+				</td>
+			</tr>
+		</table>
+	</td>
+	<?php if($i%4 == 3): ?></tr><?php endif; ?>
+	<?php endforeach; endif; ?>
+	<tr>
+		<td class="quiet pdl10">&gt;&gt; 找到<?= $this->numrows ?>位好友</td>
+		<td width="25%">&nbsp;</td>
+		<td width="25%">&nbsp;</td>
+		<td width="25%">&nbsp;</td>
+	</tr>
+</table>
+<div class="pagination"><?= $this->pagination ?></div>
+
+<script type="text/javascript">
+function fattr(fid,sid){$.post('/space_friends/index/attr', {fid:fid,sid:sid}, function(data){ $.facebox(data)  });}
+function del(fid){ 
+	var c= confirm('确定要移除该好友？'); 
+	if(c == true){ 
+		$.post('/space_friends/reject/del', {fid:fid}, function(data){ if(data == 'success'){alert('成功移除!');history.go(0);} });
+	}
+}
+online_state();
+</script>

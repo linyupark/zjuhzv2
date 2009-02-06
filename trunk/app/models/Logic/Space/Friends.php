@@ -176,14 +176,30 @@
 		}
 		
 		/**
+		 * 改变好友分组
+		 *
+		 * @param unknown_type $uid
+		 * @param unknown_type $fid
+		 * @param unknown_type $sort
+		 */
+		public static function sort($uid, $fid, $sort)
+		{
+			parent::Space()->update('tb_friends', array('sort' => $sort), 'uid = '.$uid.' AND friend = '.$fid);
+		}
+		
+		/**
 		 * 增加新的好友分组
 		 *
 		 * @param int $sid
 		 * @param string $name
 		 */
-		public static function addSort($sid, $name)
+		public static function addSort($params)
 		{
-			return false;
+			parent::Space()->insert('tb_friends_sort', array(
+				'uid' => $params['uid'],
+				'sid' => $params['sid'],
+				'name' => $params['val']
+			));
 		}
 		
 		/**

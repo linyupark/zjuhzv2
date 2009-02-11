@@ -7,6 +7,18 @@
 	class Logic_Space_Group extends DbModel 
 	{	
 		/**
+		 * 新群信息
+		 *
+		 * @param unknown_type $num
+		 * @return unknown
+		 */
+		public static function fresh($num)
+		{
+			return parent::Space()->fetchAll('
+				SELECT * FROM `tb_group` ORDER BY `createtime` DESC LIMIT '.$num);
+		}
+		
+		/**
 		 * 更新最后访问时间
 		 *
 		 */
@@ -40,7 +52,6 @@
 		{
 			return parent::Space()->fetchRow('SELECT * FROM `tb_group` WHERE `gid` = ?', $gid);
 		}
-		
 		
 		/**
 		 * 建立新群组

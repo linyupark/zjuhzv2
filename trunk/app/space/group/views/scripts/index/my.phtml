@@ -1,0 +1,52 @@
+<div class="yui-g">
+	<!-- 我的群组列表 -->
+	<div class="yui-u first" style="height:350px;overflow:auto;width:35%">
+	<?php
+		if(count($this->groups) > 0):
+		$gname = array();
+		foreach ($this->groups as $g):
+		$gname[$g['gid']] = $g['name'];
+	?>
+	<table class="mg10 table-dashed">
+		<tr>
+			<td width="40">
+				<a href="/space_group/home/?id=<?= $g['gid'] ?>">
+					<img class="cccborder" src="<?= Cmd::groupicon($g['gid'], 40) ?>" />
+				</a>
+			</td>
+			<td>
+				<a href="/space_group/home/?id=<?= $g['gid'] ?>" class="f14"><?= $g['name'] ?></a><br />
+				<span class="quiet">人数:<?= Logic_Space_Group_Member::num($g['gid']) ?></span>
+			</td>
+		</tr>
+	</table>
+	<?php endforeach; else: ?>
+	<table class="mg10 table-dashed">
+		<tr><td class="quiet">你还没有加入任何群组</td></tr>
+	</table>
+	<?php endif; ?>
+	</div>
+	
+	<!-- 我的群组最新话题列表 -->
+	<div class="yui-u mgt10" style="width:64%;">
+	<?php if(count($this->bars) > 0) : ?>
+		<table class="table-dashed" width="100%">
+			<?php foreach ($this->bars as $b): ?>
+			<tr>
+				<td>
+					<a style="color:#666" href="/space_group/home/?id=<?= $b['group'] ?>">
+						[<?= $gname[$b['group']] ?>]</a>
+					<a href="">
+						<img src="<?= Alp_Url::img('icon/1616/'.$this->icons[$b['type']]) ?>" />
+						<?= stripslashes($b['title']) ?>
+					</a>
+					<span class="quiet"><?= Alp_Date::normal($b['replytime']) ?></span>
+				</td>
+			</tr>
+			<?php endforeach; ?>
+		</table>
+	<?php endif; ?>
+	</div>
+</div>
+
+

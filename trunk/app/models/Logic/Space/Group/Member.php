@@ -3,6 +3,36 @@
 	class Logic_Space_Group_Member extends DbModel 
 	{	
 		/**
+		 * 更新成员群组角色
+		 *
+		 * @param unknown_type $gid
+		 * @param unknown_type $uid
+		 * @param unknown_type $role
+		 */
+		public static function crole($gid, $uid, $role, $time = false)
+		{
+			if($time == false) 
+			$data = array('role' => $role);
+			else $data = array('role' => $role, 'jointime' => $time);
+			parent::Space()->update('tb_group_member', $data, 'gid = '.$gid.' AND uid = '.$uid);
+		}
+		
+		/**
+		 * 申请加入群
+		 *
+		 * @param unknown_type $gid
+		 * @param unknown_type $uid
+		 */
+		public static function join($gid, $uid)
+		{
+			parent::Space()->insert('tb_group_member', array(
+				'uid' => $uid,
+				'gid' => $gid,
+				'role' => 'join'
+			));
+		}
+		
+		/**
 		 * 获取用户所在群组的角色
 		 *
 		 * @param unknown_type $gid
@@ -40,7 +70,7 @@
 		public static function isMemeber($gid, $uid)
 		{
 			return parent::Space()->fetchRow('SELECT * FROM `tb_group_member` 
-				WHERE `gid` = ? AND `uid` = ? AND `role` = "member" OR `role` = "creater" OR `role` = "manager"', 
+				WHERE `gid` = ? AND `uid` = ? AND (`role` = "member" OR `role` = "creater" OR `role` = "manager")', 
 			array($gid, $uid));
 		}
 		

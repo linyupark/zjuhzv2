@@ -1,0 +1,39 @@
+<table width="100%">
+<?php if(count($this->rows) > 0): $i = 0; ?>
+	<?php foreach ($this->rows as $uid => $r): ?>
+	<?php if($i%3 == 0): ?><tr><?php endif; ?>
+	<td width="33%">
+		<table class="table-dashed">
+			<tr>
+				<td width="50">
+					<div class="head40">
+						<a href="/space_home/?uid=<?= $uid ?>">
+				    	<img class="pd10" src="<?= Cmd::userhead($uid, '40', $r['sex']) ?>" />
+				    	</a>
+				    </div>
+				</td>
+				<td>
+					<img class="online_state" src="<?= Alp_Url::img('icon/1616/offline.gif') ?>" rel="<?= $uid ?>" />
+					<a href="/space_home/?uid=<?= $uid ?>"><?= $r['username'] ?></a>
+					<br />
+					<span class="quiet">来访:<?= Alp_Date::normal($r['time']) ?></span>
+				</td>
+			</tr>
+		</table>
+	</td>
+	<?php if($i%3 == 2): ?></tr><?php endif; ?>
+	<?php $i ++; endforeach; ?>
+	<tr>
+		<td width="33%">&nbsp;</td>
+		<td width="33%">&nbsp;</td>
+		<td width="33%">&nbsp;</td>
+	</tr>
+<?php else: ?>
+	<tr>
+		<td class="quiet pd10">最近还没有好友来拜访过你</td>
+	</tr>
+<?php endif; ?>
+</table>
+<script type="text/javascript">
+online_state();
+</script>

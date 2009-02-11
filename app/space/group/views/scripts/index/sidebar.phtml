@@ -1,0 +1,24 @@
+<div class="yui-b">
+	<div class="greybox">
+		<div class="greybox-top"></div>
+		<?php if(Cmd::role() != 'guest') echo $this->action(Cmd::role(), 'modnav'); ?>
+	</div>
+	<br />
+	<h3 class="section">新创建群</h3>
+	<?php if(count($this->fresh) > 0): foreach ($this->fresh as $r): ?>
+	<table class="table-dashed" width="90%">
+		<tr>
+			<td width="40"><img class="cccborder" src="<?= Cmd::groupicon($r['gid'], 40) ?>" /></td>
+			<td class="f14">
+				<a href="/space_group/home/?id=<?= $r['gid'] ?>"><?= $r['name'] ?></a>
+				<br />
+				<span class="f12 quiet">建于: <?= Alp_Date::normal($r['createtime']); ?></span>
+			</td>
+		</tr>
+	</table>
+	<?php endforeach; endif; ?>
+</div>
+
+<script type="text/javascript">
+	$('.yui-d3f').addClass('yui-t6')
+</script>

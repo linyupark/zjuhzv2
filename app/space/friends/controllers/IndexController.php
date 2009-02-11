@@ -17,6 +17,39 @@
 		}
 		
 		/**
+		 * 好友访问记录
+		 *
+		 */
+		function visitAction()
+		{
+			$uid = Cmd::uid();
+			$visitor = Logic_Space_Home::get('guests', $uid);
+			$visitor = unserialize($visitor['guests']);
+			if($visitor != false)
+			{
+				$temp = array();
+				foreach ($visitor as $v)
+				{
+					$temp[$v['uid']] = array(
+						'time' => $v['time'], 
+						'username' => $v['username'],
+						'sex' => $v['sex']
+					);
+				}
+				$friends = Logic_Space_Friends::fetch($uid);
+				$rows = array();
+				foreach ($friends as $f)
+				{
+					if(array_key_exists($f['friend'], $temp))
+					$rows[$f['friend']] = $temp[$f['friend']];
+				}
+				uasort($rows, create_function('$a, $b', 'return $a["time"] < $b["time"];'));
+				
+				$this->view->rows = $rows;
+			}
+		}
+		
+		/**
 		 * 分组管理
 		 *
 		 */

@@ -176,7 +176,7 @@
 		}
 		
 		/**
-		 * 改变好友分组
+		 * 改变好友属分组
 		 *
 		 * @param unknown_type $uid
 		 * @param unknown_type $fid
@@ -185,6 +185,29 @@
 		public static function sort($uid, $fid, $sort)
 		{
 			parent::Space()->update('tb_friends', array('sort' => $sort), 'uid = '.$uid.' AND friend = '.$fid);
+		}
+		
+		/**
+		 * 删除分组
+		 *
+		 * @param unknown_type $params
+		 */
+		public static function delSort($params)
+		{
+			parent::Space()->delete('tb_friends_sort', 'uid = '.$params['uid'].' AND sid = '.$params['sid']);
+		}
+		
+		/**
+		 * 更新分组信息
+		 *
+		 * @param unknown_type $params
+		 */
+		public static function updateSort($params)
+		{
+			parent::Space()->update('tb_friends_sort', array(
+				'sid' => $params['sid'],
+				'name' => $params['val']
+			), 'uid = '.$params['uid']);
 		}
 		
 		/**
@@ -201,6 +224,7 @@
 				'name' => $params['val']
 			));
 		}
+
 		
 		/**
 		 * 指定用户是否包含该好友分组

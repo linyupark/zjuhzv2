@@ -64,3 +64,7 @@ a.tb-on{ color:#333; }
 .tp0{ color:#BB3843; }.tp1{ color:#BF6530; }.tp2{ color:#BF8630; }.tp3{ color:#BFA330; }.tp4{ color:#BEBF30; }.tp5{ color:#91A933; }
 .tp6{ color:#459435; }.tp7{ color:#357994; }.tp8{ color:#355A94; }.tp9{ color:#3F3594; }.tp10{ color:#6F3594; }.tp11{ color:#94356D; }
 
+/* block btn a */
+a.blk:visited:link,a.blk:visited{ display:block; width:140px; padding:3px; border-bottom:1px solid #eee; text-decoration:none;  }
+a.blk:hover{ border-bottom:1px solid #999; }
+

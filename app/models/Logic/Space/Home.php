@@ -30,6 +30,23 @@
 			return parent::Space()->fetchRow('SELECT `'.$col.'` FROM `tb_home` WHERE `uid` = ?', $uid);
 		}
 		
+		/**
+		 * 更新访问者数据
+		 *
+		 * @param unknown_type $array
+		 * @param unknown_type $uid
+		 */
+		public static function guests($array, $uid)
+		{
+			parent::Space()->update('tb_home', array('guests' => serialize($array)), 'uid = '.$uid);
+		}
+		
+		/**
+		 * 用户状态小记录更新
+		 *
+		 * @param unknown_type $v
+		 * @param unknown_type $uid
+		 */
 		public static function ing($v, $uid)
 		{
 			$db = parent::Space();

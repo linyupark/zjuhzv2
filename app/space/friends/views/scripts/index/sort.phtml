@@ -5,9 +5,9 @@
 			<?php if(isset($this->default[$i])): ?>
 				<input class="item" type="text" value="<?= $s ?>" disabled="disabled" />
 			<?php else: ?>
-				<input class="item" type="text" value="<?= $s ?>"  />
-				<input type="button" class="btn" value="保存" />
-				<input type="button" class="btn" value="删除" />
+				<input id="s_<?= $i ?>" class="item" type="text" value="<?= $s ?>"  />
+				<input id="btn_<?= $i ?>" onclick="save_sort(<?= $i ?>)" type="button" class="btn" value="保存" />
+				<input id="del_<?= $i ?>" onclick="del_sort(<?= $i ?>)" type="button" class="btn" value="删除" />
 			<?php endif; ?>
 		</td>
 	</tr>
@@ -21,6 +21,29 @@
 </table>
 
 <script type="text/javascript">
+	function del_sort(sid)
+	{
+		var c = confirm('确定删除该分组？删除后该分组下的好友需要重新分组');
+		if(c == true)
+		{
+			$('#del_'+sid).val('删除中..').attr('disabled', true);
+			$.post('/space_friends/sort/del', {sid:sid}, function(data){
+				if(data == 'success') history.go(0);
+				else{ alert(data); $('#del_'+sid).val('删除').attr('disabled', false); }
+			});	
+		}
+	}
+
+	function save_sort(sid)
+	{
+		var val = $('#s_'+sid).val();
+		$('#btn_'+sid).val('保存中..').attr('disabled', true);
+		$.post('/space_friends/sort/save', {sid:sid,val:val}, function(data){
+			if(data == 'success') $('#btn_'+sid).val('保存成功').attr('disabled', false);
+			else{ alert(data); $('#btn_'+sid).val('保存').attr('disabled', false); }
+		});
+	}
+	
 	function create_sort()
 	{
 		var len = $('.item').length;

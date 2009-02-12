@@ -3,6 +3,59 @@
 	class Logic_Space_Msg extends DbModel 
 	{	
 		/**
+		 * 群信
+		 *
+		 * @param unknown_type $incept
+		 * @param unknown_type $sender
+		 * @param unknown_type $gid
+		 * @param unknown_type $content
+		 */
+		public static function group($incept, $sender, $gid, $content)
+		{
+			parent::Space()->insert('tb_msg', array(
+				'gid' => $gid,
+				'incept' => $incept,
+				'sender' => $sender,
+				'type' => 'group',
+				'content' => $content,
+				'time' => time()
+			));
+		}
+		
+		/**
+		 * 申请加入群组
+		 *
+		 * @param unknown_type $incept
+		 * @param unknown_type $sender
+		 * @param unknown_type $gname
+		 * @param unknown_type $gid
+		 */
+		public static function joinGroup($incept, $sender, $gid)
+		{
+			$db = parent::Space();
+			$db->beginTransaction();
+			try {
+				foreach ($incept as $r)
+				{
+					$db->insert('tb_msg', array(
+						'gid' => $gid,
+						'incept' => $r['uid'],
+						'sender' => $sender,
+						'type' => 'group',
+						'content' => '申请加入群',
+						'time' => time()
+					));
+				}
+				$db->commit();
+				
+			} catch (Exception $e) {
+				
+				$db->rollback();
+				Alp_Sys::msg('exception', $e->getMessage());
+			}
+		}
+		
+		/**
 		 * 是否有新回复
 		 *
 		 * @param unknown_type $parent

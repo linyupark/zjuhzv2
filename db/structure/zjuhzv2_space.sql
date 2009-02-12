@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: zjuhzv2_space
 Target Host: localhost
 Target Database: zjuhzv2_space
-Date: 2009/1/22 15:49:31
+Date: 2009-2-12 обнГ 05:05:06
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -117,7 +117,8 @@ CREATE TABLE `tb_home` (
 -- ----------------------------
 CREATE TABLE `tb_msg` (
   `mid` bigint(20) unsigned NOT NULL auto_increment,
-  `type` char(6) NOT NULL default 'pm' COMMENT 'pm;gbook;friend',
+  `gid` int(10) unsigned default NULL,
+  `type` char(6) NOT NULL default 'pm' COMMENT 'pm;friend;group',
   `parent` bigint(20) unsigned NOT NULL default '0',
   `content` text,
   `sender` int(10) unsigned NOT NULL,

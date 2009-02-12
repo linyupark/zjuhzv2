@@ -33,21 +33,21 @@
 
 	function friend_pass_form(uid)
 	{
-		$('.btn').attr('disabled', true);
+		$('#msg_f_'+uid+' .btn').attr('disabled', true);
 		$.post('/space_friends/pass/form?sender='+uid, function(data){ 
 			$.facebox(data); 
-			$('.btn').attr('disabled', false);
+			$('#msg_f_'+uid+' .btn').attr('disabled', false);
 		})
 	}
 	
 	function friend_reject(uid)
 	{
-		$('.btn').attr('disabled', true);
+		$('#msg_f_'+uid+' .btn').attr('disabled', true);
 		$.post('/space_friends/reject/?sender='+uid, function(data){ 
 			if(data == 'success') 
 			state_box(uid, '<div class="error">已经拒绝请求，信息将被删除</div>');
 			else alert(data);
-			$('.btn').attr('disabled', false);
+			$('#msg_f_'+uid+' .btn').attr('disabled', false);
 		})
 	}
 </script>

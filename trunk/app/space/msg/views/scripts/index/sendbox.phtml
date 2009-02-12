@@ -11,10 +11,13 @@
 			<a href="/space_home/?uid=<?= $r['incept'] ?>"><?= $r['iname'] ?></a> 的
 			<?php switch ($r['type']){
 				case 'friend' :
-					echo '好友请求';
+					echo '<span class="quiet">好友请求</span>';
 				break;
 				case 'pm' :
-					echo '消息';
+					echo '<span class="quiet">消息</span>';
+				break;
+				case 'group' : 
+					echo '<span class="quiet">群组消息</span>';
 				break;
 			} ?>
 			<?= ($r['isread'] == 0)?'<span class="quiet">(未读)</span>':'' ?>

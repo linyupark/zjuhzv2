@@ -58,6 +58,10 @@
 					$select->columns(array('mid' => new Zend_Db_Expr('max(msg.mid)')));
 					$select->where('msg.parent != 0')->group('msg.parent');
 				break;
+				case 'group' : // 群组信息
+					$select->joinLeft(array('g' => 'tb_group'), 'g.gid = msg.gid',
+							array('gname' => 'g.name'));
+				break;
 				default : 
 				break;
 			}

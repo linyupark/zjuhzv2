@@ -2,6 +2,10 @@
 	<a href="javascript:joinGroup()" class="blk"><img class="vm" src="<?= Alp_Url::img('icon/1616/door.gif') ?>" /> 加入该群</a>
 <?php endif; ?>
 
+<?php if($this->type != 'close' && $this->role == 'join'): ?>
+	<span class="quiet">已申请加入，等待处理</span>
+<?php endif; ?>
+
 <?php if($this->role && $this->role != 'join' && $this->role != 'invite'): ?>
 	<a href="" class="blk"><img class="vm" src="<?= Alp_Url::img('icon/1616/add_m.gif') ?>" /> 邀请好友加入群</a>
 <?php endif; ?>
@@ -19,9 +23,5 @@
 <?php endif; ?>
 
 <script type="text/javascript">
-function joinGroup(){
-	$.post('/space_group/member/join/?id=<?= $this->gid ?>', function(data){
-		$.facebox(data);
-	});
-}
+function joinGroup(){ $.post('/space_group/member/join/',{id:<?= $this->gid ?>}, function(data){$.facebox(data);});}
 </script>

@@ -3,6 +3,29 @@
 	class Logic_Space_Group_Member extends DbModel 
 	{	
 		/**
+		 * 离开群组
+		 *
+		 * @param unknown_type $gid
+		 * @param unknown_type $uid
+		 */
+		public static function leave($gid, $uid)
+		{
+			$db = parent::Space();
+			$db->beginTransaction();
+			try {
+				$db->delete('tb_group_member', 'uid = '.$uid.' AND gid = '.$gid);
+				$db->delete('tb_msg', 'sender = '.$uid.' AND gid = '.$gid);
+				$db->delete('tb_msg', 'incept = '.$uid.' AND gid = '.$gid);
+				$db->commit();
+				
+			} catch (Exception $e){
+				
+				$db->rollback();
+				Alp_Sys::msg('exception', $e->getMessage());
+			}
+		}
+		
+		/**
 		 * 更新成员群组角色
 		 *
 		 * @param unknown_type $gid
@@ -29,6 +52,21 @@
 				'uid' => $uid,
 				'gid' => $gid,
 				'role' => 'join'
+			));
+		}
+		
+		/**
+		 * 邀请加入群
+		 *
+		 * @param unknown_type $gid
+		 * @param unknown_type $uid
+		 */
+		public static function invite($gid, $uid)
+		{
+			parent::Space()->insert('tb_group_member', array(
+				'uid' => $uid,
+				'gid' => $gid,
+				'role' => 'invite'
 			));
 		}
 		
@@ -95,7 +133,7 @@
 		public static function num($gid)
 		{
 			$row = parent::Space()->fetchRow('SELECT COUNT(`uid`) AS `numrow` FROM `tb_group_member` 
-				WHERE `gid` = ? AND `role` = "member" OR `role` = "creater" OR `role` = "manager"', 
+				WHERE `gid` = ? AND (`role` = "member" OR `role` = "creater" OR `role` = "manager")', 
 			$gid);
 			return $row['numrow'];
 		}

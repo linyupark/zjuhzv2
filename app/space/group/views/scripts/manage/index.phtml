@@ -1,0 +1,18 @@
+<div class="yui-main">
+	<div class="yui-b">
+		<div class="mg5 section yui-g">
+			<div class="yui-u first">
+				<img class="vm mgr10" src="<?= Alp_Url::img('icon/1616/group.gif') ?>" />
+				<b><a href="/space_group/home/?id=<?= $this->gid ?>">
+					<?= stripslashes($this->group['name']); ?></a> 
+					&gt; 群管理</b>
+			</div>
+			<div class="yui-u txtr a-span">
+				<a href="javascript:history.back()">返回上一页</a>
+			</div>
+		</div>
+		<?= $this->action('tab', 'manage', 'space_group', array('type' => $this->type)); ?>
+		<?= $this->action($this->type, 'manage', 'space_group'); ?>
+	</div>
+</div>
+<?= $this->render('sidebar.phtml'); ?>

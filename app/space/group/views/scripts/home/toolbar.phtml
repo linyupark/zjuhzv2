@@ -6,16 +6,20 @@
 	<span class="quiet">已申请加入，等待处理</span>
 <?php endif; ?>
 
-<?php if($this->role && $this->role != 'join' && $this->role != 'invite'): ?>
-	<a href="" class="blk"><img class="vm" src="<?= Alp_Url::img('icon/1616/add_m.gif') ?>" /> 邀请好友加入群</a>
+<?php if($this->type == 'close' && ($this->role == 'manager' || $this->role == 'creater')): ?>
+	<a href="/space_group/invite/?gid=<?= $this->gid ?>" class="blk"><img class="vm" src="<?= Alp_Url::img('icon/1616/add_m.gif') ?>" /> 邀请好友加入群</a>
+<?php endif; ?>
+
+<?php if($this->type != 'close' && $this->role && $this->role != 'join' && $this->role != 'invite'): ?>
+	<a href="/space_group/invite/?gid=<?= $this->gid ?>" class="blk"><img class="vm" src="<?= Alp_Url::img('icon/1616/add_m.gif') ?>" /> 邀请好友加入群</a>
 <?php endif; ?>
 
 <?php if($this->role == 'member'): ?>
-	<a href="" class="blk"><img class="vm" src="<?= Alp_Url::img('icon/1616/out.gif') ?>" /> 脱离该群</a>
+	<a href="javascript:leaveGroup()" class="blk"><img class="vm" src="<?= Alp_Url::img('icon/1616/out.gif') ?>" /> 脱离该群</a>
 <?php endif; ?>
 
 <?php if($this->role == 'creater' || $this->role == 'manager'): ?>
-	<a href="" class="blk"><img class="vm" src="<?= Alp_Url::img('icon/1616/mana.gif') ?>" /> 管理该群</a>
+	<a href="/space_group/manage/?id=<?= $this->gid ?>" class="blk"><img class="vm" src="<?= Alp_Url::img('icon/1616/mana.gif') ?>" /> 管理该群</a>
 <?php endif; ?>
 
 <?php if($this->role == 'creater') : ?>
@@ -24,4 +28,11 @@
 
 <script type="text/javascript">
 function joinGroup(){ $.post('/space_group/member/join/',{id:<?= $this->gid ?>}, function(data){$.facebox(data);});}
+function leaveGroup(){ 
+	var c = confirm('确定要脱离？相关的群组消息也会自动删除'); 
+	if(c == true) {
+		$.post('/space_group/member/leave/',{id:<?= $this->gid ?>}, 
+		function(data){if(data == 'success') location.href='/space_group/'});
+	}
+}
 </script>

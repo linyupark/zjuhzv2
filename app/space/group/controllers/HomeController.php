@@ -66,7 +66,7 @@
 				Logic_Space_Group::visit($gid, $uid); // 更新最后访问时间
 				$select = DbModel::Space()->select()->from(array('gm' => 'tb_group_member'), array('uid','role'));
 				$select->joinLeft(array('u' => 'zjuhzv2_user.tb_base'), 'gm.uid = u.uid', array('username'))
-					   ->where('gm.role != "join" AND gm.role != "invite"')
+					   ->where('gm.role != "join" AND gm.role != "invite" AND gm.gid = '.$gid)
 					   ->order('gm.jointime DESC')->limit(12);
 				$rows = $select->query()->fetchAll();
 				$manager = array(); $fresh = array();

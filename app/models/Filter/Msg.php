@@ -7,6 +7,17 @@
 	class Filter_Msg
 	{
 		/**
+		 * 群组信息过滤
+		 *
+		 * @param unknown_type $params
+		 */
+		public static function group($params)
+		{
+			$params['uname'] = Alp_Valid::of($params['uname'], 'uname', '被邀请人', 'trim|required');
+			return $params;
+		}
+		
+		/**
 		 * pm数据过滤
 		 *
 		 * @param unknown_type $params

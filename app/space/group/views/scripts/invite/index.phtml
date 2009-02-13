@@ -1,0 +1,49 @@
+<div class="yui-main">
+	<div class="yui-b">
+		<div class="mg5 section yui-g">
+			<div class="yui-u first">
+				<img class="vm mgr10" src="<?= Alp_Url::img('icon/1616/group.gif') ?>" />
+				<b><a href="/space_group/home/?id=<?= $this->group['gid'] ?>">
+					<?= stripslashes($this->group['name']); ?></a> 
+					&gt; 邀请好友加入本群</b>
+			</div>
+			<div class="yui-u txtr a-span">
+				<a href="javascript:history.back()">返回上一页</a>
+			</div>
+		</div>
+		<form id="invite_form" method="post" onsubmit="return postInvite()">
+			<table width="90%">
+				<tr>
+					<td class="txtr">邀请你的好友加入本群：</td>
+					<td>
+						<div id="incept_box" style="position:relative;">
+						<input name="uname" id="uname_box" type="text" value="" size="50" /> 
+						<a href="javascript:friends_box()">邀请对象</a>
+							<span id="friends_box"></span>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" class="txtc">
+						<input class="btn" type="submit" value="确定发送" />
+					</td>
+				</tr>
+			</table>
+			<input id="incepter" type="hidden" name="incept" value="" />
+			<input type="hidden" name="gid" value="<?= $this->gid ?>" />
+		</form>
+	</div>
+</div>
+<?= $this->render('sidebar.phtml'); ?>
+
+<script type="text/javascript">
+	function postInvite(){
+		$('input:submit').val('发送中..').attr('disabled', true);
+		$.post('/space_group/member/invite', $('#invite_form').serializeArray(), function(data){
+			if(data != 'success') {alert(data); $('input:submit').val('确定发送').attr('disabled', false);}
+			else { $('input:submit').val('发送成功').attr('disabled', false); }
+		});
+		return false;
+	}
+	function friends_box(){ $('#friends_box').load('/space_msg/pm/friends'); }
+</script>

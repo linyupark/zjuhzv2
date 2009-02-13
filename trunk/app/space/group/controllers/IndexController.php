@@ -30,7 +30,8 @@
 			$select = DbModel::Space()->select();
 			$select->from(array('m' => 'tb_group_member'))
 				   ->where('m.uid = ?', $uid)
-				   ->where('m.role = ?', 'creater');
+				   ->where('m.role = "creater" OR m.role = "member" OR m.role = "manager"');
+				   
 			$select->joinLeft(array('g' => 'tb_group'), 'g.gid = m.gid');
 			$groups = $select->query()->fetchAll();
 			
@@ -38,10 +39,11 @@
 			if(count($groups) > 0)
 			{
 				$select->reset();
-				$select->from(array('bar' => 'tb_tbar'))->where('bar.group > 0');
-				foreach ($groups as $g)
+				$select->from(array('bar' => 'tb_tbar'));
+				foreach ($groups as $i => $g)
 				{
-					$select->orWhere('bar.group = ?', $g['gid']);
+					if($i == 0) $select->where('bar.group = ?', $g['gid']);
+					else $select->orWhere('bar.group = ?', $g['gid']);
 				}
 				$select->order('replytime DESC')->limit(10);
 				$this->view->bars = $select->query()->fetchAll();

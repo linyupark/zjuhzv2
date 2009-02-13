@@ -1,0 +1,13 @@
+<div class="yui-b">
+	<div class="greybox">
+		<div class="greybox-top"></div>
+		<?php if(Cmd::role() != 'guest') echo $this->action(Cmd::role(), 'modnav'); ?>
+	</div>
+	<br />
+	<h3 class="section">最近浏览</h3>
+	<?= $this->action('history', 'topic', 'space_group'); ?>
+</div>
+
+<script type="text/javascript">
+	$('.yui-d3f').addClass('yui-t6')
+</script>

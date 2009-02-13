@@ -1,0 +1,33 @@
+<form class="mg10" id="group_basic" method="post" onsubmit="return set_group()">
+	<h3>设置群的基本信息：</h3>
+	<table class="table-dashed">
+		<tr>
+			<td class="txtr">类型：</td>
+			<td>
+				<select>
+					<option value="open" <?= $this->group['type'] == 'open' ? 'selected="selected"':'' ?>>公开</option>
+					<option value="limit" <?= $this->group['type'] == 'limit' ? 'selected="selected"':'' ?>>公开(需批准)</option>
+					<option value="close" <?= $this->group['type'] == 'close' ? 'selected="selected"':'' ?>>私密</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td class="txtr">群名称：</td>
+			<td><input type="text" name="name" size="30" value="<?= stripslashes($this->group['name']) ?>" /></td>
+		</tr>
+		<tr>
+			<td valign="top">群介绍：</td>
+			<td><textarea name="intro" style="width:300px;height:120px;"><?= stripslashes($this->group['intro']) ?></textarea></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><input class="btn" type="submit" value="保存设置" /></td>
+		</tr>
+	</table>
+</form>
+<script type="text/javascript">
+	function set_group()
+	{
+		
+	}
+</script>

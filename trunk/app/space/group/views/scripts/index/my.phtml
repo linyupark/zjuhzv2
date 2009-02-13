@@ -36,10 +36,11 @@
 				<td>
 					<a style="color:#666" href="/space_group/home/?id=<?= $b['group'] ?>">
 						[<?= $gname[$b['group']] ?>]</a>
-					<a href="">
+					<a href="/space_bar/<?= $b['type'] ?>/view?tid=<?= $b['tid'] ?>">
 						<img src="<?= Alp_Url::img('icon/1616/'.$this->icons[$b['type']]) ?>" />
 						<?= stripslashes($b['title']) ?>
 					</a>
+					<?= Logic_Space_Bar::subpage($b); ?>
 					<span class="quiet"><?= Alp_Date::normal($b['replytime']) ?></span>
 				</td>
 			</tr>

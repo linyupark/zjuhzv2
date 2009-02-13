@@ -26,10 +26,26 @@
 		}
 		
 		/**
+		 * 脱离群
+		 *
+		 */
+		function leaveAction()
+		{
+			$this->getHelper('viewRenderer')->setNoRender();
+			if($this->getRequest()->isXmlHttpRequest())
+			{
+				$uid = Cmd::uid();
+				$gid = $this->_getParam('id');
+				Logic_Space_Group_Member::leave($gid, $uid);
+				echo 'success';
+			}
+		}
+		
+		/**
 		 * 批准加入
 		 *
 		 */
-		function passAction()
+		function jpassAction()
 		{
 			$this->getHelper('viewRenderer')->setNoRender();
 			if($this->getRequest()->isXmlHttpRequest())
@@ -42,6 +58,80 @@
 				Logic_Space_Msg::group($uid, $myid, $gid, '已经批准你的申请，赶快去群组看看吧~');
 				echo 'success';
 			}
+		}
+		
+		function ipassAction()
+		{
+			$this->getHelper('viewRenderer')->setNoRender();
+			if($this->getRequest()->isXmlHttpRequest())
+			{
+				$myid = Cmd::uid();
+				$uid = $this->_getParam('uid');
+				$gid = $this->_getParam('gid');
+				if(Logic_Space_Group_Member::isMemeber($gid, $myid) == false)
+				Logic_Space_Group_Member::crole($gid, $myid, 'member', time());
+				Logic_Space_Msg::group($uid, $myid, $gid, '已经同意你的邀请，赶快去群组看看吧~');
+				echo 'success';
+			}
+		}
+		
+		/**
+		 * 邀请加入群
+		 *
+		 */
+		function inviteAction()
+		{
+			$this->getHelper('viewRenderer')->setNoRender();
+			$uid = Cmd::uid();
+			$params = $this->_getAllParams();
+			$params = Filter_Msg::group($params);
+			if(Alp_Sys::getMsg() == null)
+			{
+				if($params['incept'] == '') // 从名字中获取id
+				{
+					$unames = explode(' ', $params['uname']);
+					$incept = Logic_User_Base::uid($unames);
+					
+					$friends = Logic_Space_Friends::fetch($uid);
+					$fid = array();
+					foreach ($friends as $f)
+					{
+						$fid[] = $f['friend'];
+					}
+					// 过滤非好友id
+					foreach ($incept as $i => $u)
+					{
+						if(!in_array($u['uid'], $fid))
+						unset($incept[$i]);
+					}
+				}
+				else $incept = explode(',', $params['incept']);
+				
+				if(count($incept) > 0)
+				{
+					// 逐个发信
+					foreach ($incept as $u)
+					{
+						$role = Logic_Space_Group_Member::role($params['gid'], $u['uid']);
+						// 插入新角色数据
+						if(!$role) Logic_Space_Group_Member::invite($params['gid'], $u['uid']);
+						// 过滤群组成员
+						if($role == 'creater' || $role == 'member' || $role == 'manager') continue;
+						else
+						{
+							// 变换角色
+							if($role == 'join') 
+							Logic_Space_Group_Member::crole($params['gid'], $u['uid'], 'invite');
+							// 没有重复邀请
+							if(Logic_Space_Msg::unique('group', $uid, $u['uid']) == false)
+							Logic_Space_Msg::group($u['uid'], $uid, $params['gid'], '邀请加入群');
+						}
+					}
+					echo 'success';
+				}
+				else Alp_Sys::msg('incept', '无效的发送对象，请重新选择');
+			}
+			echo Alp_Sys::allMsg('* ', "\n");
 		}
 		
 		/**

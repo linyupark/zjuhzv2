@@ -17,9 +17,17 @@
 		<td width="180" id="msg_g_<?= $r['sender'] ?>" <?= ($r['isread'] == 0)?'style="background:url('.Alp_Url::img('v1/newmsg.gif').') no-repeat right bottom"':'' ?>>
 			<?php if($r['content'] == '申请加入群'): ?>
 				<?php if(Logic_Space_Group_Member::isMemeber($r['gid'], $r['sender'])): ?>
-				<div class="success">已同意加入</div>
+				<div class="success">已批准加入</div>
 				<?php else: ?>
 				<input onclick="join_pass(<?= $r['gid'].','.$r['sender'] ?>)" class="btn" type="button" value="同意" /> 
+				<?php endif; ?>
+			<?php endif; ?>
+			
+			<?php if($r['content'] == '邀请加入群'): ?>
+				<?php if(Logic_Space_Group_Member::isMemeber($r['gid'], $r['incept'])): ?>
+				<div class="success">已同意加入</div>
+				<?php else: ?>
+				<input onclick="invite_pass(<?= $r['gid'].','.$r['sender'] ?>)" class="btn" type="button" value="同意" /> 
 				<?php endif; ?>
 			<?php endif; ?>
 		</td>
@@ -33,7 +41,16 @@
 	function join_pass(gid, uid)
 	{
 		$('#msg_g_'+uid+' .btn').attr('disabled', true);
-		$.post('/space_group/member/pass', {uid:uid,gid:gid}, function(data){ 
+		$.post('/space_group/member/jpass', {uid:uid,gid:gid}, function(data){ 
+			if(data == 'success')
+			$('#msg_g_'+uid).html('<div class="success">已批准加入</div>');
+		}) 
+	}
+	
+	function invite_pass(gid, uid)
+	{
+		$('#msg_g_'+uid+' .btn').attr('disabled', true);
+		$.post('/space_group/member/ipass', {uid:uid,gid:gid}, function(data){ 
 			if(data == 'success')
 			$('#msg_g_'+uid).html('<div class="success">已同意加入</div>');
 		}) 

@@ -4,7 +4,7 @@
 		<tr>
 			<td class="txtr">类型：</td>
 			<td>
-				<select>
+				<select name="type">
 					<option value="open" <?= $this->group['type'] == 'open' ? 'selected="selected"':'' ?>>公开</option>
 					<option value="limit" <?= $this->group['type'] == 'limit' ? 'selected="selected"':'' ?>>公开(需批准)</option>
 					<option value="close" <?= $this->group['type'] == 'close' ? 'selected="selected"':'' ?>>私密</option>
@@ -28,6 +28,11 @@
 <script type="text/javascript">
 	function set_group()
 	{
-		
+		$('input:submit').val('保存中..').attr('disabled', true);
+		$.post('/space_group/manage/basic/?id=<?= $this->group['gid'] ?>', $('#group_basic').serializeArray(), function(data){
+			if(data != 'success') { alert(data); $('input:submit').val('保存设置').attr('disabled', false); }
+			else $('input:submit').val('保存成功').attr('disabled', false);
+		})
+		return false;
 	}
 </script>

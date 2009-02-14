@@ -1,0 +1,26 @@
+<div class="yui-g mg10">
+	<div class="yui-u first" style="width:20%; padding-left:25px;">
+		<div class="head80 pd10">
+			<img id="h80" class="mg10" src="<?= Cmd::groupicon($this->gid, '80') ?>" />
+		</div>
+	</div>
+	<div class="yui-u" style="width:70%">
+		<h3>更换群LOGO</h3>
+		<form method="post" target="icon_upload" enctype="multipart/form-data" action="/public/upload/icon">
+			<p class="quiet">LOGO文件需小于2MB，尺寸最好为80*80，支持JPG,GIF,PNG</p>
+			<input type="file" name="icon[]" />
+			<input type="hidden" name="gid" value="<?= $this->gid ?>" />
+			<input class="btn" type="submit" value="上传" />
+		</form>
+		<iframe name="icon_upload" class="hide"></iframe>
+	</div>
+</div>
+
+<script type="text/javascript">
+	function ref()
+	{
+		var d = new Date();
+		var t = d.getTime();
+		$('#h80').attr('src', "/upload/groups/<?= $this->gid ?>/80.gif?v="+t);
+	}
+</script>

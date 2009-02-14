@@ -1,0 +1,27 @@
+<form class="mg10" id="groupmsg_form" method="post" onsubmit="return postmsg()">
+	<table width="90%">
+		<tr>
+			<td class="txtr" valign="top">内容：</td>
+			<td>
+				<textarea name="content" style="width:380px; height:200px"></textarea>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" class="txtc">
+				<input class="btn" type="submit" value="确定发送" />
+			</td>
+		</tr>
+	</table>
+	<input id="incepter" type="hidden" name="incept" value="<?= $this->incept['uid'] ?>" />
+</form>
+<script type="text/javascript">
+	function postmsg()
+	{
+		$('input:submit').val('发送中..').attr('disabled', true);
+		$.post('/space_group/manage/msg?id=<?= $this->gid ?>', $('#groupmsg_form').serializeArray(), function(data){
+			if(data == 'success'){ $('input:submit').val('发送成功').attr('disabled', false); }
+			else { alert(data); $('input:submit').val('确定发送').attr('disabled', false); }
+		});
+		return false;
+	}
+</script>

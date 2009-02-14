@@ -16,6 +16,9 @@
 			</td>
 			<td>
 				<a href="/space_group/home/?id=<?= $g['gid'] ?>" class="f14"><?= $g['name'] ?></a><br />
+				<?php if($g['role'] == 'creater' || $g['role'] == 'manager'): ?>
+				<a href="/space_group/manage/?id=<?= $g['gid'] ?>" style="color:#666">[管理]</a>
+				<?php endif; ?>
 				<span class="quiet">人数:<?= Logic_Space_Group_Member::num($g['gid']) ?></span>
 			</td>
 		</tr>

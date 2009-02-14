@@ -65,9 +65,9 @@
     	 */
     	public static function groupicon($gid, $size = '40')
     	{
-    		$dir = UPLOADROOT.'group/'.$gid;
+    		$dir = UPLOADROOT.'groups/'.$gid;
     		if(file_exists($dir.'/'.$size.'.gif'))
-    		return '/upload/group/'.$gid.'/'.$size.'.gif?t='.time();
+    		return '/upload/groups/'.$gid.'/'.$size.'.gif?t='.time();
     		else return Alp_Url::img('v1/group_'.$size.'.gif');
     	}
     	

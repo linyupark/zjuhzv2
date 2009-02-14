@@ -10,6 +10,33 @@
 		}
 		
 		/**
+		 * 群组logo上传
+		 *
+		 */
+		function iconAction()
+		{
+			$path = UPLOADROOT.'/groups/'.$this->_getParam('gid');
+			if(!file_exists($path)) mkdir($path, 0777);
+			Alp_Upload::init(array(
+				'maxsize' => 2000,
+				'filename' => array('80'),
+				'overwrite' => true,
+				'path' => $path.'/'
+			));
+			if(!Alp_Upload::handle('icon'))
+			{
+				echo "<script>alert('".Alp_Sys::allMsg('',"")."')</script>";
+			}
+			else // 图像处理
+			{
+				Alp_Image::init($path.'/80')->output('80', 'gif', null, null, true);
+				Alp_Image::init($path.'/80.gif')->resize('80', 80, 80);
+				Alp_Image::init($path.'/80.gif')->resize('40', 40, 40);
+				echo "<script>parent.ref()</script>";
+			}
+		}
+		
+		/**
 		 * 头像上传
 		 *
 		 */

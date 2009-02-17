@@ -1,3 +1,96 @@
-<?php
+<form method="get">
+<table class="table-dashed mg10" width="98%">
+	<tr>
+		<td colspan="3">
+			<input type="hidden" name="id" value="<?= $this->gid ?>" />
+			<input type="hidden" name="type" value="member" />
+			<input name="uname" size="20" value="<?= $this->uname ?>" /> 
+			<input type="submit" class="btn" value="查找" />
+		</td>
+	</tr>
+	<tr class="section-sub">
+		<td width="100">姓名</td>
+		<td width="50">身份</td>
+		<td width="100">加入时间</td>
+		<td class="txtc">操作</td>
+	</tr>
+	<?php if(count($this->rows) > 0): foreach ($this->rows as $r): ?>
+	<tr id="m_<?= $r['uid'] ?>">
+		<td>
+			<a href="/space_home/?uid=<?= $r['uid'] ?>">
+				<img class="vm" width="20" height="20" src="<?= Cmd::userhead($r['uid'], '40', $r['sex']) ?>" />
+			</a>
+			<a href="/space_home/?uid=<?= $r['uid'] ?>">
+				<?= $r['uname'] ?>
+			</a>
+		</td>
+		<td class="quiet">
+			<?php 
+				$op = '<a href="/space_msg/pm/?uid='.$r['uid'].'">@发信</a>';
+				switch ($r['role']){
+					case 'member' : 
+						$role = '成员';
+						if($this->role == 'creater')
+						{$op .= '<a href="javascript:upgrade('.$r['uid'].')">提拔</a>';}
+						$op .= '<a href="javascript:out('.$r['uid'].')">踢出</a>';
+					break;
+					case 'join' : 
+						$role = '待审核';
+						$op .= '<a href="javascript:jpass('.$r['uid'].')">批准</a>';
+					break;
+					case 'manager' : 
+						$role = '管理员';
+						$op .= '<a href="javascript:fire('.$r['uid'].')">解职</a>';
+						$op .= '<a href="javascript:out('.$r['uid'].')">踢出</a>';
+					break;
+				} 
+				echo $role;
+			?>
+		</td>
+		<td class="quiet">
+			<?= Alp_Date::normal($r['jointime']); ?>
+		</td>
+		<td class="a-span txtc">
+			<?php if($this->role == 'creater' || 
+					($this->role == 'manager' && $r['role'] != 'manager')): ?>
+				<?= $op; ?>
+			<?php endif; ?>
+		</td>
+	</tr>
+	<?php endforeach; else: ?>
+	<tr><td colspan="3" class="quiet">没有找到可管理的成员</td></tr>
+	<?php endif; ?>
+</table>
+</form>
+<div class="pg"><?= $this->pagination ?></div>
 
-?>
+<script type="text/javascript">
+	function out(uid)
+	{
+		var c = confirm('确定要踢出？其相关的群组消息也会自动删除'); 
+		if(c == true) {
+			$.post('/space_group/member/leave/',{uid:uid, id:<?= $this->gid ?>}, 
+			function(data){if(data == 'success') $('#m_'+uid).children().fadeOut(); });
+		}
+	}
+	function upgrade(uid){ 
+		$.post('/space_group/member/crole/',{ uid:uid, gid:<?= $this->gid ?>,role:'manager' },
+		function(data){ 
+			if(data == 'success') { alert('成功提拔为管理员'); history.go(0); } 
+			else alert(data);
+		}
+	);}
+	function fire(uid){ 
+		$.post('/space_group/member/crole/',{ uid:uid, gid:<?= $this->gid ?>,role:'member' },
+		function(data){ 
+			if(data == 'success') { alert('成功解除管理员职务'); history.go(0); } 
+			else alert(data);
+		}
+	);}
+	function jpass(uid){
+		$.post('/space_group/member/jpass', {uid:uid,gid:<?= $this->gid ?>}, function(data){ 
+			if(data == 'success') { alert('成功批准加入'); history.go(0); }
+			else alert(data);
+		}) 
+	}
+</script>

@@ -9,13 +9,63 @@
 		function init()
 		{ 
 			$gid = $this->_getParam('id');
-			$this->view->group = Logic_Space_Group::info($gid);
+			$group = Logic_Space_Group::info($gid);
+			$this->view->group = $group;
 			$this->view->gid = $gid; 
 		}
 		
 		function indexAction()
 		{
+			$role = Logic_Space_Group_Member::role($this->view->gid, Cmd::uid());
+			if($role != 'creater' && $role != 'manager')
+			$this->_forward('deny', 'error', 'public', 
+				array('position'=>'space_group_home','group' => $this->view->group));
 			$this->view->type = $this->_getParam('type', 'basic');
+		}
+		
+		/**
+		 * 群成员管理
+		 *
+		 */
+		function memberAction()
+		{
+			$gid = $this->_getParam('id');
+			$name = $this->_getParam('uname');
+			$select = DbModel::Space()->select();
+			$page = $this->_getParam('p', 1);
+			$query = '';
+			
+			$select->from(array('gm' => 'tb_group_member'));
+			
+			$select->where('gm.gid = ?', $gid)
+				   ->where('gm.role = "manager" OR gm.role = "member" OR gm.role = "join"');
+				   
+			if($name != null)
+			{
+				$query = '&uname='.urlencode($name);
+				$select->where('u.username LIKE "%'.$name.'%"');
+				$this->view->uname = urldecode($name);
+			}
+			
+			$row = $select->query()->fetchAll();
+			$select->joinLeft(array('u' => 'zjuhzv2_user.tb_base'), 'u.uid = gm.uid', 
+				   			  array('uname'=>'u.username', 'sex'=>'u.sex'));
+			$pagesize = 10;
+			if(count($row) > $pagesize)
+			{
+				Alp_Page::$pagesize = $pagesize;
+				Alp_Page::create(array(
+					'href_open' => '<a href="/space_group/manage/?id='.$gid.'&type=member'.$query.'&p=%d">',
+					'href_close' => '</a>',
+					'num_rows' => count($row),
+					'cur_page' => $page
+				));
+				$select->limit($pagesize, Alp_Page::$offset);
+				$this->view->pagination = Alp_Page::$page_str;
+			}
+			$select->order('gm.jointime DESC');
+			$this->view->rows = $select->query()->fetchAll();
+			$this->view->role = Logic_Space_Group_Member::role($gid, Cmd::uid());
 		}
 		
 		/**

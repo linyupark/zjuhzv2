@@ -10,6 +10,58 @@
 			</div>
 		</div>
 		<?= $this->render('tab.phtml'); ?>
+		<form method="get">
+			<table class="table-dashed mg10" width="98%">
+				<tr>
+					<td colspan="3">
+						<input type="hidden" name="id" value="<?= $this->gid ?>" />
+						<input name="uname" size="20" value="<?= $this->uname ?>" /> 
+						<input type="submit" class="btn" value="查找" />
+					</td>
+				</tr>
+				<tr class="section-sub">
+					<td width="100">姓名</td>
+					<td width="50">身份</td>
+					<td width="100">加入时间</td>
+					<td class="txtc">操作</td>
+				</tr>
+				<?php if(count($this->rows) > 0): foreach ($this->rows as $r): ?>
+				<tr id="m_<?= $r['uid'] ?>">
+					<td>
+						<a href="/space_home/?uid=<?= $r['uid'] ?>">
+							<img class="vm" width="30" height="30" src="<?= Cmd::userhead($r['uid'], '40', $r['sex']) ?>" />
+						</a>
+						<a href="/space_home/?uid=<?= $r['uid'] ?>">
+							<?= $r['uname'] ?>
+						</a>
+					</td>
+					<td class="quiet">
+						<?php 
+							$op = '';
+							switch ($r['role']){
+								case 'member' : 
+									$role = '成员';
+								break;
+								case 'manager' : 
+									$role = '管理员';
+								break;
+							} 
+							echo $role;
+						?>
+					</td>
+					<td class="quiet">
+						<?= Alp_Date::normal($r['jointime']); ?>
+					</td>
+					<td class="a-span txtc">
+						<a href="/space_msg/pm/?uid=<?= $r['uid'] ?>">@发信</a>
+					</td>
+				</tr>
+				<?php endforeach; else: ?>
+				<tr><td colspan="3" class="quiet">没有找到对应群成员</td></tr>
+				<?php endif; ?>
+			</table>
+		</form>
+		<div class="pg"><?= $this->pagination ?></div>
 	</div>
 </div>
 <div class="yui-b">

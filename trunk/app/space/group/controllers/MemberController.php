@@ -20,9 +20,63 @@
 			if(Logic_Space_Group::isAllowedVisit($gid, $uid))
 			{	
 				$this->view->group = $group;
+				// 成员显示
+				$name = $this->_getParam('uname');
+				$select = DbModel::Space()->select();
+				$page = $this->_getParam('p', 1);
+				$query = '';
+				
+				$select->from(array('gm' => 'tb_group_member'))
+					   ->joinLeft(array('u' => 'zjuhzv2_user.tb_base'), 'u.uid = gm.uid', 
+					   			  array('uname'=>'u.username', 'sex'=>'u.sex'));
+				
+				$select->where('gm.gid = ?', $gid)
+					   ->where('gm.role = "manager" OR gm.role = "member"');
+
+				if($name != null)
+				{
+					$query = '&uname='.urlencode($name);
+					$select->where('u.username LIKE "%'.$name.'%"');
+					$this->view->uname = urldecode($name);
+				}
+				
+				$row = $select->query()->fetchAll();
+								
+				$pagesize = 10;
+				if(count($row) > $pagesize)
+				{
+					Alp_Page::$pagesize = $pagesize;
+					Alp_Page::create(array(
+						'href_open' => '<a href="/space_group/member/?id='.$gid.$query.'&p=%d">',
+						'href_close' => '</a>',
+						'num_rows' => count($row),
+						'cur_page' => $page
+					));
+					$select->limit($pagesize, Alp_Page::$offset);
+					$this->view->pagination = Alp_Page::$page_str;
+				}
+				$select->order('gm.jointime DESC');
+				$this->view->rows = $select->query()->fetchAll();
 			}
 			else $this->_forward('deny', 'error', 'public', 
 				array('position'=>'space_group_home','group'=>$group));
+		}
+		
+		/**
+		 * 转换角色
+		 *
+		 */
+		function croleAction()
+		{
+			$this->getHelper('viewRenderer')->setNoRender();
+			if($this->getRequest()->isXmlHttpRequest())
+			{
+				$uid = $this->_getParam('uid');
+				$gid = $this->_getParam('gid');
+				$role = $this->_getParam('role');
+				Logic_Space_Group_Member::crole($gid, $uid, $role);
+				echo 'success';
+			}
 		}
 		
 		/**
@@ -34,7 +88,7 @@
 			$this->getHelper('viewRenderer')->setNoRender();
 			if($this->getRequest()->isXmlHttpRequest())
 			{
-				$uid = Cmd::uid();
+				$uid = $this->_getParam('uid');
 				$gid = $this->_getParam('id');
 				Logic_Space_Group_Member::leave($gid, $uid);
 				echo 'success';

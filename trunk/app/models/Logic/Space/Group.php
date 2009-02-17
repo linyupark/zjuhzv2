@@ -7,6 +7,21 @@
 	class Logic_Space_Group extends DbModel 
 	{	
 		/**
+		 * 我的群
+		 *
+		 */
+		public static function my($uid)
+		{
+			$select = DbModel::Space()->select();
+			$select->from(array('m' => 'tb_group_member'))
+				   ->where('m.uid = ?', $uid)
+				   ->where('m.role = "creater" OR m.role = "member" OR m.role = "manager"');
+				   
+			$select->joinLeft(array('g' => 'tb_group'), 'g.gid = m.gid');
+			return  $select->query()->fetchAll();
+		}
+		
+		/**
 		 * 新群信息
 		 *
 		 * @param unknown_type $num
@@ -72,7 +87,8 @@
 				$db->insert('tb_group_member', array(
 					'uid' => $creater,
 					'gid' => $gid,
-					'role' => 'creater'
+					'role' => 'creater',
+					'jointime' => time()
 				));
 				$db->commit();
 				return $gid;

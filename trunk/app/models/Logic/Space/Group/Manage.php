@@ -39,7 +39,8 @@
 			parent::Space()->update('tb_group', array(
 				'type' => $params['type'],
 				'name' => $params['name'],
-				'intro' => $params['intro']
+				'intro' => Alp_String::html($params['intro']),
+				'notice' => Alp_String::html($params['notice']),
 			), 'gid = '.$params['id']);
 		}
 	}

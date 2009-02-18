@@ -3,6 +3,15 @@
 	class Logic_Space_Bar_Comment extends DbModel 
 	{
 		/**
+		 * 是否允许回应
+		 *
+		 */
+		public static function isAllowed($gid)
+		{
+			
+		}
+		
+		/**
 		 * 获取回帖总数
 		 *
 		 * @param unknown_type $tid

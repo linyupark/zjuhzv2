@@ -11,10 +11,6 @@
 		</div>
 		<?= $this->action('info', 'home', 'space_group', array('group'=>$this->group)); ?>
 		<?= $this->render('tab.phtml'); ?>
-		<!-- 群公告 -->
-		<?php if($this->group['notice']): ?>
-		<div class="notice"><?= stripslashes($this->group['notice']) ?></div>
-		<?php endif; ?>
 		<!-- 群帖子快速一览 -->
 		<?= $this->action('topic', 'home', 'space_group'); ?>
 	</div>

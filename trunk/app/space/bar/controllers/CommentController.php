@@ -16,7 +16,14 @@
 		 */
 		function viewAction()
 		{
+			$uid = Cmd::uid();
 			$this->view->page = $this->_getParam('p', 1);
+			$gid = $this->_getParam('gid');
+			if($gid != null)
+			{
+				$this->view->rform = Logic_Space_Group_Member::isMemeber($gid, $uid);
+				$this->view->gid = $gid;
+			}
 		}
 		
 		/**

@@ -2,7 +2,14 @@
 <div id="comment_box"></div>
 <hr class="dashed" />
 
+<?php if($this->rform == true): ?>
 <?= $this->render('comment/form.phtml'); ?>
+<?php else: ?>
+<div class="f14 mglr10 tp0">
+	<img src="<?= Alp_Url::img('icon/1616/att.gif') ?>" /> 此群帖必须是群成员才能回复。
+	<a href="/space_group/home/?id=<?= $this->gid ?>">访问该群主页</a>
+</div>
+<?php endif; ?>
 
 <script type="text/javascript">
 	function load_comment(p)

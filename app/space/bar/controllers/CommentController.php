@@ -39,7 +39,6 @@
 			if($this->getRequest()->isXmlHttpRequest())
 			{
 				$page = $this->_getParam('p', 1);
-				Alp_Page::$pagesize = $this->pagesize; // 分页数
 				$tid = $this->params['tid']; 
 				
 				$select = DbModel::Space()->select()->from(array('c'=>'zjuhzv2_space.tb_comment'));
@@ -49,6 +48,7 @@
 				$rows = $select->query()->fetchAll();
 				if(count($rows) > $this->pagesize)
 				{
+					Alp_Page::$pagesize = $this->pagesize;
 					Alp_Page::create(array(
 						'href_open' => '<a href="javascript:load_comment(%d)">',
 						'href_close' => '</a>',

@@ -1,0 +1,28 @@
+<table class="mg5" width="100%">
+	<?php if(count($this->rows) > 0) : foreach ($this->rows as $i => $r): ?>
+	<?php if($i%3 == 0): ?><tr><?php endif; ?>
+	<td width="33%">
+		<table class="table-dashed">
+			<tr>
+				<td width="40">
+					<a href="/space_group/home/?id=<?= $r['gid'] ?>">
+				    	<img class="cccborder" src="<?= Cmd::groupicon($r['gid'], 40) ?>" />
+				    </a>
+				</td>
+				<td class="f14">
+					<a href="/space_group/home/?id=<?= $r['gid'] ?>"><?= stripslashes($r['name']) ?></a>
+					<br />
+					<span class="f12 quiet">建于：<?= Alp_Date::normal($r['createtime']); ?></span>
+				</td>
+			</tr>
+		</table>
+	</td>
+	<?php if($i%3 == 2): ?></tr><?php endif; ?>
+	<?php endforeach; endif; ?>
+	<tr>
+		<td class="quiet pdl10">&gt;&gt; 找到<?= $this->numrows ?>个群</td>
+		<td width="33%">&nbsp;</td>
+		<td width="33%">&nbsp;</td>
+	</tr>
+</table>
+<div class="pg"><?= $this->pagination ?></div>

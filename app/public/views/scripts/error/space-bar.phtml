@@ -1,0 +1,29 @@
+<div class="section-u txtc">
+	<h1>
+		<img class="vm" src="<?= Alp_Url::img('icon/cartoon/lock.gif') ?>" />
+		此帖已设置开放人群(<?php 
+			switch ($this->params['private'])
+			{
+				case 0 :
+					echo '仅发布者';
+				break;
+				case 1 :
+					echo '仅发布者好友';
+				break;
+				case 2 :
+					echo '仅群组成员';
+				break;
+				case 3 :
+					echo '仅注册校友';
+				break;
+				case 4 :
+					echo '所有人';
+				break;
+			}
+		?>)，您目前的权限无法访问。
+	</h1>
+	<h3 class="a-span">
+		<a href="javascript:history.back()">返回上一页</a>
+		<a href="/">返回首页</a>
+	</h3>
+</div>

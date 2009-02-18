@@ -1,14 +1,30 @@
 <table width="100%">
 	<tr>
-		<td width="100" class="txtc"><img class="cccborder" src="<?= Cmd::groupicon($this->group['gid'], 80) ?>" /></td>
+		<td width="100" class="txtc" valign="top"><img class="cccborder" src="<?= Cmd::groupicon($this->group['gid'], 80) ?>" /></td>
 		<td>
-			<?= ($this->group['type'] == 'close')?'<img src="'.Alp_Url::img('icon/mix/lock.gif').'" />':'' ?>
-			<b class="f14"><?= stripslashes($this->group['name']); ?></b><br />
-			<span class="quiet">
-			成员：<?= Logic_Space_Group_Member::num($this->group['gid']); ?><br />
-			创建：<?= date('Y年m月d日',$this->group['createtime']); ?><br />
-			介绍：<?= stripslashes($this->group['intro']) ?>
-			</span>
+			<table class="table-dashed" width="90%">
+				<tr>
+					<td colspan="2">
+						<?= ($this->group['type'] == 'close')?'<img src="'.Alp_Url::img('icon/mix/lock.gif').'" />':'' ?>
+						<b class="f14"><?= stripslashes($this->group['name']); ?></b>
+						<span class="quiet">(<?= Logic_Space_Group_Member::num($this->group['gid']); ?>人)</span>
+					</td>
+				</tr>
+				<tr>
+					<td class="txtr quiet" width="13%">创建</td>
+					<td><?= date('Y年m月d日',$this->group['createtime']); ?></td>
+				</tr>
+				<tr>
+					<td class="txtr quiet" valign="top">介绍</td>
+					<td><?= stripslashes($this->group['intro']) ?></td>
+				</tr>
+				<?php if($this->group['notice']): ?>
+				<tr>
+					<td class="txtr quiet" valign="top">公告</td>
+					<td><?= stripslashes($this->group['notice']) ?></td>
+				</tr>
+				<?php endif; ?>
+			</table>
 		</td>
 		<td width="140" valign="top" style="line-height:160%">
 			<!-- 群组工具条 -->

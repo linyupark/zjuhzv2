@@ -28,7 +28,26 @@
 		 */
 		function allAction()
 		{
-			
+			$page = $this->_getParam('p', 1);
+			$select = DbModel::Space()->select();
+			$select->from(array('g' => 'tb_group'), array('numrows' => new Zend_Db_Expr('COUNT(g.gid)')));
+			$row = $select->query()->fetchAll();
+			$select->reset(Zend_Db_Select::COLUMNS)->columns('*');
+			$pagesize = 15;
+			if($row[0]['numrows'] > $pagesize)
+			{
+				Alp_Page::$pagesize = $pagesize;
+				Alp_page::create(array(
+					'href_open' => '<a href="">',
+					'href_close' => '</a>',
+					'num_rows' => $row[0]['numrows'],
+					'cur_page' => $page
+				));
+				$this->view->pagination = Alp_Page::$page_str;
+			}
+			$select->order('createtime DESC');
+			$this->view->numrows = $row[0]['numrows'];
+			$this->view->rows = $select->query()->fetchAll();
 		}
 		
 		/**

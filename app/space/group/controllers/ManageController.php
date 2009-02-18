@@ -108,7 +108,7 @@
 			{
 				$this->getHelper('viewRenderer')->setNoRender();
 				$params = $this->getRequest()->getParams();
-				$params = Filter_Group::create($params);
+				$params = Filter_Group::basic($params);
 				if(Alp_Sys::getMsg() == null)
 				{
 					Logic_Space_Group_Manage::basic($params);

@@ -1,11 +1,15 @@
 <div class="yui-main">
     <div class="yui-b">
+    	<?php if($this->relogin): ?>
+    	<h2 class="mg10 error">系统检测到您还未登录本站</h2>
+    	<?php else: ?>
         <h2 class="section">欢迎登录杭州浙大校友会网站</h2>
+        <?php endif; ?>
         <?= $this->render('login/form.phtml'); ?>
     </div>
 </div>
 <div class="yui-b">
-	<img src="<?= Alp_Url::img('v1/login_bg.jpg') ?>" width="160px" />
+	<img src="<?= Alp_Url::img('v1/login_bg.jpg') ?>" width="150px" />
 </div>
 <script>
     $('.yui-d3f').addClass('yui-t1');

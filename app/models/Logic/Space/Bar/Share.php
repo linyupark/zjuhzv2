@@ -55,21 +55,35 @@
 		public static function mod($params, $tid)
 		{
 			$db = parent::Space();
-			foreach ($params['ids'] as $id)
-			{
-				$db->update('tb_share', array(
-					'intro' => Alp_String::html($params['intros'][$id])
-				), 'id ='.$id);
-			}
-			
-			if(isset($params['n_files']))
-			foreach($params['n_files'] as $k => $file)
-			{
-				$db->insert('tb_share', array(
-					'tid' => $tid,
-					'file' => $file,
-					'intro' => Alp_String::html($params['n_intros'][$k])
-				));
+			$db->beginTransaction();
+			try {
+				$db->update('tb_tbar', array(
+					'title' => $params['title'],
+					'private' => $params['private'],
+					'nicky' => $params['nicky']
+				), 'tid = '.$tid);
+				
+				foreach ($params['ids'] as $id)
+				{
+					$db->update('tb_share', array(
+						'intro' => Alp_String::html($params['intros'][$id])
+					), 'id ='.$id);
+				}
+				if(isset($params['n_files']))
+				foreach($params['n_files'] as $k => $file)
+				{
+					$db->insert('tb_share', array(
+						'tid' => $tid,
+						'file' => $file,
+						'intro' => Alp_String::html($params['n_intros'][$k])
+					));
+				}
+				$db->commit();
+				
+			} catch (Exception $e) {
+				
+				$db->rollback();
+				Alp_Sys::msg('exception', $e->getMessage());
 			}
 		}
 		

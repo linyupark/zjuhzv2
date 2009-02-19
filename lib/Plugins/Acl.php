@@ -49,7 +49,6 @@
                 $request->setControllerName('error');
                 $request->setActionName('deny');
                 $request->setParam('role', $role);
-                $request->setParam('position', $resource.'_'.$controller);
             }
         }
     }

@@ -2,7 +2,11 @@
 <div class="yui-main">
 	<div class="mg5 section yui-g">
 		<div class="yui-u first" style="width:80%">
-			<img class="vm mgr10" src="<?= Alp_Url::img('icon/1616/talk.gif') ?>" /><b>话题</b> 
+			<img class="vm mgr10" src="<?= Alp_Url::img('icon/1616/talk.gif') ?>" />
+			<?php if($this->row['group']): ?>
+			<b><a href="/space_group/home/?id=<?= $this->row['group'] ?>">群组</a></b> :: 
+			<?php endif; ?>
+			<b>话题</b> 
 			:: <?= stripcslashes($this->row['title']) ?>
 		</div>
 		<div class="yui-u txtr a-span" style="width:20%">

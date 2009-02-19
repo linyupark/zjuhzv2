@@ -202,6 +202,7 @@
 			$params['memo'] = trim($params['memo']);
 			$options = array();
 			$rates = array();
+			if(count($params['options']) > 0)
 			foreach ($params['options'] as $opt)
 			{
 				$value = strip_tags(trim($opt));

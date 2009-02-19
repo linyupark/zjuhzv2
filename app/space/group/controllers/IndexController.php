@@ -30,7 +30,8 @@
 		{
 			$page = $this->_getParam('p', 1);
 			$select = DbModel::Space()->select();
-			$select->from(array('g' => 'tb_group'), array('numrows' => new Zend_Db_Expr('COUNT(g.gid)')));
+			$select->from(array('g' => 'tb_group'), array('numrows' => new Zend_Db_Expr('COUNT(g.gid)')))
+				   ->where('g.type != ?', 'close');
 			$row = $select->query()->fetchAll();
 			$select->reset(Zend_Db_Select::COLUMNS)->columns('*');
 			$pagesize = 15;
@@ -82,10 +83,12 @@
 					}
 				}
 				
-				$select->where(substr($where, 0, -3))
+				$select->where(substr($where, 0, -3))->order(new Zend_Db_Expr('RAND()'))
 				       ->joinLeft(array('g' => 'tb_group'), 'g.gid = m.gid')
 				       ->joinLeft(array('u' => 'zjuhzv2_user.tb_base'), 'u.uid = m.uid', 
-				       			  array('uname' => 'u.username', 'sex' => 'u.sex'));
+				       			  array('uname' => 'u.username'))
+				       ->where('g.type != ?', 'close')
+				       ->limit(5);
 				       
 				$groups = $select->query()->fetchAll();
 				
@@ -99,7 +102,7 @@
 						if($i == 0) $select->where('bar.group = ?', $g['gid']);
 						else $select->orWhere('bar.group = ?', $g['gid']);
 					}
-					$select->order('replytime DESC')->limit(10);
+					$select->order('replytime DESC')->limit(12);
 					$this->view->bars = $select->query()->fetchAll();
 				}
 			}
@@ -126,7 +129,7 @@
 					if($i == 0) $select->where('bar.group = ?', $g['gid']);
 					else $select->orWhere('bar.group = ?', $g['gid']);
 				}
-				$select->order('replytime DESC')->limit(10);
+				$select->order('replytime DESC')->limit(12);
 				$this->view->bars = $select->query()->fetchAll();
 			}
 			$this->view->groups = $groups;

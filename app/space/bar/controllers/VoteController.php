@@ -50,13 +50,24 @@
 			$options = unserialize($row[0]['options']);
 			if($this->getRequest()->isXmlHttpRequest())
 			{
+				$uid = Cmd::uid();
+				$friends = Logic_Space_Friends::fetch($uid);
 				$this->getHelper('viewRenderer')->setNoRender();
-				$mychoice = '我选择了:';
-				foreach ($voters[Cmd::uid()] as $opt)
+				$choice = '我选择了:';
+				foreach ($voters[$uid] as $opt)
 				{
-					$mychoice .= '"'.$options[$opt].'" ';
+					$choice .= '"'.$options[$opt].'" ';
 				}
-				echo $mychoice;
+				foreach ($friends as $f)
+				{
+					if(isset($voters[$f['friend']]))
+					{
+						$choice .= '<br />'.$f['uname'].':';
+						foreach ($voters[$f['friend']] as $opt)
+						$choice .= '"'.$options[$opt].'" ';
+					}
+				}
+				echo $choice;
 			}
 			else
 			{

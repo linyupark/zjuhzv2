@@ -24,7 +24,10 @@
 		function denyAction()
 		{
 			$this->view->params = $this->_getAllParams();
-			$this->render($this->_getParam('position'));
+			$render = $this->_getParam('position');
+			if($render == null)
+			$this->render('relogin');
+			else $this->render($render);
 		}
 	}
 

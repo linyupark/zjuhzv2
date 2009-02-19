@@ -1,7 +1,7 @@
 <?php $this->headTitle(htmlspecialchars(stripcslashes($this->row['title']))); ?>
 <style>
-	.rate_bg{ background:#eee; width:220px; height:10px; }
-	.rate_0,.rate_1,.rate_2,.rate_3,.rate_4{ height:7px; width:0px; margin:1px; }
+	.rate_bg{ background:#eee; width:220px; height:10px; overflow:hidden }
+	.rate_0,.rate_1,.rate_2,.rate_3,.rate_4{ height:7px; width:0px; margin:1px;  }
 	.rate_0{ background:#E7AB6D; border:1px solid #C18F5A; }
 	.rate_1{ background:#5DBC5B; border:1px solid #478F45; }
 	.rate_2{ background:#6C81B6; border:1px solid #586E97; }
@@ -11,7 +11,11 @@
 <div class="yui-main">
 	<div class="mg5 section yui-g">
 		<div class="yui-u first" style="width:80%">
-			<img class="vm mgr10" src="<?= Alp_Url::img('icon/1616/vote.gif') ?>" /><b>投票调查</b> 
+			<img class="vm mgr10" src="<?= Alp_Url::img('icon/1616/vote.gif') ?>" />
+			<?php if($this->row['group']): ?>
+			<b><a href="/space_group/home/?id=<?= $this->row['group'] ?>">群组</a></b> :: 
+			<?php endif; ?>
+			<b>投票调查</b> 
 			:: <?= stripcslashes($this->row['title']) ?>
 		</div>
 		<div class="yui-u txtr a-span" style="width:20%">

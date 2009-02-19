@@ -27,7 +27,7 @@
 	                        	Alp_String::encrypy(serialize(array($account, $password))), 
 	                        	(time()+3600*24*7), '/'
 	                        );
-	                        Alp_Sys::msg('form_tip','success');
+	                        Alp_Sys::msg('form_tip', 'success');
                         }
                     }
                     else Alp_Sys::msg('form_tip','账号密码有误');
@@ -61,6 +61,7 @@
         	$request = $this->getRequest();
         	$this->view->remember = unserialize(stripslashes(Alp_String::decrypt($_COOKIE['zjuhz_remember'])));
             $this->view->account = $request->getParam('account');
+            $this->view->relogin = $request->getParam('relogin');
         }
     }
 

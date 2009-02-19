@@ -2,13 +2,17 @@
 <div class="yui-main">
 	<div class="mg5 section yui-g">
 		<div class="yui-u first" style="width:80%">
-			<img class="vm mgr10" src="<?= Alp_Url::img('icon/1616/share.gif') ?>" /><b>文件共享</b> 
+			<img class="vm mgr10" src="<?= Alp_Url::img('icon/1616/share.gif') ?>" />
+			<?php if($this->row['group']): ?>
+			<b><a href="/space_group/home/?id=<?= $this->row['group'] ?>">群组</a></b> :: 
+			<?php endif; ?>
+			<b>文件共享</b> 
 			:: <?= stripcslashes($this->row['title']) ?>
 		</div>
 		<div class="yui-u txtr a-span" style="width:20%">
 			<a href="javascript:history.back()">返回上一页</a>
 			<?php if(!$this->row['group']): ?>
-			<a href="/space_bar/">返回话题列表</a>
+			<a href="/space_bar/?type=share">返回共享列表</a>
 			<?php else: ?>
 			<a href="/space_group/topic/?id=<?= $this->row['group'] ?>">返回群组帖区</a>
 			<?php endif; ?>
@@ -69,7 +73,7 @@
 			</td>
 		</tr>
 	</table>
-	<?= $this->action('view', 'comment', 'space_bar') ?>
+	<?= $this->action('view', 'comment', 'space_bar', array('gid' => $this->row['group'])) ?>
 </div>
 <script type="text/javascript">
 	function inc_download(id){$.post('/space_bar/share/download?id='+id);}

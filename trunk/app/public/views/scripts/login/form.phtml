@@ -53,7 +53,11 @@ function login_form()
                     $('#'+name).html(value);
                 });
         	}
-            else location.href='/public/';
+        	<?php if($this->relogin): ?>
+        	else history.go(0);
+        	<?php else: ?>
+            else location.href='/';
+            <?php endif; ?>
             $('#submit').val('登录').attr('disabled', false);
         }
     );

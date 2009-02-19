@@ -1,3 +1,9 @@
+<?php 
+	$uid = Cmd::uid(); $role = Cmd::role();
+	$gid = $this->row['group']; $grole = '';
+	if($gid) $grole = Logic_Space_Group_Member::role($gid, $uid);
+?>
+
 <div class="txtr a-span">
 	<?php if($this->row['modtime']): ?>
 	<span class="quiet f14">***该帖最后编辑于<?= Alp_Date::normal($this->row['modtime']); ?>***</span>
@@ -8,16 +14,14 @@
 		<img id="rate_icon" src="<?= Alp_Url::img('icon/mix/ding.gif'); ?>" />
 		顶(<span id="rate_box"><?= $this->row['rate'] ?></span>)
 	</a>
-	<?php if(Logic_Space_Bar::isFav($this->row, Cmd::uid())): ?>
+	<?php if(Logic_Space_Bar::isFav($this->row, $uid)): ?>
 	<a href="javascript:load_fav('off')"><img id="fav_icon" src="<?= Alp_Url::img('icon/mix/fav.gif'); ?>" />收藏</a>
 	<?php else: ?>
 	<a href="javascript:load_fav('on')"><img id="fav_icon" src="<?= Alp_Url::img('icon/mix/fav_off.gif'); ?>" />收藏</a>
 	<?php endif; ?>
-	<?php if(Cmd::role() == 'master'): ?>
+	<?php if($role == 'master' || $this->row['puber'] == $uid || $grole == 'creater' || $grole == 'manager'): ?>
+	<a href="javascript:edit_bar(<?= $this->row['tid'] ?>)"><img src="<?= Alp_Url::img('icon/mix/edit.gif'); ?>" />修改</a>
 	<a href="javascript:deny_bar(<?= $this->row['tid'] ?>)"><img src="<?= Alp_Url::img('icon/mix/lock.gif'); ?>" />屏蔽</a>
-	<a href="javascript:edit_bar(<?= $this->row['tid'] ?>)"><img src="<?= Alp_Url::img('icon/mix/edit.gif'); ?>" />修改</a>
-	<?php elseif($this->row['puber'] == Cmd::uid() && $this->row['type'] != 'help'): ?>
-	<a href="javascript:edit_bar(<?= $this->row['tid'] ?>)"><img src="<?= Alp_Url::img('icon/mix/edit.gif'); ?>" />修改</a>
 	<?php endif; ?>
 	<!-- /通用按钮 -->
 </div>

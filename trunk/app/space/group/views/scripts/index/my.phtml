@@ -1,13 +1,13 @@
-<div class="yui-g">
+<div class="yui-g mgt10">
 	<!-- 我的群组列表 -->
-	<div class="yui-u first" style="height:350px;overflow:auto;width:35%">
+	<div class="yui-u first" style="width:35%">
 	<?php
 		if(count($this->groups) > 0):
 		$gname = array();
 		foreach ($this->groups as $g):
 		$gname[$g['gid']] = $g['name'];
 	?>
-	<table class="mg10 table-dashed">
+	<table class="mgl10 table-dashed">
 		<tr>
 			<td width="40">
 				<a href="/space_group/home/?id=<?= $g['gid'] ?>">
@@ -31,7 +31,7 @@
 	</div>
 	
 	<!-- 我的群组最新话题列表 -->
-	<div class="yui-u mgt10" style="width:64%;">
+	<div class="yui-u" style="width:64%;">
 	<?php if(count($this->bars) > 0) : ?>
 		<table class="table-dashed" width="100%">
 			<?php foreach ($this->bars as $b): ?>

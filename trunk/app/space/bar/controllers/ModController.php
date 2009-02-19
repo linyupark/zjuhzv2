@@ -20,10 +20,18 @@
 		 */
 		function isAllowed($tid)
 		{
+			$gid = $this->view->gp;
+			$uid = Cmd::uid(); $role = Cmd::role();
 			$row = DbModel::Space()->fetchRow('SELECT `puber` FROM `tb_tbar` WHERE `tid` = ?', $tid);
-			$puber = $row['puber'];
-			if(Cmd::role() == 'master' || $puber == Cmd::uid()) return true;
-			else return false;
+			if($role == 'master' || $row['puber'] == $uid) return true;
+			if($gid > 0)
+			{
+				$grole = Logic_Space_Group_Member::role($gid, $uid);
+				if($grole == 'creater' || $grole == 'manager')
+				return true;
+			}
+			$this->_forward('deny', 'error', 'public', array('position' => 'space_bar_mod'));
+			return false;
 		}
 		
 		/**
@@ -43,10 +51,8 @@
 		 */
 		function shareAction()
 		{
-			$this->view->headTitle('修改共享帖');
 			$tid = $this->view->tid;
-			$row = Logic_Space_Bar_Share::view($tid);
-			if($this->getRequest()->isXmlHttpRequest() && $this->isAllowed($tid)) // 处理保存
+			if($this->getRequest()->isXmlHttpRequest()) // 处理保存
 			{
 				$this->getHelper('viewRenderer')->setNoRender();
 				$params = $this->getRequest()->getParams();
@@ -62,8 +68,14 @@
 				}
 				echo Zend_Json::encode(array('result'=>Alp_Sys::allMsg('* ',"\n")));
 			}
-			$this->view->row = $row[0];
-			$this->view->items = DbModel::Space()->fetchAll('SELECT * FROM `tb_share` WHERE `tid` = ? ORDER BY `id` ASC', $tid);
+			else 
+			{
+				$this->view->headTitle('修改共享帖');
+				$this->isAllowed($tid);
+				$row = Logic_Space_Bar_Share::view($tid);
+				$this->view->row = $row[0];
+				$this->view->items = DbModel::Space()->fetchAll('SELECT * FROM `tb_share` WHERE `tid` = ? ORDER BY `id` ASC', $tid);
+			}
 		}
 		
 		/**
@@ -83,10 +95,8 @@
 		 */
 		function photoAction()
 		{
-			$this->view->headTitle('修改图片帖');
 			$tid = $this->view->tid;
-			$row = Logic_Space_Bar_Photo::view($tid);
-			if($this->getRequest()->isXmlHttpRequest() && $this->isAllowed($tid)) // 处理保存
+			if($this->getRequest()->isXmlHttpRequest()) // 处理保存
 			{
 				$this->getHelper('viewRenderer')->setNoRender();
 				$params = $this->getRequest()->getParams();
@@ -102,8 +112,14 @@
 				}
 				echo Zend_Json::encode(array('result'=>Alp_Sys::allMsg('* ',"\n")));
 			}
-			$this->view->row = $row[0];
-			$this->view->photos = DbModel::Space()->fetchAll('SELECT * FROM `tb_photo` WHERE `tid` = ? ORDER BY `id` ASC', $tid);
+			else 
+			{
+				$this->view->headTitle('修改图片帖');
+				$this->isAllowed($tid);
+				$row = Logic_Space_Bar_Photo::view($tid);
+				$this->view->row = $row[0];
+				$this->view->photos = DbModel::Space()->fetchAll('SELECT * FROM `tb_photo` WHERE `tid` = ? ORDER BY `id` ASC', $tid);
+			}
 		}
 		
 		/**
@@ -112,10 +128,8 @@
 		 */
 		function voteAction()
 		{
-			$this->view->headTitle('修改投票');
 			$tid = $this->view->tid;
-			$row = Logic_Space_Bar_Vote::view($tid);
-			if($this->getRequest()->isXmlHttpRequest() && $this->isAllowed($tid)) // 处理保存
+			if($this->getRequest()->isXmlHttpRequest()) // 处理保存
 			{
 				$this->getHelper('viewRenderer')->setNoRender();
 				$params = $this->getRequest()->getParams();
@@ -131,8 +145,14 @@
 				}
 				echo Zend_Json::encode(array('result'=>Alp_Sys::allMsg('* ',"\n")));
 			}
-			$this->view->row = $row[0];
-			$this->view->options = unserialize($row[0]['options']);
+			else 
+			{
+				$this->view->headTitle('修改投票');
+				$this->isAllowed($tid);
+				$row = Logic_Space_Bar_Vote::view($tid);
+				$this->view->row = $row[0];
+				$this->view->options = unserialize($row[0]['options']);
+			}
 		}
 		
 		/**
@@ -141,10 +161,8 @@
 		 */
 		function eventsAction()
 		{
-			$this->view->headTitle('修改活动');
 			$tid = $this->view->tid;
-			$row = Logic_Space_Bar_Events::view($tid);
-			if($this->getRequest()->isXmlHttpRequest() && $this->isAllowed($tid)) // 处理保存
+			if($this->getRequest()->isXmlHttpRequest()) // 处理保存
 			{
 				$this->getHelper('viewRenderer')->setNoRender();
 				$params = $this->getRequest()->getParams();
@@ -160,7 +178,13 @@
 				}
 				echo Zend_Json::encode(array('result'=>Alp_Sys::allMsg('* ',"\n")));
 			}
-			$this->view->row = $row[0];
+			else 
+			{
+				$this->view->headTitle('修改活动');
+				$this->isAllowed($tid);
+				$row = Logic_Space_Bar_Events::view($tid);
+				$this->view->row = $row[0];
+			}
 		}
 		
 		/**
@@ -169,10 +193,8 @@
 		 */
 		function newsAction()
 		{
-			$this->view->headTitle('修改新闻');
 			$tid = $this->view->tid;
-			$row = Logic_Space_Bar_News::view($tid);
-			if($this->getRequest()->isXmlHttpRequest() && $this->isAllowed($tid)) // 处理保存
+			if($this->getRequest()->isXmlHttpRequest()) // 处理保存
 			{
 				$this->getHelper('viewRenderer')->setNoRender();
 				$params = $this->getRequest()->getParams();
@@ -188,7 +210,13 @@
 				}
 				echo Zend_Json::encode(array('result'=>Alp_Sys::allMsg('* ',"\n")));
 			}
-			$this->view->row = $row[0];
+			else
+			{
+				$this->view->headTitle('修改新闻');
+				$this->isAllowed($tid);
+				$row = Logic_Space_Bar_News::view($tid);
+				$this->view->row = $row[0];
+			}
 		}
 		
 		/**
@@ -197,10 +225,8 @@
 		 */
 		function topicAction()
 		{
-			$this->view->headTitle('修改话题');
 			$tid = $this->view->tid;
-			$row = Logic_Space_Bar_Topic::view($tid);
-			if($this->getRequest()->isXmlHttpRequest() && $this->isAllowed($tid)) // 处理保存
+			if($this->getRequest()->isXmlHttpRequest()) // 处理保存
 			{
 				$this->getHelper('viewRenderer')->setNoRender();
 				$params = $this->getRequest()->getParams();
@@ -216,7 +242,13 @@
 				}
 				echo Zend_Json::encode(array('result'=>Alp_Sys::allMsg('* ',"\n")));
 			}
-			$this->view->row = $row[0];
+			else
+			{
+				$this->view->headTitle('修改话题');
+				$this->isAllowed($tid);
+				$row = Logic_Space_Bar_Topic::view($tid);
+				$this->view->row = $row[0];
+			}
 		}
 	}
 

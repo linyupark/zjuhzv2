@@ -10,13 +10,10 @@
 			</div>
 		</div>
 		<?= $this->render('tab.phtml'); ?>
-		<form method="get">
 			<table class="table-dashed mg10" width="98%">
 				<tr>
 					<td colspan="3">
-						<input type="hidden" name="id" value="<?= $this->gid ?>" />
-						<input name="uname" size="20" value="<?= $this->uname ?>" /> 
-						<input type="submit" class="btn" value="查找" />
+						
 					</td>
 				</tr>
 				<tr class="section-sub">
@@ -60,7 +57,6 @@
 				<tr><td colspan="3" class="quiet">没有找到对应群成员</td></tr>
 				<?php endif; ?>
 			</table>
-		</form>
 		<div class="pg"><?= $this->pagination ?></div>
 	</div>
 </div>

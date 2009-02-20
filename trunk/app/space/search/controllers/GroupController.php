@@ -6,7 +6,10 @@
 	 */
 	class Space_Search_GroupController extends Zend_Controller_Action 
 	{
-		
+		function indexAction()
+		{
+			
+		}
 	}
 
 ?>

@@ -1,0 +1,18 @@
+<div class="yui-main">
+	<div class="yui-b">
+		<div class="mg5 section yui-g">
+			<div class="yui-u first" style="width:80%">
+				<img class="vm mgr10" src="<?= Alp_Url::img('icon/mix/search.gif') ?>" />
+				<b>查找<?php switch ($this->for) {
+					case 'bar' : echo '帖子'; break;
+					case 'group' : echo '群组'; break;
+					case 'user' : echo '校友'; break;
+				} ?></b>
+			</div>
+			<div class="yui-u txtr" style="width:20%"><a href="javascript:history.back()">返回上一页</a></div>
+		</div>
+		<?= $this->render('tab.phtml'); ?>
+		<?= $this->action('index', $this->for, 'space_search'); ?>
+	</div>
+</div>
+<?= $this->render('sidebar.phtml'); ?>

@@ -18,11 +18,19 @@
 	<tr>
 		<td class="txtr">姓名：</td>
 		<td class="quiet"><?= $this->profile['username'] ?></td>
-		<td><?= $this->partial('privacy/select.phtml', 
-				array('name'=>'username', 'value'=>$this->access['username'])) ?></td>
+		<td></td>
 		<td>
 			<input id="home_username" type="checkbox" disabled="disabled" />
 			<input type="hidden" name="home[]" value="username" />
+		</td>
+	</tr>
+	<tr>
+		<td class="txtr">性别：</td>
+		<td class="quiet"><?= $this->profile['sex'] ?></td>
+		<td></td>
+		<td>
+			<input id="home_sex" type="checkbox" disabled="disabled" />
+			<input type="hidden" name="home[]" value="sex" />
 		</td>
 	</tr>
 	<tr>
@@ -31,16 +39,6 @@
 		<td><?= $this->partial('privacy/select.phtml', 
 				array('name'=>'nickname', 'value'=>$this->access['nickname'])) ?></td>
 		<td><input id="home_nickname" type="checkbox" name="home[]" value="nickname" /></td>
-	</tr>
-	<tr>
-		<td class="txtr">性别：</td>
-		<td class="quiet"><?= $this->profile['sex'] ?></td>
-		<td><?= $this->partial('privacy/select.phtml', 
-				array('name'=>'sex', 'value'=>$this->access['sex'])) ?></td>
-		<td>
-			<input id="home_sex" type="checkbox" disabled="disabled" />
-			<input type="hidden" name="home[]" value="sex" />
-		</td>
 	</tr>
 	<tr>
 		<td class="txtr">出生日期：</td>

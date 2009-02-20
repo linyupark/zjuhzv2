@@ -6,7 +6,10 @@
 	 */
 	class Space_Search_BarController extends Zend_Controller_Action 
 	{
-		
+		function indexAction()
+		{
+			
+		}
 	}
 
 ?>

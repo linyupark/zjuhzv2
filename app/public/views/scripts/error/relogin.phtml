@@ -1,1 +1,5 @@
+<?php if(isset($_COOKIE['zjuhz_remember'])): ?>
+
+<?php else: ?>
 <?= $this->action('index', 'login', 'public', array('relogin' => true)); ?>
+<?php endif; ?>

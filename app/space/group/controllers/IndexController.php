@@ -44,6 +44,7 @@
 					'num_rows' => $row[0]['numrows'],
 					'cur_page' => $page
 				));
+				$select->limit($pagesize, Alp_Page::$offset);
 				$this->view->pagination = Alp_Page::$page_str;
 			}
 			$select->order('createtime DESC');

@@ -9,6 +9,8 @@
 		function indexAction()
 		{
 			$this->view->for = $this->_getParam('for', 'bar');
+			$this->view->key = trim(urldecode($this->_getParam('key')));
+			$this->view->range = $this->_getParam('range', 'all'); // 查找范围
 		}
 	}
 

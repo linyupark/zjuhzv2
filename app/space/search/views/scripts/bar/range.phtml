@@ -1,0 +1,21 @@
+<div class="yui-g mg10">
+	<div class="yui-u first" style="width:30%">
+		<span class="quiet">找到<?= $this->numrows ?>个相关帖子</span>
+	</div>
+	<div class="yui-u txtr a-span" style="width:70%">
+		范围:
+		<?php 
+			$r = $this->range; $k = urlencode($this->key); 
+			$on = 'style="text-decoration:underline;color:#333"'; 
+		?>
+		<a href="/space_search/?for=bar&key=<?= $k ?>&range=all" <?= ($r == 'all')?$on:'' ?>>全部</a>
+		<a href="/space_search/?for=bar&key=<?= $k ?>&range=topic" <?= ($r == 'topic')?$on:'' ?>>话题</a>
+		<a href="/space_search/?for=bar&key=<?= $k ?>&range=news" <?= ($r == 'news')?$on:'' ?>>新闻</a>
+		<a href="/space_search/?for=bar&key=<?= $k ?>&range=events" <?= ($r == 'events')?$on:'' ?>>活动</a>
+		<a href="/space_search/?for=bar&key=<?= $k ?>&range=help" <?= ($r == 'help')?$on:'' ?>>互助</a>
+		<a href="/space_search/?for=bar&key=<?= $k ?>&range=vote" <?= ($r == 'vote')?$on:'' ?>>投票</a>
+		<a href="/space_search/?for=bar&key=<?= $k ?>&range=photo" <?= ($r == 'photo')?$on:'' ?>>图片</a>
+		<a href="/space_search/?for=bar&key=<?= $k ?>&range=share" <?= ($r == 'share')?$on:'' ?>>共享</a>
+		<a href="/space_search/?for=bar&key=<?= $k ?>&range=group" <?= ($r == 'group')?$on:'' ?>>群组帖</a>
+	</div>
+</div>

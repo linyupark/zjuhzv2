@@ -9,10 +9,17 @@
 	<div class="yui-u txtr">
 		<form method="get">
 			<input type="hidden" name="for" value="<?= $this->for ?>" />
-			<?php if($this->for == 'bar'): ?>
+			<?php if($this->for == 'bar' || $this->for == 'user'): ?>
 			<input type="hidden" name="range" value="<?= $this->range ?>" />
 			<?php endif; ?>
 			<input type="text" name="key" value="<?= $this->key ?>" />
+			<?php if($this->for == 'user'): $on = 'selected="selected"'; ?>
+			<select name="attr">
+				<option value="username" <?= ($this->attr == 'username')?$on:''; ?>>姓名</option>
+				<option value="campus" <?= ($this->attr == 'campus')?$on:''; ?>>院系</option>
+				<option value="interest" <?= ($this->attr == 'interest')?$on:''; ?>>兴趣</option>
+			</select>
+			<?php endif; ?>
 			<input class="btn" type="submit" value="查找" />
 		</form>
 	</div>

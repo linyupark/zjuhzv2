@@ -1,0 +1,14 @@
+<div class="yui-g mg10">
+	<div class="yui-u first" style="width:35%">
+		<span class="quiet">找到<?= $this->numrows ?>个相关用户</span>
+	</div>
+	<div class="yui-u txtr a-span" style="width:65%">
+		范围:
+		<?php 
+			$r = $this->range; $k = urlencode($this->key); $a = $this->attr;
+			$on = 'style="text-decoration:underline;color:#333"'; 
+		?>
+		<a href="/space_search/?for=user&key=<?= $k ?>&attr=<?= $a ?>&range=all" <?= ($r == 'all')?$on:'' ?>>全部</a>
+		<a href="/space_search/?for=user&key=<?= $k ?>&attr=<?= $a ?>&range=friend" <?= ($r == 'friend')?$on:'' ?>>好友</a>
+	</div>
+</div>

@@ -36,7 +36,7 @@
 						'sex' => $v['sex']
 					);
 				}
-				$friends = Logic_Space_Friends::fetch($uid);
+				$friends = Logic_Space_Friends::ids($uid);
 				$rows = array();
 				foreach ($friends as $f)
 				{

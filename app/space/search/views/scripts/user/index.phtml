@@ -1,3 +1,30 @@
-<?php
-
-?>
+<?= $this->render('user/range.phtml'); ?>
+<?php //Zend_Debug::dump($this->rows); ?>
+<table class="mg5" width="100%">
+<?php if(count($this->rows) > 0): foreach ($this->rows as $i => $r): ?>
+<?php if($i%2 == 0): ?><tr><?php endif; ?>
+<td width="49%">
+	<table class="table-dashed" width="98%">
+		<tr>
+			<td width="40">
+				<div class="head40">
+				<a href="/space_home/?uid=<?= $r['uid'] ?>">
+				<img class="pd10" src="<?= Cmd::userhead($r['uid'], 40, $r['sex']) ?>" />
+				</a>
+				</div>
+			</td>
+			<td style="line-height:180%">
+				<img class="online_state" src="<?= Alp_Url::img('icon/1616/offline.gif') ?>" rel="<?= $r['uid'] ?>" />
+				<a class="f14" href="/space_home/?uid=<?= $r['uid'] ?>"><?= $r['username'] ?></a>
+				<br />
+				<a href="/space_msg/pm/?uid=<?= $r['uid'] ?>">发信</a>
+				<a href="javascript:friend_add(<?= $r['uid'] ?>)">加为好友</a>
+			</td>
+		</tr>
+	</table>
+</td>
+<?php if($i%2 == 1): ?></tr><?php endif; ?>
+<?php endforeach; endif; ?>
+</table>
+<div class="pg"><?= $this->pagination ?></div>
+<script>online_state();</script>

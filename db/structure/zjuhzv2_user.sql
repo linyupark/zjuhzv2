@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: zjuhzv2_user
 Target Host: localhost
 Target Database: zjuhzv2_user
-Date: 2009/1/22 15:49:48
+Date: 2009-2-21 обнГ 04:43:45
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -57,7 +57,8 @@ CREATE TABLE `tb_contact` (
   `zipcode` char(6) default NULL,
   `tel` char(15) default NULL,
   `mobile` char(11) default NULL,
-  UNIQUE KEY `ix_uid` (`uid`)
+  UNIQUE KEY `ix_uid` (`uid`),
+  UNIQUE KEY `ix_mail` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------

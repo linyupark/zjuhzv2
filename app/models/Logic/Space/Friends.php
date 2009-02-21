@@ -7,6 +7,17 @@
 	class Logic_Space_Friends extends DbModel 
 	{	
 		/**
+		 * 返回所有好友的id
+		 *
+		 * @param unknown_type $uid
+		 * @return unknown
+		 */
+		public static function ids($uid)
+		{
+			return parent::Space()->fetchAll('SELECT `friend` FROM `tb_friends` WHERE `uid` = '.$uid);
+		}
+		
+		/**
 		 * 获取指定用户指定好友分类列表信息
 		 *
 		 * @param unknown_type $uid

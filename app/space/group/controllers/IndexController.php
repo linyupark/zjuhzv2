@@ -60,7 +60,7 @@
 		{
 			// 群组信息
 			$uid = Cmd::uid();
-			$friends = Logic_Space_Friends::fetch($uid);
+			$friends = Logic_Space_Friends::ids($uid);
 			$where = '';
 			if(count($friends) != 0)
 			{
@@ -71,9 +71,9 @@
 				
 				foreach ($friends as $f)
 				{
-					$where .= ' m.uid = '.$f['friend'].' OR';
+					$where .= $f['friend'].',';
 				}
-				$select->where(substr($where, 0, -2));
+				$select->where('m.uid IN ('.substr($where,0,-1).')');
 	
 				if(count($mygroup) > 0)
 				{

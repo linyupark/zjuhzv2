@@ -79,7 +79,7 @@
 					$unames = explode(' ', $params['uname']);
 					$incept = Logic_User_Base::uid($unames);
 					/*
-					$friends = Logic_Space_Friends::fetch($uid);
+					$friends = Logic_Space_Friends::ids($uid);
 					$fid = array();
 					foreach ($friends as $f)
 					{

@@ -3,13 +3,21 @@
 		<div class="greybox-top"></div>
 		<?php if(Cmd::role() != 'guest') echo $this->action(Cmd::role(), 'modnav'); ?>
 	</div>
-	<div class="section">
-		<b class="mgl10">最近来访</b>
-	</div>
-	<div class="section">
-		<b class="mgl10">好友列表</b>
-	</div>
+	<h3 class="section">最近来访</h3>
+		<?php if($this->guests): foreach($this->guests as $r): ?>
+		<table width="33%" class="fleft">
+			<tr><td>
+				<img class="online_state" src="<?= Alp_Url::img('icon/1616/offline.gif') ?>" rel="<?= $r['uid'] ?>" />
+				<a href="/space_home/?uid=<?= $r['uid'] ?>"><?= $r['username'] ?></a>
+				<div class="quiet"><?= Alp_Date::normal($r['time']) ?></div>
+			</td></tr>
+		</table>
+		<?php endforeach; else: ?>
+		<div class="quiet mg10">暂时还没有人来看过你哦</div>
+		<?php endif; ?>
+	<h3 class="section" style="clear:left;">好友列表</h3>
 </div>
 <script type="text/javascript">
 	$('.yui-d3f').addClass('yui-t6');
+	online_state();
 </script>

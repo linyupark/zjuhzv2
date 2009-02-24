@@ -128,7 +128,7 @@
         # 固定长度 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
         private function str_exact($name, $value, $alias, $arg)
         {
-            if($this->strlen_utf8($value) != $arg[0])
+            if(self::strlen_utf8($value) != $arg[0])
             Alp_Sys::conv('valid_str_exact', array($alias, $arg[0]), $name);
         }
         

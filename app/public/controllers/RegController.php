@@ -18,7 +18,18 @@
                 if(Alp_Sys::getMsg() == null)
                 {	
                 	// 进行注册
-                	Logic_User_Reg::insert($params);
+                	$uid = Logic_User_Reg::insert($params);
+                	if($uid != false)
+                	{
+                		// 注册成功log - add_user
+		            	Logic_Log::user(array(
+		            		'uid' => $uid,
+		            		'fid' => 0,
+		            		'key' => 'add_user'
+		            	));
+			            // 邀请注册好友关联
+			        	Logic_User_Reg::rel($uid, $params['ucode'], $params['scode']);
+                	}
                 }
             }
             else

@@ -1,0 +1,26 @@
+<table class="table-dashed mg10" width="95%">
+	<tr>
+		<td colspan="2">
+			如果您有好友是浙江大学校友，复制此邀请链接地址，
+			用QQ、MSN或其他方式发送给你的朋友；打开此网址即可加入。
+			<b>建议：不同的好友圈子请选择对应的邀请链接，以便对方找到与你的共同好友
+			</b>
+		</td>
+	</tr>
+	<tr>
+		<td width="180" class="txtr">默认邀请链接：</td>
+		<td><input id="u_0" onclick="ucopy(0)" size="70" type="text" value="http://v2.zjuhz.com/public/reg/?ucode=<?= $this->ucode ?>&scode=<?= Alp_String::encrypy(0) ?>" /></td>
+	</tr>
+	<?php foreach ($this->sorts as $id => $name): ?>
+	<tr>
+		<td class="txtr"><?= $name ?>专用邀请链接：</td>
+		<td><input id="u_<?= $id ?>" onclick="ucopy(<?= $id ?>)" size="70" type="text" value="http://v2.zjuhz.com/public/reg/?ucode=<?= $this->ucode ?>&scode=<?= Alp_String::encrypy($id) ?>" /></td>
+	</tr>
+	<?php endforeach; ?>
+</table>
+<script type="text/javascript">
+	function ucopy(id)
+	{
+		$('#u_'+id).focus().select();
+	}
+</script>

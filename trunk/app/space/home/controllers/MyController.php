@@ -20,8 +20,11 @@
 		
 		function indexAction()
 		{
+			$uid = Cmd::uid();
 			$this->view->profile = Cmd::getSess('profile');
-			$this->view->home = Logic_User_Privacy::getHome(Cmd::uid());
+			$row = Logic_Space_Home::get('guests', $uid);
+			$this->view->guests = unserialize($row['guests']);
+			$this->view->home = Logic_User_Privacy::getHome($uid);
 		}
 	}
 

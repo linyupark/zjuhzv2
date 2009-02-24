@@ -35,6 +35,13 @@
             </td>
         </tr>
         <tr>
+            <td><b>手机号码</b></td>
+            <td>
+                <input size="30" type="text" name="mobile" maxlength="11" />
+                <span class="valid_tip" id="mobile"></span>
+            </td>
+        </tr>
+        <tr>
             <td>
                 <label for="option1"><input type="radio" name="sex" id="option1" value="男" checked="checked" /> <b>男</b></label>
                 <br />
@@ -64,7 +71,7 @@ function reg_form()
 {
     $('.valid_tip').empty();
     $('#submit').val('提交注册信息中....').attr('disabled', true);
-    $.getJSON(
+    $.post(
         '/public/reg/doreg',
         $('#reg_form').serializeArray(),
         function(data){
@@ -77,7 +84,7 @@ function reg_form()
         	else location.href='/public/login?account='+data.account;
             $('#submit').val('同意注册协议，提交注册信息').attr('disabled', false);
 
-        }
+        }, 'json'
     );
     return false;
 }

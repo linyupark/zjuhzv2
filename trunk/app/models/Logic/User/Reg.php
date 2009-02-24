@@ -2,7 +2,6 @@
 
     class Logic_User_Reg extends DbModel
     {
-    	
         /**
          * 是否已经在用户数据库中存在
          *
@@ -18,9 +17,59 @@
         	{
         		case 'account' : return $User->fetchRow('SELECT `uid` FROM `tb_base` WHERE `account` = ?', $value); break;
         		case 'email' : return $User->fetchRow('SELECT `uid` FROM `tb_contact` WHERE `email` = ?', $value); break;
+        		case 'mobile' : return $User->fetchRow('SELECT `uid` FROM `tb_contact` WHERE `mobile` = ?', $value); break;
         		case 'uid' : return $User->fetchRow('SELECT `uid` FROM `tb_base` WHERE `uid` = ?', $value); break;
         		default : return false; break;
         	}
+        }
+        
+        /**
+         * 邀请注册
+         *
+         * @param unknown_type $uid
+         * @param unknown_type $fid
+         */
+        public static function rel($uid, $fid, $sid)
+        {
+        	// 是否为有效邀请
+			if(self::isRegistered('uid', $fid) != false 
+			   && Logic_Space_Friends::hasSort($fid, $sid) == true)
+			{
+				// 关联
+			    Logic_Space_Friends::rel($uid, $fid);
+			    Logic_Space_Friends::rel($fid, $uid);
+			    Logic_Space_Friends::sort($fid, $uid, $sid);
+			
+			    // 通知双方
+				if(Logic_Space_Msg::unique('friend', $uid, $fid) == false)	
+				DbModel::Space()->insert('tb_msg', array(
+					'type' => 'friend',
+					'content' => '系统提示：该用户已经通过邀请注册成功并将你加为好友',
+					'sender' => $uid,
+					'incept' => $fid,
+					'time' => time()
+				));
+				if(Logic_Space_Msg::unique('friend', $fid, $uid) == false)
+				DbModel::Space()->insert('tb_msg', array(
+					'type' => 'friend',
+					'content' => '系统提示：该用户已经将你加为好友',
+					'sender' => $fid,
+					'incept' => $uid,
+					'time' => time()
+				));
+			        			
+			    // log记录 - add_friend
+			    Logic_Log::user(array(
+			        'uid' => $uid,
+			        'fid' => $fid,
+				    'key' => 'add_friend'
+				));
+				Logic_Log::user(array(
+				    'uid' => $fid,
+			        'fid' => $uid,
+				    'key' => 'add_friend'
+				));
+			}
         }
         
         /**
@@ -31,7 +80,7 @@
          */
         public static function insert($data)
         {
-        	// 自行注册
+        	// 默认为待审核
         	$data['role'] = 'bench';
         	
         	// 注册事务处理
@@ -52,35 +101,24 @@
             	// 获取注册后的个人id
             	$self_uid = $User->lastInsertId();
             	
-            	// 用户email数据插入
+            	// 用户基础联系方式数据插入
             	$User->insert('tb_contact', array(
             		'uid' => $self_uid, 
-            		'email' => $data['email']
+            		'email' => $data['email'],
+            		'mobile' => $data['mobile']
             	));
             	
-            	// 注册成功log - add_user
-            	
-            	
-	            // 邀请注册好友关联
-	        	if(!empty($data['ucode']) && !empty($data['scode']))
-	        	{
-	        		// 是否为有效邀请
-	        		if(self::isRegistered('uid', $data['ucode']) != false 
-	        		&& Logic_Space_Friends::hasSort($data['ucode'], $data['scode']) == true)
-	        		{
-	        			// 关联
-	        			time();
-	        			// log记录 - add_friend
-	        		}
-	        	}
             	$User->commit();
             	Alp_Sys::msg('form_tip', 'success');
             	Alp_Sys::msg('account', $data['account']);
+            	return $self_uid;
             	
             } catch (Exception $e) {
             	$User->rollback();
             	Alp_Sys::msg('form_tip', $e->getMessage());
             }
+            
+            return false;
         }
     }
 

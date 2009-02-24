@@ -17,6 +17,19 @@
 		}
 		
 		/**
+		 * 邀请友注册
+		 *
+		 */
+		function inviteAction()
+		{
+			$uid = Cmd::uid();
+			$sorts = Logic_Space_Friends::getSort($uid);
+			$this->view->sorts = $sorts;
+			$this->view->ucode = Alp_String::encrypy($uid);
+		}
+		
+		
+		/**
 		 * 好友访问记录
 		 *
 		 */

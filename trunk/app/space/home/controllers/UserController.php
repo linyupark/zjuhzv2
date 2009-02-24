@@ -14,7 +14,8 @@
 			$this->visitor($uid);
 			$this->view->profile = Logic_User_Base::get($uid);
 			$this->view->home = Logic_User_Privacy::getHome($uid);
-			$this->view->uid= $uid;
+			$this->view->guests = Logic_Space_Home::get('guests', $uid);
+			$this->view->uid = $uid;
 		}
 		
 		function visitor($uid)
@@ -28,7 +29,7 @@
 			// 无数据则初始化
 			if($visitor == false) $visitor = array();
 			
-			$size = 36; // 记录上限
+			$size = 12; // 记录上限
 			$flag = 0;
 			
 			if(count($visitor) > 0)

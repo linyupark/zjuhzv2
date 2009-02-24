@@ -9,7 +9,7 @@
 		<tr><td>
 			<div class="head40">
 				<a href="/space_home/?uid=<?= $this->creater['uid'] ?>">
-					<img class="mg10" src="<?= Cmd::userhead($this->creater['uid']) ?>" />
+					<img class="mg10" src="<?= Cmd::userhead($this->creater['uid'],40,$this->creater['sex']) ?>" />
 				</a>
 			</div>
 			<img class="online_state" src="<?= Alp_Url::img('icon/1616/offline.gif') ?>" rel="<?= $this->creater['uid'] ?>" />
@@ -21,7 +21,7 @@
 		<tr><td>
 			<div class="head40">
 				<a href="/space_home/?uid=<?= $m['uid'] ?>">
-					<img class="mg10" src="<?= Cmd::userhead($m['uid']) ?>" />
+					<img class="mg10" src="<?= Cmd::userhead($m['uid'],40,$m['sex']) ?>" />
 				</a>
 			</div>
 			<img class="online_state" src="<?= Alp_Url::img('icon/1616/offline.gif') ?>" rel="<?= $m['uid'] ?>" />
@@ -35,7 +35,7 @@
 		<tr><td>
 			<div class="head40">
 				<a href="/space_home/?uid=<?= $f['uid'] ?>">
-					<img class="mg10" src="<?= Cmd::userhead($f['uid']) ?>" />
+					<img class="mg10" src="<?= Cmd::userhead($f['uid'],40,$f['sex']) ?>" />
 				</a>
 			</div>
 			<img class="online_state" src="<?= Alp_Url::img('icon/1616/offline.gif') ?>" rel="<?= $f['uid'] ?>" />

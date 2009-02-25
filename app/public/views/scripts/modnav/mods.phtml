@@ -38,7 +38,7 @@
 <?php if(Cmd::role() == 'black'): ?>
 <br />
 <b><?= 	Cmd::rolename() ?>附加权限：</b>
-<div class="mods yui-g f14 a-span" style="line-height:150%">
+<div class="mods yui-g f14 a-span">
 	<div class="yui-u first">
 		<img src="<?= Alp_Url::img('icon/1616/inf.gif') ?>" /><a href="">申请解冻</a>
 	</div>
@@ -48,7 +48,7 @@
 <?php // member
 if(Cmd::role() != 'black' && Cmd::role() != 'bench'):  ?>
 <hr class="dashed" />
-<div class="mods yui-g f14 a-span" style="line-height:150%">
+<div class="mods yui-g f14 a-span">
 	<div class="yui-u first">
 		<img src="<?= Alp_Url::img('icon/1616/rss.gif') ?>" /><a href="/space_rss/">制定订阅</a>
 	</div>
@@ -58,7 +58,7 @@ if(Cmd::role() != 'black' && Cmd::role() != 'bench'):  ?>
 <?php if(Cmd::role() == 'power'): ?>
 <br />
 <b><?= 	Cmd::rolename() ?>附加权限：</b>
-<div class="mods yui-g f14" style="line-height:150%">
+<div class="mods yui-g f14">
 	<div class="yui-u first">
 		<img src="<?= Alp_Url::img('icon/1616/s_mail.gif') ?>" /><a href="">群发消息</a>
 	</div>
@@ -68,7 +68,7 @@ if(Cmd::role() != 'black' && Cmd::role() != 'bench'):  ?>
 <?php // master
 if(Cmd::role() == 'master'): ?>
 <hr class="dashed" />
-<div class="mods yui-g f14 a-span" style="line-height:150%">
+<div class="mods yui-g f14 a-span">
 	<div class="yui-u first">
 		<img src="<?= Alp_Url::img('icon/1616/f_user.gif') ?>" /><a href="">用户管理</a>
 	</div>
@@ -84,3 +84,11 @@ if(Cmd::role() == 'master'): ?>
 </div>
 <?php endif; ?>
 <hr class="dashed" />
+<div class="mods yui-g">
+	<div class="yui-u first txtc">
+		当前<a class="f14" href="/space_search/?for=user&range=online"><?= Logic_Api::onlinex() ?>人</a>在线
+	</div>
+	<div class="yui-u f14 a-span">
+		<img src="<?= Alp_Url::img('icon/1616/invite.gif') ?>" /><a class="f14" href="/space_friends/?type=invite">邀请注册</a>
+	</div>
+</div>

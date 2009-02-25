@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: zjuhzv2_space
 Target Host: localhost
 Target Database: zjuhzv2_space
-Date: 2009-2-21 обнГ 04:43:38
+Date: 2009-2-25 обнГ 05:09:58
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -108,8 +108,7 @@ CREATE TABLE `tb_help_sort` (
 CREATE TABLE `tb_home` (
   `uid` int(10) unsigned NOT NULL,
   `ing` varchar(255) default NULL,
-  `guests` text,
-  `groups` text
+  `guests` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------

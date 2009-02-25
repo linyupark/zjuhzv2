@@ -7,6 +7,20 @@
 	class Logic_Space_Group extends DbModel 
 	{	
 		/**
+		 * 我的群id
+		 *
+		 * @param unknown_type $uid
+		 * @return unknown
+		 */
+		public static function ids($uid)
+		{
+			return parent::Space()->fetchAll('SELECT `gid` 
+				FROM `tb_group_member` 
+				WHERE `uid` = '.$uid.' 
+				AND `role` IN ("creater","member","manager")');
+		}
+		
+		/**
 		 * 我的群
 		 *
 		 */

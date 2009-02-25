@@ -26,9 +26,18 @@
 				$params = Filter_Space::topic($params);
 				if(Alp_Sys::getMsg() == null)
 				{
+					$params['uid'] = Cmd::uid();
 					$tid = Logic_Space_Bar_Topic::insert($params);
 					if(Alp_Sys::getMsg() == null)
 					{
+						// 记录
+						Logic_Log::bar(array(
+							'uid' => $params['uid'],
+							'gid' => $params['group'],
+							'tid' => $tid,
+							'key' => 'add_topic',
+							'time' => time()
+						));
 						echo Zend_Json::encode(array('result'=>'success', 'tid' => $tid));
 						exit();
 					}

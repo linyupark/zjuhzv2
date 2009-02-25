@@ -2,7 +2,7 @@
 <div id="comment_box"></div>
 <hr class="dashed" />
 
-<?php if($this->rform == true): ?>
+<?php if($this->rform == true || (int)$this->gid == 0): ?>
 <?= $this->render('comment/form.phtml'); ?>
 <?php else: ?>
 <div class="f14 mglr10 tp0">

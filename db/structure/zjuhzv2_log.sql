@@ -4,47 +4,23 @@ Source Host: localhost
 Source Database: zjuhzv2_log
 Target Host: localhost
 Target Database: zjuhzv2_log
-Date: 2009/1/22 15:49:21
+Date: 2009-2-25 ÏÂÎç 05:10:05
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
--- Table structure for tb_space_bar
+-- Table structure for tb_event
 -- ----------------------------
-CREATE TABLE `tb_space_bar` (
-  `id` int(10) unsigned NOT NULL auto_increment,
+CREATE TABLE `tb_event` (
+  `lid` bigint(20) unsigned NOT NULL auto_increment,
   `uid` int(10) unsigned NOT NULL,
+  `fid` int(11) NOT NULL default '0',
+  `tid` bigint(20) NOT NULL default '0',
   `gid` int(10) unsigned NOT NULL default '0',
-  `type` char(25) NOT NULL,
-  `value` varchar(255) NOT NULL,
+  `key` char(30) NOT NULL,
   `time` int(10) unsigned NOT NULL,
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY  (`lid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for tb_space_group
--- ----------------------------
-CREATE TABLE `tb_space_group` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `uid` int(10) unsigned NOT NULL,
-  `gid` int(10) unsigned NOT NULL default '0',
-  `type` char(25) NOT NULL,
-  `value` varchar(255) NOT NULL,
-  `time` int(10) unsigned NOT NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for tb_user
--- ----------------------------
-CREATE TABLE `tb_user` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `uid` int(10) unsigned NOT NULL,
-  `type` char(25) NOT NULL,
-  `value` varchar(255) NOT NULL,
-  `time` int(10) unsigned NOT NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records 

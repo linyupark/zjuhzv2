@@ -25,9 +25,25 @@
 			{
 				 $friends = Logic_Space_Friends::ids($uid);
 				 $in = '';
-				 foreach ($friends as $f)
+				 if(count($friends) > 0)
 				 {
-				 	$in .= $f['friend'].',';
+				 	foreach ($friends as $f)
+					 {
+					 	$in .= $f['friend'].',';
+					 }
+					 $select->where('ub.uid IN ('.substr($in,0,-1).')');
+				 }
+				 else $select->where('ub.uid = 0');
+			}
+			
+			// 在线范围
+			if($range == 'online')
+			{
+				 $users = Logic_Api::online();
+				 $in = '';
+				 foreach ($users as $u)
+				 {
+				 	$in .= $u['uid'].',';
 				 }
 				 $select->where('ub.uid IN ('.substr($in,0,-1).')');
 			}

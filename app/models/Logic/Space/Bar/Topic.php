@@ -65,7 +65,7 @@
 				$db->insert('tb_tbar', array(
 					'type' => $params['type'],
 					'title' => $params['title'],
-					'puber' => Cmd::uid(),
+					'puber' => $params['uid'],
 					'pubtime' => time(),
 					'replytime' => time(),
 					'group' => $params['group'],

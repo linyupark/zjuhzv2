@@ -14,7 +14,8 @@
 			$this->visitor($uid);
 			$this->view->profile = Logic_User_Base::get($uid);
 			$this->view->home = Logic_User_Privacy::getHome($uid);
-			$this->view->guests = Logic_Space_Home::get('guests', $uid);
+			$row = Logic_Space_Home::get('guests', $uid);
+			$this->view->guests = unserialize($row['guests']);
 			$this->view->uid = $uid;
 		}
 		

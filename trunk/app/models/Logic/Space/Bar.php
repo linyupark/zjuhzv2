@@ -3,6 +3,15 @@
 	class Logic_Space_Bar extends DbModel 
 	{
 		/**
+		 * 返回指定uid所发布的tids
+		 *
+		 */
+		public static function ids($uid)
+		{
+			return parent::Space()->fetchAll('SELECT `tid` FROM `tb_tbar` WHERE `puber` = ?', $uid);
+		}
+		
+		/**
 		 * 回复总数返回评论分页数
 		 *
 		 * @param unknown_type $replys

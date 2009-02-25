@@ -69,27 +69,32 @@
 				$select->from(array('m' => 'tb_group_member'))
 					   ->where('m.role = "member" OR m.role="manager" OR m.role = "creater"');
 				
-				foreach ($friends as $f)
+				if(count($friends) > 0)
 				{
-					$where .= $f['friend'].',';
-				}
-				$select->where('m.uid IN ('.substr($where,0,-1).')');
-	
-				if(count($mygroup) > 0)
-				{
-					$where = '';
-					foreach ($mygroup as $g)
+					foreach ($friends as $f)
 					{
-						$where .= ' m.gid != '.$g['gid'].' AND';
+						$where .= $f['friend'].',';
 					}
+					$select->where('m.uid IN ('.substr($where,0,-1).')');
+					
+					if(count($mygroup) > 0)
+					{
+						$where = '';
+						foreach ($mygroup as $g)
+						{
+							$where .= ' m.gid != '.$g['gid'].' AND';
+						}
+						$select->where(substr($where, 0, -3));
+					}
+					
+					$select->order(new Zend_Db_Expr('RAND()'))
+					       ->joinLeft(array('g' => 'tb_group'), 'g.gid = m.gid')
+					       ->joinLeft(array('u' => 'zjuhzv2_user.tb_base'), 'u.uid = m.uid', 
+					       			  array('uname' => 'u.username'))
+					       ->where('g.type != ?', 'close')
+					       ->limit(5);
 				}
-				
-				$select->where(substr($where, 0, -3))->order(new Zend_Db_Expr('RAND()'))
-				       ->joinLeft(array('g' => 'tb_group'), 'g.gid = m.gid')
-				       ->joinLeft(array('u' => 'zjuhzv2_user.tb_base'), 'u.uid = m.uid', 
-				       			  array('uname' => 'u.username'))
-				       ->where('g.type != ?', 'close')
-				       ->limit(5);
+				else $select->where('m.uid = 0');
 				       
 				$groups = $select->query()->fetchAll();
 				

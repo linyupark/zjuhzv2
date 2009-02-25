@@ -21,6 +21,12 @@
 				{
 					Logic_Space_Friends::rel($params['sender'], $params['uid']);
 					Logic_Space_Friends::pass($params);
+					Logic_Log::user(array(
+						'uid' => $params['sender'],
+						'fid' => $params['uid'],
+						'key' => 'add_friend',
+						'time' => time()
+					));
 					if(Alp_Sys::getMsg() == null)
 					{
 						echo 'success';

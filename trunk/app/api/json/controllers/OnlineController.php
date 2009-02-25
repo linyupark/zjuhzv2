@@ -19,11 +19,20 @@
 		function checkAction()
 		{
 			$uid = $this->_getParam('uid');
-			$alive = time() - 900; // 15分钟等待时间
+			$alive = Logic_Api::alive();
 			$db = DbModel::getSqlite('online.s3db');
 			$row = $db->fetchRow('SELECT `uid`,`time` FROM `ol` WHERE `uid` = ?', $uid);
 			if($row == false || $row['time'] < $alive) echo Zend_Json::encode(array('state' => 'offline'));
 			else echo Zend_Json::encode(array('state' => 'online'));
+		}
+		
+		/**
+		 * 返回在线人数
+		 *
+		 */
+		function numAction()
+		{
+			echo Logic_Api::onlinex();
 		}
 	}
 

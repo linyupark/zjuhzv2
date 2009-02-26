@@ -17,6 +17,8 @@
 			$row = Logic_Space_Home::get('guests', $uid);
 			$this->view->guests = unserialize($row['guests']);
 			$this->view->uid = $uid;
+			$this->view->log = Logic_Log::home($uid);
+			$this->view->event = Zend_Registry::get('config')->event_log->toArray();
 		}
 		
 		function visitor($uid)

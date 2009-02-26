@@ -89,6 +89,14 @@
 					{
 						if($params['cid'] == 0) // 新评论
 						{
+							// 记录
+							Logic_Log::bar(array(
+								'uid' => $params['uid'],
+								'tid' => $params['tid'],
+								'gid' => $params['group'],
+								'key' => 'add_reply',
+								'value' => Alp_String::utfSubStr(strip_tags(trim($params['content'])), 200).'...'
+							));
 							$num = Logic_Space_Bar_Comment::num($params['tid']);
 							$page = ceil($num / $this->pagesize);
 						}

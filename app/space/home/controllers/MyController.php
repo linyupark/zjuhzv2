@@ -13,9 +13,18 @@
 		
 		function doingAction()
 		{
+			$uid = Cmd::uid();
 			$this->getHelper('viewRenderer')->setNoRender();
 			$ing = strip_tags(trim($this->_getParam('ing')));
-			Logic_Space_Home::ing($ing, Cmd::uid());
+			Logic_Space_Home::ing($ing, $uid);
+			if(Alp_Sys::getMsg() == null)
+			{
+				Logic_Log::user(array(
+					'uid' => $uid,
+					'fid' => 0,
+					'key' => 'mod_ing'
+				));
+			}
 		}
 		
 		function indexAction()

@@ -20,7 +20,7 @@
 		{
 			$uid = $this->_getParam('uid', Cmd::uid());
 			$row = Logic_Space_Home::get('ing', $uid);
-			if($row['ing'] == null) echo '...';
+			if($row['ing'] == null) echo '';
 			else echo $row['ing'];
 		}
 		

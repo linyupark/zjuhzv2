@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: zjuhzv2_log
 Target Host: localhost
 Target Database: zjuhzv2_log
-Date: 2009-2-25 обнГ 05:10:05
+Date: 2009-2-26 обнГ 05:03:01
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -18,6 +18,7 @@ CREATE TABLE `tb_event` (
   `tid` bigint(20) NOT NULL default '0',
   `gid` int(10) unsigned NOT NULL default '0',
   `key` char(30) NOT NULL,
+  `value` tinytext,
   `time` int(10) unsigned NOT NULL,
   PRIMARY KEY  (`lid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

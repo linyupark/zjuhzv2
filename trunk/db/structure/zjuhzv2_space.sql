@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: zjuhzv2_space
 Target Host: localhost
 Target Database: zjuhzv2_space
-Date: 2009-2-25 обнГ 05:09:58
+Date: 2009-2-26 обнГ 05:03:09
 */
 
 SET FOREIGN_KEY_CHECKS=0;

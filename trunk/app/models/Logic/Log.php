@@ -14,8 +14,6 @@
 		{
 			$select = parent::Log()->select();
 			$select->from(array('e' => 'tb_event'));
-			// 排除uid发起的
-			$select->where('e.uid != '.$uid.' AND e.fid != '.$uid);
 			
 			// 在好友uid里选择
 			$friends = Logic_Space_Friends::ids($uid);
@@ -29,7 +27,7 @@
 			}
 			// 在uid加入的群组里选择
 			$groups = Logic_Space_Group::ids($uid);
-			$group = '0,';
+			$group = '';
 			if(count($groups) > 0)
 			{
 				foreach ($groups as $g)
@@ -38,25 +36,34 @@
 				}
 			}
 			// 在我发布过的tid中选择
+			/*
 			$bars = Logic_Space_Bar::ids($uid);
-			$bar = '0,';
+			$bar = '';
 			if(count($bars) > 0)
 			{
 				foreach ($bars as $b)
 				{
 					$bar .= $b['tid'].',';
 				}
-			}
+			}*/
 			// 开始筛选
-			$friend = 'e.uid IN ('.substr($friend,0,-1).')';
-			$group = 'e.gid IN ('.substr($group,0,-1).')';
-			$bar = 'e.tid IN ('.substr($bar,0,-1).')';
-			$select->where($friend.' OR '.$group.' OR '.$bar);
-			$select->joinLeft(array('u' => 'zjuhzv2_user.tb_base'), 'u.uid = e.uid', array('uname'=>'u.username'));
-			$select->joinLeft(array('u2' => 'zjuhzv2_user.tb_base'), 'u2.uid = e.fid', array('fname'=>'u2.username'));
-			$select->joinLeft(array('bar' => 'zjuhzv2_space.tb_tbar'), 'bar.tid = e.tid', array('title'=>'bar.title','type'=>'bar.type'));
+			$select->where('e.uid IN ('.substr($friend,0,-1).') AND e.fid != '.$uid);
+			//if($bar != '') $select->orWhere('e.tid IN ('.substr($bar,0,-1).')');
+			if($group != '') $select->orWhere('e.gid IN ('.substr($group,0,-1).') AND e.uid != '.$uid);
+			
+			$select->joinLeft(array('u' => 'zjuhzv2_user.tb_base'), 'u.uid = e.uid', 
+							  array('uname'=>'u.username'));
+			$select->joinLeft(array('u2' => 'zjuhzv2_user.tb_base'), 'u2.uid = e.fid', 
+							  array('fname'=>'u2.username'));
+			$select->joinLeft(array('bar' => 'zjuhzv2_space.tb_tbar'), 'bar.tid = e.tid', 
+							  array('title'=>'bar.title','type'=>'bar.type','reply'=>'bar.reply'));
+			$select->joinLeft(array('g' => 'zjuhzv2_space.tb_group'), 'g.gid = e.gid', 
+							  array('gname'=>'g.name'));
+							  
 			$select->order('time DESC')->limit(20);
-
+			
+			//Zend_Debug::dump($select->__toString());
+			
 			return $select->query()->fetchAll();
 		}
 		
@@ -105,7 +112,6 @@
 				'gid' => $params['gid'],
 				'tid' => $params['tid'],
 				'key' => $params['key'],
-				'value' => $params['value'],
 				'time' => time()
 			));
 		}

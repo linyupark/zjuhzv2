@@ -5,7 +5,17 @@
 	 *
 	 */
 	class Space_Search_UserController extends Zend_Controller_Action 
-	{
+	{	
+		function init()
+		{
+			// 成员，权力成员，管理员才能搜索用户
+			$role = Cmd::role();
+			if($role != 'member' && $role != 'power' && $role != 'master')
+			{
+				$this->_redirect('/public/error/deny/?position=deny');
+			}
+		}
+		
 		function indexAction()
 		{
 			$params = $this->getRequest()->getParams();

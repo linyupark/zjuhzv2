@@ -35,8 +35,7 @@
 							'uid' => $params['uid'],
 							'gid' => $params['group'],
 							'tid' => $tid,
-							'key' => 'add_topic',
-							'time' => time()
+							'key' => 'add_topic'
 						));
 						echo Zend_Json::encode(array('result'=>'success', 'tid' => $tid));
 						exit();
@@ -60,9 +59,17 @@
 				$params = Filter_Space::news($params);
 				if(Alp_Sys::getMsg() == null)
 				{
+					$params['uid'] = Cmd::uid();
 					$tid = Logic_Space_Bar_News::insert($params);
 					if(Alp_Sys::getMsg() == null)
 					{
+						// 记录
+						Logic_Log::bar(array(
+							'uid' => $params['uid'],
+							'gid' => $params['group'],
+							'tid' => $tid,
+							'key' => 'add_news'
+						));
 						echo Zend_Json::encode(array('result'=>'success', 'tid' => $tid));
 						exit();
 					}
@@ -85,9 +92,17 @@
 				$params = Filter_Space::help($params);
 				if(Alp_Sys::getMsg() == null)
 				{
+					$params['uid'] = Cmd::uid();
 					$tid = Logic_Space_Bar_Help::insert($params);
 					if(Alp_Sys::getMsg() == null)
 					{
+						// 记录
+						Logic_Log::bar(array(
+							'uid' => $params['uid'],
+							'gid' => $params['group'],
+							'tid' => $tid,
+							'key' => 'add_help'
+						));
 						echo Zend_Json::encode(array('result'=>'success', 'tid' => $tid));
 						exit();
 					}
@@ -110,9 +125,17 @@
 				$params = Filter_Space::events($params);
 				if(Alp_Sys::getMsg() == null)
 				{
+					$params['uid'] = Cmd::uid();
 					$tid = Logic_Space_Bar_Events::insert($params);
 					if(Alp_Sys::getMsg() == null)
 					{
+						// 记录
+						Logic_Log::bar(array(
+							'uid' => $params['uid'],
+							'gid' => $params['group'],
+							'tid' => $tid,
+							'key' => 'add_events'
+						));
 						echo Zend_Json::encode(array('result'=>'success', 'tid' => $tid));
 						exit();
 					}
@@ -135,9 +158,17 @@
 				$params = Filter_Space::vote($params);
 				if(Alp_Sys::getMsg() == null)
 				{
+					$params['uid'] = Cmd::uid();
 					$tid = Logic_Space_Bar_Vote::insert($params);
 					if(Alp_Sys::getMsg() == null)
 					{
+						// 记录
+						Logic_Log::bar(array(
+							'uid' => $params['uid'],
+							'gid' => $params['group'],
+							'tid' => $tid,
+							'key' => 'add_vote'
+						));
 						echo Zend_Json::encode(array('result'=>'success', 'tid' => $tid));
 						exit();
 					}
@@ -160,9 +191,17 @@
 				$params = Filter_Space::photo($params);
 				if(Alp_Sys::getMsg() == null)
 				{
+					$params['uid'] = Cmd::uid();
 					$tid = Logic_Space_Bar_Photo::insert($params);
 					if(Alp_Sys::getMsg() == null)
 					{
+						// 记录
+						Logic_Log::bar(array(
+							'uid' => $params['uid'],
+							'gid' => $params['group'],
+							'tid' => $tid,
+							'key' => 'add_photo'
+						));
 						echo Zend_Json::encode(array('result'=>'success', 'tid' => $tid));
 						exit();
 					}
@@ -185,9 +224,17 @@
 				$params = Filter_Space::share($params);
 				if(Alp_Sys::getMsg() == null)
 				{
+					$params['uid'] = Cmd::uid();
 					$tid = Logic_Space_Bar_Share::insert($params);
 					if(Alp_Sys::getMsg() == null)
 					{
+						// 记录
+						Logic_Log::bar(array(
+							'uid' => $params['uid'],
+							'gid' => $params['group'],
+							'tid' => $tid,
+							'key' => 'add_share'
+						));
 						echo Zend_Json::encode(array('result'=>'success', 'tid' => $tid));
 						exit();
 					}

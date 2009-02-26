@@ -15,7 +15,7 @@
 	<div class="yui-u mgt10" style="width:79%;">
 		<b class="f14"><?= $this->profile['username'] ?></b>
 		<span class="ing mgl10">
-		<a href="javascript:ing()" style="color:#666">我正在<span id="iamdoing"></span>
+		<a href="javascript:ing()" style="color:#666"><span id="iamdoing"></span>
 			<img src="<?= Alp_Url::img('icon/mix/tool.gif') ?>" />
 		</a>
 		</span>
@@ -85,6 +85,7 @@
 	function ing()
 	{
 		$('.ing').toggle();
+		$('#ing_put').focus().select();
 	}
 
 	function slide(p)

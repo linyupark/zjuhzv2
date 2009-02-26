@@ -26,7 +26,7 @@
 		public static function onlinex()
 		{
 			$alive = self::alive();
-			$cache = Logic_Cache::factory('Core');
+			$cache = Logic_Cache::factory('Core', 60);
 			if(!$row = $cache->load('onlinex'))
 			{
 				$row = parent::getSqlite('online.s3db')->fetchRow('SELECT COUNT(`uid`) AS numrows FROM `ol` WHERE `time` > '.$alive);

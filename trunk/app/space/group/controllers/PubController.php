@@ -6,6 +6,16 @@
 	 */
 	class Space_Group_PubController extends Zend_Controller_Action 
 	{
+		function init()
+		{
+			// 成员，权力成员，管理员才能建立群组
+			$role = Cmd::role();
+			if($role != 'member' && $role != 'power' && $role != 'master')
+			{
+				$this->_redirect('/public/error/deny/?position=deny');
+			}
+		}
+		
 		/**
 		 * 创建导航页
 		 *
@@ -27,6 +37,7 @@
 		 */
 		function createAction()
 		{
+			$uid = Cmd::uid();
 			$params = $this->_getAllParams();
 			if($this->getRequest()->isXmlHttpRequest())
 			{
@@ -34,9 +45,16 @@
 				$params = Filter_Group::create($params);
 				if(Alp_Sys::getMsg() == null)
 				{
-					$gid = Logic_Space_Group::create($params, Cmd::uid());
+					$gid = Logic_Space_Group::create($params, $uid);
 					if(Alp_Sys::getMsg() == null)
 					{
+						// 记录
+						Logic_Log::group(array(
+							'uid' => $uid,
+							'gid' => $gid,
+							'tid' => 0,
+							'key' => 'add_group',
+						));
 						echo Zend_Json::encode(array('result'=>'success','gid'=>$gid));
 						exit();
 					}

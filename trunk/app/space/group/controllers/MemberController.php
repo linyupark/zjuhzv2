@@ -109,6 +109,12 @@
 				$gid = $this->_getParam('gid');
 				if(Logic_Space_Group_Member::isMemeber($gid, $uid) == false)
 				Logic_Space_Group_Member::crole($gid, $uid, 'member', time());
+				// 记录
+				Logic_Log::group(array(
+					'uid' => $uid,
+					'gid' => $gid,
+					'key' => 'join_group',
+				));
 				Logic_Space_Msg::group($uid, $myid, $gid, '已经批准你的申请，赶快去群组看看吧~');
 				echo 'success';
 			}
@@ -211,6 +217,12 @@
 				{
 					Logic_Space_Group_Member::join($gid, $uid);
 					Logic_Space_Group_Member::crole($gid, $uid, 'member', time());
+					// 记录
+					Logic_Log::group(array(
+						'uid' => $uid,
+						'gid' => $gid,
+						'key' => 'join_group',
+					));
 					echo '你成功加入该群';
 					echo Alp_Sys::jump('/space_group/home/?id='.$gid, 1);
 				}

@@ -73,7 +73,7 @@
 	</tr>
 	<tr>
 		<td class="txtr">婚姻：</td>
-		<td class="quiet"><?= ($this->profile['marriage'])?$this->profile['marriage']:'未填写' ?></td>
+		<td class="quiet"><?= ($this->profile['marriage'])?$this->marriage[$this->profile['marriage']]:'未填写' ?></td>
 		<td><?= $this->partial('privacy/select.phtml', 
 				array('name'=>'marriage', 'value'=>$this->access['marriage'])) ?></td>
 		<td><input id="home_marriage" type="checkbox" name="home[]" value="marriage" /></td>

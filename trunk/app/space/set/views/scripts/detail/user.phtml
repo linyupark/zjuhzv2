@@ -1,0 +1,180 @@
+<table style="margin-left:30px" width="90%">
+<tr>
+	<td width="40" valign="top">
+		<div class="head40">
+    	<a href="/space_home/?uid=<?= $this->uid ?>">
+    	<img id="h40" class="pd10" src="<?= Cmd::userhead($this->uid, 40, $this->data[0]['sex']) ?>" /></a>
+    	</div>
+    </td>
+	<td>
+		<?php 
+			$access = unserialize($this->data[0]['access']); 
+			$index = count($this->data);
+		?>
+		<table class="table-dashed" width="100%">
+			<tr>
+				<td colspan="2">
+					<a href="/space_home/?uid=<?= $this->uid ?>">返回TA的首页</a>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2"><b>基本信息：</b></td>
+			</tr>
+			<tr>
+				<td class="txtr quiet" width="80">姓名：</td>
+				<td><?= $this->data[0]['username']; ?></td>
+			</tr>
+			<?php if($access['nickname'] >= $this->rel): ?>
+			<tr>
+				<td class="txtr quiet">昵称：</td>
+				<td><?= $this->data[0]['nickname']?$this->data[0]['nickname']:'-'; ?></td>
+			</tr>
+			<?php endif; ?>
+			<tr>
+				<td class="txtr quiet">性别：</td>
+				<td><?= $this->data[0]['sex']; ?></td>
+			</tr>
+			<?php if($access['birth'] >= $this->rel): ?>
+			<tr>
+				<td class="txtr quiet">出生日期：</td>
+				<td>
+					<?= $this->data[0]['birthyear']?$this->data[0]['birthyear']:'----'; ?>
+					/
+					<?= $this->data[0]['birthmonth']?$this->data[0]['birthmonth']:'--'; ?>
+					/
+					<?= $this->data[0]['birthday']?$this->data[0]['birthday']:'--'; ?>
+				</td>
+			</tr>
+			<?php endif; ?>
+			<?php if($access['hometown'] >= $this->rel): ?>
+			<tr>
+				<td class="txtr quiet">家乡：</td>
+				<td><?= $this->data[0]['hometown']?$this->data[0]['hometown']:'-'; ?></td>
+			</tr>
+			<?php endif; ?>
+			<?php if($access['city'] >= $this->rel): ?>
+			<tr>
+				<td class="txtr quiet">现住地：</td>
+				<td><?= $this->data[0]['city']?$this->data[0]['city']:'-'; ?></td>
+			</tr>
+			<?php endif; ?>
+			<?php if($access['marriage'] >= $this->rel): ?>
+			<tr>
+				<td class="txtr quiet">婚姻：</td>
+				<td><?= $this->marriage[$this->data[0]['marriage']]; ?></td>
+			</tr>
+			<?php endif; ?>
+			<?php if($access['contact'] >= $this->rel): ?>
+			<tr>
+				<td colspan="2"><b>联系方式：</b></td>
+			</tr>
+			<tr>
+				<td class="txtr quiet">Email：</td>
+				<td><?= $this->data[0]['email']?$this->data[0]['email']:'-'; ?></td>
+			</tr>
+			<tr>
+				<td class="txtr quiet">QQ号：</td>
+				<td><?= $this->data[0]['qq']?$this->data[0]['qq']:'-'; ?></td>
+			</tr>
+			<tr>
+				<td class="txtr quiet">MSN：</td>
+				<td><?= $this->data[0]['msn']?$this->data[0]['msn']:'-'; ?></td>
+			</tr>
+			<tr>
+				<td class="txtr quiet">家庭住址：</td>
+				<td><?= $this->data[0]['address']?$this->data[0]['address']:'-'; ?></td>
+			</tr>
+			<tr>
+				<td class="txtr quiet">邮编：</td>
+				<td><?= $this->data[0]['zipcode']?$this->data[0]['zipcode']:'-'; ?></td>
+			</tr>
+			<tr>
+				<td class="txtr quiet">电话：</td>
+				<td><?= $this->data[0]['tel']?$this->data[0]['tel']:'-'; ?></td>
+			</tr>
+			<tr>
+				<td class="txtr quiet">手机：</td>
+				<td><?= $this->data[0]['mobile']?$this->data[0]['mobile']:'-'; ?></td>
+			</tr>
+			<?php endif; ?>
+			<?php if($access['edu'] >= $this->rel): ?>
+			<tr>
+				<td colspan="2"><b>教育情况：</b></td>
+			</tr>
+			<?php 
+				  if($this->data[0]['campus'] != null):
+				  for($edu_i = 0; $edu_i < $index; $edu_i ++): 
+				  if($this->data[$edu_i]['campus'] != $this->data[($edu_i-1)]['campus']): ?>
+			<tr>
+				<td class="txtr quiet"><?= $edu_i+1 ?>.</td>
+				<td>
+					<?= $this->data[$edu_i]['year'] ?>入学
+					<?= $this->data[$edu_i]['campus'] ?>
+					<?= $this->data[$edu_i]['class'] ?>
+				</td>
+			</tr>
+			<?php endif; endfor; else: ?>
+			<tr><td></td><td>未填写</td></tr>
+			<?php endif; ?>
+			<?php endif; ?>
+			<?php if($access['career'] >= $this->rel): ?>
+			<tr>
+				<td colspan="2"><b>工作信息：</b></td>
+			</tr>
+			<?php 
+				  if($this->data[0]['company'] != null):
+				  for($car_i = 0; $car_i < $index; $car_i ++): 
+				  if($this->data[$car_i]['company'] != $this->data[($car_i-1)]['company']): ?>
+			<tr>
+				<td class="txtr quiet"><?= $car_i+1 ?>.</td>
+				<td>
+					<?= $this->data[$car_i]['company'] ?> (<?= $this->data[$car_i]['department'] ?>)
+					<?= $this->data[$car_i]['job'] ?>
+					从<?= date('y/m', $this->data[$car_i]['start']) ?> - <?= ($this->data[$car_i]['end']==0)?'至今':date('y/m', $this->data[$car_i]['end']) ?>
+				</td>
+			</tr>
+			<?php endif; endfor; else: ?>
+			<tr><td></td><td>未填写</td></tr>
+			<?php endif; ?>
+			<?php endif; ?>
+			<?php if($access['intro'] >= $this->rel): ?>
+			<tr>
+				<td colspan="2"><b>个人介绍：</b></td>
+			</tr>
+			<tr>
+				<td class="txtr quiet">兴趣爱好：</td>
+				<td><?= $this->data[0]['interest']?$this->data[0]['interest']:'-'; ?></td>
+			</tr>
+			<tr>
+				<td class="txtr quiet">喜欢的书：</td>
+				<td><?= $this->data[0]['book']?$this->data[0]['book']:'-'; ?></td>
+			</tr>
+			<tr>
+				<td class="txtr quiet">喜欢的电影：</td>
+				<td><?= $this->data[0]['movie']?$this->data[0]['movie']:'-'; ?></td>
+			</tr>
+			<tr>
+				<td class="txtr quiet">喜欢的电视：</td>
+				<td><?= $this->data[0]['tv']?$this->data[0]['tv']:'-'; ?></td>
+			</tr>
+			<tr>
+				<td class="txtr quiet">偶像：</td>
+				<td><?= $this->data[0]['idol']?$this->data[0]['idol']:'-'; ?></td>
+			</tr>
+			<tr>
+				<td class="txtr quiet">座右铭：</td>
+				<td><?= $this->data[0]['motto']?$this->data[0]['motto']:'-'; ?></td>
+			</tr>
+			<tr>
+				<td class="txtr quiet">最近心愿：</td>
+				<td><?= $this->data[0]['wish']?$this->data[0]['wish']:'-'; ?></td>
+			</tr>
+			<tr>
+				<td class="txtr quiet">简介：</td>
+				<td><?= $this->data[0]['intro']?$this->data[0]['intro']:'-'; ?></td>
+			</tr>
+			<?php endif; ?>
+		</table>
+	</td>
+</tr>
+</table>

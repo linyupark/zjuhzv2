@@ -110,7 +110,7 @@
 			} catch (Exception $e){
 				
 				$db->rollback();
-				Alp_Sys::msg('exception', $e->getMessage());
+				Alp_Sys::msg('exception', '创建异常，可能该群组名已被使用，错误代码：'.$e->getMessage());
 			}
 			return false;
 		}

@@ -1,0 +1,48 @@
+<div class="yui-main">
+	<div class="yui-b">
+		<div class="mg5 section yui-g">
+			<div class="yui-u first">
+				<img class="vm mgr10" src="<?= Alp_Url::img('icon/1616/friend.gif') ?>" />
+				<b>
+					<a href="/space_home/?uid=<?= $this->user['uid'] ?>">
+					<?= $this->user['username'] ?>的好友</a>
+				</b>	
+			</div>
+			<div class="yui-u txtr"><a href="javascript:history.back()">返回上一页</a></div>
+		</div>
+		<table width="100%">
+		<?php if(count($this->friends) > 0) : foreach ($this->friends as $i => $r): ?>
+		<?php if($i%3 == 0): ?><tr><?php endif; ?>
+		<td width="33%">
+			<table class="table-dashed">
+				<tr>
+					<td width="50">
+						<div class="head40">
+							<a href="/space_home/?uid=<?= $r['friend'] ?>">
+					    	<img class="pd10" src="<?= Cmd::userhead($r['friend'], '40', $r['usex']) ?>" />
+					    	</a>
+					    </div>
+					</td>
+					<td>
+						<img class="online_state" src="<?= Alp_Url::img('icon/1616/offline.gif') ?>" rel="<?= $r['friend'] ?>" />
+						<a href="/space_home/?uid=<?= $r['friend'] ?>"><?= $r['uname'] ?></a>
+						<br />
+						<a href="/space_msg/pm/?uid=<?= $r['friend'] ?>" style="color:#999">短信</a>
+						<a href="javascript:add_friend(<?= $r['friend'] ?>)" style="color:#999">加为好友</a>
+					</td>
+				</tr>
+			</table>
+		</td>
+		<?php if($i%3 == 2): ?></tr><?php endif; ?>
+		<?php endforeach; endif; ?>
+		<tr>
+			<td class="quiet pdl10">&gt;&gt; 找到<?= $this->numrows ?>位好友</td>
+			<td width="33%">&nbsp;</td>
+			<td width="33%">&nbsp;</td>
+		</tr>
+	</table>
+	<div class="pg"><?= $this->pagination ?></div>
+	</div>
+</div>
+<?= $this->render('sidebar.phtml'); ?>
+<script>online_state();</script>

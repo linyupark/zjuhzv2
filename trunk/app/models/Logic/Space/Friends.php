@@ -24,7 +24,7 @@
 		 * @param unknown_type $sort
 		 * @return unknown
 		 */
-		public static function fetch($uid, $sort = 0)
+		public static function fetch($uid, $sort = 0, $limit = null)
 		{
 			$select = parent::Space()->select();
 			$select->from(array('f' => 'tb_friends'))
@@ -34,6 +34,7 @@
 			$select->where('f.sort = ?', $sort);
 			$select->joinLeft(array('u' => 'zjuhzv2_user.tb_base'), 'f.friend = u.uid', 
 							  array('uname' => 'u.username', 'usex' => 'u.sex'));
+			if(is_numeric($limit)) $select->limit($limit);
 			return $select->query()->fetchAll();
 		}
 		

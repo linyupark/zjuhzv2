@@ -1,0 +1,23 @@
+<div class="yui-main">
+	<div class="yui-b">
+		<div class="mg5 section yui-g">
+			<div class="yui-u first">
+				<img class="vm mgr10" src="<?= Alp_Url::img('icon/1616/profile.gif') ?>" />
+				<b><?php if($this->base['uid'] == Cmd::uid()){$action = 'my'; echo '我';}
+					else{$action = 'user'; echo $this->base['username'];}?>的个人资料</b>
+			</div>
+			<div class="yui-u txtr"><a href="javascript:history.back()">返回上一页</a></div>
+		</div>
+		<?= $this->action($action, 'detail', 'space_set'); ?>
+	</div>
+</div>
+<div class="yui-b">
+	<div class="greybox">
+		<div class="greybox-top"></div>
+		<?php if(Cmd::role() != 'guest') echo $this->action(Cmd::role(), 'modnav'); ?>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$('.yui-d3f').addClass('yui-t6')
+</script>

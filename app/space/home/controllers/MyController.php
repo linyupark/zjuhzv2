@@ -30,11 +30,14 @@
 		function indexAction()
 		{
 			$uid = Cmd::uid();
-			$this->view->profile = Cmd::getSess('profile');
 			$row = Logic_Space_Home::get('guests', $uid);
+			
+			$this->view->profile = Cmd::getSess('profile');
 			$this->view->guests = unserialize($row['guests']);
+			$this->view->friends = Logic_Space_Friends::fetch($uid,0,24);
 			$this->view->home = Logic_User_Privacy::getHome($uid);
 			$this->view->log = Logic_Log::home($uid);
+			$this->view->uid = $uid;
 			$this->view->event = Zend_Registry::get('config')->event_log->toArray();
 		}
 	}

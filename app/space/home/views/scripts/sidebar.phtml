@@ -16,6 +16,20 @@
 		<div class="quiet mg10">暂时还没有人来看过你哦</div>
 		<?php endif; ?>
 	<h3 class="section" style="clear:left;">好友列表</h3>
+		<?php if($this->friends): foreach($this->friends as $f): ?>
+		<table width="33%" class="fleft">
+			<tr><td>
+				<img class="online_state" src="<?= Alp_Url::img('icon/1616/offline.gif') ?>" rel="<?= $f['friend'] ?>" />
+				<a href="/space_home/?uid=<?= $f['friend'] ?>"><?= $f['uname'] ?></a>
+			</td></tr>
+		</table>
+		<?php endforeach; ?> 
+		<div class="txtr" style="clear:left;">
+			<a style="color:#666" href="/space_friends/from/?uid=<?= $this->uid ?>">&gt;&gt;所有好友</a>
+		</div>
+		<?php else: ?>
+		<div class="quiet mg10">此人暂时还没有加任何人为好友</div>
+		<?php endif; ?>
 </div>
 <script type="text/javascript">
 	$('.yui-d3f').addClass('yui-t6');

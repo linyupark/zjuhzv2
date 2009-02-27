@@ -36,28 +36,35 @@
 		{
 			$uid = $this->_getParam('uid');
 			$myid = Cmd::uid();
-			switch (Logic_Space_Friends::hasFriend($myid, $uid))
+			if($myid == $uid)
 			{
-				case 'wait' : // 已经申请加为好友，待批准
-					$this->render('wait');
-				break;
-				case 'pass' : // 已经是好友
-					$this->render('passed');
-				break;
-				case 'block' : // 是黑名单人员
-					Logic_Space_Friends::unblock($myid, $uid);
-					$this->render('unblock');
-				break;
-				default : // 进行申请成为好友处理
-					if(Logic_Space_Friends::hasFriend($uid, $myid) == 'block')
-					$this->render('deny');
-					else 
-					{
-						// 请求表单
-						$this->view->incept = Logic_User_Base::get($uid);
-						$this->render('form');
-					}
-				break;
+				$this->render('passed'); // 排除自己加自己
+			}
+			else
+			{
+				switch (Logic_Space_Friends::hasFriend($myid, $uid))
+				{
+					case 'wait' : // 已经申请加为好友，待批准
+						$this->render('wait');
+					break;
+					case 'pass' : // 已经是好友
+						$this->render('passed');
+					break;
+					case 'block' : // 是黑名单人员
+						Logic_Space_Friends::unblock($myid, $uid);
+						$this->render('unblock');
+					break;
+					default : // 进行申请成为好友处理
+						if(Logic_Space_Friends::hasFriend($uid, $myid) == 'block')
+						$this->render('deny');
+						else 
+						{
+							// 请求表单
+							$this->view->incept = Logic_User_Base::get($uid);
+							$this->render('form');
+						}
+					break;
+				}
 			}
 		}
 	}

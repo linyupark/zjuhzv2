@@ -12,10 +12,12 @@
 		{
 			$uid = $this->_getParam('uid');
 			$this->visitor($uid);
+			$row = Logic_Space_Home::get('guests', $uid);
+			
 			$this->view->profile = Logic_User_Base::get($uid);
 			$this->view->home = Logic_User_Privacy::getHome($uid);
-			$row = Logic_Space_Home::get('guests', $uid);
 			$this->view->guests = unserialize($row['guests']);
+			$this->view->friends = Logic_Space_Friends::fetch($uid,0,24);
 			$this->view->uid = $uid;
 			$this->view->log = Logic_Log::home($uid);
 			$this->view->event = Zend_Registry::get('config')->event_log->toArray();

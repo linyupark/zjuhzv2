@@ -31,6 +31,7 @@
 			$this->view->access = Logic_User_Privacy::getAccess(Cmd::uid());
 			$this->view->home = Logic_User_Privacy::getHome(Cmd::uid());
 			$this->view->profile = Cmd::getSess('profile');
+			$this->view->marriage = Zend_Registry::get('config')->marriage->v->toArray();
 		}
 	}
 

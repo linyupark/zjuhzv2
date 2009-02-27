@@ -10,7 +10,7 @@
 		 * 用户首页显示动态信息
 		 *
 		 */
-		public static function home($uid)
+		public static function home($uid, $limit = 20)
 		{
 			$select = parent::Log()->select();
 			$select->from(array('e' => 'tb_event'));
@@ -60,7 +60,7 @@
 			$select->joinLeft(array('g' => 'zjuhzv2_space.tb_group'), 'g.gid = e.gid', 
 							  array('gname'=>'g.name'));
 							  
-			$select->order('time DESC')->limit(20);
+			$select->order('time DESC')->limit($limit);
 			
 			//Zend_Debug::dump($select->__toString());
 			
@@ -110,7 +110,6 @@
 			parent::Log()->insert('tb_event', array(
 				'uid' => $params['uid'],
 				'gid' => $params['gid'],
-				'tid' => $params['tid'],
 				'key' => $params['key'],
 				'time' => time()
 			));

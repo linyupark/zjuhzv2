@@ -46,6 +46,20 @@
 					</div>
 				</div>
 				<div class="f14 pd10" style="line-height:150%;">
+					<table class="table-dashed">
+						<tr>
+							<td class="quiet">地点：</td>
+							<td><?= stripslashes($this->row['address']) ?></td>
+						</tr>
+						<tr>
+							<td class="quiet">时间：</td>
+							<td><?= date('Y-d-m H:i', $this->row['time']) ?></td>
+						</tr>
+						<tr>
+							<td class="quiet">人数：</td>
+							<td><?= $this->row['limit'] == null ? '无限制':$this->row['limit'] ?></td>
+						</tr>
+					</table>
 					<?= stripslashes($this->row['content']); ?>
 					<?= $this->action('sign', 'events', 'space_bar', array('row' => $this->row)); ?>
 				</div>

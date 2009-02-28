@@ -17,6 +17,22 @@
 		}
 		
 		/**
+		 * 导出excel
+		 *
+		 */
+		function xlsAction()
+		{
+			$tid = $this->_getParam('tid');
+			$row = Logic_Space_Bar_Events::view($tid);
+			$uid = Cmd::uid(); $role = Cmd::role();
+			$grole = '';
+			if($row[0]['group'] > 0)  $grole = Logic_Space_Group_Member::role($row[0]['group'],$uid);
+			// 判断是否有条件进行导出
+			if($role == 'master' || $row[0]['puber'] == $uid || $grole == 'creater' || $grole == 'manager')
+			$this->_forward('events','excel','api_export', array('tid'=>$tid));
+		}
+		
+		/**
 		 * 活动报名
 		 *
 		 */

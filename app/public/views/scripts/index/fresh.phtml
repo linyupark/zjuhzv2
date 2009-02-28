@@ -1,0 +1,12 @@
+<?= $this->headScript()->appendFile('/player/nip_common.js') ?>
+<div class="yui-g">
+	<div class="yui-u first" style="width:40%">
+		<script type=text/javascript>
+			xml_url = "/player/toppicxml.xml";
+			swf_obj('/player/focus_img.swf?xml_url='+xml_url,'265','250')
+		</script>
+	</div>
+	<div class="yui-u" style="width:57%">
+		<?= $this->action('news', 'index'); ?>
+	</div>
+</div>

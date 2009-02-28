@@ -21,7 +21,7 @@
             	Cmd::setSess('profile', $base);
             	Cmd::setSess('profile', $contact);
             	// 更新最后登陆时间
-            	$User->update('tb_base', array('lastlogin' => time()), 'uid = '.$uid);            	
+            	$User->update('tb_base', array('lastlogin' => time()), 'uid = '.$uid);      	
             	return true;
             }
             else return false;

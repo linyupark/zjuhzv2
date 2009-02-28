@@ -1,0 +1,43 @@
+<div class="pdlr10">
+	<b class="f14 mgl10">请登陆</b>
+	<hr class="dashed" />
+	<form method="post" id="fastlogin_form" onsubmit="return fastlogin()">
+	<table width="100%">
+		<tr>
+			<td class="txtr">帐号</td>
+			<td><input type="text" name="account" /></td>
+		</tr>
+		<tr>
+			<td class="txtr">密码</td>
+			<td><input type="password" name="password" /></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>
+				<input type="hidden" name="rememberme" value="0" />
+            	<input class="nob" name="rememberme" type="checkbox" id="flrememberme" value="1" />
+            	<label for="flrememberme">下次自动登录</label>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td class="a-span">
+				<input type="hidden" name="sid" value="<?= Zend_Session::getId() ?>" />
+                <input style="width:90px;" id="flsubmit" class="btn" type="submit" value="登录" />
+                <a href="">忘记密码？</a>
+			</td>
+		</tr>
+	</table>
+	</form>
+	<script type="text/javascript">
+		function fastlogin()
+		{
+			$('#flsubmit').val('登录中..').attr('disabled', true);
+			$.post('/public/login/dologin', $('#fastlogin_form').serializeArray(), function(data){
+				if(data.form_tip != 'success') { $('#flsubmit').val('登录失败').attr('disabled', false); }
+				else {  $('#flsubmit').val('登录成功'); location.href = '/space_home/'; }
+			}, 'json');
+			return false;
+		}
+	</script>
+</div>

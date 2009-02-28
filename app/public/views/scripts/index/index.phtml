@@ -1,13 +1,19 @@
 <div class="yui-main">
 	<div class="yui-b">
+	<?= Cmd::role() == 'guest' ? $this->render('index/start.phtml'):''; ?>
+	<?= $this->render('index/fresh.phtml'); ?>
 	</div>
 </div>
 <div class="yui-b">
 	<div class="greybox">
 		<div class="greybox-top"></div>
-		<?php if(Cmd::role() != 'guest') echo $this->action(Cmd::role(), 'modnav'); ?>
+		<?php 
+			if(Cmd::role() != 'guest') 
+			echo $this->action(Cmd::role(), 'modnav'); 
+			else 
+			echo $this->render('index/fastlogin.phtml');
+		?>
 	</div>
-	
 </div>
 
 <script type="text/javascript">

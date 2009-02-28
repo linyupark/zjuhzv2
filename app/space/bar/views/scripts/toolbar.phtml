@@ -21,7 +21,14 @@
 	<?php endif; ?>
 	<?php if($role == 'master' || $this->row['puber'] == $uid || $grole == 'creater' || $grole == 'manager'): ?>
 	<a href="javascript:edit_bar(<?= $this->row['tid'] ?>)"><img src="<?= Alp_Url::img('icon/mix/edit.gif'); ?>" />修改</a>
+	<!--
 	<a href="javascript:deny_bar(<?= $this->row['tid'] ?>)"><img src="<?= Alp_Url::img('icon/mix/lock.gif'); ?>" />屏蔽</a>
+	  -->
+		<?php if($this->row['type'] == 'events'): ?>
+		<a href="/space_bar/events/xls?tid=<?= $this->row['tid'] ?>">
+			<img src="<?= Alp_Url::img('icon/1616/xls.gif'); ?>" />人员名单
+		</a>
+		<?php endif; ?>
 	<?php endif; ?>
 	<!-- /通用按钮 -->
 </div>

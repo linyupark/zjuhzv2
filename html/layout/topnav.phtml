@@ -2,13 +2,10 @@
 	<?php if(Cmd::role() == 'guest'): ?>
 	<table width="100%">
     	<tr>
-    		<td class="txtl">
-    			<span style="color:#aaa">
-    				本站目标：成为校友沟通互助的平台和助手<br />
-    				本会宗旨：联络校友 帮助校友 回报母校 建设杭州
-    			</span>
-    		</td>
-    		<td class="pd10 txtr" valign="top">
+    		<td class="a-span5">
+    			<p class="mgb5 quiet" style="height:15px;">
+    				联络校友 . 团结互助 . 爱校荣校 . 建设杭州
+    			</p>
     			<?php if(isset($_COOKIE['zjuhz_remember'])):
     				$key = unserialize(stripslashes(Alp_String::decrypt($_COOKIE['zjuhz_remember'])));
     			?>
@@ -21,15 +18,19 @@
 				        	if(data.form_tip == 'success')
 				        	history.go(0);
 				        	else
-				        	$('#login_hook').html('密码失效，请<a href="/public/login">手动登录</a>');
+				        	$('#login_hook').html('密码失效，请手动登录');
 				        }
 				    );
     			</script>
     			<?php else: ?>
     			<a href="/public/login/"><img src="<?= Alp_Url::img('icon/1616/offline.gif') ?>" /> 登录</a>
     			<?php endif; ?>
-			    <a href="/public/login/findpsw"><img src="<?= Alp_Url::img('icon/1616/find_key.gif') ?>" /> 找密码</a>
 			    <a href="/public/reg/"><img src="<?= Alp_Url::img('icon/1616/new_key.gif') ?>" /> 注册</a>
+    		</td>
+    		<td width="10%">
+    			<div class="head40">
+    				<img id="h40" class="pd10" src="<?= Cmd::userhead(0, 40) ?>" />
+    			</div>
     		</td>
     	</tr>
     </table>

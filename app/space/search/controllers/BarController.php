@@ -12,7 +12,7 @@
 			$range = $this->_getParam('range', 'all'); // 查找范围
 			$key = trim(urldecode($params['key']));
 			$page = $this->_getParam('p', 1);
-			$pagesize = 20;
+			$pagesize = 10;
 			$select = DbModel::Space()->select();
 			$select->from(array('b'=>'tb_tbar'), 
 					array('numrows' => new Zend_Db_Expr('COUNT(b.tid)')))

@@ -1,0 +1,23 @@
+<?php  if(count($this->events) > 0):  ?>
+<table width="98%" class="table-dashed">
+<tr class="section">
+	<td class="a-span">
+		<b>近期可参加活动</b>
+	</td>
+	<td class="txtr"><a href="/space_bar/?type=events">&gt;&gt;更多</a></td>
+</tr>
+<?php foreach ($this->events as $i => $e): ?>
+<tr>
+	<td>
+		<img src="<?= Alp_Url::img('icon/num/gg'.($i+1).'.gif') ?>" />
+		<a href="/space_bar/events/view?tid=<?= $e['tid'] ?>">
+			<?= stripcslashes($e['title']) ?>
+		</a>
+	</td>
+	<td class="f9 quiet txtr" width="80" valign="top">
+		<?= date('y/m/d H:i', $e['starttime']) ?>
+	</td>
+</tr>
+<?php endforeach; ?>
+</table>
+<?php endif; ?>

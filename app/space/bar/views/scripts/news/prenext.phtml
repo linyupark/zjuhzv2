@@ -1,0 +1,18 @@
+<div class="yui-g">
+	<div class="yui-u first">
+		上一篇：
+		<?php if($this->pre != false): ?>
+		<a href="/public/news/view/id/<?= $this->pre['tid'] ?>"><?= stripslashes($this->pre['title']) ?></a>
+		<?php else: ?>
+		<span class="quiet">没有了</span>
+		<?php endif; ?>
+	</div>
+	<div class="yui-u txtr">
+		下一篇：
+		<?php if($this->next != false): ?>
+		<a href="/public/news/view/id/<?= $this->next['tid'] ?>"><?= stripslashes($this->next['title']) ?></a>
+		<?php else: ?>
+		<span class="quiet">没有了</span>
+		<?php endif; ?>
+	</div>
+</div>

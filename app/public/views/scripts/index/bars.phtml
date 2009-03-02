@@ -1,0 +1,21 @@
+<table width="98%" class="table-dashed">
+<tr class="section">
+	<td class="a-span">
+		<b>新帖动态</b>
+	</td>
+	<td class="txtr"><a href="/space_bar/">&gt;&gt;更多</a></td>
+</tr>
+<?php if(count($this->bars) > 0): foreach ($this->bars as $b): ?>
+<tr>
+	<td colspan="2">
+		<img class="vm" src="<?= Alp_Url::img('icon/1616/'.$this->icons[$b['type']]) ?>" />
+		<a href="/space_bar/<?= $b['type'] ?>/view?tid=<?= $b['tid'] ?>" 
+		title="<?= stripcslashes($b['title']) ?>">
+			<?= Alp_String::utfSubStr(stripcslashes($b['title']),39) ?>
+		</a>
+	</td>
+</tr>
+<?php endforeach; else: ?>
+<tr><td class="quiet" colspan="2">没找到相关的内容</td></tr>
+<?php endif; ?>
+</table>

@@ -2,7 +2,7 @@
 <tr class="section-u">
 	<td>跟
 	<?php foreach ($this->tags as $t): ?>
-	<a href=""><?= $t ?></a> 
+	<a href="/space_search/?for=bar&key=<?= urlencode($t) ?>&range=news"><?= $t ?></a> 
 	<?php endforeach; ?>
 	相关的新闻：</td>
 </tr>

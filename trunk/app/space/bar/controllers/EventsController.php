@@ -183,7 +183,7 @@
 			}
 
 			$row = $select->query()->fetchAll();
-			$select->reset(Zend_Db_Select::COLUMNS)->columns(array('bar.*','e.member'));
+			$select->reset(Zend_Db_Select::COLUMNS)->columns(array('bar.*','e.*'));
 			$pagesize = 10;
 			if($row[0]['numrows'] > $pagesize)
 			{

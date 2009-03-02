@@ -10,19 +10,20 @@
 		<div class="yui-g">
 			<div class="yui-u first" style="width:20%;">
 				<div class="head80">
-					<img style="margin:20px 0 0 20px" src="<?= Cmd::userhead($this->params['uid'], '80', Cmd::getSess('profile','sex')) ?>" />
+					<img style="margin:20px 0 0 20px" src="<?= Cmd::userhead($base['uid'], 80, $base['sex']) ?>" />
 				</div>
 				<div class="a-span" style="line-height:150%">
-					<a href="/sapce_set/detail/">详细资料</a>
-					<a href="javascript:friend_add(<?= $this->params['uid'] ?>)">加为好友</a>
+					<a href="/space_set/detail/?uid=<?= $base['uid'] ?>">详细资料</a>
+					<a href="javascript:friend_add(<?= $base['uid'] ?>)">加为好友</a>
 					<br />
-					<a href="/space_msg/pm/?uid=<?= $this->params['uid'] ?>">发送信息</a>
+					<a href="/space_msg/pm/?uid=<?= $base['uid'] ?>">发送信息</a>
 				</div>
 				<br /><br />
 			</div>
 			<div class="yui-u mgt10" style="width:79%;">
 				<div class="notice">
-					<h2>由于对方的隐私设置，你没有权限查看。</h2>
+					<h2><img class="vm" src="<?= Alp_Url::img('icon/cartoon/lock.gif') ?>" /> 
+					由于对方的隐私设置，你没有权限查看。</h2>
 				</div>
 			</div>
 		</div>

@@ -1,3 +1,19 @@
-<?php
-	Zend_Debug::dump($this->news);
-?>
+<table width="98%" class="table-dashed">
+<tr class="section">
+	<td class="a-span">
+		<b>新闻资讯</b>
+	</td>
+	<td class="txtr"><a href="/public/news/">&gt;&gt;更多</a></td>
+</tr>
+<?php if(count($this->news) > 0): foreach ($this->news as $n): ?>
+<tr>
+	<td colspan="2">
+		<a href="/public/news/sort/id/<?= $n['sort'] ?>" style="color:#666">[<?= $n['name'] ?>]</a>
+		<a href="/public/news/view/id/<?= $n['tid'] ?>" 
+			<?= $n['ding'] == 1 ? 'style="color:red"' : '' ?>>
+			<?= stripcslashes($n['title']) ?>
+		</a>
+	</td>
+</tr>
+<?php endforeach; endif; ?>
+</table>

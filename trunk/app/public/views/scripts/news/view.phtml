@@ -1,16 +1,16 @@
 <?php $this->headTitle(htmlspecialchars(stripcslashes($this->row['title']))); ?>
 <div class="yui-main">
 	<div class="mg5 section yui-g">
-		<div class="yui-u first" style="width:80%">
-			<img class="vm mgr10" src="<?= Alp_Url::img('icon/1616/talk.gif') ?>" /><b>新闻快递</b> 
-			:: <a href="/space_bar/?type=news&sort=<?= $this->row['sort'] ?>"><?= $this->row['sortname'] ?></a> / <?= stripcslashes($this->row['title']) ?>
+		<div class="yui-u first" style="width:70%">
+			<img class="vm mgr10" src="<?= Alp_Url::img('icon/1616/talk.gif') ?>" /><b>新闻资讯</b> 
+			:: <a href="/public/news/?sort=<?= $this->row['sort'] ?>"><?= $this->row['sortname'] ?></a> / <?= stripcslashes($this->row['title']) ?>
 		</div>
-		<div class="yui-u txtr a-span" style="width:20%">
+		<div class="yui-u txtr a-span" style="width:30%">
 			<a href="javascript:history.back()">返回上一页</a>
-			<a href="/space_bar/?type=news">返回新闻列表</a>
+			<a href="/public/news/">返回新闻资讯主页</a>
 		</div>
 	</div>
-	<?= $this->action('prenext', 'news', 'space_bar', array('id' => $this->row['tid'])); ?>
+	<?= $this->action('prenext', 'news', 'public', array('id' => $this->row['tid'])); ?>
 	<table width="100%">
 		<tr>
 			<td>
@@ -26,21 +26,21 @@
 					</div>
 					<div class="yui-u txtr" style="width:20%">
 						<?= Alp_Date::normal($this->row['pubtime']) ?> 
-						&nbsp;&nbsp;&nbsp;&nbsp;
-						楼主
 					</div>
 				</div>
 				<div class="f14 pd10" style="line-height:150%;">
 					<?= stripslashes($this->row['content']); ?>
 				</div>
-				<hr class ="dashed" />
-				<br />
-				<?= $this->action('prenext', 'news', 'space_bar', array('id' => $this->row['tid'])); ?>
-				<br />
-				<?= $this->action('relative','news','space_bar',array('tid'=>$this->row['tid'],'tags'=>unserialize($this->row['tags']))); ?>
-				<?= $this->render('toolbar.phtml'); ?>
 			</td>
 		</tr>
 	</table>
-	<?= $this->action('view', 'comment', 'space_bar') ?>
+	<hr class="dashed" />
+	<br />
+	<?= $this->action('prenext', 'news', 'public', array('id' => $this->row['tid'])); ?>
+	<br />
+	<div class="notice f14 a-span">
+		只有注册校友才能对新闻进行回复评论。
+		<a href="/space_bar/news/view?tid=<?= $this->row['tid'] ?>">立即登录</a>
+		<a href="/public/reg/">注册帐号</a>
+	</div>
 </div>

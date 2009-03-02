@@ -7,6 +7,23 @@
 	class Space_Bar_NewsController extends Zend_Controller_Action
 	{
 		/**
+		 * 上下文章
+		 *
+		 */
+		function prenextAction()
+		{
+			$tid = $this->_getParam('tid');
+			$this->view->pre = DbModel::Space()->fetchRow('
+				SELECT `title`,`tid` FROM `tb_tbar` 
+				WHERE `tid` < '.$tid.'
+				AND `type` = "news" ORDER BY `pubtime` DESC');
+			$this->view->next = DbModel::Space()->fetchRow('
+				SELECT `title`,`tid` FROM `tb_tbar` 
+				WHERE `tid` > '.$tid.'
+				AND `type` = "news" ORDER BY `pubtime` ASC');
+		}
+		
+		/**
 		 * 相关文章
 		 *
 		 */

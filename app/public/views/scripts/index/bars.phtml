@@ -1,12 +1,12 @@
-<table width="98%" class="table-dashed">
-<tr class="section">
+<table width="100%" class="table-dashed">
+<tr class="bcolor-z">
 	<td class="a-span">
 		<b>新帖动态</b>
 	</td>
 	<td class="txtr"><a href="/space_bar/">&gt;&gt;更多</a></td>
 </tr>
-<?php if(count($this->bars) > 0): foreach ($this->bars as $b): ?>
-<tr>
+<?php if(count($this->bars) > 0): foreach ($this->bars as $i => $b): ?>
+<tr <?= $i%2==1?'class="section-sub"':'' ?>>
 	<td colspan="2">
 		<img class="vm" src="<?= Alp_Url::img('icon/1616/'.$this->icons[$b['type']]) ?>" />
 		<a href="/space_bar/<?= $b['type'] ?>/view?tid=<?= $b['tid'] ?>" 

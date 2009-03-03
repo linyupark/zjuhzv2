@@ -142,7 +142,6 @@
 							  array('pubname' => 'username', 'pubnick' => 'nickname'));
 			$select->joinLeft(array('ruser' => 'zjuhzv2_user.tb_base'), 'ruser.uid = bar.replyer', 
 							  array('replyname' => 'username', 'replynick' => 'nickname'));
-			$select->reset(Zend_Db_Select::GROUP);
 			
 			$rows = $select->query()->fetchAll();
 			$this->view->rows = $rows;

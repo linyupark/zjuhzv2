@@ -26,7 +26,8 @@ hr.dashed{ height:1px; border:none; border-bottom:1px dashed #ccc; margin:5px; }
 .head40{ background:url(/im/v1/head_bg.gif) no-repeat; height:60px; width:60px; }
 .head80{ background:url(/im/v1/head_80_bg.gif) no-repeat; height:120px; width:120px; }
 
-.section{ padding:5px 8px; background:#E2DFF9; border:1px solid #BCB5F1; border-left:3px solid #BCB5F1; color:#336; margin:0 0 10px 0; }
+.section,.section-b{ padding:5px 8px; background:#E2DFF9; border:1px solid #BCB5F1; border-left:3px solid #BCB5F1; color:#336; margin:0 0 10px 0; }
+.section-b{ width:270px; margin-left:10px; padding:5px 0 5px 8px; }
 .valid_tip{ color:red; font-size:12px; }
 .section-sub{ background:#F3F3F3; padding:3px; }
 .section-u{ background:#F3F3F3; padding:5px 8px; border:1px solid #ccc; border-left:3px solid #ccc;margin:0 0 10px 0; color:#336; }
@@ -41,13 +42,17 @@ hr.dashed{ height:1px; border:none; border-bottom:1px dashed #ccc; margin:5px; }
 
 .cccborder{ border:1px solid #ccc; }
 
+.bcolor-z{ background:#E2DFF9; }
+.bcolor-g{ background:#F3F3F3; }
+.bcolor-w{ background:#fff; }
+
 /* pagination style */
 .pg{ text-align:center; clear:both; float:none; margin:10px; }
 .pg a{ background:#f5f5f5; padding:5px; margin-left:5px; }
 .pg b{ padding:5px; background:#666; color:#fff; margin-left:5px; }
 
 /* default layout style */
-.greybox{ color:#666; background:#eee url(/im/v1/grey-bottom.jpg) no-repeat bottom; width:270px; overflow:hidden; padding-bottom:20px; }
+.greybox{ color:#666; background:#eee url(/im/v1/grey-bottom.jpg) no-repeat bottom; width:270px; overflow:hidden; padding-bottom:10px; }
 .greybox-top{ background:url(/im/v1/grey-top.jpg) no-repeat; width:270px; height:12px; }
 .yui-b .greybox a{ color:#5D7115; }
 

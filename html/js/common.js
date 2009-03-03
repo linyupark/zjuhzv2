@@ -22,3 +22,7 @@ function friend_add(uid)
 		$.facebox(data);
 	});
 }
+function oplink()
+{
+	$('.oplink a').css('opacity',0.7).hover(function(){$(this).css('opacity',1);}).mouseout(function(){$('.oplink a').css('opacity',0.7);})
+}

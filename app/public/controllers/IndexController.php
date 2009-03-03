@@ -20,6 +20,20 @@
 			$this->view->of = $this->_getParam('of');
 		}
 		
+		function fastloginAction(){}
+		
+		/**
+		 * 群组首页展示
+		 *
+		 */
+		function groupAction()
+		{
+			$rows = DbModel::Space()->fetchAll('SELECT * FROM `tb_group`
+				WHERE `type` != "close" 
+				ORDER BY `point` DESC LIMIT 8');
+			$this->view->groups = $rows;
+		}
+		
 		/**
 		 * 近期活动
 		 *

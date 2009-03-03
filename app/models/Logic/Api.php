@@ -36,6 +36,16 @@
 		}
 		
 		/**
+		 * 注册总人数
+		 *
+		 */
+		public static function regnum()
+		{
+			$row = parent::User()->fetchRow('SELECT COUNT(`uid`) AS `numrows` FROM `tb_base`');
+			return $row['numrows'];
+		}
+		
+		/**
 		 * 返回指定uid的用户所有信息
 		 *
 		 * @param unknown_type $uid

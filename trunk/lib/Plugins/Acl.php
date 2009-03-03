@@ -20,6 +20,7 @@
             
             // 资源列表
             $acl->add(new Zend_Acl_Resource('public'));
+            $acl->add(new Zend_Acl_Resource('console'));
             $acl->add(new Zend_Acl_Resource('addon_vote'));
             $acl->add(new Zend_Acl_Resource('addon_partners'));
             $acl->add(new Zend_Acl_Resource('addon_console'));
@@ -40,6 +41,7 @@
             // 访问控制定义
             $acl->allow('guest', array('public','addon_vote','addon_partners','addon_console','addon_booking'));
             $acl->allow(array('bench','member'), null);
+            $acl->deny(array('member','bench','power','black'), 'console');
             $acl->allow('master', null);
             
             // 无权限转向

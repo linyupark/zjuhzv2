@@ -155,7 +155,6 @@
 							  array('replyname' => 'username', 'replynick' => 'nickname'));
 			$select->joinLeft(array('s' => 'zjuhzv2_space.tb_news_sort'), 'news.sort = s.sort',
 							  array('sortname' => 's.name', 'sid' => 's.sort'));
-			$select->reset(Zend_Db_Select::GROUP);
 							  
 			$rows = $select->query()->fetchAll();
 			$this->view->rows = $rows;

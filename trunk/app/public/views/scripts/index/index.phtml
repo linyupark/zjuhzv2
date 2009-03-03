@@ -1,11 +1,11 @@
 <div class="yui-main">
 	<div class="yui-b">
-	<?= Cmd::role() == 'guest' ? $this->render('index/start.phtml'):''; ?>
+	<?= Cmd::role() == 'guest' ? $this->render('index/start.phtml'):$this->render('index/welcome.phtml'); ?>
 	<?= $this->render('index/fresh.phtml'); ?>
 	</div>
 </div>
 <div class="yui-b">
-	<div class="greybox">
+	<div class="greybox mgl5">
 		<div class="greybox-top"></div>
 		<?php 
 			if(Cmd::role() != 'guest') 
@@ -15,7 +15,9 @@
 		?>
 	</div>
 	<br />
+	<div class="mgl5">
 	<?= $this->action('bars', 'index'); ?>
+	</div>
 </div>
 
 <script type="text/javascript">

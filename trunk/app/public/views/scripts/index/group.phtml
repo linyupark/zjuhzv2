@@ -1,0 +1,28 @@
+<?php if(count($this->groups) > 0):  ?>
+<table width="100%" class="table-dashed">
+<tr class="bcolor-z">
+	<td class="a-span" colspan="3">
+		<b>精彩群组</b>
+	</td>
+	<td class="txtr">
+		<a href="/space_group/?list=all">&gt;&gt;更多</a>
+	</td>
+</tr>
+<?php foreach ($this->groups as $i => $g): ?>
+<?php if($i%2 == 2): ?><tr><?php endif; ?>
+	<td width="40">
+		<div class="head40">
+			<a href="/space_group/home/?id=<?= $g['gid'] ?>">
+				<img class="mg10" src="<?= Cmd::groupicon($g['gid']) ?>" />
+			</a>
+		</div>
+	</td>
+	<td>
+		<b><a href="/space_group/home/?id=<?= $g['gid'] ?>"><?= stripslashes($g['name']) ?></a></b>
+		<br />
+		<p class="quiet"><?= $g['intro'] ?></p>
+	</td>
+<?php if($i%2 == 1): ?></tr><?php endif; ?>
+<?php endforeach; ?>
+</table>
+<?php endif; ?>

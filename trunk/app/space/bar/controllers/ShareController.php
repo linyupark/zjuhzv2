@@ -48,7 +48,7 @@
 			$page = $this->_getParam('p', 1); // 默认显示页
 			$select = DbModel::Space()->select()
 									  ->from(array('bar' => 'zjuhzv2_space.tb_tbar'))
-									  ->where('`group` = ?', 0);
+									  ->where('`group` = ?', 0)->group('bar.tid');
 			
 			$select->joinLeft(array('share' => 'zjuhzv2_space.tb_share'), 'bar.tid = share.tid');						  
 									  
@@ -139,7 +139,6 @@
 							  array('pubname' => 'username', 'pubnick' => 'nickname'));
 			$select->joinLeft(array('ruser' => 'zjuhzv2_user.tb_base'), 'ruser.uid = bar.replyer', 
 							  array('replyname' => 'username', 'replynick' => 'nickname'));
-			$select->reset(Zend_Db_Select::GROUP);
 			
 			$rows = $select->query()->fetchAll();
 			$this->view->rows = $rows;

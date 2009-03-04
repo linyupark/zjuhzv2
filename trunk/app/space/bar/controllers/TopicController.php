@@ -25,7 +25,7 @@
 			$page = $this->_getParam('p', 1); // 默认显示页
 			$select = DbModel::Space()->select()->from(array('bar' => 'zjuhzv2_space.tb_tbar'), 
 													   array('numrows' => new Zend_Db_Expr('COUNT(bar.tid)')))
-												->where('bar.group = ?', 0)
+												->where('bar.group = 0')->where('bar.deny = 0')
 												->order('ding DESC');
 			switch ($where)
 			{

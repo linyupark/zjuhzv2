@@ -31,8 +31,9 @@
     	 *
     	 * @return unknown
     	 */
-    	public static function rolename()
+    	public static function rolename($role = null)
     	{
+    		if($role == null)
     		$role = self::role();
     		return Zend_Registry::get('config')->user_role->$role;
     	}

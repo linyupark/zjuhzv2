@@ -8,6 +8,35 @@
 			<div class="yui-u txtr" style="width:20%"><a href="javascript:history.back()">返回上一页</a></div>
 		</div>
 		<?= $this->render('user/range.phtml') ?>
+		<table width="100%" class="table-dashed">
+			<tr class="bcolor-g">
+				<td class="quiet">找到<?= $this->numrows ?>人</td>
+				<td></td>
+				<td></td>
+			</tr>
+			<?php if(count($this->rows)): foreach($this->rows as $i => $r): ?>
+			<tr <?= ($i%2 == 1)? 'class="bcolor-g"':'' ?>>
+				<td width="80">
+					<img height="20" src="<?= Cmd::userhead($r['uid'], 40, $r['sex']) ?>" />
+					<a class="f14" href="/space_home/?uid=<?= $r['uid'] ?>"><?= $r['username'] ?></a>
+				</td>
+				<td>
+					<a style="color:#666" href="javascript:detail(<?= $r['uid'] ?>)">[资料]</a>
+					<a style="color:#666" target="_blank" href="/space_msg/pm/?uid=<?= $r['uid'] ?>">[信]</a>
+				</td>
+				<td width="70%" class="a-span" id="toolbar_<?= $r['uid'] ?>">
+					<?= $this->action('toolbar', 'user', 'console', array('row' => $r)); ?>
+				</td>
+			</tr>
+			<?php endforeach; endif; ?>
+		</table>
+		<div class="pg"><?= $this->pagination ?></div>
 	</div>
 </div>
 <?= $this->render('sidebar.phtml') ?>
+
+<script type="text/javascript">
+function detail(uid) {$.post('/console/user/detail', {uid:uid}, function(data){ $.facebox(data); })}
+function crole(uid,role) { $.post('/console/user/crole', {uid:uid,role:role}, function(data){ $('#toolbar_'+uid).html(data);});}
+function initpsw(uid){ $.post('/console/user/initpsw', {uid:uid}, function(data){ $.facebox(data); }); }
+</script>

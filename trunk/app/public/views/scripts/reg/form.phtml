@@ -43,9 +43,9 @@
         </tr>
         <tr>
             <td>
-                <label for="option1"><input type="radio" name="sex" id="option1" value="男" checked="checked" /> <b>男</b></label>
+                <label for="option1"><input class="nob" type="radio" name="sex" id="option1" value="男" checked="checked" /> <b>男</b></label>
                 <br />
-                <label for="option2"><input type="radio" name="sex" id="option2" value="女" /> <b>女</b></label>
+                <label for="option2"><input class="nob" type="radio" name="sex" id="option2" value="女" /> <b>女</b></label>
             </td>
             <td>
                 <input type="hidden" name="sid" value="<?= Zend_Session::getId() ?>" />
@@ -61,12 +61,6 @@
 </form>
 
 <script type="text/javascript">
-$(document).ready(function(){
-$.NiceJForms.build({
-		imagesPath:"/cs/nicejform/images/default/"
-	})
-});
-
 function reg_form()
 {
     $('.valid_tip').empty();

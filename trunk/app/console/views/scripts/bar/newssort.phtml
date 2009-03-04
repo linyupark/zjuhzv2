@@ -1,0 +1,67 @@
+<table width="100%" class="mgt10 table-dashed">
+	<tr class="bcolor-g">
+		<td width="120">类名</td>
+		<td>该类下帖数</td>
+		<td></td>
+	</tr>
+	<?php if(count($this->sorts) > 0): foreach ($this->sorts as $s): ?>
+	<tr>
+		<td><input type="text" name="sname" value="<?= $s['name'] ?>" /></td>
+		<td><?= $s['rate'] ?>篇</td>
+		<td class="a-span5">
+			<a href="javascript:mname(<?= $s['sort'] ?>)">改名</a>
+			<?php if($s['rate'] > 0): ?>
+			<a href="javascript:mvbar(<?= $s['sort'] ?>)">转移</a>
+			<?php endif; ?>
+			<a href="javascript:dsort(<?= $s['sort'] ?>)">删除</a>
+		</td>
+	</tr>
+	<?php endforeach; else: ?>
+	<tr>
+		<td class="quiet" colspan="3">还没有建立任何新闻归类</td>
+	</tr>
+	<?php endif; ?>
+	<tr>
+		<td colspan="3">
+			<select name="sort" id="news_sorts"></select>
+			<input id="new_sort" type="text" name="sortname" value="" />
+			<input onclick="create_sort()" type="button" value="创建" class="btn" />
+		</td>
+	</tr>
+</table>
+</div>
+</div>
+<?= $this->render('sidebar.phtml') ?>
+
+<script type="text/javascript">
+	function mname(sid)
+	{
+		
+	}
+
+	function create_sort()
+	{
+		var v = $('#new_sort').val();
+		$('.btn[type=button]').attr('disabled', true).val('创建中...');
+		$.post(
+			'/space_bar/news/create_sort',
+			{sortname:v},
+			function(data)
+			{
+				if(data == 'success')
+				{
+					$('#news_sorts').load('/space_bar/news/sorts');
+					$('.btn[type=button]').attr('disabled', false).val('创建成功');
+					history.go(0);
+				}
+				else 
+				{
+					alert(data);
+					$('.btn[type=button]').attr('disabled', false).val('创建');
+				}
+				
+			}
+		);
+	}
+	$('#news_sorts').load('/space_bar/news/sorts');
+</script>

@@ -1,22 +1,22 @@
-<form class="txtr">
-<input type="text" name="key" />
-<input class="btn" type="submit" value="搜索" />
-</form>
-<div class="yui-g mg10">
-	<div class="yui-u first" style="width:35%">
-		<span class="quiet">找到<?= $this->numrows ?>个相关用户</span>
-	</div>
-	<div class="yui-u txtr a-span" style="width:65%">
+<form class="a-span">
+<div class="yui-g">
+	<div class="yui-u first pdl5" style="width:60%">
 		范围:
 		<?php 
-			$r = $this->range; $k = urlencode($this->key); $a = $this->attr;
+			$r = $this->range; $k = urlencode($this->key); 
 			$on = 'style="text-decoration:underline;color:#333"'; 
 		?>
-		<a href="/console/user/?key=<?= $k ?>&attr=<?= $a ?>&range=all" <?= ($r == 'all')?$on:'' ?>>全部</a>
-		<a href="/console/user/?key=<?= $k ?>&attr=<?= $a ?>&range=black" <?= ($r == 'black')?$on:'' ?>>被冻结</a>
-		<a href="/console/user/?key=<?= $k ?>&attr=<?= $a ?>&range=bench" <?= ($r == 'online')?$on:'' ?>>待审核</a>
-		<a href="/console/user/?key=<?= $k ?>&attr=<?= $a ?>&range=member" <?= ($r == 'friend')?$on:'' ?>>校友</a>
-		<a href="/console/user/?key=<?= $k ?>&attr=<?= $a ?>&range=power" <?= ($r == 'power')?$on:'' ?>>校友会成员</a>
-		<a href="/console/user/?key=<?= $k ?>&attr=<?= $a ?>&range=master" <?= ($r == 'master')?$on:'' ?>>管理员</a>
+		<a href="/console/user/?key=<?= $k ?>&range=all" <?= ($r == 'all')?$on:'' ?>>全部</a>
+		<a href="/console/user/?key=<?= $k ?>&range=black" <?= ($r == 'black')?$on:'' ?>>被冻结</a>
+		<a href="/console/user/?key=<?= $k ?>&range=bench" <?= ($r == 'bench')?$on:'' ?>>待审核</a>
+		<a href="/console/user/?key=<?= $k ?>&range=member" <?= ($r == 'member')?$on:'' ?>>校友</a>
+		<a href="/console/user/?key=<?= $k ?>&range=power" <?= ($r == 'power')?$on:'' ?>>校友会成员</a>
+		<a href="/console/user/?key=<?= $k ?>&range=master" <?= ($r == 'master')?$on:'' ?>>管理员</a>
+	</div>
+	<div class="yui-u a-span txtr" style="width:35%">
+		<input type="hidden" name="range" value="<?= $r ?>" />
+		<input onclick="this.focus();this.select()" type="text" name="key" value="<?= urldecode($k) ?>" />
+		<input class="btn" type="submit" value="搜索" />
 	</div>
 </div>
+</form>

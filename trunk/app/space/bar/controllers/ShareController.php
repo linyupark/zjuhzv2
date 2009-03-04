@@ -48,7 +48,8 @@
 			$page = $this->_getParam('p', 1); // 默认显示页
 			$select = DbModel::Space()->select()
 									  ->from(array('bar' => 'zjuhzv2_space.tb_tbar'))
-									  ->where('`group` = ?', 0)->group('bar.tid');
+									  ->where('bar.group = 0')->where('bar.deny = 0')
+									  ->order('bar.ding DESC')->group('bar.tid');
 			
 			$select->joinLeft(array('share' => 'zjuhzv2_space.tb_share'), 'bar.tid = share.tid');						  
 									  

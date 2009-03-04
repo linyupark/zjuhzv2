@@ -7,6 +7,17 @@
 	class Logic_User_Base extends DbModel
 	{
 		/**
+		 * 改变用户身份
+		 *
+		 * @param unknown_type $uid
+		 * @param unknown_type $role
+		 */
+		static function crole($uid, $role)
+		{
+			parent::User()->update('tb_base', array('role' => $role), 'uid = '.$uid);
+		}
+		
+		/**
 		 * 根据用户名获取其id
 		 *
 		 * @param unknown_type $uname

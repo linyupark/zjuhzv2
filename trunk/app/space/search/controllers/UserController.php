@@ -59,6 +59,12 @@
 				 $select->where('ub.uid IN ('.substr($in,0,-1).')');
 			}
 			
+			// 只找管理员
+			if($range == 'master')
+			{
+				$select->where('ub.role = ?', 'master');
+			}
+			
 			// 搜索属性
 			switch ($attr)
 			{
@@ -90,7 +96,7 @@
 			{
 				Alp_Page::$pagesize = $pagesize;
 				Alp_Page::create(array(
-					'href_open' => '<a href="">',
+					'href_open' => '<a href="/space_search/?for=user&range='.$range.'&key='.urlencode($key).'&attr='.$attr.'&p=%d">',
 					'href_close' => '</a>',
 					'num_rows' => $numrows,
 					'cur_page' => $page

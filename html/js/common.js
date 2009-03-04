@@ -2,7 +2,6 @@ document.write("<script type=\"text/javascript\" src=\"/js/jq/jquery.js\"></scri
 document.write("<script type=\"text/javascript\" src=\"/js/jq/facebox.js\"></script>");
 //document.write("<script type=\"text/javascript\" src=\"/js/jq/jquery.fmsg.js\"></script>");
 //document.write("<script type=\"text/javascript\" src=\"/js/jq/jquery.hint.js\"></script>");
-document.write("<script type=\"text/javascript\" src=\"/js/jq/nicejforms.js\"></script>");
 function check_msgbox()
 {
 	$.getJSON('/api_json/msg/check',function(data){

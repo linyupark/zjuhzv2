@@ -1,0 +1,27 @@
+<form class="mgt10 a-span5">
+<div class="yui-g">
+	<div class="yui-u first pdl5" style="width:65%">
+		范围:
+		<?php 
+			$r = $this->range; $k = urlencode($this->key); 
+			$on = 'style="text-decoration:underline;color:#333"'; 
+		?>
+		<a href="/console/bar/?key=<?= $k ?>&range=all" <?= ($r == 'all')?$on:'' ?>>全部</a>
+		<a href="/console/bar/?key=<?= $k ?>&range=topic" <?= ($r == 'topic')?$on:'' ?>>话题</a>
+		<a href="/console/bar/?key=<?= $k ?>&range=news" <?= ($r == 'news')?$on:'' ?>>新闻</a>
+		<a href="/console/bar/?key=<?= $k ?>&range=events" <?= ($r == 'events')?$on:'' ?>>活动</a>
+		<a href="/console/bar/?key=<?= $k ?>&range=help" <?= ($r == 'help')?$on:'' ?>>互助</a>
+		<a href="/console/bar/?key=<?= $k ?>&range=vote" <?= ($r == 'vote')?$on:'' ?>>投票</a>
+		<a href="/console/bar/?key=<?= $k ?>&range=photo" <?= ($r == 'photo')?$on:'' ?>>图片</a>
+		<a href="/console/bar/?key=<?= $k ?>&range=share" <?= ($r == 'share')?$on:'' ?>>共享</a>
+		<a href="/console/bar/?key=<?= $k ?>&range=group" <?= ($r == 'group')?$on:'' ?>>群组帖</a>
+		<a href="/console/bar/?key=<?= $k ?>&range=ding" <?= ($r == 'ding')?$on:'' ?>>顶置</a>
+		<a href="/console/bar/?key=<?= $k ?>&range=deny" <?= ($r == 'deny')?$on:'' ?>>屏蔽</a>
+	</div>
+	<div class="yui-u a-span txtr" style="width:33%">
+		<input type="hidden" name="range" value="<?= $r ?>" />
+		<input onclick="this.focus();this.select()" type="text" name="key" value="<?= urldecode($k) ?>" />
+		<input class="btn" type="submit" value="搜索" />
+	</div>
+</div>
+</form>

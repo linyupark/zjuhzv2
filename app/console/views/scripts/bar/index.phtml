@@ -1,0 +1,11 @@
+<div class="yui-main">
+	<div class="yui-b">
+		<div class="mg5 section yui-g">
+			<div class="yui-u first" style="width:80%">
+				<img class="vm mgr10" src="<?= Alp_Url::img('icon/1616/f_doc.gif') ?>" />
+				<b>帖子管理</b>
+			</div>
+			<div class="yui-u txtr" style="width:20%"><a href="javascript:history.back()">返回上一页</a></div>
+		</div>
+		<?= $this->render('bar/tab.phtml'); ?>
+		<?= $this->action($this->tab, 'bar', 'console'); ?>

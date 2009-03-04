@@ -45,7 +45,8 @@
 			$page = $this->_getParam('p', 1); // 默认显示页
 			$select = DbModel::Space()->select()
 									  ->from(array('bar' => 'zjuhzv2_space.tb_tbar'))
-									  ->where('bar.group = ?', 0)->group('bar.tid');
+									  ->where('bar.group = 0')->where('bar.deny = 0')
+									  ->order('bar.ding DESC')->group('bar.tid');
 			
 			$select->joinLeft(array('help' => 'zjuhzv2_space.tb_help'), 'bar.tid = help.tid');
 			
@@ -203,6 +204,10 @@
 			$this->getHelper('viewRenderer')->setNoRender();
 			if($this->getRequest()->isXmlHttpRequest())
 			{
+				$role = Cmd::role();
+				if($role != 'master' && $role != 'power')
+				Alp_Sys::msg('deny', '您目前所在用户组无法创建新分类，如有需要请通过：'."\n".
+					'"全站搜索"=>"校友"=>"范围:管理员"使用站内信联系管理员');
 				$sortname = Filter_Space::helpSort($this->_getParam('sortname'));
 				if(Alp_Sys::getMsg() == null)
 				{

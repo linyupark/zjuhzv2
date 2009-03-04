@@ -1,0 +1,21 @@
+<form id="init_form" method="post">
+	<table>
+	<tr>
+		<td><h3>初始化密码：</h3></td>
+	</tr>
+	<tr>
+		<td>
+			<input type="hidden" name="uid" value="<?= $this->uid ?>" />
+			<input type="text" name="psw" />
+			<input type="button" class="btn" value="确定" onclick="doinit()" />
+		</td>
+	</tr>
+	</table>
+</form>
+<script>
+	function doinit()
+	{
+		$.post('/console/user/initpsw', $('#init_form').serializeArray(), 
+		function(data){ if(data == 'success') $.facebox.close(); else alert(data); });
+	}
+</script>

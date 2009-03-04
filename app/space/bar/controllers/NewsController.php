@@ -59,8 +59,8 @@
 			$select = DbModel::Space()->select()
 									  ->from(array('bar' => 'zjuhzv2_space.tb_tbar'), 
 											 array('numrows' => new Zend_Db_Expr('COUNT(bar.tid)')))
-									  ->where('bar.group = ?', 0)
-									  ->order('ding DESC')->group('bar.tid');
+									  ->where('bar.group = 0')->where('bar.deny = 0')
+									  ->order('bar.ding DESC')->group('bar.tid');
 			
 			$select->joinLeft(array('news' => 'zjuhzv2_space.tb_news'), 'bar.tid = news.tid');
 			
@@ -211,6 +211,10 @@
 			$this->getHelper('viewRenderer')->setNoRender();
 			if($this->getRequest()->isXmlHttpRequest())
 			{
+				$role = Cmd::role();
+				if($role != 'master' && $role != 'power')
+				Alp_Sys::msg('deny', '您目前所在用户组无法创建新分类，如有需要请通过：'."\n".
+					'"全站搜索"=>"校友"=>"范围:管理员"使用站内信联系管理员');
 				$sortname = Filter_Space::newsSort($this->_getParam('sortname'));
 				if(Alp_Sys::getMsg() == null)
 				{

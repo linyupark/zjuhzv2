@@ -91,7 +91,8 @@
 			$select = DbModel::Space()->select()
 									  ->from(array('bar' => 'zjuhzv2_space.tb_tbar'), 
 											 array('numrows' => new Zend_Db_Expr('COUNT(bar.tid)')))
-									  ->where('`group` = ?', 0)->group('bar.tid');
+									  ->where('bar.group = 0')->where('bar.deny = 0')
+									  ->order('bar.ding DESC')->group('bar.tid');
 									  
 			$select->joinLeft(array('vote' => 'zjuhzv2_space.tb_vote'), 'bar.tid = vote.tid');						  
 			

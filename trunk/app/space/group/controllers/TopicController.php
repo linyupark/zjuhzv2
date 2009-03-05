@@ -39,22 +39,27 @@
 			$group = Logic_Space_Group::info($gid);
 			if(Logic_Space_Group::isAllowedVisit($gid, $uid))
 			{	
-				$this->view->icons = Zend_Registry::get('config')->bar_icon->toArray();
-				$this->view->group = $group;
-				
+				$range = $this->_getParam('range', 'all');
 				$where = $this->_getParam('where', 'all');
 				$order = $this->_getParam('order', 'time');
 				$page = $this->_getParam('p', 1); // 默认显示页
-				$select = DbModel::Space()->select()->from(array('bar' => 'zjuhzv2_space.tb_tbar'))
-													->where('`group` = ?', $gid)
+				$select = DbModel::Space()->select()->from(array('bar' => 'tb_tbar'), 
+													   array('numrows' => new Zend_Db_Expr('COUNT(bar.tid)')))
+													->where('bar.group = ?', $gid)->where('bar.deny = 0')
 													->order('ding DESC');
+				// 范围
+				if($range != 'all')
+				{
+					$select->where('bar.type = ?', $range);
+				}
+													
 				switch ($where)
 				{
 					case 'pub' : // 我发布的帖子
-						$select->where('puber = ?', Cmd::uid());
+						$select->where('puber = ?', $uid);
 					break;
 					case 'join' : // 我参与的帖
-						$row = Logic_Space_Bar::getJoin(Cmd::uid());
+						$row = Logic_Space_Bar::getJoin($uid);
 						if($row != false)
 						{
 							$tid_arr = unserialize($row['tid']);
@@ -118,27 +123,33 @@
 						$select->order('bar.rate DESC');
 					break;
 				}
+				$row = $select->query()->fetchAll();
+				$select->reset(Zend_Db_Select::COLUMNS)->columns('*');
+				
 				$select->joinLeft(array('puser' => 'zjuhzv2_user.tb_base'), 'puser.uid = bar.puber', 
 								  array('pubname' => 'username', 'pubnick' => 'nickname'));
 				$select->joinLeft(array('ruser' => 'zjuhzv2_user.tb_base'), 'ruser.uid = bar.replyer', 
 								  array('replyname' => 'username', 'replynick' => 'nickname'));
-				$rows = $select->query()->fetchAll();
+				
 				$pagesize = Alp_Page::$pagesize = 20;
-				if(count($rows) > $pagesize)
+				$numrows = $row[0]['numrows'];
+				if($numrows > $pagesize)
 				{
 					Alp_Page::create(array(
 						'href_open' => '<a href="?type=topic&order='.$order.'&where='.$where.'&p=%d">',
 						'href_close' => '</a>',
-						'num_rows' => count($rows),
+						'num_rows' => $numrows,
 						'cur_page' => $page
 					));
 					$select->limit($pagesize, Alp_Page::$offset);
-					$rows = $select->query()->fetchAll();
 					$this->view->pagination = Alp_Page::$page_str;
 				}
-				$this->view->rows = $rows;
+				$this->view->rows = $select->query()->fetchAll();
 				$this->view->where = $where;
 				$this->view->order = $order;
+				$this->view->range = $range;
+				$this->view->icons = Zend_Registry::get('config')->bar_icon->toArray();
+				$this->view->group = $group;
 			}
 			else $this->_forward('deny', 'error', 'public', 
 				array('position'=>'space_group_home','group'=>$group));

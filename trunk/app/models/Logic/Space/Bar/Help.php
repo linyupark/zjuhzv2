@@ -3,6 +3,34 @@
 	class Logic_Space_Bar_Help extends DbModel
 	{
 		/**
+		 * 转移求助分类
+		 *
+		 * @param unknown_type $sid
+		 * @param unknown_type $tsid
+		 */
+		public static function mv($sid, $tsid)
+		{
+			$db = parent::Space();
+			$sbar = $db->fetchAll('SELECT `tid` FROM `tb_help` WHERE `sort` = ?', $sid);
+			$db->beginTransaction();
+			try{
+				foreach ($sbar as $b)
+				{
+					$db->update('tb_help', array('sort' => $tsid), 'tid = '.$b['tid']);
+				}
+				// 被转移的分类rate回归0,目标分类加rate
+				$db->update('tb_help_sort', array('rate' => 0), 'sort = '.$sid);
+				$db->update('tb_help_sort', array('rate' => new Zend_Db_Expr('rate + '.count($sbar))), 'sort = '.$tsid);
+				$db->commit();
+				
+			} catch (Exception $e) {
+				
+				$db->rollback();
+				Alp_Sys::msg('exception', $e->getMessage());
+			}
+		}
+		
+		/**
 		 * 更新备注
 		 *
 		 */

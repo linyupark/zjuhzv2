@@ -7,7 +7,7 @@
 	<?php if(count($this->sorts) > 0): foreach ($this->sorts as $s): ?>
 	<tr>
 		<td><input id="sort_<?= $s['sort'] ?>" type="text" name="sname" value="<?= $s['name'] ?>" /></td>
-		<td><a target="_blank" href="/space_bar/?sort=<?= $s['sort'] ?>&type=news"><?= $s['rate'] ?>篇</a></td>
+		<td><a target="_blank" href="/space_bar/?sort=<?= $s['sort'] ?>&type=help"><?= $s['rate'] ?>篇</a></td>
 		<td class="a-span5">
 			<a href="javascript:mname(<?= $s['sort'] ?>)">改名</a>
 			<?php if($s['rate'] > 0): ?>
@@ -19,13 +19,13 @@
 	</tr>
 	<?php endforeach; else: ?>
 	<tr>
-		<td class="quiet" colspan="3">还没有建立任何新闻归类</td>
+		<td class="quiet" colspan="3">还没有建立任何求助归类</td>
 	</tr>
 	<?php endif; ?>
 	<tr>
 		<td colspan="3">
-			<select name="sort" id="news_sorts"></select>
-			<input id="new_sort" type="text" name="sortname" value="" />
+			<select name="sort" id="help_sorts"></select>
+			<input id="help_sort" type="text" name="sortname" value="" />
 			<input onclick="create_sort()" type="button" value="创建" class="btn" />
 		</td>
 	</tr>
@@ -37,7 +37,7 @@
 <script type="text/javascript">
 	function mvbar(sid)
 	{
-		$.post('/console/bar/mvbar?for=news', {sid:sid}, function(data){
+		$.post('/console/bar/mvbar?for=help', {sid:sid}, function(data){
 			$.facebox(data);
 		});
 	}
@@ -45,26 +45,25 @@
 	function mname(sid)
 	{
 		var sortname = $('#sort_'+sid).val();
-		$.post('/console/bar/mname?for=news', {sid:sid,sortname:sortname}, function(data){
-			if(data == 'success')  { alert('修改成功'); history.go(0); }
+		$.post('/console/bar/mname?for=help', {sid:sid,sortname:sortname}, function(data){
+			if(data == 'success') { alert('修改成功'); history.go(0); }
 			else alert(data);
 		});
 	}
 
 	function create_sort()
 	{
-		var v = $('#new_sort').val();
+		var v = $('#help_sort').val();
 		$('.btn[type=button]').attr('disabled', true).val('创建中...');
 		$.post(
-			'/space_bar/news/create_sort',
+			'/space_bar/help/create_sort',
 			{sortname:v},
 			function(data)
 			{
 				if(data == 'success')
 				{
-					$('#news_sorts').load('/space_bar/news/sorts');
+					$('#help_sorts').load('/space_bar/help/sorts');
 					$('.btn[type=button]').attr('disabled', false).val('创建成功');
-					history.go(0);
 				}
 				else 
 				{
@@ -75,5 +74,5 @@
 			}
 		);
 	}
-	$('#news_sorts').load('/space_bar/news/sorts');
+	$('#help_sorts').load('/space_bar/help/sorts');
 </script>

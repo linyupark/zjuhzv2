@@ -1,0 +1,85 @@
+<form class="mgt10 a-span5">
+<div class="yui-g">
+	<div class="yui-u first pdl5" style="width:65%">
+		范围:
+		<?php 
+			$r = $this->range; $k = urlencode($this->key); $gid = $this->gid;
+			$on = 'style="text-decoration:underline;color:#333"'; 
+		?>
+		<a href="/space_group/manage/?type=bar&id=<?= $gid ?>&key=<?= $k ?>&range=all" <?= ($r == 'all')?$on:'' ?>>全部</a>
+		<a href="/space_group/manage/?type=bar&id=<?= $gid ?>&key=<?= $k ?>&range=topic" <?= ($r == 'topic')?$on:'' ?>>话题</a>
+		<a href="/space_group/manage/?type=bar&id=<?= $gid ?>&key=<?= $k ?>&range=events" <?= ($r == 'events')?$on:'' ?>>活动</a>
+		<a href="/space_group/manage/?type=bar&id=<?= $gid ?>&key=<?= $k ?>&range=vote" <?= ($r == 'vote')?$on:'' ?>>投票</a>
+		<a href="/space_group/manage/?type=bar&id=<?= $gid ?>&key=<?= $k ?>&range=photo" <?= ($r == 'photo')?$on:'' ?>>图片</a>
+		<a href="/space_group/manage/?type=bar&id=<?= $gid ?>&key=<?= $k ?>&range=share" <?= ($r == 'share')?$on:'' ?>>共享</a>
+		<a href="/space_group/manage/?type=bar&id=<?= $gid ?>&key=<?= $k ?>&range=ding" <?= ($r == 'ding')?$on:'' ?>>顶置</a>
+		<a href="/space_group/manage/?type=bar&id=<?= $gid ?>&key=<?= $k ?>&range=deny" <?= ($r == 'deny')?$on:'' ?>>屏蔽</a>
+	</div>
+	<div class="yui-u a-span txtr" style="width:33%">
+		<input type="hidden" name="range" value="<?= $r ?>" />
+		<input type="hidden" name="type" value="bar" />
+		<input type="hidden" name="id" value="<?= $gid ?>" />
+		<input onclick="this.focus();this.select()" type="text" name="key" value="<?= urldecode($k) ?>" />
+		<input class="btn" type="submit" value="搜索" />
+	</div>
+</div>
+</form>
+<table width="100%" class="table-dashed">
+	<tr class="bcolor-g">
+		<td class="quiet">找到<?= $this->numrows ?>条记录</td>
+		<td></td>
+	</tr>
+	<?php if(count($this->rows)): foreach($this->rows as $i => $r): ?>
+	<tr <?= $i%2==1?'class="bcolor-g"':'' ?>>
+		<td>
+			<img src="<?= Alp_Url::img('icon/1616/'.$this->icons[$r['type']]) ?>" />
+			<a <?= $r['ding'] == 1?'style="color:red"':'' ?> target="_blank" href="/space_bar/<?= $r['type'] ?>/view?tid=<?= $r['tid'] ?>">
+				<?= stripslashes($r['title']); ?>
+			</a>
+		</td>
+		<td id="bar_<?= $r['tid'] ?>" class="a-span5" width="150">
+			<a target="_blank" href="/space_bar/mod/<?= $r['type'] ?>?tid=<?= $r['tid'] ?>&gp=<?= $r['group'] ?>">编辑</a>
+			<?php if($r['ding'] == 1): ?>
+			<a href="javascript:unding(<?= $r['tid'] ?>)">取消顶置</a>
+			<?php else: ?>
+			<a href="javascript:ding(<?= $r['tid'] ?>)">顶置</a>
+			<?php endif; if($r['deny'] == 1): ?>
+			<a href="javascript:undeny(<?= $r['tid'] ?>)">取消屏蔽</a>
+			<?php else: ?>
+			<a href="javascript:deny(<?= $r['tid'] ?>)">屏蔽</a>
+			<?php endif; ?>
+		</td>
+	</tr>
+	<?php endforeach; endif; ?>
+</table>
+<div class="pg"><?= $this->pagination ?></div>
+<script type="text/javascript">
+function ding(tid){ 
+	$.post('/space_group/manage/barcmd?cmd=ding&tid='+tid, function(data){
+		if(data == 'success')
+		{ $('#bar_'+tid+' a:contains("顶置")').text('取消顶置').attr('href', 'javascript:unding('+tid+')'); }
+		else alert(data);
+	}); 
+}
+function unding(tid){ 
+	$.post('/space_group/manage/barcmd?cmd=unding&tid='+tid, function(data){
+		if(data == 'success')
+		{ $('#bar_'+tid+' a:contains("取消顶置")').text('顶置').attr('href', 'javascript:ding('+tid+')'); }
+		else alert(data);
+	}); 
+}
+function deny(tid){ 
+	$.post('/space_group/manage/barcmd?cmd=deny&tid='+tid, function(data){
+		if(data == 'success')
+		{ $('#bar_'+tid+' a:contains("屏蔽")').text('取消屏蔽').attr('href', 'javascript:undeny('+tid+')'); }
+		else alert(data);
+	}); 
+}
+function undeny(tid){ 
+	$.post('/space_group/manage/barcmd?cmd=undeny&tid='+tid, function(data){
+		if(data == 'success')
+		{ $('#bar_'+tid+' a:contains("取消屏蔽")').text('屏蔽').attr('href', 'javascript:deny('+tid+')'); }
+		else alert(data);
+	}); 
+}
+</script>

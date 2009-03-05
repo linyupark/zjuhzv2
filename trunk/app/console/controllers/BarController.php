@@ -7,6 +7,107 @@
 	class Console_BarController extends Zend_Controller_Action
 	{
 		/**
+		 * 转移帖子
+		 *
+		 */
+		function mvbarAction()
+		{
+			$type = $this->_getParam('for');
+			if($type == 'news')
+			$sorts = Logic_Space_Bar_News::getSorts();
+			if($type == 'help')
+			$sorts = Logic_Space_Bar_Help::getSorts();
+			
+			$target = $this->_getParam('tsid');
+			$sid = $this->_getParam('sid');
+			
+			//  把当前要转移的分类过滤掉
+			if(count($sorts) > 0)
+			{
+				foreach ($sorts as $i => $s)
+				{
+					if($s['sort'] == $sid)
+					{
+						$this->view->sname = $s['name'];
+						unset($sorts[$i]);
+					}
+				}
+			}
+			
+			if($target != null) // 具体转移操作
+			{
+				$this->getHelper('viewRenderer')->setNoRender();
+				if($type == 'news')
+				Logic_Space_Bar_News::mv($sid, $target);
+				if($type == 'help')
+				Logic_Space_Bar_Help::mv($sid, $target);
+				if(Alp_Sys::getMsg() == null)
+				echo 'success';
+				else echo Alp_Sys::msg('exception');
+			}
+			else
+			{
+				$this->view->sorts = $sorts;
+				$this->view->sid = $sid;
+				$this->view->for = $type;
+			}
+		}
+		
+		/**
+		 * 改发布时间
+		 *
+		 */
+		function mtimeAction()
+		{
+			$this->getHelper('viewRenderer')->setNoRender();
+			$pubtime = $this->_getParam('pubtime');
+			$tid = $this->_getParam('tid');
+			$time = strtotime($pubtime);
+			if($time != false)
+			{
+				DbModel::Space()->update('tb_tbar', 
+				array('pubtime' => $time), 
+				'tid = '.$tid);
+				echo '修改成功';
+			}
+			else echo '时间格式错误';
+		}
+		
+		/**
+		 * 修改类名
+		 *
+		 */
+		function mnameAction()
+		{
+			$this->getHelper('viewRenderer')->setNoRender();
+			$type = $this->_getParam('for');
+			$sid = $this->_getParam('sid');
+			$sortname = $this->_getParam('sortname');
+			if($type == 'news')
+			Filter_Space::newsSort($sortname);
+			if($type == 'help')
+			Filter_Space::helpSort($sortname);
+			if(Alp_Sys::getMsg() == null)
+			{
+				DbModel::Space()->update('tb_'.$type.'_sort', 
+				array('name' => trim($sortname)), 
+				'sort = '.$sid);
+				echo 'success';
+			}
+			else echo Alp_Sys::allMsg('* ', "\n");
+		}
+		
+		/**
+		 * 求助归类管理
+		 *
+		 */
+		function helpsortAction()
+		{
+			$sorts = Logic_Space_Bar_Help::getSorts();
+			$this->view->sorts = $sorts;
+		}
+		
+		/**
 		 * 帖子归类管理
 		 *
 		 */
@@ -26,27 +127,8 @@
 			$this->getHelper('viewRenderer')->setNoRender();
 			$type = $this->_getParam('t');
 			$tid = $this->_getParam('tid');
-			try {
-				switch ($type)
-				{
-					case 'ding' : 
-						DbModel::Space()->update('tb_tbar', array('ding' => 1), 'tid = '.$tid);
-					break;
-					case 'unding' : 
-						DbModel::Space()->update('tb_tbar', array('ding' => 0), 'tid = '.$tid);
-					break;
-					case 'deny' : 
-						DbModel::Space()->update('tb_tbar', array('deny' => 1), 'tid = '.$tid);
-					break;
-					case 'undeny' : 
-						DbModel::Space()->update('tb_tbar', array('deny' => 0), 'tid = '.$tid);
-					break;
-				}
-				echo 'success';
-				
-			} catch (Exception $e) {
-				echo $e->getMessage();
-			}
+			Logic_Api::barcmd($tid, $type);
+			if(Alp_Sys::getMsg() == null){ echo 'success'; }
 			endif;
 		}
 		

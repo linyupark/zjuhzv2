@@ -12,7 +12,7 @@
 		<?= $this->render('tab.phtml'); ?>
 		<br />
 		<div class="mglr10 yui-g a-span">
-			<div class="yui-u first" style="width:75%">
+			<div class="yui-u first">
 			<form method="get" id="tab_form">
 			筛选：
 				<select name="where" onchange="$('#tab_form').submit();">
@@ -29,7 +29,21 @@
 					<option value="rate" <?= ($this->order == 'rate') ? 'selected="selected"':'' ?>>被顶数</option>
 				</select>
 				<input type="hidden" name="id" value="<?= $this->gid ?>" />
+				<input type="hidden" name="range" value="<?= $this->range ?>" />
 			</form>
+			</div>
+			<div class="yui-u txtr">
+				范围:
+					<?php 
+						$r = $this->range; $w = $this->where; $o = $this->order; $id = $this->gid;
+						$on = 'style="text-decoration:underline;color:#333"'; 
+					?>
+					<a href="/space_group/topic/?id=<?= $id ?>&where=<?= $w ?>&order=<?= $o ?>&range=all" <?= ($r == 'all')?$on:'' ?>>全部</a>
+					<a href="/space_group/topic/?id=<?= $id ?>&where=<?= $w ?>&order=<?= $o ?>&range=topic" <?= ($r == 'topic')?$on:'' ?>>话题</a>
+					<a href="/space_group/topic/?id=<?= $id ?>&where=<?= $w ?>&order=<?= $o ?>&range=events" <?= ($r == 'events')?$on:'' ?>>活动</a>
+					<a href="/space_group/topic/?id=<?= $id ?>&where=<?= $w ?>&order=<?= $o ?>&range=vote" <?= ($r == 'vote')?$on:'' ?>>投票</a>
+					<a href="/space_group/topic/?id=<?= $id ?>&where=<?= $w ?>&order=<?= $o ?>&range=photo" <?= ($r == 'photo')?$on:'' ?>>图片</a>
+					<a href="/space_group/topic/?id=<?= $id ?>&where=<?= $w ?>&order=<?= $o ?>&range=share" <?= ($r == 'share')?$on:'' ?>>共享</a>
 			</div>
 		</div>
 		<table class="table-dashed mg5" width="98%">

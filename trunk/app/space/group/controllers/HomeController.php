@@ -41,7 +41,7 @@
 			
 			$gid = $this->view->gid;
 			$select = DbModel::Space()->select()->from(array('bar' => 'zjuhzv2_space.tb_tbar'))
-												->where('`group` = ?', $gid)
+												->where('bar.group = ?', $gid)->where('bar.deny = 0')
 												->order('ding DESC')->order('bar.replytime DESC');
 			$select->joinLeft(array('puser' => 'zjuhzv2_user.tb_base'), 'puser.uid = bar.puber', 
 							  array('pubname' => 'username', 'pubnick' => 'nickname'));

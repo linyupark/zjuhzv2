@@ -14,8 +14,8 @@
 					</a>
 				</td>
 				<td class="txtl" width="110">
-					<input onclick="this.focus();this.select()" type="text" class="f9" value="<?= date('y/m/d H:i', $r['pubtime']) ?>" size="12" />
-					<a href="">改</a>
+					<input id="ptime_<?= $r['tid'] ?>" type="text" class="f9" value="<?= date('y-m-d H:i', $r['pubtime']) ?>" size="12" />
+					<a href="javascript:ptime(<?= $r['tid'] ?>)">改</a>
 				</td>
 				<td id="bar_<?= $r['tid'] ?>" class="a-span5" width="150">
 					<?php if($r['type'] != 'help'): ?>
@@ -39,6 +39,12 @@
 <?= $this->render('sidebar.phtml') ?>
 
 <script type="text/javascript">
+function ptime(tid){
+	var v = $('#ptime_'+tid).val();
+	$.post('/console/bar/mtime', {pubtime:v,tid:tid}, function(data){
+		alert(data);
+	});
+}
 function ding(tid){ 
 	$.post('/console/bar/update?t=ding&tid='+tid, function(data){
 		if(data == 'success')

@@ -1,0 +1,31 @@
+<form id="mvbar_form" method="post">
+	<table>
+	<tr>
+		<td><h3>将“<?= $this->sname ?>”下的帖子转移到：</h3></td>
+	</tr>
+	<tr>
+		<td>
+			<?php if(count($this->sorts) > 0): ?>
+			<select id="tsid" name="tsid">
+				<?php foreach ($this->sorts as $s): ?>
+				<option value="<?= $s['sort'] ?>"><?= stripslashes($s['name']) ?></option>
+				<?php endforeach; ?>
+			</select>
+			<input type="button" class="btn" value="确定" onclick="domv()" />
+			<input type="hidden" name="sid" value="<?= $this->sid ?>" />
+			<?php else: ?>
+			<span class="quiet">没有可转移的分类</span>
+			<?php endif; ?>
+		</td>
+	</tr>
+	</table>
+</form>
+<script>
+	function domv()
+	{
+		$.post('/console/bar/mvbar?for=<?= $this->for ?>', $('#mvbar_form').serializeArray(), function(data){
+			if(data == 'success') history.go(0);
+			else alert(data);
+		});
+	}
+</script>

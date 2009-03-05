@@ -60,8 +60,8 @@
 		{
 			$params = $this->getRequest()->getParams();
 			$range = $params['range'] ? $params['range'] : 'bench';
-			$key = trim($params['key']);
-			$pagesize = 20;
+			$key = trim(urldecode($params['key']));
+			$pagesize = 10;
 			$page = $params['p'] ? $params['p'] : 1;
 			
 			$select = DbModel::User()->select();
@@ -98,7 +98,7 @@
 			{
 				Alp_Page::$pagesize = $pagesize;
 				Alp_Page::create(array(
-					'href_open' => '<a href="/console/user/?range='.$range.'&key='.urlencode($key).'&p=%d">',
+					'href_open' => '<a href="/console/user/?range='.$range.'&key='.$key.'&p=%d">',
 					'href_close' => '</a>',
 					'num_rows' => $numrows,
 					'cur_page' => $page

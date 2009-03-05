@@ -43,7 +43,7 @@
 			$params = $this->getRequest()->getParams();
 			$gid = $params['id'];
 			$range = $params['range'] ? $params['range'] : 'all';
-			$key = trim($params['key']);
+			$key = trim(urldecode($params['key']));
 			$page = $this->_getParam('p', 1);
 			$pagesize = 10;
 			$select = DbModel::Space()->select();
@@ -71,7 +71,7 @@
 			{
 				Alp_Page::$pagesize = $pagesize;
 				Alp_Page::create(array(
-					'href_open' => '<a href="/space_group/manage/?id='.$gid.'&range='.$range.'&key='.urlencode($key).'&p=%d">',
+					'href_open' => '<a href="/space_group/manage/?id='.$gid.'&range='.$range.'&key='.$key.'&p=%d">',
 					'href_close' => '</a>',
 					'num_rows' => $numrows,
 					'cur_page' => $page

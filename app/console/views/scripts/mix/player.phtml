@@ -1,0 +1,14 @@
+<div class="mg10 memo">
+举例：<br />
+	<?= htmlspecialchars('
+		<?xml version="1.0" encoding="gbk"?>
+		<banner_swf>
+		<fixedbn img="透明图片" alpha_num="0"></fixedbn>
+		<banner img="图片地址" bnurl="点后的连接" bntarget="_blank" bntitle="标题"></banner>
+		</banner_swf>'
+	); ?>
+</div>
+<form class="pd10" method="post">
+	<textarea name="xml" style="width:95%;height:200px;background:#ffc"><?= $this->xml; ?></textarea>
+	<div class="pd10 txtc"><input type="submit" value="保存修改" class="btn"></div>
+</form>

@@ -24,12 +24,13 @@
 			$range = $this->_getParam('range', 'all'); // 查找范围
 			$key = trim(urldecode($params['key']));
 			$page = $this->_getParam('p', 1);
-			$pagesize = 20;
+			$pagesize = 9;
 			$uid = Cmd::uid();
 			
 			$select = DbModel::User()->select();
 			$select->from(array('ub'=>'tb_base'), 
-					          array('numrows' => new Zend_Db_Expr('COUNT(ub.uid)')));
+					          array('numrows' => new Zend_Db_Expr('COUNT(ub.uid)')))
+					          ->order('ub.uid DESC');
 			
 			// 好友范围
 			if($range == 'friend')
@@ -96,7 +97,7 @@
 			{
 				Alp_Page::$pagesize = $pagesize;
 				Alp_Page::create(array(
-					'href_open' => '<a href="/space_search/?for=user&range='.$range.'&key='.urlencode($key).'&attr='.$attr.'&p=%d">',
+					'href_open' => '<a href="/space_search/?for=user&range='.$range.'&key='.$key.'&attr='.$attr.'&p=%d">',
 					'href_close' => '</a>',
 					'num_rows' => $numrows,
 					'cur_page' => $page

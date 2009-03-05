@@ -23,6 +23,75 @@
 			$this->view->type = $this->_getParam('type', 'basic');
 		}
 		
+		function barcmdAction()
+		{
+			if($this->getRequest()->isXmlHttpRequest()):
+			$this->getHelper('viewRenderer')->setNoRender();
+			$cmd = $this->_getParam('cmd');
+			$tid = $this->_getParam('tid');
+			Logic_Api::barcmd($tid, $cmd);
+			if(Alp_Sys::getMsg() == null){ echo 'success'; }
+			endif;
+		}
+		
+		/**
+		 * 帖子管理
+		 *
+		 */
+		function barAction()
+		{
+			$params = $this->getRequest()->getParams();
+			$gid = $params['id'];
+			$range = $params['range'] ? $params['range'] : 'all';
+			$key = trim($params['key']);
+			$page = $this->_getParam('p', 1);
+			$pagesize = 10;
+			$select = DbModel::Space()->select();
+			$select->from(array('b'=>'tb_tbar'), array('numrows' => new Zend_Db_Expr('COUNT(b.tid)')))
+				   ->where('b.group = ?', $gid);
+			
+			// 帖子显示范围
+			if($range != 'all' && $range != 'deny' && $range != 'ding')
+			$select->where('b.type = ?', $range);
+			if($range == 'ding') $select->where('b.ding = 1');
+			if($range == 'deny') $select->where('b.deny = 1');
+			if($range != 'deny') $select->where('b.deny = 0');
+			
+			// 如果有模糊查询
+			if(!empty($key))
+			{
+				$select->where('b.title LIKE "%'.$key.'%"');
+			}
+			
+			$row = $select->query()->fetchAll();
+			$numrows = $row[0]['numrows'];
+			$select->reset(Zend_Db_Select::COLUMNS)->columns('*');
+			
+			if($numrows > $pagesize)
+			{
+				Alp_Page::$pagesize = $pagesize;
+				Alp_Page::create(array(
+					'href_open' => '<a href="/space_group/manage/?id='.$gid.'&range='.$range.'&key='.urlencode($key).'&p=%d">',
+					'href_close' => '</a>',
+					'num_rows' => $numrows,
+					'cur_page' => $page
+				));
+				$select->limit($pagesize, Alp_Page::$offset);
+				$this->view->pagination = Alp_Page::$page_str;
+			}
+			
+			$select->joinLeft(array('g' => 'tb_group'), 'g.gid = b.group', 
+							  array('gname' => 'g.name', 'gtype' => 'g.type'));
+							  
+			$select->order('b.ding DESC')->order('b.pubtime DESC');
+			
+			$this->view->numrows = $numrows;
+			$this->view->range = $range;
+			$this->view->key = $key;
+			$this->view->rows = $select->query()->fetchAll();
+			$this->view->icons = Zend_Registry::get('config')->bar_icon->toArray();
+		}
+		
 		/**
 		 * 群成员管理
 		 *

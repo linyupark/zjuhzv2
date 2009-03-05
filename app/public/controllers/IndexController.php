@@ -11,6 +11,74 @@
 			$this->view->icons = Zend_Registry::get('config')->bar_icon->toArray();
 		}
 		
+		function v1tov2Action()
+		{
+			set_time_limit(99999999);
+			$this->getHelper('viewRenderer')->setNoRender();
+			/*
+			$v2db = DbModel::User();
+			$v1users = Cmdv1::alluser();
+			
+			foreach ($v1users as $u)
+			{
+				if(Logic_User_Reg::isRegistered('email', $u['eMail'])) continue;
+				$role = $u['point'] == 0 ? 'bench' : 'member';
+				$regtime = strtotime($u['regTime']);
+				$bday = ''; $byear = ''; $bmon = '';
+				if($u['point'] == null) $u['point'] = 0;
+				if($u['birthday'] != null) // 处理生日
+				{
+					$time = strtotime($u['birthday']);
+					$byear = date('y', $time);
+					$bmon = date('m', $time);
+					$bday = date('d', $time);
+				}
+				// 基础数据
+				$v2db->insert('tb_base', 
+					array(
+						'uid' => $u['userid'],
+						'account'=>$u['username'],
+						'password'=>$u['password'],
+						'username'=>$u['realName'],
+						'sex' => $u['sex'],
+						'birthyear' => $byear,
+						'birthmonth' => $bmon,
+						'birthday' => $bday,
+						'hometown' => $u['hometown_c'],
+						'city' => $u['location_c'],
+						'regtime' => $regtime,
+						'role' => $role,
+						'point' => $u['point']
+					)
+				);
+				// 不许空邮箱地址
+				if($u['eMail'] == null) $u['eMail'] = $u['username'].'@163.com';
+				$v2db->insert('tb_contact', 
+					array(
+						'uid' => $u['userid'],
+						'email' => $u['eMail'],
+						'mobile' => $u['mobile'],
+						'qq' => $u['qq'],
+						'msn' => $u['msn'],
+						'address' => $u['address'],
+						'zipcode' => $u['postcode'],
+						'tel' => $u['phone']
+					)
+				);
+				if($u['point'] > 0)
+				$v2db->insert('zjuhzv2_log.tb_point', 
+					array(
+						'uid' => $u['userid'],
+						'memo' => '热心度系统数据迁移累计加分，如需要回溯加分详情可咨询校友会',
+						'time' => time(),
+						'handler' => 0
+					)
+				);
+			}
+			//Zend_Debug::dump($v1users);
+			echo 'done';*/
+		}
+		
 		function indexAction()
 		{
 		}

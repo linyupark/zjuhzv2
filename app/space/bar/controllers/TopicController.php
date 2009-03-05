@@ -23,7 +23,7 @@
 			$where = $this->_getParam('where', 'all');
 			$order = $this->view->order;
 			$page = $this->_getParam('p', 1); // 默认显示页
-			$select = DbModel::Space()->select()->from(array('bar' => 'zjuhzv2_space.tb_tbar'), 
+			$select = DbModel::Space()->select()->from(array('bar' => 'tb_tbar'), 
 													   array('numrows' => new Zend_Db_Expr('COUNT(bar.tid)')))
 												->where('bar.group = 0')->where('bar.deny = 0')
 												->order('ding DESC');
@@ -33,22 +33,17 @@
 					$select->where('puber = ?', $myid);
 				break;
 				case 'join' : // 我参与的帖
-					$row = DbModel::Space()->fetchRow('SELECT * FROM `tb_tjoin` WHERE `uid` = ?', $myid);
+					$row = Logic_Space_Bar::getJoin($myid);
 					if($row != false)
 					{
-						$tid_arr = array();
-						foreach ($row as $r)
-						{
-							if(unserialize($r)) $tid_arr[] = unserialize($r);
-						}
-						
+						$tid_arr = unserialize($row['tid']);
 						if(count($tid_arr) > 0)
 						{
 							$i = 0;
-							foreach ($tid_arr as $v)
+							foreach ($tid_arr as $tid => $time)
 							{
-								if($i == 0) $select->where('bar.tid = ?', array_keys($v));
-								else $select->orWhere('bar.tid = ?',  array_keys($v));
+								if($i == 0) $select->where('bar.tid = ?', $tid);
+								else $select->orWhere('bar.tid = ?', $tid);
 								$i++;
 							}
 						}

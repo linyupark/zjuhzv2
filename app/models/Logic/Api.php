@@ -36,6 +36,40 @@
 		}
 		
 		/**
+		 * 帖子的一些公用命令
+		 *
+		 * @param unknown_type $tid
+		 * @param unknown_type $cmd
+		 * @return unknown
+		 */
+		public static function barcmd($tid, $cmd)
+		{
+			$db = DbModel::Space();
+			try {
+				switch ($cmd)
+				{
+					case 'ding' : 
+						$db->update('tb_tbar', array('ding' => 1), 'tid = '.$tid);
+					break;
+					case 'unding' : 
+						$db->update('tb_tbar', array('ding' => 0), 'tid = '.$tid);
+					break;
+					case 'deny' : 
+						$db->update('tb_tbar', array('deny' => 1), 'tid = '.$tid);
+					break;
+					case 'undeny' : 
+						$db->update('tb_tbar', array('deny' => 0), 'tid = '.$tid);
+					break;
+				}
+				return true;
+			
+			} catch (Exception $e) {
+				Alp_Sys::msg('exception', $e->getMessage());
+			}
+			return false;
+		}
+		
+		/**
 		 * 注册总人数
 		 *
 		 */

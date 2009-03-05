@@ -1,8 +1,5 @@
-<?xml version="1.0" encoding="gbk"?>
+<?xml version="1.0" encoding="utf-8"?>
 	<banner_swf>
 	<fixedbn img="images/main_mini.jpg" alpha_num="0"></fixedbn>
-	<banner img="/upload/photo/2/1.jpg" bnurl="/space_bar/photo/view?tid=11" bntarget="_blank" bntitle="中秋快乐！"></banner>
-	<banner img="/upload/photo/2/2.jpg" bnurl="/space_bar/photo/view?tid=12" bntarget="_blank" bntitle="父爱无言，真爱送父亲"></banner>
-	<banner img="/upload/photo/2/3.jpg" bnurl="/space_bar/photo/view?tid=13" bntarget="_blank" bntitle="让我们为灾区人民送上自己的祝福吧！"></banner>
-	<banner img="/upload/photo/2/4.jpg" bnurl="/space_bar/photo/view?tid=14" bntarget="_blank" bntitle="情动五月，感情母恩"></banner>
+	<banner img="/upload/" bnurl="/space_bar/photo/view?tid=11" bntarget="_blank" bntitle=""></banner>
 </banner_swf>

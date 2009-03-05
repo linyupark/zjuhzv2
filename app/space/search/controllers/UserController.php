@@ -97,7 +97,7 @@
 			{
 				Alp_Page::$pagesize = $pagesize;
 				Alp_Page::create(array(
-					'href_open' => '<a href="/space_search/?for=user&range='.$range.'&key='.$key.'&attr='.$attr.'&p=%d">',
+					'href_open' => '<a href="/space_search/?for=user&range='.$range.'&key='.urlencode($key).'&attr='.$attr.'&p=%d">',
 					'href_close' => '</a>',
 					'num_rows' => $numrows,
 					'cur_page' => $page

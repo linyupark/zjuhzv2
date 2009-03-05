@@ -14,7 +14,7 @@
 			</td></tr>
 		</table>
 		<?php endforeach; else: ?>
-		<div class="quiet">暂时还没有人来看过你哦</div>
+		<div class="quiet mg10">暂时还没人来访</div>
 		<?php endif; ?>
 	<h3 class="section" style="clear:left;">好友列表</h3>
 		<?php if($this->friends): foreach($this->friends as $f): ?>
@@ -29,7 +29,7 @@
 			<a style="color:#666" href="/space_friends/from/?uid=<?= $this->uid ?>">&gt;&gt;所有好友</a>
 		</div>
 		<?php else: ?>
-		<div class="quiet mg10">此人暂时还没有加任何人为好友</div>
+		<div class="quiet mg10">还没加任何好友</div>
 		<?php endif; ?>
 </div>
 <script type="text/javascript">

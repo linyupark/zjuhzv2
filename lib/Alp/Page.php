@@ -43,8 +43,8 @@
 	    //首,上
 	    if (self::$_set['cur_page'] != 1)
 	    {
-	      $page_str .= sprintf(self::$_set['href_open'].self::$first.self::$_set['href_close'], 1);
-	      $page_str .= sprintf(self::$_set['href_open'].self::$prev.self::$_set['href_close'], (self::$_set['cur_page'] - 1));
+	      $page_str .= str_replace('%d', 1, self::$_set['href_open'].self::$first.self::$_set['href_close']);
+	      $page_str .= str_replace('%d', (self::$_set['cur_page'] - 1), self::$_set['href_open'].self::$prev.self::$_set['href_close']);
 	    }
 	    //开始index
 	    if (self::$_set['cur_page'] - self::$link_span > 1)
@@ -64,15 +64,15 @@
 	    for ($i = $start; $i <= $end; $i++)
 	    {
 	      if ($i == self::$_set['cur_page'])
-	        $page_str .= sprintf(self::$text_open.$i.self::$text_close, $i);
+	        $page_str .= str_replace('%d', $i, self::$text_open.$i.self::$text_close);
 	      else
-	        $page_str .= sprintf(self::$_set['href_open'].$i.self::$_set['href_close'], $i);
+	        $page_str .= str_replace('%d', $i, self::$_set['href_open'].$i.self::$_set['href_close']);
 	    }
 	    //下,尾
 	    if (self::$_set['cur_page'] != self::$num_pages)
 	    {
-	      $page_str .= sprintf(self::$_set['href_open'].self::$next.self::$_set['href_close'], (self::$_set['cur_page'] + 1));
-	      $page_str .= sprintf(self::$_set['href_open'].self::$last.self::$_set['href_close'], self::$num_pages);
+	      $page_str .= str_replace('%d', (self::$_set['cur_page'] + 1), self::$_set['href_open'].self::$next.self::$_set['href_close']);
+	      $page_str .= str_replace('%d', self::$num_pages, self::$_set['href_open'].self::$last.self::$_set['href_close']);
 	    }
 	    self::$offset = (self::$_set['cur_page'] - 1) * self::$pagesize;
 	    return self::$page_str = $page_str;

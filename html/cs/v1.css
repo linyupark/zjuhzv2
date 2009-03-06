@@ -6,7 +6,6 @@
 @import url("alp/common.css");
 @import url("alp/link-sky.css");
 @import url("alp/facebox.css");
-@import url("nicejform/niceforms-default.css");
 
 html{ background:#CFE1ED }
 body{ background:#CFE1ED url(/im/v1/bg-top.gif) repeat-x top; padding-top:10px; font-size:12px }

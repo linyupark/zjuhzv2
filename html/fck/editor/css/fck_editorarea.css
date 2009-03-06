@@ -30,9 +30,12 @@
  * The "body" styles should match your editor web site, mainly regarding
  * background color and font family and size.
  */
+@import url("/cs/alp/yui-reset.css");
+@import url("/cs/alp/yui-font.css");
 @import url("/cs/alp/yui-base.css");
 @import url("/cs/alp/common.css");
 @import url("/cs/alp/link-sky.css");
+
 .quote{ background:#FFFFDF; padding:2px 8px; border:1px dashed #D4DFA7; margin-bottom:5px }
 body
 {
@@ -51,7 +54,7 @@ a[href]
 {
 	color: -moz-hyperlinktext !important;		/* For Firefox... mark as important, otherwise it becomes black */
 	text-decoration: -moz-anchor-decoration;	/* For Firefox 3, otherwise no underline will be used */
-}
+} 
 
 /**
  * Just uncomment the following block if you want to avoid spaces between

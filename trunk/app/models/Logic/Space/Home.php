@@ -78,6 +78,7 @@
 			$career = Logic_User_Career::get($uid);
 			$trans_intro = Zend_Registry::get('config')->user_intro->toArray();
 			$trans_contact = Zend_Registry::get('config')->user_contact->toArray();
+			$marriage_alias = Zend_Registry::get('config')->marriage->v->toArray();
 			switch ($col)
 			{
 				case 'nickname' : 
@@ -103,7 +104,7 @@
 				break;
 				case 'marriage' : 
 					if(!$base['marriage']) return false;
-					return '<tr><td class="quiet txtr">婚姻：</td><td>'.$base['marriage'].'</td></tr>';
+					return '<tr><td class="quiet txtr">婚姻：</td><td>'.$marriage_alias[$base['marriage']].'</td></tr>';
 				break;
 				case 'edu' : 
 					$str = '';

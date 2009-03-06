@@ -8,7 +8,7 @@
 <?php if(count($this->news) > 0): foreach ($this->news as $n): ?>
 <tr>
 	<td colspan="2">
-		<a href="/public/news/sort/id/<?= $n['sort'] ?>" style="color:#666">[<?= $n['name'] ?>]</a>
+		<a href="/space_bar/?sort=<?= $n['sort'] ?>&type=news" style="color:#666">[<?= $n['name'] ?>]</a>
 		<a href="/public/news/view/id/<?= $n['tid'] ?>" 
 			<?= $n['ding'] == 1 ? 'style="color:red"' : '' ?>>
 			<?= stripcslashes($n['title']) ?>

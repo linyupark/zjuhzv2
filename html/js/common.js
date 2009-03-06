@@ -5,7 +5,10 @@ document.write("<script type=\"text/javascript\" src=\"/js/jq/facebox.js\"></scr
 function check_msgbox()
 {
 	$.getJSON('/api_json/msg/check',function(data){
-		if(parseInt(data.result) > 0){ $('#msgstate').attr('src', '/im/icon/1616/newmail.gif'); }
+		if(parseInt(data.result) > 0){ 
+			$('#msgstate').attr('src', '/im/icon/1616/newmail.gif');
+			newMsg(1);
+		}
 		else $('#msgstate').attr('src', '/im/icon/1616/mail.gif');
 		$('#json_msgbox').text(data.result);
 	});
@@ -24,4 +27,19 @@ function friend_add(uid)
 function oplink()
 {
 	$('.oplink a').css('opacity',0.7).hover(function(){$(this).css('opacity',1);}).mouseout(function(){$('.oplink a').css('opacity',0.7);})
+}
+
+var fmsg = null;
+var g_blinkswitch = 0;
+var g_blinktitle = document.title;
+function startNewMsg()
+{
+	document.title = g_blinkswitch % 2==0 ? "【　　　】" + g_blinktitle : "【新消息】" + g_blinktitle;
+	g_blinkswitch++;
+}
+function newMsg(flag)
+{
+	if(flag == 1)
+	fmsg = setInterval(startNewMsg, 1000);
+	else clearInterval(fmsg);
 }

@@ -9,7 +9,7 @@
 	</td>
 </tr>
 <?php foreach ($this->groups as $i => $g): ?>
-<?php if($i%2 == 2): ?><tr><?php endif; ?>
+<tr>
 	<td width="40">
 		<div class="head40">
 			<a href="/space_group/home/?id=<?= $g['gid'] ?>">
@@ -22,7 +22,7 @@
 		<br />
 		<p class="quiet"><?= $g['intro'] ?></p>
 	</td>
-<?php if($i%2 == 1): ?></tr><?php endif; ?>
+</tr>
 <?php endforeach; ?>
 </table>
 <?php endif; ?>

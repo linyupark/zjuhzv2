@@ -32,22 +32,22 @@
 	</tr>
 	<tr class="txtc">
 		<td>
-			<?php if($this->neb['leader']) : ?>
-			<img class="pd10" src="<?= Cmd::userhead($this->neb['leader']['uid'], 80, $this->neb['leader']['sex']) ?>" />
+			<?php if($this->neb['leader']) : $leader = $this->neb['leader']; ?>
+			<img class="pd10" src="<?= Cmd::userhead($leader['uid'], 80, $leader['sex']) ?>" />
 			<p class="pd10">
-				<?= $this->neb['leader']['username'] ?> / 
-				<span class="quiet f9"><?= $this->neb['leader']['point'] ?>pt</span>
+				<a href="/space_home/?uid=<?= $leader['uid'] ?>"><?= $leader['username'] ?></a> / 
+				<span class="quiet f9"><?= $leader['point'] ?>pt</span>
 			</p>
 			<?php else : ?>
 			<span class="quiet">前无古人了..</span>
 			<?php endif; ?>
 		</td>
 		<td>
-			<?php if($this->neb['pursuer']) : ?>
-			<img class="pd10" src="<?= Cmd::userhead($this->neb['pursuer']['uid'], 80, $this->neb['pursuer']['sex']) ?>" />
+			<?php if($this->neb['pursuer']) : $pursuer = $this->neb['pursuer']; ?>
+			<img class="pd10" src="<?= Cmd::userhead($pursuer['uid'], 80, $pursuer['sex']) ?>" />
 			<p class="pd10">
-				<?= $this->neb['pursuer']['username'] ?> / 
-				<span class="quiet f9"><?= $this->neb['pursuer']['point'] ?>pt</span>
+				<a href="/space_home/?uid=<?= $pursuer['uid'] ?>"><?= $pursuer['username'] ?></a> / 
+				<span class="quiet f9"><?= $pursuer['point'] ?>pt</span>
 			</p>
 			<?php else : ?>
 			<span class="quiet">后无来者,你的热心度是0吗？还不赶快加油~</span>

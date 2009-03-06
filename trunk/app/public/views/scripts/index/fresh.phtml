@@ -1,10 +1,16 @@
 <?= $this->headScript()->appendFile('/player/nip_common.js') ?>
 <div class="yui-g">
 	<div class="yui-u first" style="width:40%">
-		<script type=text/javascript>
-			xml_url = "/player/toppicxml.xml";
-			swf_obj('/player/focus_img.swf?xml_url='+xml_url,'270','240')
-		</script>
+		<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" id=scriptmain name=scriptmain codebase="http://download.macromedia.com/pub/shockwave/cabs/
+flash/swflash.cab#version=6,0,29,0" width="266" height="243">
+      	<param name="movie" value="/player/bcastr.swf?bcastr_xml_url=/player/bcastr.xml">
+      	<param name="quality" value="high">
+      	<param name=scale value=noscale>
+      	<param name="LOOP" value="false">
+      	<param name="menu" value="false">
+      	<param name="wmode" value="transparent">
+      	<embed src="/player/bcastr.swf?bcastr_xml_url=/player/bcastr.xml" width="266" height="243" loop="false" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" salign="T" name="scriptmain" menu="false" wmode="transparent"></embed>
+    	</object>
 		<?= $this->render('index/3x.phtml'); ?>
 	</div>
 	<div class="yui-u" style="width:57%">

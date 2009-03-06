@@ -1,7 +1,7 @@
 <div class="yui-g">
 	<div class="yui-u first" style="width:20%;">
 		<div class="head80">
-			<img style="margin:20px 0 0 20px" src="<?= Cmd::userhead($this->uid, '80', Cmd::getSess('profile','sex')) ?>" />
+			<img style="margin:20px 0 0 20px" src="<?= Cmd::userhead($this->uid, '80', $this->profile['sex']) ?>" />
 		</div>
 		<div class="a-span" style="line-height:150%">
 			<a href="/space_set/detail/?uid=<?= $this->uid ?>">详细资料</a>

@@ -5,10 +5,26 @@
 	 *
 	 */
 	class Console_MixController extends Zend_Controller_Action
-	{
+	{	
 		function indexAction()
 		{
 			$this->view->tab = $this->_getParam('tab', 'player');
+		}
+		
+		/**
+		 * 头版新闻编辑
+		 *
+		 */
+		function ftpageAction()
+		{
+			$file = HTMLROOT.'/player/ftpage.html';
+			if($this->getRequest()->isPost()) // 保存处理
+			{
+				$data = $this->getRequest()->getPost('html');
+				file_put_contents($file, stripslashes($data));
+			}
+			$html = file_get_contents($file);
+			$this->view->html = $html;
 		}
 		
 		/**
@@ -17,7 +33,7 @@
 		 */
 		function playerAction()
 		{
-			$file = $_SERVER['DOCUMENT_ROOT'].'/player/bcastr.xml';
+			$file = HTMLROOT.'/player/bcastr.xml';
 			if($this->getRequest()->isPost()) // 保存处理
 			{
 				$data = $this->getRequest()->getPost('xml');

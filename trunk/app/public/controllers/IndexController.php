@@ -83,11 +83,28 @@
 		{
 		}
 		
+		/**
+		 * 一般静态文档
+		 *
+		 */
 		function docAction()
 		{
 			$this->view->of = $this->_getParam('of');
 		}
 		
+		/**
+		 * 网站头版新闻编辑
+		 *
+		 */
+		function ftpageAction()
+		{
+			$this->view->html = file_get_contents(HTMLROOT.'/player/ftpage.html');
+		}
+		
+		/**
+		 * 快速登陆显示
+		 *
+		 */
 		function fastloginAction(){}
 		
 		/**

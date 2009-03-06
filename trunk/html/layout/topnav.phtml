@@ -41,6 +41,7 @@
     			<p class="mgb5" style="height:18px;">
     				Hi~ <b><?= Cmd::getSess('profile', 'username') ?></b> 
     				[<?= Cmd::rolename() ?>]
+    				<a style="color:#D44848" href="/public/point/"><img class="vm" src="<?= Alp_Url::img('/icon/1616/heart.gif') ?>" /><?= Logic_Api::percentpoint(Cmd::getSess('profile','point')) ?>&deg;</a>
     				<span id="logout">
     					<a href="javascript:logout(0)"><img class="vm" src="<?= Alp_Url::img('icon/1616/out.gif') ?>" />退出</a>
 	    			</span>
@@ -51,7 +52,6 @@
 	    			</span>
     			</p>
     			<a href="/space_msg/"><img id="msgstate" src="<?= Alp_Url::img('icon/1616/mail.gif') ?>" />消息[<span id="json_msgbox">0</span>]</a>
-    			<a href=""><img class="vm" src="<?= Alp_Url::img('/icon/1616/heart.gif') ?>" />热心度</a>
     			<a href="/space_set/profile/"><img class="vm" src="<?= Alp_Url::img('icon/1616/profile.gif') ?>" />设置</a>
     			<a href="/space_home/"><img class="vm" src="<?= Alp_Url::img('icon/1616/home.gif') ?>" />主页</a>
     		</td>

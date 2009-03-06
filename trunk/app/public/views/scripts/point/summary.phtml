@@ -1,0 +1,57 @@
+<table width="90%" class="mg10 table-dashed">
+	<tr class="bcolor-g">
+		<td class="txtc">全校友热心度累计</td>
+		<td class="txtc">我的热心度</td>
+		<td class="txtc">当前排行</td>
+	</tr>
+	<tr class="txtc">
+		<td>
+			<span style="color:#B90029; font-size:24px;">
+				<b><?= $this->sumpoint ?></b>
+				<small class="f12">pt</small>
+			</span>
+		</td>
+		<td>
+			<div class="txtl" style="margin:0 auto; background:url(<?= Alp_Url::img('v1/deg.gif') ?>) no-repeat left center; width:138px; height:23px; overflow:hidden">
+				<img style="margin:4px 0 4px 10px;" src="<?= Alp_Url::img('v1/deg_b.gif') ?>" width="<?= round(1.21*$this->percent) ?>" height="11" />
+			</div>
+			<b>
+				<span  style="color:#5EAF0A; font-size:18px;"><?= $this->percent ?>&deg;</span> / 
+				<span class="quiet f12"><?= $this->mypoint ?>pt</span>
+			</b>
+		</td>
+		<td>
+			<span style="color:#5EAF0A; font-size:18px;"><b><?= $this->rank ?></b></span>位
+		</td>
+	</tr>
+</table>
+<table width="90%" class="mg10 table-dashed">
+	<tr class="bcolor-g">
+		<td class="txtc">我紧跟着</td>
+		<td class="txtc">追赶我的</td>
+	</tr>
+	<tr class="txtc">
+		<td>
+			<?php if($this->neb['leader']) : ?>
+			<img class="pd10" src="<?= Cmd::userhead($this->neb['leader']['uid'], 80, $this->neb['leader']['sex']) ?>" />
+			<p class="pd10">
+				<?= $this->neb['leader']['username'] ?> / 
+				<span class="quiet f9"><?= $this->neb['leader']['point'] ?>pt</span>
+			</p>
+			<?php else : ?>
+			<span class="quiet">前无古人了..</span>
+			<?php endif; ?>
+		</td>
+		<td>
+			<?php if($this->neb['pursuer']) : ?>
+			<img class="pd10" src="<?= Cmd::userhead($this->neb['pursuer']['uid'], 80, $this->neb['pursuer']['sex']) ?>" />
+			<p class="pd10">
+				<?= $this->neb['pursuer']['username'] ?> / 
+				<span class="quiet f9"><?= $this->neb['pursuer']['point'] ?>pt</span>
+			</p>
+			<?php else : ?>
+			<span class="quiet">后无来者,你的热心度是0吗？还不赶快加油~</span>
+			<?php endif; ?>
+		</td>
+	</tr>
+</table>

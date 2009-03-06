@@ -17,7 +17,7 @@
 		 */
 		function playerAction()
 		{
-			$file = $_SERVER['DOCUMENT_ROOT'].'/player/toppicxml.xml';
+			$file = $_SERVER['DOCUMENT_ROOT'].'/player/bcastr.xml';
 			if($this->getRequest()->isPost()) // 保存处理
 			{
 				$data = $this->getRequest()->getPost('xml');

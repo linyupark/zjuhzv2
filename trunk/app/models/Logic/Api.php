@@ -8,18 +8,37 @@
 		}
 		
 		/**
-		 * 热心度相邻排行校友
+		 * 返回热度记录
 		 *
+		 * @param unknown_type $uid
+		 * @param unknown_type $p
+		 * @return unknown
 		 */
-		public function nebpoint($point)
+		public static function pointlog($p = 1, $uid = null)
 		{
-			$db = parent::User();
-			$leader = $db->fetchRow('SELECT `point`,`uid`,`sex`,`username` FROM `tb_base` 
-				WHERE `point` > '.$point.' ORDER BY `point` ASC LIMIT 1');
-			if($point > 0)
-			$pursuer = $db->fetchRow('SELECT `point`,`uid`,`sex`,`username` FROM `tb_base` 
-				WHERE `point` < '.$point.' ORDER BY `point` DESC LIMIT 1');
-			return array('leader'=>$leader, 'pursuer'=>$pursuer);
+			$pagesize = 10;
+			$where = $uid == null ? '' : ' WHERE log.`uid` = '.(int)$uid;
+			$db = parent::Log();
+			$row = $db->fetchRow('SELECT COUNT(log.`pid`) AS `numrows` FROM `tb_point` AS `log` '.
+				$where.' ORDER BY log.`time` DESC');
+			$numrows = $row['numrows'];
+			
+			$sql = 'SELECT 
+					log.*,u.username AS `uname`,u2.username AS `hname` 
+					FROM `tb_point` AS `log` 
+					LEFT JOIN zjuhzv2_user.tb_base AS `u` ON log.`uid` = u.`uid` 
+					LEFT JOIN zjuhzv2_user.tb_base AS `u2` ON log.`handler` = u2.`uid` '.
+					$where.' ORDER BY log.`time` DESC';
+					
+			if($numrows > $pagesize)
+			{
+				$offset = ($p-1)*$pagesize;
+				$rows = $db->fetchAll($sql.' LIMIT '.$offset.','.$pagesize);
+			}
+			else 
+				$rows = $db->fetchAll($sql);
+				
+			return array('numrows' => $numrows, 'rows' => $rows, 'pagesize' => $pagesize);
 		}
 		
 		/**

@@ -17,6 +17,18 @@
 			$this->view->tab = $this->_getParam('tab', 'summary');
 		}
 		
+		function dymAction()
+		{
+			$this->getHelper('viewRenderer')->setNoRender();
+			$rows = DbModel::User()->fetchAll('SELECT `uid`,`point` FROM `tb_base` WHERE `point` > 0');
+			$log = DbModel::Log();
+			foreach ($rows as $r)
+			{
+				$log->update('tb_point', array('point' => $r['point']), 'uid = '.$r['uid']);
+			}
+			echo 'done';
+		}
+		
 		/**
 		 * 自己的热心度摘要(排行，前后两位，全站总热度，百分比%)
 		 *
@@ -30,7 +42,7 @@
 			$this->view->mypoint = $point;
 			$this->view->percent = $percent;
 			$this->view->rank = Logic_Api::rankpoint($point, 'user');
-			$this->view->neb = Logic_Api::nebpoint($point);
+			$this->view->neb = Logic_User_Base::nebpoint($point);
 		}
 		
 		/**
@@ -39,7 +51,24 @@
 		 */
 		function logAction()
 		{
-			
+			$range = $this->_getParam('range', 'self');
+			$page = $this->_getParam('p', 1);
+			$uid = Cmd::uid();
+			if($range == 'self') $data = Logic_Api::pointlog($page, $uid);
+			if($range == 'all') $data = Logic_Api::pointlog($page);
+			if($data['numrows'] > $data['pagesize'])
+			{
+				Alp_Page::$pagesize = $data['pagesize'];
+				Alp_Page::create(array(
+					'href_open' => '<a href="/public/point/?tab=log&range='.$range.'&p=%d">',
+					'href_close' => '</a>',
+					'num_rows' => $data['numrows'],
+					'cur_page' => $page
+				));
+				$this->view->pagination = Alp_Page::$page_str;
+			}
+			$this->view->rows = $data['rows'];
+			$this->view->range = $range;
 		}
 		
 		/**

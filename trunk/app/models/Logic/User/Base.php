@@ -18,6 +18,23 @@
 		}
 		
 		/**
+		 * 热心度相邻排行校友
+		 *
+		 */
+		public function nebpoint($point)
+		{
+			$db = parent::User();
+			$leader = $db->fetchRow('SELECT `point`,`uid`,`sex`,`username` FROM `tb_base` 
+				WHERE `point` > '.$point.' ORDER BY `point` ASC LIMIT 1');
+			if($point > 0)
+			$pursuer = $db->fetchRow('SELECT `point`,`uid`,`sex`,`username` FROM `tb_base` 
+				WHERE `point` < '.$point.' ORDER BY `point` DESC LIMIT 1');
+			return array('leader'=>$leader, 'pursuer'=>$pursuer);
+		}
+		
+		
+		
+		/**
 		 * 根据用户名获取其id
 		 *
 		 * @param unknown_type $uname

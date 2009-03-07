@@ -8,6 +8,32 @@
 		}
 		
 		/**
+		 * 增加分数
+		 *
+		 * @param unknown_type $type
+		 * @param unknown_type $id
+		 * @param unknown_type $point
+		 */
+		public static function apoint($type = 'user', $id, $point, $memo, $time)
+		{
+			$handler = Cmd::uid();
+			if($type == 'user') // 用户加分
+			{
+				$uid = (int)$id;
+				$user = parent::User();
+				$user->update('tb_base', 
+					array('point' => new Zend_Db_Expr('point + '.(int)$point)), 'uid = '.$uid);
+				parent::Log()->insert('tb_point', array(
+					'uid' => $uid,
+					'memo' => $memo,
+					'point' => $point,
+					'handler' => $handler,
+					'time' => $time
+				));
+			}
+		}
+		
+		/**
 		 * 返回热度记录
 		 *
 		 * @param unknown_type $uid

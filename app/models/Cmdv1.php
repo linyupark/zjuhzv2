@@ -6,18 +6,34 @@
 	 */
 	class Cmdv1
 	{
+		static function remoteUser($dbname)
+		{
+			$db = new Zend_Db_Adapter_Pdo_Mysql(array(
+			    'host'     => 'www.zjuhz.com',
+			    'username' => 'zjuhz_mysql_dev',
+			    'password' => 'www_zjuhz_com_@[dev]_20080505#',
+			    'dbname'   => $dbname
+			));
+			return $db;
+		}
+		
+		/**
+		 * 返回所有热心度加分记录
+		 *
+		 */
+		static function alldevotelog()
+		{
+			$db = self::remoteUser('zjuhz_devote');
+			return $db->fetchAll('SELECT * FROM `tbl_transaction` ORDER BY `time` ASC');
+		}
+		
 		/**
 		 * 连接远程数据库返回所有用户有用信息
 		 *
 		 */
 		static function alluser()
 		{
-			$db = new Zend_Db_Adapter_Pdo_Mysql(array(
-			    'host'     => 'www.zjuhz.com',
-			    'username' => 'zjuhz_mysql_dev',
-			    'password' => 'www_zjuhz_com_@[dev]_20080505#',
-			    'dbname'   => 'zjuhz_user'
-			));
+			$db = self::remoteUser('zjuhz_user');
 			$db->query('SET NAMES "utf8"');
 			$select = $db->select();
 			$select->from(array('base' => 'tbl_user'), array(

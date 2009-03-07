@@ -1,3 +1,33 @@
-<?php
-
-?>
+<div class="pd10 a-span" style="border-bottom:1px dashed #ccc">
+	显示：
+	<?php $on = 'style="text-decoration:underline;color:#333"';  ?>
+	<a href="/public/point/?tab=log&range=self" <?= $this->range == 'self' ? $on:'' ?>>我的</a>
+	<a href="/public/point/?tab=log&range=all" <?= $this->range == 'all' ? $on:'' ?>>全站的</a>
+</div>
+<table class="table-dashed" width="100%">
+<tr class="bcolor-g quiet">
+	<td>操作人</td>
+	<?php if($this->range == 'all'): ?>
+	<td>得分人</td>
+	<?php endif; ?>
+	<td class="txtc">说明</td>
+	<td>分值</td>
+	<td>时间</td>
+</tr>
+<?php if(count($this->rows) > 0): foreach ($this->rows as $r): ?>
+<tr>
+	<td><?= $r['hname'] == null ? '系统' : '<a href="/space_home/?uid='.$r['handler'].'">'.$r['hname'].'</a>' ?></td>
+	<?php if($this->range == 'all'): ?>
+	<td><a href="/space_home/?uid=<?= $r['handler'] ?>"><?= $r['uname'] ?></td>
+	<?php endif; ?>
+	<td class="quiet"><?= stripslashes($r['memo']) ?></td>
+	<td style="color:#D44848"><?= $r['point'] ?><span class="f9">pt</span></td>
+	<td class="quiet"><?= date('y/m/d H:i', $r['time']) ?></td>
+</tr>
+<?php endforeach; else: ?>
+<tr>
+	<td colspan="4">没有相关记录..</td>
+</tr>
+<?php endif; ?>
+</table>
+<div class="pg"><?= $this->pagination ?></div>

@@ -18,7 +18,7 @@
 <tr>
 	<td><?= $r['hname'] == null ? '系统' : '<a href="/space_home/?uid='.$r['handler'].'">'.$r['hname'].'</a>' ?></td>
 	<?php if($this->range == 'all'): ?>
-	<td><a href="/space_home/?uid=<?= $r['handler'] ?>"><?= $r['uname'] ?></td>
+	<td><a href="/space_home/?uid=<?= $r['handler'] ?>"><?= $r['uname'] ?></a></td>
 	<?php endif; ?>
 	<td class="quiet"><?= stripslashes($r['memo']) ?></td>
 	<td style="color:#D44848"><?= $r['point'] ?><span class="f9">pt</span></td>

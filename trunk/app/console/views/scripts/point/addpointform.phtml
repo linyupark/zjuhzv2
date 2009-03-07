@@ -1,0 +1,33 @@
+<form id="add_point_form" method="post" onsubmit="return apt()">
+	<table class="table-dashed f14" width="100%">
+		<tr>
+			<td colspan="2"><b>请填写加分表单</b></td>
+		</tr>
+		<tr>
+			<td>分值:</td>
+			<td><input type="text" name="point" size="4" /></td>
+		</tr>
+		<tr>
+			<td valign="top">说明：</td>
+			<td>
+				<textarea name="memo" style="width:200px; height:100px"></textarea>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">时间：</td>
+			<td>
+				<input name="time" value="<?= date('y-m-d H:i', time()) ?>">
+			</td>
+		</tr>
+		<tr>
+			<td class="txtr" colspan="2">
+				<?php if($this->for == 'user'): foreach ($this->uids as $uid): ?>
+				<input type="hidden" name="uid[]" value="<?= $uid ?>" />
+				<?php endforeach; endif; ?>
+				<input type="hidden" name="for" value="<?= $this->for ?>" />
+				<input type="submit" class="btn" value="确定" /> 
+				<input type="button" class="btn" onclick="$.facebox.close()" value="取消" />
+			</td>
+		</tr>
+	</table>
+</form>

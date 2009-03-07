@@ -1,0 +1,52 @@
+<div class="pd10">
+	<div class="memo quiet">
+		搜索格式：[群组名]人名@人名@...(注：只写[群组名]可罗列群组内所有成员)<br />
+		举例1只找人：张三@李四@王五 举例2群组里某几个人：[羽毛球俱乐部]张三@李四@王五
+	</div>
+	<form method="get">
+		输入关键字：<input type="text" name="key" value="<?= $this->key ?>" size="80" />
+		<input type="hidden" name="tab" value="user" />
+		<input type="submit" value="搜索" class="btn" />
+	</form>
+</div>
+<table width="100%" class="table-dashed" id="user_list">
+<tr class="bcolor-g">
+	<td width="50" class="txtc"><a id="sel_btn" href="javascript:sel(1)">全选</a></td>
+	<td></td>
+	<td><a href="javascript:af()">#给勾选的加分</a></td>
+</tr>
+<?php if(count($this->rows) > 0) : foreach ($this->rows as $i => $r) : ?>
+<tr <?= $i%2 == 1 ? 'class="bcolor-g"':'' ?>>
+	<td class="txtc"><input type="checkbox" name="uid[]" class="nob" value="<?= $r['uid'] ?>" /></td>
+	<td class="txtl">
+		<?php if($r['gname']): ?>
+		<a style="color:#666" href="/space_group/home/?id=<?= $r['gid'] ?>">[<?= $r['gname'] ?>]</a>
+		<?php endif; ?>
+		<a class="f14" href="/space_home/?uid=<?= $r['uid'] ?>"><?= $r['uname'] ?></a>
+		<span style="color:#D44848" class="f9"><?= $r['point'] ?></span>
+	</td>
+	<td><a href="">@单独加分</a></td>
+</tr>
+<?php endforeach; else: ?>
+<tr>
+	<td class="quiet" colspan="2">没有找到相关用户</td>
+</tr>
+<?php endif; ?>
+</table>
+<script>
+	function sel(f)
+	{
+		if(f == 1){ $('input:checkbox').attr('checked', true); $('#sel_btn').attr('href','javascript:sel(0)'); }
+		else { $('input:checkbox').attr('checked', false); $('#sel_btn').attr('href','javascript:sel(1)'); }
+	}
+	function af(){ $.post('/console/point/add?for=user', $('input.nob:checked').serializeArray(), function(data){$.facebox(data);});}
+	function apt()
+	{
+		$('#add_point_form input:submit').attr('disabled', true).val('提交中..');
+		$.post('/console/point/add?for=user', $('#add_point_form').serializeArray(), function(data){
+			if(data == 'success') { alert('操作成功!'); history.go(0); }
+			else {alert(data); $('#add_point_form input:submit').attr('disabled',  false).val('确定'); }
+		});
+		return false;
+	}
+</script>

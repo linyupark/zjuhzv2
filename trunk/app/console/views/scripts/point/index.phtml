@@ -1,0 +1,17 @@
+<div class="yui-main">
+	<div class="yui-b">
+		<div class="mg5 section yui-g">
+			<div class="yui-u first" style="width:80%">
+				<img class="vm mgr10" src="<?= Alp_Url::img('icon/1616/f_heart.gif') ?>" />
+				<b>校友会热心度管理</b>
+			</div>
+			<div class="yui-u txtr" style="width:20%"><a href="javascript:history.back()">返回上一页</a></div>
+		</div>
+		<div class="tb-box">
+			<a href="/console/point/?tab=user" <?= ($this->tab == 'user')?'class="tb-on"':'class="tb-of"' ?>>校友</a><span class="tb-rbg"></span>
+			<a href="/console/point/?tab=group" <?= ($this->tab == 'group')?'class="tb-on"':'class="tb-of"' ?>>群俱乐部</a><span class="tb-rbg"></span>
+		</div>
+		<?= $this->action($this->tab, 'point', 'console'); ?>
+		</div>
+</div>
+<?= $this->render('sidebar.phtml') ?>

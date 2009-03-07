@@ -17,17 +17,6 @@
 			$this->view->tab = $this->_getParam('tab', 'summary');
 		}
 		
-		function dymAction()
-		{
-			$this->getHelper('viewRenderer')->setNoRender();
-			$rows = DbModel::User()->fetchAll('SELECT `uid`,`point` FROM `tb_base` WHERE `point` > 0');
-			$log = DbModel::Log();
-			foreach ($rows as $r)
-			{
-				$log->update('tb_point', array('point' => $r['point']), 'uid = '.$r['uid']);
-			}
-			echo 'done';
-		}
 		
 		/**
 		 * 自己的热心度摘要(排行，前后两位，全站总热度，百分比%)

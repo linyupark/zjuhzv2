@@ -96,6 +96,7 @@
 			else 
 			{
 				$this->view->tab = 'edu';
+				$this->view->tip = $this->_getParam('tip');
 				$edu = DbModel::User()->fetchAll('SELECT * FROM `tb_edu` WHERE `uid` = ?', Cmd::uid());
 				$this->view->edu = $edu;
 			}

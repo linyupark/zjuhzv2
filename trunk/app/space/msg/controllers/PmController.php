@@ -94,13 +94,12 @@
 					*/
 				}
 				else $incept = explode(',', $params['incept']);
-				
 				if(count($incept) > 0)
 				{
 					// 逐个发信
 					foreach ($incept as $u)
 					{
-						Logic_Space_Msg::pm($uid, $u['uid'], Alp_String::html($params['content']));
+						Logic_Space_Msg::pm($uid, $u, Alp_String::html($params['content']));
 					}
 					echo 'success';
 				}

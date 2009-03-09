@@ -1,6 +1,10 @@
 <?= $this->render('header.phtml') ?>
 <?= $this->render('profile/tab.phtml') ?>
 <div class="mg10">
+<?php // 登陆时未填写教育信息的提示
+if($this->tip == 1): ?>
+<div class="notice">烦请完善您的教育信息(必要)，联系方式等一些个人资料，以方便我们的审核跟后续服务。</div>
+<?php endif; ?>
 <table class="mgl10 table-dashed" width="97%">
 	<tr>
 		<td colspan="4"><b class="f14">教育情况一览</b></td>
@@ -87,7 +91,7 @@
 			function(data)
 			{
 				if(data == 'success')
-				window.history.go(0);
+				location.href = '/space_set/profile/edu';
 				else
 				{
 					alert(data);

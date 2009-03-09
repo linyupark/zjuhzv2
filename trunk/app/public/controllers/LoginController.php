@@ -20,6 +20,12 @@
                         // 成功登录处理
                         if(Logic_User_Login::treat($row['uid']) == true)
                         {
+                        	// 检测其教育资料数据
+                        	if(!Logic_User_Edu::get($row['uid']))
+                        	{
+                        		Alp_Sys::msg('goto', '/space_set/profile/edu?tip=1');
+                        	}
+                        	
 	                        // cookie 保存帐号密码
 	                        if($params['rememberme'] == 1)
 	                        setcookie(

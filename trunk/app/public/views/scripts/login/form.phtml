@@ -44,9 +44,9 @@ function login_form()
                 });
         	}
         	<?php if($this->relogin): ?>
-        	else history.go(0);
+        	else data.goto == null ? history.go(0) : location.href=data.goto;
         	<?php else: ?>
-            else location.href='/space_home/';
+            else data.goto == null ? location.href='/space_home/' : location.href=data.goto;
             <?php endif; ?>
             $('#submit').val('登录').attr('disabled', false);
         }

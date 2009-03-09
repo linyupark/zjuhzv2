@@ -16,7 +16,7 @@
 				        {sid:'<?= Zend_Session::getId() ?>',account:'<?= $key[0] ?>',password:'<?= $key[1] ?>',rememberme:1},
 				        function(data){ 
 				        	if(data.form_tip == 'success')
-				        	history.go(0);
+				        	data.goto == null ? history.go(0) : location.href=data.goto;
 				        	else
 				        	$('#login_hook').html('密码失效，请手动登录');
 				        }

@@ -3,8 +3,44 @@
 		<img src="<?= Alp_Url::img('icon/1616/box.gif'); ?>" class="vm mgr10" />最新动态
 	</h3>
 	<table class="table-dashed" width="100%">
-	<?php if(count($this->log) > 0): foreach($this->log as $i => $r): ?>
-	<tr <?php if($i%2==1) {echo 'style="background:#f5f5f5"';} ?>>
+	<?php if(count($this->log) > 0): ?>
+	<?php // 把加入本站信息跟加为好友信息集中显示
+		$reg = ''; $fri = array();	
+		foreach ($this->log as $i => $r)
+		{
+			if((int)$r['fid'] > 0) 
+			{
+				$fri[$r['uid']][] = array('uname' => $r['uname'], 
+					'f' => '<a href="/space_home/?uid='.$r['fid'].'">'.$r['fname'].'</a>');
+				unset($this->log[$i]);
+			}
+			if($r['key'] == 'add_user') 
+			{
+				$reg .= '<a href="/space_home/?uid='.$r['uid'].'">'.$r['uname'].'</a>,';
+				unset($this->log[$i]);
+			}
+		}
+	?>
+	<?php if($reg != ''): ?>
+	<tr>
+		<td width="40" valign="top" class="txtr">
+			<img src="<?= Alp_Url::img('icon/log/add_user.gif'); ?>" />
+		</td>
+		<td><?= $reg ?> <span class="quiet">加入本站</span></td>
+	</tr>
+	<?php endif; if(count($fri) > 0): foreach ($fri as $uid => $f): ?>
+	<tr>
+		<td width="40" valign="top" class="txtr">
+			<img src="<?= Alp_Url::img('icon/log/add_friend.gif'); ?>" />
+		</td>
+		<td>
+		<a href="/space_home/?uid=<?= $uid ?>"><?= $f[0]['uname'] ?></a> 将 
+		<?php foreach ($f as $data): ?> <?= $data['f'] ?>,<?php endforeach; ?>
+		<span class="quiet">加为好友</span></td>
+	</tr>
+	<?php endforeach; endif; ?>
+	<?php foreach($this->log as $i => $r): ?>
+	<tr>
 		<td width="40" valign="top" class="txtr">
 			<img src="<?= Alp_Url::img('icon/log/'.$r['key'].'.gif'); ?>" />
 		</td>
@@ -26,7 +62,7 @@
 				<div class="mg5"><img src="<?= Alp_Url::img('icon/log/quote.gif'); ?>" /><?= $r['value'] ?></div>
 			<?php endif; ?>
 		</td>
-		<td width="30%" class="quiet txtr f9" valign="top"><?= date('Y-m-d H:i',$r['time']) ?></td>
+		<td width="100" class="quiet txtr f9" valign="top"><?= date('Y-m-d H:i',$r['time']) ?></td>
 	</tr>
 	<?php endforeach; else: ?>
 	<tr>

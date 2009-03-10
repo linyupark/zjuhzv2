@@ -39,7 +39,7 @@
 			{
 				Alp_Page::$pagesize = $pagesize;
 				Alp_page::create(array(
-					'href_open' => '<a href="">',
+					'href_open' => '<a href="/space_group/?list=all&p=%d">',
 					'href_close' => '</a>',
 					'num_rows' => $row[0]['numrows'],
 					'cur_page' => $page

@@ -16,15 +16,16 @@
 			</tr>
 			<?php if(count($this->rows)): foreach($this->rows as $i => $r): ?>
 			<tr <?= ($i%2 == 1)? 'class="bcolor-g"':'' ?>>
-				<td width="80">
+				<td width="180">
 					<img height="20" src="<?= Cmd::userhead($r['uid'], 40, $r['sex']) ?>" />
 					<a class="f14" href="/space_home/?uid=<?= $r['uid'] ?>"><?= $r['username'] ?></a>
+					(<?= $r['account'] ?>)
 				</td>
 				<td>
 					<a style="color:#666" href="javascript:detail(<?= $r['uid'] ?>)">[资料]</a>
 					<a style="color:#666" target="_blank" href="/space_msg/pm/?uid=<?= $r['uid'] ?>">[信]</a>
 				</td>
-				<td width="70%" class="a-span" id="toolbar_<?= $r['uid'] ?>">
+				<td width="50%" class="a-span" id="toolbar_<?= $r['uid'] ?>">
 					<?= $this->action('toolbar', 'user', 'console', array('row' => $r)); ?>
 				</td>
 			</tr>

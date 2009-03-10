@@ -51,7 +51,7 @@
 				$select = DbModel::Space()->select()->from(array('c'=>'zjuhzv2_space.tb_comment'));
 				$select->where('tid = ?', $tid);
 				$select->joinLeft(array('u'=>'zjuhzv2_user.tb_base'), 'c.uid = u.uid',
-								  array('uname'=>'u.username', 'unick'=>'u.nickname'));
+								  array('uname'=>'u.username', 'unick'=>'u.nickname', 'usex' => 'u.sex'));
 				$rows = $select->query()->fetchAll();
 				if(count($rows) > $this->pagesize)
 				{

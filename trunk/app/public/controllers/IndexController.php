@@ -11,10 +11,15 @@
 			$this->view->icons = Zend_Registry::get('config')->bar_icon->toArray();
 		}
 		
+		/**
+		 * 好友关系数据迁移
+		 *
+		 */
 		function friAction()
 		{
 			set_time_limit(99999999);
 			$this->getHelper('viewRenderer')->setNoRender();
+			/*
 			$rows = Cmdv1::friends();
 			foreach ($rows as $r)
 			{
@@ -26,7 +31,7 @@
 					if(Logic_User_Base::check($f) != false)
 					Logic_Space_Friends::rel($uid, $f);
 				}
-			}
+			}*/
 		}
 		
 		/**
@@ -229,7 +234,7 @@
 				FROM `tb_tbar` AS `bar` 
 				LEFT JOIN `tb_news` AS `news` ON news.`tid` = bar.`tid` 
 				LEFT JOIN `tb_news_sort` AS `s` ON s.`sort` = news.`sort` 
-				WHERE bar.`type` = "news" AND bar.`private` = 4 
+				WHERE bar.`type` = "news" AND bar.`private` >= 3 
 				ORDER BY bar.`ding`DESC,bar.`pubtime` DESC LIMIT 7');
 			$this->view->news = $rows;
 		}

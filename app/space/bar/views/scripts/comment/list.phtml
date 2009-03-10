@@ -6,10 +6,10 @@
     <td rowspan="2" width="8%" valign="top">
     	<div class="head40 txtc">
 			<?php if($r['nicky']): ?>
-				<img class="mg10" src="<?= Cmd::userhead(0,40,Cmd::getSess('profile','sex')) ?>" />
+				<img class="mg10" src="<?= Cmd::userhead(0,40,$r['usex']) ?>" />
 			<?php else: ?>
 			<a href="/space_home/?uid=<?= $r['uid'] ?>">
-				<img class="mg10" src="<?= Cmd::userhead($r['uid']) ?>" />
+				<img class="mg10" src="<?= Cmd::userhead($r['uid'],40,$r['usex']) ?>" />
 			</a>
 			<?php endif; ?>
 		</div>

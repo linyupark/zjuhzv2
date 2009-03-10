@@ -15,7 +15,7 @@
 		static function remoteDb($dbname)
 		{	
 			$db = new Zend_Db_Adapter_Pdo_Mysql(array(
-			    'host'     => 'localshot',
+			    'host'     => 'localhost',
 			    'username' => 'zjuhz_mysql_dev',
 			    'password' => 'www_zjuhz_com_@[dev]_20080505#',
 			    'dbname'   => $dbname

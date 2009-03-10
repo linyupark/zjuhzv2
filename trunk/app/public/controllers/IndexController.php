@@ -41,7 +41,6 @@
 		function mvgroupAction()
 		{
 			$this->getHelper('viewRenderer')->setNoRender();
-			/*
 			$gid = $this->_getParam('gid');
 			if($gid)
 			{
@@ -52,7 +51,7 @@
 					'name' => $group['name'],
 					'createtime' => $group['create_time'],
 					'intro' => $group['intro'],
-					'point' => 100,
+					'point' => 0,
 					'type' => 'open'
 				));
 				$n_gid = $db->lastInsertId();
@@ -73,7 +72,7 @@
 						'lastvisit' => $m['last_access']
 					));
 				}
-			}*/
+			}
 		}
 		
 		function v1tov2Action()

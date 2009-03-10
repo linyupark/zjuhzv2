@@ -25,7 +25,7 @@
 					'num_rows' => $numrows,
 					'cur_page' => $page
 				));
-				$this->view->friends = array_slice(Alp_Page::$offset, $pagesize);
+				$this->view->friends = array_slice($friends, Alp_Page::$offset, $pagesize);
 				$this->view->pagination = Alp_Page::$page_str;
 			}
 			else $this->view->friends = $friends;

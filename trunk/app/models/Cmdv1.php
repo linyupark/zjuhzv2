@@ -24,6 +24,17 @@
 		}
 		
 		/**
+		 * 好友数据
+		 *
+		 * @return unknown
+		 */
+		static function friends()
+		{
+			$db = self::remoteDb('zjuhz_group');
+			return $db->fetchAll('SELECT `uid`,`friends` FROM `tbl_group_user` WHERE `friends` != ""');
+		}
+		
+		/**
 		 * 获取群组的创建人，时间，介绍，成员信息，做迁移用
 		 *
 		 * @param unknown_type $gid

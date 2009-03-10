@@ -11,9 +11,32 @@
 			$this->view->icons = Zend_Registry::get('config')->bar_icon->toArray();
 		}
 		
+		function friAction()
+		{
+			set_time_limit(99999999);
+			$this->getHelper('viewRenderer')->setNoRender();
+			$rows = Cmdv1::friends();
+			foreach ($rows as $r)
+			{
+				$uid = $r['uid'];
+				$friends = explode(',', $r['friends']);
+				if(Logic_User_Base::check($uid) != false)
+				foreach ($friends as $f)
+				{
+					if(Logic_User_Base::check($f) != false)
+					Logic_Space_Friends::rel($uid, $f);
+				}
+			}
+		}
+		
+		/**
+		 * 群组数据迁移
+		 *
+		 */
 		function mvgroupAction()
 		{
 			$this->getHelper('viewRenderer')->setNoRender();
+			/*
 			$gid = $this->_getParam('gid');
 			if($gid)
 			{
@@ -45,7 +68,7 @@
 						'lastvisit' => $m['last_access']
 					));
 				}
-			}
+			}*/
 		}
 		
 		function v1tov2Action()
@@ -118,6 +141,7 @@
 		
 		function indexAction()
 		{
+			
 		}
 		
 		/**

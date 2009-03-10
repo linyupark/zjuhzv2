@@ -73,23 +73,20 @@
 			if(Logic_Space_Group::isAllowedVisit($gid, $uid))
 			{
 				Logic_Space_Group::visit($gid, $uid); // 更新最后访问时间
-				$select = DbModel::Space()->select()->from(array('gm' => 'tb_group_member'), array('uid','role'));
-				$select->joinLeft(array('u' => 'zjuhzv2_user.tb_base'), 'gm.uid = u.uid', array('username','sex'))
-					   ->where('gm.role != "join" AND gm.role != "invite" AND gm.gid = '.$gid)
-					   ->order('gm.jointime DESC')->limit(12);
+				$select = DbModel::Space()->select()->from(array('gm' => 'tb_group_member'));
+				$select->joinLeft(array('u' => 'zjuhzv2_user.tb_base'), 'gm.uid = u.uid', array('username','sex'));
+				
+				$select->where('gm.gid = '.$gid.' AND gm.role = "creater"');
 				$rows = $select->query()->fetchAll();
-				$manager = array(); $fresh = array();
-				foreach ($rows as $user)
-				{
-					if($user['role'] == 'creater')
-					$this->view->creater = $user;
-					if($user['role'] == 'manager')
-					$manager[] = $user;
-					if($user['role'] == 'member')
-					$fresh[] = $user;
-				}
-				$this->view->manager = $manager;
-				$this->view->fresh = $fresh;
+				$this->view->creater = $rows[0]; $select->reset(Zend_Db_Select::WHERE);
+				
+				$select->where('gm.gid = '.$gid.' AND gm.role = "manager"');
+				$rows = $select->query()->fetchAll();
+				$this->view->manager = $rows; $select->reset(Zend_Db_Select::WHERE);
+				
+				$select->where('gm.gid = '.$gid.' AND gm.role = "member"')->order('gm.jointime DESC')->limit(6);
+				$rows = $select->query()->fetchAll();
+				$this->view->fresh = $rows; 
 				
 				$select->reset(Zend_Db_Select::ORDER)->order('gm.lastvisit DESC'); // 重置排序
 				$this->view->visitor = $select->query()->fetchAll();

@@ -47,13 +47,9 @@
 	<?php foreach ($this->visitor as $v): ?>
 	<table width="33%" class="fleft">
 		<tr><td>
-			<div class="head40">
-				<a href="/space_home/?uid=<?= $v['uid'] ?>">
-					<img class="mg10" src="<?= Cmd::userhead($v['uid']) ?>" />
-				</a>
-			</div>
 			<img class="online_state" src="<?= Alp_Url::img('icon/1616/offline.gif') ?>" rel="<?= $v['uid'] ?>" />
 			<a href="/space_home/?uid=<?= $v['uid'] ?>"><?= $v['username'] ?></a>
+		<div class="quiet f9"><?= Alp_date::normal($v['lastvisit']) ?></div>
 		</td></tr>
 	</table>
 	<?php endforeach; ?>

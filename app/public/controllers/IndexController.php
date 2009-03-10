@@ -11,6 +11,43 @@
 			$this->view->icons = Zend_Registry::get('config')->bar_icon->toArray();
 		}
 		
+		function mvgroupAction()
+		{
+			$this->getHelper('viewRenderer')->setNoRender();
+			$gid = $this->_getParam('gid');
+			if($gid)
+			{
+				$data = Cmdv1::group($gid);
+				$group = $data['group']; $member = $data['member'];
+				$db = DbModel::Space();
+				$db->insert('tb_group', array(
+					'name' => $group['name'],
+					'createtime' => $group['create_time'],
+					'intro' => $group['intro'],
+					'point' => 100,
+					'type' => 'open'
+				));
+				$n_gid = $db->lastInsertId();
+				$db->insert('tb_group_member', array(
+					'uid' => $group['creater'],
+					'gid' => $n_gid,
+					'role' => 'creater',
+					'jointime' => $group['create_time']
+				));
+				foreach ($member as $m)
+				{
+					if($m['user_id'] != $group['creater'])
+					$db->insert('tb_group_member', array(
+						'uid' => $m['user_id'],
+						'gid' => $n_gid,
+						'role' => 'member',
+						'jointime' => $m['join_time'],
+						'lastvisit' => $m['last_access']
+					));
+				}
+			}
+		}
+		
 		function v1tov2Action()
 		{
 			set_time_limit(99999999);

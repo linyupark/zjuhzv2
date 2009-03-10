@@ -16,7 +16,7 @@
 		<tr>
 			<td></td>
 			<td class="txtr">
-				<input class="btn" type="submit" value="确定" />
+				<input id="mfbtn" class="btn" type="submit" value="确定" />
 			</td>
 		</tr>
 	</table>
@@ -25,18 +25,19 @@
 <script type="text/javascript">
 	function makef()
 	{
-		$('input:submit').val('发送中..').attr('disabled', true);
+		$('#mfbtn').val('发送中..').attr('disabled', true);
 		$.post('/space_friends/add/submit/?incept=<?= $this->incept['uid'] ?>', 
 			$('#friend_add_form').serializeArray(), 
 			function(data){
 				if(data == 'success')
 				{
+					$('#mfbtn').val('发送成功');
 					$.facebox.close();
 				}
 				else
 				{
 					alert(data);
-					$('input:submit').val('确定').attr('disabled', false);
+					$('#mfbtn').val('确定').attr('disabled', false);
 				}
 			});
 		return false;

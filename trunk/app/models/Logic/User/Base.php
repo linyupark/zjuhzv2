@@ -32,8 +32,6 @@
 			return array('leader'=>$leader, 'pursuer'=>$pursuer);
 		}
 		
-		
-		
 		/**
 		 * 根据用户名获取其id
 		 *

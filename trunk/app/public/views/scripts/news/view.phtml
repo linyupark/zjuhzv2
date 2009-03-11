@@ -21,14 +21,14 @@
 						<?= $this->row['unick'] ?>
 						<?php else: ?>
 						<a href="/space_home/?uid=<?= $this->row['puber'] ?>"><?= $this->row['uname'] ?></a>
-						<?php endif; ?>：
-						<b class="f14"><?= stripcslashes($this->row['title']) ?></b>
+						<?php endif; ?>
 					</div>
 					<div class="yui-u txtr" style="width:20%">
 						<?= Alp_Date::normal($this->row['pubtime']) ?> 
 					</div>
 				</div>
 				<div class="f14 pd10" style="line-height:150%;">
+					<h2 class="txtc"><?= stripcslashes($this->row['title']) ?></h2>
 					<?= stripslashes($this->row['content']); ?>
 				</div>
 			</td>

@@ -39,6 +39,7 @@
 		 */
 		public static function isAllowed($private, $puber, $group = null)
 		{
+			if(Cmd::role() == 'master') return true;
 			switch ($private)
 			{
 				case 0 : //只有自己看

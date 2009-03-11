@@ -28,7 +28,8 @@
 			if(!$row[0]) // 无效帖子
 			$this->_forward('error', 'error', 'public');
 			if(!Logic_Space_Bar::isAllowed($row[0]['private'], $row[0]['puber'], $row[0]['group'])) // 有对应帖子判断阅读权限
-			$this->_forward('deny', 'error', 'public');
+			$this->_forward('deny', 'error', 'public', 
+					array('position' => 'space_bar', 'private' => $row[0]['private']));
 
 			Logic_Space_Bar::click($tid, $row[0]['group']);
 			$this->view->row = $row[0];

@@ -84,11 +84,11 @@
 				$rows = $select->query()->fetchAll();
 				$this->view->manager = $rows; $select->reset(Zend_Db_Select::WHERE);
 				
-				$select->where('gm.gid = '.$gid.' AND gm.role = "member"')->order('gm.jointime DESC')->limit(6);
+				$select->where('gm.gid = '.$gid.' AND gm.role = "member"')->order('gm.jointime DESC')->limit(3);
 				$rows = $select->query()->fetchAll();
 				$this->view->fresh = $rows; 
 				
-				$select->reset(Zend_Db_Select::ORDER)->order('gm.lastvisit DESC'); // 重置排序
+				$select->reset(Zend_Db_Select::ORDER)->order('gm.lastvisit DESC')->limit(12);; // 重置排序
 				$this->view->visitor = $select->query()->fetchAll();
 				
 				$this->view->group = $group;

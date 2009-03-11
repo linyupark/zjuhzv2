@@ -124,7 +124,7 @@
 		 */
 		public static function reg($params)
 		{
-			$params['account'] = Alp_Valid::of($params['account'], 'account', '帐号', 'trim|aldash|str_between[4,16]');
+			$params['account'] = Alp_Valid::of($params['account'], 'account', '帐号', 'trim|aldash|str_between[3,16]');
             $params['username'] = Alp_Valid::of($params['username'], 'username', '真实姓名', 'trim|str_between[2,4]');
             $params['password'] = Alp_Valid::of($params['password'], 'password', '登录密码', 'trim|required|matches[确认密码,'.$params['password2'].']');
             $params['email'] = Alp_Valid::of($params['email'], 'email', '邮箱', 'trim|valid_email');

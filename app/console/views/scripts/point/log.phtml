@@ -1,0 +1,41 @@
+<table class="table-dashed mgt10" width="100%">
+<tr class="bcolor-g quiet">
+	<td>操作人</td>
+	<td>得分人</td>
+	<td class="txtc">说明</td>
+	<td>分值</td>
+	<td>时间</td>
+	<td></td>
+</tr>
+<?php if(count($this->rows) > 0): foreach ($this->rows as $r): ?>
+<tr>
+	<td><?= $r['hname'] == null ? '系统' : '<a href="/space_home/?uid='.$r['handler'].'">'.$r['hname'].'</a>' ?></td>
+	<td><a href="/space_home/?uid=<?= $r['uid'] ?>"><?= $r['uname'] ?></a></td>
+	<td class="quiet"><?= stripslashes($r['memo']) ?></td>
+	<td style="color:#D44848">
+		<?= $r['point'] ?><span class="f9">pt</span>
+	</td>
+	<td class="quiet f9"><?= date('y/m/d H:i', $r['time']) ?></td>
+	<td>
+		<a href="javascript:dpoint(<?= $r['pid'] ?>)">
+		<img src="<?= Alp_Url::img('icon/mix/x.gif') ?>" /></a>
+	</td>
+</tr>
+<?php endforeach; else: ?>
+<tr>
+	<td colspan="4">没有相关记录..</td>
+</tr>
+<?php endif; ?>
+</table>
+<div class="pg"><?= $this->pagination ?></div>
+<script type="text/javascript">
+function dpoint(id)
+{
+	var c = confirm('确定要删除此项加分？');
+	if(c == true)
+	$.post('/console/point/del', {pid:id}, function(data){
+		if(data == 'success') history.go(0);
+		else alert(data);
+	});
+}
+</script>

@@ -21,7 +21,7 @@
 		
 		public static function bar($params)
 		{
-			$params['title'] = Alp_Valid::of($params['title'], 'title', '标题主题', 'trim|strip_tags|str_between[3,90]');
+			$params['title'] = Alp_Valid::of($params['title'], 'title', '标题主题', 'trim|strip_tags|str_between[3,40]');
 			if(Logic_Space_Bar::unique($params['title']) != false)
 			Alp_Sys::msg('title', '您使用的标题或主题已经存在，请更换');
 			$params['type'] = Alp_Valid::of($params['type'], 'type', '帖子类型', 'trim|required');
@@ -37,10 +37,25 @@
 		 */
 		public static function photo($params)
 		{
-			$params['title'] = Alp_Valid::of($params['title'], 'title', '标题', 'trim|strip_tags|str_between[3,90]');
+			$params['title'] = Alp_Valid::of($params['title'], 'title', '标题', 'trim|strip_tags|str_between[3,40]');
 			if(Logic_Space_Bar::unique($params['title']) != false)
 			Alp_Sys::msg('title', '您使用的标题已经存在，请更换');
 			if(count($params['photos']) == 0) Alp_Sys::msg('files', '请上传要展示的图片文件');
+			return $params;
+		}
+		
+		/**
+		 * 视频帖过滤
+		 *
+		 * @param unknown_type $params
+		 * @return unknown
+		 */
+		public static function video($params)
+		{
+			$params['title'] = Alp_Valid::of($params['title'], 'title', '标题', 'trim|strip_tags|str_between[3,40]');
+			if(Logic_Space_Bar::unique($params['title']) != false)
+			Alp_Sys::msg('title', '您使用的标题已经存在，请更换');
+			if(count($params['videos']) == 0) Alp_Sys::msg('files', '请上传要分享的视频文件');
 			return $params;
 		}
 		
@@ -52,7 +67,7 @@
 		 */
 		public static function share($params)
 		{
-			$params['title'] = Alp_Valid::of($params['title'], 'title', '主题', 'trim|strip_tags|str_between[3,90]');
+			$params['title'] = Alp_Valid::of($params['title'], 'title', '主题', 'trim|strip_tags|str_between[3,40]');
 			if(Logic_Space_Bar::unique($params['title']) != false)
 			Alp_Sys::msg('title', '您使用的标题已经存在，请更换');
 			if(count($params['files']) == 0) Alp_Sys::msg('files', '请上传想要共享的文件');
@@ -69,7 +84,7 @@
 		{
 			if(Logic_Space_Bar::unique($params['title']) != false)
 			Alp_Sys::msg('title', '您使用的主题已经存在，请更换');
-			$params['title'] = Alp_Valid::of($params['title'], 'title', '主题', 'trim|strip_tags|str_between[3,90]');
+			$params['title'] = Alp_Valid::of($params['title'], 'title', '主题', 'trim|strip_tags|str_between[3,40]');
 			$options = array();
 			$rates = array();
 			foreach ($params['options'] as $opt)
@@ -171,21 +186,21 @@
 		 */
 		public static function modtopic($params)
 		{
-			$params['title'] = Alp_Valid::of($params['title'], 'title', '标题主题', 'trim|strip_tags|str_between[3,90]');
+			$params['title'] = Alp_Valid::of($params['title'], 'title', '标题主题', 'trim|strip_tags|str_between[3,40]');
 			$params['content'] = Alp_Valid::of($params['content'], 'content', '内容', 'trim|required');
 			return $params;
 		}
 		
 		public static function modshare($params)
 		{
-			$params['title'] = Alp_Valid::of($params['title'], 'title', '标题', 'trim|strip_tags|str_between[3,90]');
+			$params['title'] = Alp_Valid::of($params['title'], 'title', '标题', 'trim|strip_tags|str_between[3,40]');
 			if(count($params['files']) == 0 && count($params['n_files']) == 0) Alp_Sys::msg('files', '请上传想要共享的文件');
 			return $params;
 		}
 		
 		public static function modphoto($params)
 		{
-			$params['title'] = Alp_Valid::of($params['title'], 'title', '标题', 'trim|strip_tags|str_between[3,90]');
+			$params['title'] = Alp_Valid::of($params['title'], 'title', '标题', 'trim|strip_tags|str_between[3,40]');
 			if(count($params['photos']) == 0 && count($params['n_photos']) == 0) Alp_Sys::msg('files', '请上传要展示的图片文件');
 			return $params;
 		}
@@ -198,7 +213,7 @@
 		 */
 		public static function modvote($params)
 		{
-			$params['title'] = Alp_Valid::of($params['title'], 'title', '主题', 'trim|strip_tags|str_between[3,90]');
+			$params['title'] = Alp_Valid::of($params['title'], 'title', '主题', 'trim|strip_tags|str_between[3,40]');
 			$params['memo'] = trim($params['memo']);
 			$options = array();
 			$rates = array();
@@ -219,7 +234,7 @@
 		
 		public static function modevents($params)
 		{
-			$params['title'] = Alp_Valid::of($params['title'], 'title', '标题主题', 'trim|strip_tags|str_between[3,90]');
+			$params['title'] = Alp_Valid::of($params['title'], 'title', '标题主题', 'trim|strip_tags|str_between[3,40]');
 			$params['content'] = Alp_Valid::of($params['content'], 'content', '内容', 'trim|required');
 			if(!empty($params['limit']))
 			$params['limit'] = Alp_Valid::of($params['limit'], 'limit', '人数限制', 'trim|numeric');
@@ -238,7 +253,7 @@
 		
 		public static function modnews($params)
 		{
-			$params['title'] = Alp_Valid::of($params['title'], 'title', '标题主题', 'trim|strip_tags|str_between[3,90]');
+			$params['title'] = Alp_Valid::of($params['title'], 'title', '标题主题', 'trim|strip_tags|str_between[3,40]');
 			$params['content'] = Alp_Valid::of($params['content'], 'content', '内容', 'trim|required');
 			$params['sort'] = Alp_Valid::of($params['sort'], 'sort', '归类', 'trim|required');
 			$tags = array();

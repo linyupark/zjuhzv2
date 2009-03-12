@@ -14,7 +14,7 @@
 				<td class="txtc" width="10%">
 					<div class="head40">
 						<?php if($r['nicky']): ?>
-						<img class="pd10" src="<?= Cmd::userhead(0,40,Cmd::getSess('profile','sex')) ?>" />
+						<img class="pd10" src="<?= Cmd::userhead(0,40,$r['pubsex']) ?>" />
 						<?php else: ?>
 						<a href="/space_home/?uid=<?= $r['puber'] ?>">
 						<img class="pd10" src="<?= Cmd::userhead($r['puber'],40) ?>" />

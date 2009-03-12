@@ -9,6 +9,30 @@
 		function init(){  }
 		
 		/**
+		 * 清除收件箱记录
+		 *
+		 */
+		function clearAction()
+		{
+			$this->getHelper('viewRenderer')->setNoRender();
+			if($this->getRequest()->isXmlHttpRequest())
+			{
+				$pid = $this->_getParam('pid');
+				$mids = DbModel::Space()->fetchAll('SELECT `mid` 
+					FROM `tb_msg` WHERE `parent` = ? AND `type` = "pm"', $pid);
+				if(count($mids) > 0)
+				{
+					foreach ($mids as $r)
+					{
+						Logic_Space_Msg::clear($r['mid'], 'ibox');
+					}
+					Logic_Space_Msg::del();
+				}
+				echo 'success';
+			}
+		}
+		
+		/**
 		 * 发送站内信表单
 		 *
 		 */

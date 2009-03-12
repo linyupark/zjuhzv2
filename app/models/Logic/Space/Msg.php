@@ -98,6 +98,25 @@
 		}
 		
 		/**
+		 * 删除双方都已经清除记录的msg
+		 *
+		 */
+		public static function del()
+		{
+			parent::Space()->delete('tb_msg', 'ibox = 0 AND sbox = 0');
+		}
+		
+		/**
+		 * 清除信息记录
+		 *
+		 * @param unknown_type $mid
+		 */
+		public static function clear($mid, $box = 'ibox')
+		{
+			parent::Space()->update('tb_msg', array($box => 0), 'mid = '.(int)$mid);
+		}
+		
+		/**
 		 * 发送站内信息
 		 *
 		 * @param unknown_type $incept

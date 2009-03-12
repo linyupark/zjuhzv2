@@ -1,7 +1,7 @@
 <?php foreach ($this->rows as $r): ?>
-<table class="table-dashed" width="90%" style="line-height:170%">
+<table id="msg_box_<?= $r['mid'] ?>" class="table-dashed" width="90%" style="line-height:170%">
 	<tr>
-		<td width="50">
+		<td width="50" valign="top">
 			<div class="head40">
 	    		<img class="pd10" src="<?= Cmd::userhead($r['incept'], '40', $r['isex']) ?>" />
 	    	</div>
@@ -21,6 +21,7 @@
 				break;
 			} ?>
 			<?= ($r['isread'] == 0)?'<span class="quiet">(未读)</span>':'' ?>
+			<a href="javascript:clear(<?= $r['mid'] ?>)" class="f9" style="color:#666">[x]</a>
 			<br />
 			<img src="<?= Alp_Url::img('icon/mix/quote2.gif') ?>" />
 			<?= stripslashes($r['content']); ?>

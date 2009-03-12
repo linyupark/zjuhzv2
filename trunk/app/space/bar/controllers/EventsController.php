@@ -205,7 +205,7 @@
 			}
 			
 			$select->joinLeft(array('puser' => 'zjuhzv2_user.tb_base'), 'puser.uid = bar.puber', 
-							  array('pubname' => 'username', 'pubnick' => 'nickname', 'pubsex' => 'sex'));
+							  array('pubname' => 'username', 'pubnick' => 'nickname', 'pubsex' => 'puser.sex'));
 			$select->joinLeft(array('ruser' => 'zjuhzv2_user.tb_base'), 'ruser.uid = bar.replyer', 
 							  array('replyname' => 'username', 'replynick' => 'nickname'));
 							  

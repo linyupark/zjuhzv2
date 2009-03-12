@@ -91,8 +91,8 @@
 					       ->joinLeft(array('g' => 'tb_group'), 'g.gid = m.gid')
 					       ->joinLeft(array('u' => 'zjuhzv2_user.tb_base'), 'u.uid = m.uid', 
 					       			  array('uname' => 'u.username'))
-					       ->where('g.type != ?', 'close')
-					       ->limit(5);
+					       ->where('g.type != ?', 'close')->group('g.gid')
+					       ->limit(7);
 				}
 				else $select->where('m.uid = 0');
 				       

@@ -71,7 +71,8 @@
 		{
 			if($_FILES)
 			{
-				$path = UPLOADROOT.'/share/'.Cmd::uid();
+				$uid = Cmd::uid();
+				$path = UPLOADROOT.'/share/'.$uid;
 				if(!file_exists($path)) mkdir($path, 0777);
 				Alp_Upload::init(array(
 					'type' => 'rar|zip|doc|xls|ppt|7z|mp3',
@@ -86,7 +87,39 @@
 				else
 				{
 					// 上传后的处理
-					echo '<script>parent.create_item('.Cmd::uid().',"'.Alp_Upload::$filename[0].'");parent.upreload();</script>';
+					echo '<script>parent.create_item('.$uid.',"'.Alp_Upload::$filename[0].'");parent.upreload();</script>';
+				}
+			}
+		}
+		
+		/**
+		 * 视频上传
+		 *
+		 */
+		function videoAction()
+		{
+			if($_FILES)
+			{
+				$uid = Cmd::uid();
+				$path = UPLOADROOT.'/video/'.$uid;
+				if(!file_exists($path)) mkdir($path, 0777);
+				$newname = strtolower(Alp_Ext_Str2Pinyin::str2pinyin($_FILES['video']['name'][0]));
+				Alp_Upload::init(array(
+					'type' => 'flv',
+					'maxsize' => 49000,
+					'filename' => array($newname),
+					'overwrite' => true,
+					'path' => $path.'/'
+				));
+				if(!Alp_Upload::handle('video'))
+				{
+					echo "<script>alert('".Alp_Sys::allMsg('',"")."');parent.upreload();</script>";
+				}
+				else
+				{
+					$url = Alp_Url::upload('video/'.$uid.'/'.$newname);
+					$html = '<object type="application/x-shockwave-flash" data="/player/vcastr3.swf" width="650" height="500" id="vcastr3"><param name="movie" value="/player/vcastr3.swf"/> <param name="allowFullScreen" value="true" /><param name="FlashVars" value="xml=<vcastr><channel><item><source>'.$url.'</source><duration></duration><title></title></item></channel><config></config><plugIns><logoPlugIn><url>/player/logoPlugIn.swf</url><logoText>zjuhz.com</logoText><logoTextAlpha>0.75</logoTextAlpha><logoTextFontSize>14</logoTextFontSize><logoTextLink></logoTextLink><logoTextColor>0xffffff</logoTextColor><textMargin>10 10 auto auto</textMargin></logoPlugIn></plugIns></vcastr>"/></object>';
+					echo '<script>parent.insert_html(\''.$html.'\')</script>';
 				}
 			}
 		}
@@ -99,7 +132,8 @@
 		{
 			if($_FILES)
 			{
-				$path = UPLOADROOT.'/users/pic/'.Cmd::uid();
+				$uid = Cmd::uid();
+				$path = UPLOADROOT.'/users/pic/'.$uid;
 				if(!file_exists($path)) mkdir($path, 0777);
 				$newname = strtolower(Alp_Ext_Str2Pinyin::str2pinyin($_FILES['pic']['name'][0]));
 				Alp_Upload::init(array(
@@ -123,7 +157,7 @@
 						$h = $height*(600/$width);
 						$im->resize(Alp_String::stripFileExt($newname), 600, $h, Alp_String::stripFile($newname));
 					}
-					$url = Alp_Url::upload('users/pic/'.Cmd::uid().'/'.$newname);
+					$url = Alp_Url::upload('users/pic/'.$uid.'/'.$newname);
 					echo '<script>parent.insert_html("<img src=\''.$url.'\' />")</script>';
 				}
 			}
@@ -133,7 +167,8 @@
 		{
 			if($_FILES)
 			{
-				$path = UPLOADROOT.'/photo/'.Cmd::uid();
+				$uid = Cmd::uid();
+				$path = UPLOADROOT.'/photo/'.$uid;
 				if(!file_exists($path)) mkdir($path, 0777);
 				$newname = strtolower(Alp_Ext_Str2Pinyin::str2pinyin($_FILES['photo']['name'][0]));
 				Alp_Upload::init(array(
@@ -156,7 +191,7 @@
 						$h = $height*(600/$width);
 						$im->resize(Alp_String::stripFileExt($newname).'_resize', 600, $h, Alp_String::stripFile($newname));
 					}
-					echo '<script>parent.create_item('.Cmd::uid().',"'.Alp_Upload::$filename[0].'");parent.upreload();</script>';
+					echo '<script>parent.create_item('.$uid.',"'.Alp_Upload::$filename[0].'");parent.upreload();</script>';
 				}
 			}
 		}

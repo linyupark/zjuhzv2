@@ -1,33 +1,37 @@
 <?php 
 	$gp = ''; 
+	$on = 'color:#333;text-decoration:underline;font-weight:bold';
 	if($this->gp):
 	$gp = '&gp='.$this->gp;
 ?>
-<div class="quiet pdb10">
+<div class="pdb10">
 	<img src="<?= Alp_Url::img('icon/1616/att_s.gif'); ?>" />
 	当前发布的为群组帖，可选择以下类型：
 </div>
 <?php endif; ?>
-<a href="?pub=topic<?= $gp ?>" style="<?= ($this->pub == 'topic')?'color:#333;text-decoration:underline':''; ?>">
-	<img src="<?= Alp_Url::img('icon/1616/talk.gif'); ?>" /> 话题帖
+<a href="?pub=topic<?= $gp ?>" style="<?= ($this->pub == 'topic')?$on:''; ?>">
+	<img src="<?= Alp_Url::img('icon/1616/talk.gif'); ?>" /> 话题
 </a>
 <?php if(!$this->gp): ?>
-<a href="?pub=news<?= $gp ?>" style="<?= ($this->pub == 'news')?'color:#333;text-decoration:underline':''; ?>">
-	<img src="<?= Alp_Url::img('icon/1616/news.gif'); ?>" /> 新闻帖
+<a href="?pub=news<?= $gp ?>" style="<?= ($this->pub == 'news')?$on:''; ?>">
+	<img src="<?= Alp_Url::img('icon/1616/news.gif'); ?>" /> 新闻
 </a>
-<a href="?pub=help<?= $gp ?>" style="<?= ($this->pub == 'help')?'color:#333;text-decoration:underline':''; ?>">
-	<img src="<?= Alp_Url::img('icon/1616/smile.gif'); ?>" /> 求助帖
+<a href="?pub=help<?= $gp ?>" style="<?= ($this->pub == 'help')?$on:''; ?>">
+	<img src="<?= Alp_Url::img('icon/1616/smile.gif'); ?>" /> 求助
 </a>
 <?php endif; ?>
-<a href="?pub=events<?= $gp ?>" style="<?= ($this->pub == 'events')?'color:#333;text-decoration:underline':''; ?>">
-	<img src="<?= Alp_Url::img('icon/1616/tea.gif'); ?>" /> 活动帖
+<a href="?pub=events<?= $gp ?>" style="<?= ($this->pub == 'events')?$on:''; ?>">
+	<img src="<?= Alp_Url::img('icon/1616/tea.gif'); ?>" /> 活动
 </a>
-<a href="?pub=vote<?= $gp ?>" style="<?= ($this->pub == 'vote')?'color:#333;text-decoration:underline':''; ?>">
-	<img src="<?= Alp_Url::img('icon/1616/vote.gif'); ?>" /> 投票帖
+<a href="?pub=vote<?= $gp ?>" style="<?= ($this->pub == 'vote')?$on:''; ?>">
+	<img src="<?= Alp_Url::img('icon/1616/vote.gif'); ?>" /> 投票
 </a>
-<a href="?pub=share<?= $gp ?>" style="<?= ($this->pub == 'share')?'color:#333;text-decoration:underline':''; ?>">
-	<img src="<?= Alp_Url::img('icon/1616/share.gif'); ?>" /> 共享帖
+<a href="?pub=share<?= $gp ?>" style="<?= ($this->pub == 'share')?$on:''; ?>">
+	<img src="<?= Alp_Url::img('icon/1616/share.gif'); ?>" /> 文件
 </a>
-<a href="?pub=photo<?= $gp ?>" style="<?= ($this->pub == 'photo')?'color:#333;text-decoration:underline':''; ?>">
-	<img src="<?= Alp_Url::img('icon/1616/pic.gif'); ?>" /> 图片帖
+<a href="?pub=photo<?= $gp ?>" style="<?= ($this->pub == 'photo')?$on:''; ?>">
+	<img src="<?= Alp_Url::img('icon/1616/pic.gif'); ?>" /> 图片
+</a>
+<a href="?pub=video<?= $gp ?>" style="<?= ($this->pub == 'video')?$on:''; ?>">
+	<img src="<?= Alp_Url::img('icon/1616/video.gif'); ?>" /> 视频
 </a>

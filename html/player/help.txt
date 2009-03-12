@@ -1,0 +1,143 @@
+以下用”.”描述xml树结构并说明参数作用
+
+影片信息
+channel.item
+
+影片信息，可以设置多个影片
+channel.itme.source
+
+flv影片地址参数，此参数是唯一必须要有的参数，其他参数都可以不要，播放器有默认参数
+channel.itme.duration
+
+对应影片的总时间, 单位是秒，由于有些影片在制作过程中时间信息丢失，可以通过这里来设置
+channel.itme.tilte
+
+对应影片的标题
+channel.itme.link
+
+对应影片点击后的链接
+
+播放器设置
+config.bufferTime
+
+在缓存区影片的时间,单位是秒
+config.contralPanelAlpha
+
+控制栏的透明度，在 0 — 1 之间
+config.controlPanelBgColor
+
+控制栏背景的颜色
+config.controlPanelBtnColor
+
+控制按钮的颜色
+config.contralPanelBtnGlowColro
+
+控制按钮光晕的颜色
+config.defautVolume
+
+默认的声音大小,最大为1,最小为0
+config.controlPanelMode
+
+控制栏的显示模式，
+“float”: 默认的浮动模式,鼠标移除播放器就会隐藏掉
+“normal”: 正常模式，任何时候都在影片的下部浮动显示
+“bottom”: 下部模式，不浮动在影片之上，而是显示在影片下方
+“none”: 不显示播放器控制栏
+config.isAutoPlay
+
+是否影片自动开始播放,默认是true
+config.isLoadBegin
+
+是否一开始就读取影片,默认是true
+config.isRepeat
+
+是否循环播放影片,默然是false
+config.isShowAbout
+
+是否显示关于信息
+config.scaleMode
+
+影片放缩模式:
+“showAll”: 可以看到全部影片,保持比例,可能上下或者左右
+“exactFit”: 放缩影片到播放器的尺寸,可能比例失调
+“noScale”: 影片的原始尺寸,无放缩
+“noBorder”: 影片充满播放器,保持比例,可能会被裁剪
+
+插件设置
+
+plugIns 中每一个子节点代表一个插件，可以设置多个插件
+plugIns.logoPlugIn，显示logo插件的参数设置
+plugIns.logoPlugIn.url
+
+插件的地址，可以使用绝对地址，也可以使用相对地址，绝对地址需要http://开始
+plugIns.logoPlugIn.logoText
+
+logo文字，注意之可以使用英文和英文标点，不支持中文，如果想放中文，就把中文做成文字png透明图片，用plugIns.logoPlugIn.logoClipUrl参数设置
+plugIns.logoPlugIn.logoTextAlpha
+
+文字的透明度
+plugIns.logoPlugIn.logoTextLink
+
+文字的连接
+plugIns.logoPlugIn.logoTextFontSize
+
+文字字体的大小
+plugIns.logoPlugIn.logoTextColor
+
+文字的颜色
+plugIns.logoPlugIn.textMargin
+
+文字的位置，用了css的margin概念，四个数值代表 上 右 下 左相对于播放器的距离，四个数值用空格分开，不需具体数值用”auto”填写 ，比如左上对齐并都有10像素的距离可以写 “10 auto auto 10″, 右下角对齐是”auto 10 10 auto”
+plugIns.logoPlugIn.logoClipUrl
+
+图片logo的url，可以使用绝对地址，也可以使用相对地址，绝对地址需要http://开始
+plugIns.logoPlugIn.logoClipAlpha
+
+图片logo的透明度
+plugIns.logoPlugIn.logoClipLink
+
+图片logo的连接
+plugIns.logoPlugIn.clipMargin
+
+图片logo的位置，用了css的margin概念，四个数值代表 上 右 下 左相对于播放器的距离，四个数值用空格分开，不需具体数值用”auto”填写 ，比如左上对齐并都有10像素的距离可以写 “10 auto auto 10″, 右下角对齐是”auto 10 10 auto”
+
+plugIns.javaScriptPlugIn，javaScript控制插件的参数设置
+plugIns.javaScriptPlugIn.url
+
+插件的地址，可以使用绝对地址，也可以使用相对地址，绝对地址需要http://开始
+javaScript插件
+
+使用方法参看实例页面
+http://vcastr.ruochi.com/v3/vcastr_javaScript_example.html
+
+javaScript可以控制播放器 播放，暂停，停止，快进，快退，下一个，上一个，音量控制，影片跳转到需要的时间
+在javaScript可以获得播放器的事件,有四个参数回来，分别是type:事件种类，state:当前状态, phayHeadTime:当前播放时间，loadPersent:下载百分比
+
+事件 type有
+stateChange，播放状态变化，播放或者暂停
+complete，播放完毕
+init，播放器初始化完毕
+ready，影片下载了一部分，已经可以开始播放
+playheadUpdate，每一秒即发一次
+startBuffering，开始缓冲
+stopBuffering，缓冲结束
+
+状态 state
+playing，播放中
+paused，暂停中
+beginEndImagePlugIn 影片开始和结尾需要加载外部资源(可以是图片或者swf)的插件
+beginEndImagePlugIn.logoPlugIn.url
+
+插件的地址，可以使用相对或者绝对地址，绝对地址需要http://开始
+beginEndImagePlugIn.logoPlugIn.source
+
+开始的图片或者swf的地址
+beginEndImagePlugIn.logoPlugIn.type
+
+显示方式，有3种显示方法，begin:在开始的显示，end:结尾部分显示，beginEnd:在开始和结尾部分同时显示
+beginEndImagePlugIn.logoPlugIn.scaleType
+
+“showAll”: 可以看到全部影片,保持比例,可能上下或者左右
+“exactFit”: 放缩影片到播放器的尺寸,可能比例失调
+“noScale”: 影片的原始尺寸,无放缩
+“noBorder”: 影片充满播放器,保持比例,可能会被裁剪

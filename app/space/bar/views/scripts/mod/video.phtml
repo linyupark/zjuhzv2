@@ -1,0 +1,71 @@
+<div class="yui-main">
+	<div class="yui-b">
+		<div class="mg5 section yui-g">
+			<div class="yui-u first">
+				<img class="vm mgr10" src="<?= Alp_Url::img('icon/mix/edit.gif') ?>" /><b>修改话题</b>
+			</div>
+			<div class="yui-u txtr"><a href="javascript:history.back()">返回上一页</a></div>
+		</div>
+		<form id="video_form" method="post" onsubmit="return pub_video()">
+		<table class="mgl10 table-dashed" width="97%">
+			<tr>
+				<td class="txtr">标题：</td>
+				<td>
+					<input type="text" name="title" size="90" value="<?= stripslashes($this->row['title']) ?>" />
+				</td>
+			</tr>
+			<tr>
+				<td class="txtr">图片：</td>
+				<td id="pic_upload">
+				</td>
+			</tr>
+			<tr>
+				<td class="txtr">视频：</td>
+				<td id="video_upload"></td>
+			</tr>
+			<tr>
+				<td class="txtr">内容：</td>
+				<td><?= Cmd::fck('content',stripslashes($this->row['content']),'300px','99%') ?></td>
+			</tr>
+			<tr>
+				<td class="txtr">公开给：</td>
+				<td><?= $this->render('mod/private.phtml') ?>
+					<?= $this->render('mod/nicky.phtml') ?>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input id="submit" type="submit" value="保存帖子" class="btn" />
+					<input type="hidden" name="group" value="<?= $this->gp ?>" />
+				</td>
+			</tr>
+		</table>
+		</form>
+		<iframe name="pic_frame" class="hide" src="/public/upload/pic"></iframe>
+		<iframe name="video_frame" class="hide" src="/public/upload/video"></iframe>
+	</div>
+</div>
+
+<script type="text/javascript">
+	function pub_video()
+	{
+		$('#submit').attr('disabled', true).val('正在保存帖子，请稍候...');
+		$('#content').val(FCKeditorAPI.GetInstance("content").GetXHTML());
+		$.post(
+			'/space_bar/mod/video?tid=<?= $this->row['tid'] ?>',
+			$('#video_form').serializeArray(),
+			function(data)
+			{
+				if(data.result == 'success')
+				window.location.href = '/space_bar/video/view?tid='+data.tid;
+				else 
+				{
+					alert(data.result);
+					$('#submit').attr('disabled', false).val('保存帖子');
+				}
+			},
+			'json'
+		);
+		return false;
+	}
+	function insert_html(html){FCKeditorAPI.GetInstance("content").InsertHtml(html);upreload();}
+	$('#pic_upload').load('/public/upload/form?for=pic');
+	$('#video_upload').load('/public/upload/form?for=video');
+</script>

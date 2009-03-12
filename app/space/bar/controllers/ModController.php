@@ -220,6 +220,38 @@
 		}
 		
 		/**
+		 * 视频
+		 *
+		 */
+		function videoAction()
+		{
+			$tid = $this->view->tid;
+			if($this->getRequest()->isXmlHttpRequest()) // 处理保存
+			{
+				$this->getHelper('viewRenderer')->setNoRender();
+				$params = $this->getRequest()->getParams();
+				$params = Filter_Space::modtopic($params);
+				if(Alp_Sys::getMsg() == null)
+				{
+					Logic_Space_Bar_Video::mod($params, $tid);
+					if(Alp_Sys::getMsg() == null)
+					{
+						echo Zend_Json::encode(array('result'=>'success', 'tid' => $tid));
+						exit();
+					}
+				}
+				echo Zend_Json::encode(array('result'=>Alp_Sys::allMsg('* ',"\n")));
+			}
+			else
+			{
+				$this->view->headTitle('修改视频');
+				$this->isAllowed($tid);
+				$row = Logic_Space_Bar_Video::view($tid);
+				$this->view->row = $row[0];
+			}
+		}
+		
+		/**
 		 * 话题
 		 *
 		 */

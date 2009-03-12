@@ -14,9 +14,9 @@
 		 * @param unknown_type $id
 		 * @param unknown_type $point
 		 */
-		public static function apoint($type = 'user', $id, $point, $memo, $time)
+		public static function apoint($type = 'user', $id, $point, $memo, $time, $handler = null)
 		{
-			$handler = Cmd::uid();
+			$handler = ($handler == null) ? Cmd::uid() : $handler;
 			if($type == 'user') // 用户加分
 			{
 				$uid = (int)$id;

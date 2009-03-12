@@ -16,6 +16,28 @@
 		}
 		
 		/**
+		 * 热心度增长排行
+		 *
+		 */
+		function rankAction()
+		{
+			$range = $this->_getParam('range', 'week');
+			$now = time();
+			$db = DbModel::Log();
+			switch ($range)
+			{
+				case 'week' : // 周
+					$year = date('Y', $now);
+					$div = strtotime($year.'-1-1 00:00');
+					$rows = $db->fetchAll('SELECT * FROM `tb_point` WHERE `time` > '.$div.' AND `time` < '.$now);
+					echo floor(($now - $div)/604800);
+				break;
+			}
+			
+			$this->view->range = $range;
+		}
+		
+		/**
 		 * 全站热心度记录，带回撤功能
 		 *
 		 */

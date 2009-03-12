@@ -219,7 +219,7 @@
 					AND (g.`type` IS NULL OR g.`type` != "close")
 				)  
 				AND (bar.`type` != "news" AND bar.`type` != "events")  
-				ORDER BY bar.`pubtime` DESC LIMIT 20');
+				ORDER BY bar.`pubtime` DESC LIMIT 15');
 			$this->view->bars = $rows;
 		}
 		

@@ -52,11 +52,7 @@
 		 */
 		public static function video($params)
 		{
-			$params['title'] = Alp_Valid::of($params['title'], 'title', '标题', 'trim|strip_tags|str_between[3,40]');
-			if(Logic_Space_Bar::unique($params['title']) != false)
-			Alp_Sys::msg('title', '您使用的标题已经存在，请更换');
-			if(count($params['videos']) == 0) Alp_Sys::msg('files', '请上传要分享的视频文件');
-			return $params;
+			return self::topic($params);
 		}
 		
 		/**

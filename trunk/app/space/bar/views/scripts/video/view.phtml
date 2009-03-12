@@ -1,0 +1,60 @@
+<?php $this->headTitle(htmlspecialchars(stripcslashes($this->row['title']))); ?>
+<div class="yui-main">
+	<div class="mg5 section yui-g">
+		<div class="yui-u first" style="width:80%">
+			<img class="vm mgr10" src="<?= Alp_Url::img('icon/1616/video.gif') ?>" />
+			<?php if($this->row['group']): ?>
+			<b><a href="/space_group/home/?id=<?= $this->row['group'] ?>">群组</a></b> :: 
+			<?php endif; ?>
+			<b>视频</b> 
+			:: <?= stripcslashes($this->row['title']) ?>
+		</div>
+		<div class="yui-u txtr a-span" style="width:20%">
+			<a href="javascript:history.back()">返回上一页</a>
+			<?php if(!$this->row['group']): ?>
+			<a href="/space_bar/?type=video">返回视频列表</a>
+			<?php else: ?>
+			<a href="/space_group/topic/?id=<?= $this->row['group'] ?>">返回群组帖区</a>
+			<?php endif; ?>
+		</div>
+	</div>
+	<table width="100%">
+		<tr>
+			<td rowspan="2" width="15%" valign="top" class="txtc">
+				<div class="head80">
+					<?php if($this->row['nicky']): ?>
+					<img class="mg10 pd10" src="<?= Cmd::userhead(0,80,Cmd::getSess('profile','sex')) ?>" />
+					<img class="online_state" src="<?= Alp_Url::img('icon/1616/offline.gif') ?>" rel="<?= $this->row['puber'] ?>" />
+					<?= $this->row['unick'] ?>
+					<?php else: ?>
+					<a href="/space_home/?uid=<?= $this->row['puber'] ?>">
+					<img class="mg10 pd10" src="<?= Cmd::userhead($this->row['puber'],80) ?>" />
+					</a>
+					<img class="online_state" src="<?= Alp_Url::img('icon/1616/offline.gif') ?>" rel="<?= $this->row['puber'] ?>" />
+					<a href="/space_home/?uid=<?= $this->row['puber'] ?>"><?= $this->row['uname'] ?></a>
+					<?php endif; ?>
+				</div>
+				<br /><br /><br />
+			</td>
+		</tr>
+		<tr>
+			<td width="85%">
+				<div class="yui-g section-sub">
+					<div class="yui-u first" style="width:80%">
+						<b class="f14"><?= stripcslashes($this->row['title']) ?></b>
+					</div>
+					<div class="yui-u txtr" style="width:20%">
+						<?= Alp_Date::normal($this->row['pubtime']) ?> 
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						楼主
+					</div>
+				</div>
+				<div class="f14 pd10" style="line-height:150%;">
+					<?= stripslashes($this->row['content']); ?>
+				</div>
+				<?= $this->render('toolbar.phtml'); ?>
+			</td>
+		</tr>
+	</table>
+	<?= $this->action('view', 'comment', 'space_bar', array('gid' => $this->row['group'])) ?>
+</div>

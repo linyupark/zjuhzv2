@@ -178,6 +178,39 @@
 		}
 		
 		/**
+		 * 视频
+		 *
+		 */
+		function videoAction()
+		{
+			$this->view->headTitle('视频共享');
+			$params = $this->getRequest()->getParams();
+			if($this->getRequest()->isXmlHttpRequest())
+			{
+				$this->getHelper('viewRenderer')->setNoRender();
+				$params = Filter_Space::video($params);
+				if(Alp_Sys::getMsg() == null)
+				{
+					$params['uid'] = Cmd::uid();
+					$tid = Logic_Space_Bar_Video::insert($params);
+					if(Alp_Sys::getMsg() == null)
+					{
+						// 记录
+						Logic_Log::bar(array(
+							'uid' => $params['uid'],
+							'gid' => $params['group'],
+							'tid' => $tid,
+							'key' => 'add_video'
+						));
+						echo Zend_Json::encode(array('result'=>'success', 'tid' => $tid));
+						exit();
+					}
+				}
+				echo Zend_Json::encode(array('result'=>Alp_Sys::allMsg('* ',"\n")));
+			}
+		}
+		
+		/**
 		 * 图片
 		 *
 		 */

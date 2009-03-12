@@ -1,0 +1,44 @@
+<div class="yui-main">
+	<div class="yui-b">
+		<div class="mg5 section yui-g">
+			<div class="yui-u first" style="width:80%">
+				<img class="vm mgr10" src="<?= Alp_Url::img('icon/1616/video.gif') ?>" /><b>视频共赏</b>
+			</div>
+			<div class="yui-u txtr" style="width:20%"><a href="javascript:history.back()">返回上一页</a></div>
+		</div>
+		<?= $this->render('tab.phtml'); ?>
+		<table class="table-dashed mg5" width="98%">
+			<tr class="section-sub">
+				<td width="50%">标题</td>
+				<td width="15%" class="txtc">作者</td>
+				<td width="20%" class="txtc">回复/点击/顶</td>
+				<td width="15%" class="txtc">最后发表</td>
+			</tr>
+			<?php if($this->rows): foreach($this->rows as $i => $r): ?>
+			<tr <?= ($i%2 == 1) ? 'class="bcolor-g"' : '' ?>>
+				<td class="txtl">
+					<img class="vm" src="<?= Alp_Url::img('icon/1616/'.$this->icons[$r['type']]); ?>" />
+					<a <?= ($r['ding'] == 1)?'style="color:red"':''; ?> href="/space_bar/<?= $r['type'] ?>/view?tid=<?= $r['tid'] ?>"><?= stripslashes($r['title']) ?></a>
+					<?= Logic_Space_Bar::subpage($r); ?>
+				</td>
+				<td class="txtc quiet">
+					<?= ($r['nicky']) ? $r['pubnick']:'<a href="/space_home/?uid='.$r['puber'].'">'.$r['pubname'].'</a>' ?><br />
+					<span class="tp5"><?= Alp_Date::normal($r['pubtime']) ?></span>
+				</td>
+				<td class="txtc quiet">
+					<span class="tp7"><?= $r['reply'] ?></span> / <?= $r['click'] ?> / <span class="tp3"><?= $r['rate'] ?></span>
+				</td>
+				<td class="txtc quiet">
+					<?= ($r['replytime']) ? Alp_Date::normal($r['replytime']):'-' ?><br />
+					<?= ($r['rnicky']) ? $r['replynick']:'<a href="/space_home/?uid='.$r['replyer'].'">'.$r['replyname'].'</a>'; ?>
+				</td>
+			</tr>
+			<?php endforeach; else: ?>
+			<tr>
+				<td><img class="vm" src="<?= Alp_Url::img('icon/1616/att.gif'); ?>" /> 没有找到任何相关的帖子</td>
+			</tr>
+			<?php endif; ?>
+		</table>
+		<div class="pg"><?= $this->pagination ?></div>
+	</div>
+</div>

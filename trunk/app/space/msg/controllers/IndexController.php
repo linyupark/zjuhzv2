@@ -5,6 +5,17 @@
 	 */
 	class Space_Msg_IndexController extends Zend_Controller_Action 
 	{
+		function clearAction()
+		{
+			$this->getHelper('viewRenderer')->setNoRender();
+			if($this->getRequest()->isXmlHttpRequest())
+			{
+				$mid = (int)$this->_getParam('mid');
+				Logic_Space_Msg::clear($mid, 'sbox');
+				echo 'success';
+			}
+		}
+		
 		/**
 		 * 站内信息列表
 		 *
@@ -14,13 +25,18 @@
 			$uid = Cmd::uid();
 			$type = $this->_getParam('type', 'pm');
 			$page = $this->_getParam('p', 1);
-			$pagesize = 10;
+			$pagesize = 5;
 			
 			$select = DbModel::Space()->select();
-			$select->from(array('msg' => 'tb_msg'), array('numrows' => new Zend_Db_Expr('COUNT(mid)')));
-			$select->where('msg.incept = ?', $uid);
-			$select->where('msg.type = ?', $type);
-			
+			$select->from(array('msg' => 'tb_msg'), array('numrows' => new Zend_Db_Expr('COUNT(msg.mid)')));
+			if($type != 'sendbox')
+			{
+				$select->where('msg.type = ?', $type)->where('msg.ibox = 1 AND msg.incept = ?', $uid);
+			}
+			else
+			{
+				 $select->where('msg.sbox = 1 AND msg.sender = ?', $uid);
+			}
 			$row = $select->query()->fetchAll();
 			$select->reset(Zend_Db_Select::COLUMNS)->columns('*');
 			
@@ -49,8 +65,6 @@
 							array('ftype' => 'f.type'));
 				break;
 				case 'sendbox' : // 发件箱
-					$select->reset(Zend_Db_Select::WHERE);
-					$select->where('msg.sbox = 1 AND msg.sender = '.$uid);
 					$select->joinLeft(array('iu' => 'zjuhzv2_user.tb_base'), 'iu.uid = msg.incept', 
 							array('iname' => 'iu.username', 'isex' => 'iu.sex'));
 				break;

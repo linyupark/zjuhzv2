@@ -12,4 +12,13 @@
 	</div>
 </div>
 <?= $this->render('sidebar.phtml'); ?>
-<script>newMsg(0);</script>
+<script type="text/javascript">
+	newMsg(0);
+	function clear(mid)
+	{
+		$.post('/space_msg/index/clear', {mid:mid}, function(data){
+			if(data == 'success') $('#msg_box_'+mid).children().fadeOut();
+			else alert(data);
+		});
+	}
+</script>

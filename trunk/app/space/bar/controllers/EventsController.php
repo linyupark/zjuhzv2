@@ -38,6 +38,7 @@
 		 */
 		function signAction()
 		{
+			$myid = Cmd::uid();
 			$row = $this->_getParam('row');
 			$members = unserialize($row['member']);
 			if($members == false) $members = array();
@@ -48,9 +49,13 @@
 				$tid = $this->_getParam('tid');
 				$username = Cmd::getSess('profile', 'username');
 				if($flag == 1) // 报名
-				Logic_Space_Bar_Events::sign($tid, Cmd::uid(), $username);
+				{
+					Logic_Space_Bar_Events::sign($tid, $myid, $username);
+					// 记录
+					
+				}
 				else 
-				Logic_Space_Bar_Events::unsign($tid, Cmd::uid());
+				Logic_Space_Bar_Events::unsign($tid, $myid);
 				
 				echo 'success';
 			}
@@ -58,7 +63,7 @@
 			$this->view->time = $row['time'];
 			$this->view->members = $members;
 			$this->view->tid = $row['tid'];
-			$this->view->myid = Cmd::uid();
+			$this->view->myid = $myid;
 		}
 		
 		
@@ -200,7 +205,7 @@
 			}
 			
 			$select->joinLeft(array('puser' => 'zjuhzv2_user.tb_base'), 'puser.uid = bar.puber', 
-							  array('pubname' => 'username', 'pubnick' => 'nickname'));
+							  array('pubname' => 'username', 'pubnick' => 'nickname', 'pubsex' => 'sex'));
 			$select->joinLeft(array('ruser' => 'zjuhzv2_user.tb_base'), 'ruser.uid = bar.replyer', 
 							  array('replyname' => 'username', 'replynick' => 'nickname'));
 							  

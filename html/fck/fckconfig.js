@@ -116,7 +116,7 @@ FCKConfig.ToolbarSets["Default"] = [
 ] ;
 
 FCKConfig.ToolbarSets["ZjuhzFront"] = [
-	['FontSize','-','TextColor','BGColor','Bold','Italic','Underline','-','OrderedList','UnorderedList','JustifyLeft','JustifyCenter','JustifyRight','JustifyFull'],
+	['FontName','FontSize','-','TextColor','BGColor','Bold','Italic','Underline','-','OrderedList','UnorderedList','JustifyLeft','JustifyCenter','JustifyRight','JustifyFull'],
 	['Link','Unlink','-','Image','Flash','Table','Smiley','SpecialChar','RemoveFormat']
 ] ;
 

@@ -69,6 +69,8 @@
 			        'fid' => $uid,
 				    'key' => 'add_friend'
 				));
+				// 邀请人加分
+				Logic_Api::apoint('user', $fid, 5, '邀请校友注册本站', time(), 0);
 			}
         }
         

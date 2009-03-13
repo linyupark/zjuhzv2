@@ -41,6 +41,7 @@
 		function mvgroupAction()
 		{
 			$this->getHelper('viewRenderer')->setNoRender();
+			/*
 			$gid = $this->_getParam('gid');
 			if($gid)
 			{
@@ -72,7 +73,7 @@
 						'lastvisit' => $m['last_access']
 					));
 				}
-			}
+			}*/
 		}
 		
 		function v1tov2Action()
@@ -182,6 +183,16 @@
 				WHERE `type` != "close" 
 				ORDER BY `point` DESC LIMIT 4');
 			$this->view->groups = $rows;
+		}
+		
+		/**
+		 * 热心度排行
+		 *
+		 */
+		function rankAction()
+		{
+			$rows = Logic_Api::pointrank(array(2,3,4,5,6,41,493,488,24,35,20,89,7,1075,1130), 3);
+			$this->view->rows = $rows;
 		}
 		
 		/**

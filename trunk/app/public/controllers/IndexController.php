@@ -181,7 +181,7 @@
 		{
 			$rows = DbModel::Space()->fetchAll('SELECT * FROM `tb_group`
 				WHERE `type` != "close" 
-				ORDER BY `point` DESC LIMIT 4');
+				ORDER BY `point` DESC LIMIT 6');
 			$this->view->groups = $rows;
 		}
 		

@@ -1,0 +1,18 @@
+
+		<h3>最近<?= $this->days ?>天热心度增长：</h3>
+		<table class="table-dashed" width="100%">
+		<?php if(count($this->data['points']) > 0): foreach ($this->data['points'] as $i => $r): ?>
+		<tr <?= $i%2==0?'class="bcolor-g"':'' ?>>
+			<td class="txtr" width="80"><?= $i == 0 ? '24小时内' : '前'.($i+1).'~'.($i).'天内' ?></td>
+			<td><img src="<?= Alp_Url::img('v1/deg_b.gif') ?>" width="<?= $r*2 ?>" height="6" />
+				<span class="quiet f9"><?= $r ?>pt</span>
+				<div class="a-span">
+				<?php foreach ($this->data['rank'][$i] as $u): ?>
+				<a href="/space_home/?uid=<?= $u['uid'] ?>"><?= $u['username'] ?></a>
+				<span class="f9 quiet"><?= $u['pts'] ?>pt</span>
+				<?php endforeach; ?>
+				</div>
+			</td>
+		</tr>
+		<?php endforeach; endif; ?>
+		</table>

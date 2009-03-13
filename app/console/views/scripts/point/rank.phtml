@@ -6,6 +6,6 @@
 	<a href="?tab=rank&range=day" <?= $range == 'day' ? $on:'' ?>>日</a>
 	<a href="?tab=rank&range=week" <?= $range == 'week' ? $on:'' ?>>周</a>
 	<a href="?tab=rank&range=month" <?= $range == 'month' ? $on:'' ?>>月份</a>
-	<a href="?tab=rank&range=season" <?= $range == 'season' ? $on:'' ?>>季度</a>
 	<a href="?tab=rank&range=year" <?= $range == 'year' ? $on:'' ?>>年份</a>
 </div>
+<?= $this->render('point/rank/'.$range.'.phtml'); ?>

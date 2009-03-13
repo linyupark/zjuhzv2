@@ -110,13 +110,13 @@
 						$tid_arr = unserialize($row['tid']);
 						if(count($tid_arr) > 0)
 						{
-							$i = 0;
+							$in_tid = '';
 							foreach ($tid_arr as $tid => $time)
 							{
-								if($i == 0) $select->where('vote.tid = ?', $tid);
-								else $select->orWhere('vote.tid = ?', $tid);
-								$i++;
+								$in_tid .= $tid.',';
 							}
+							$in_tid = substr($in_tid, 0, -1);
+							$select->where('vote.tid IN ('.$in_tid.')');
 						}
 						else $select->where('vote.tid = ?', 0);
 					}
@@ -129,13 +129,15 @@
 						$tid_arr = unserialize($row['vote']);
 						if(count($tid_arr) > 0 && $tid_arr != false)
 						{
-							$i = 0;
-							foreach ($tid_arr as $tid => $time)
+							$in_tid = '';
+							foreach ($tid_arr as $v)
 							{
-								if($i == 0) $select->where('vote.tid = ?', $tid);
-								else $select->orWhere('vote.tid = ?', $tid);
-								$i++;
+								$tid = array_keys($v);
+								foreach ($tid as $id)
+								$in_tid .= $id.',';
 							}
+							$in_tid = substr($in_tid, 0, -1);	
+							$select->where('vote.tid IN ('.$in_tid.')');
 						}
 						else $select->where('vote.tid = ?', 0);
 					}

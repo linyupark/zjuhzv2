@@ -206,20 +206,53 @@
 		}
 		
 		/**
-		 * 新帖动态,排除公开新闻
+		 * 最新投票
+		 *
+		 */
+		function voteAction()
+		{
+			$rows = DbModel::Space()->fetchAll('SELECT bar.*  
+				FROM `tb_tbar` AS `bar` 
+				WHERE (
+					bar.`private` IN(3,4) 
+					AND bar.`group` = 0 
+					AND bar.`type` = "vote"
+				) 
+				ORDER BY bar.`replytime` DESC LIMIT 3');
+			$this->view->bars = $rows;
+		}
+		
+		/**
+		 * 群组顶帖
+		 *
+		 */
+		function groupbarsAction()
+		{
+			$rows = DbModel::Space()->fetchAll('SELECT bar.*  
+				FROM `tb_tbar` AS `bar` 
+				WHERE (
+					bar.`private` IN(3,4) 
+					AND bar.`group` != 0 
+					AND bar.`type` NOT IN ("events","vote") 
+				) 
+				ORDER BY bar.`rate`,bar.`reply`,bar.`replytime` DESC LIMIT 6');
+			$this->view->bars = $rows;
+		}
+		
+		/**
+		 * 公开话题
 		 *
 		 */
 		function barsAction()
 		{
 			$rows = DbModel::Space()->fetchAll('SELECT bar.*  
 				FROM `tb_tbar` AS `bar` 
-				LEFT JOIN `tb_group` AS `g` ON g.`gid` = bar.`group` 
 				WHERE (
 					bar.`private` IN(2,3,4) 
-					AND (g.`type` IS NULL OR g.`type` != "close")
-				)  
-				AND (bar.`type` != "news" AND bar.`type` != "events")  
-				ORDER BY bar.`pubtime` DESC LIMIT 15');
+					AND bar.`group` = 0 
+					AND bar.`type` IN ("topic","photo","share","video") 
+				) 
+				ORDER BY bar.`pubtime` DESC LIMIT 10');
 			$this->view->bars = $rows;
 		}
 		

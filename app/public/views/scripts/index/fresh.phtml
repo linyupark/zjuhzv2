@@ -12,12 +12,14 @@ flash/swflash.cab#version=6,0,29,0" width="266" height="243">
       	<param name="wmode" value="transparent">
       	<embed src="/player/bcastr.swf?bcastr_xml_url=/player/bcastr.xml" width="266" height="243" loop="false" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" salign="T" name="scriptmain" menu="false" wmode="transparent"></embed>
     	</object>
+    	<br />
+    	<?= $this->action('vote', 'index'); ?>
 		<?= $this->render('index/3x.phtml'); ?>
 	</div>
 	<div class="yui-u" style="width:57%">
 		<?= $this->action('ftpage', 'index'); ?>
 		<?= $this->action('events', 'index'); ?>
 		<?= $this->action('news', 'index'); ?>
-		<?= $this->action('group', 'index'); ?>
+		<?= $this->action('bars', 'index'); ?>
 	</div>
 </div>

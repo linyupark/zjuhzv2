@@ -9,20 +9,13 @@
 	</td>
 </tr>
 <?php foreach ($this->groups as $i => $g): ?>
-<tr>
-	<td width="40">
-		<div class="head40">
-			<a href="/space_group/home/?id=<?= $g['gid'] ?>">
-				<img class="mg10" src="<?= Cmd::groupicon($g['gid']) ?>" />
-			</a>
-		</div>
-	</td>
-	<td>
+<?php if($i%2 == 0): ?><tr><?php endif; ?>
+	<td width="50%" valign="top">
 		<b><a href="/space_group/home/?id=<?= $g['gid'] ?>"><?= stripslashes($g['name']) ?></a></b>
 		<br />
 		<p class="quiet"><?= $g['intro'] ?></p>
 	</td>
-</tr>
+<?php if($i%2 == 1): ?></tr><?php endif; ?>
 <?php endforeach; ?>
 </table>
 <?php endif; ?>

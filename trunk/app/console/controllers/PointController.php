@@ -24,6 +24,8 @@
 			$range = $this->_getParam('range', 'week');
 			$now = time();
 			$this_year = date('Y', $now);
+			$this_month = date('m', $now);
+			$this_day = date('d', $now);
 			$set_year = $this->_getParam('year', $this_year);
 			if($set_year > $this_year) $set_year = $this_year;
 			$db = DbModel::Log();
@@ -31,16 +33,37 @@
 			$row = $db->fetchRow('SELECT MIN(`time`) AS `starttime` FROM `tb_point`');
 			$point_start_time = $row['starttime']; // 开始有加分记录的时间为统计开始时间
 			$start_year = date('Y', $point_start_time); // 开始计算年份
-
+			$years = $set_year - $start_year; // 跟设置的年份差距
+			$div = strtotime($set_year.'-1-1 00:00');
+			
 			switch ($range)
 			{
 				case 'year' : // 年
-					$years = $set_year - $start_year;
-					for ($i = 0; $i < $years; $i ++)
+					for ($i = 0; $i <= $years; $i ++)
 					{
 						$start_count_time = strtotime($start_year+$i.'-1-1 00:00');
-						if($set_year > $start_year) $span = $start_count_time + 31536000;
-						else $span = $now;
+						$span = $start_count_time + 31536000;
+						$row = $db->fetchRow('SELECT SUM(`point`) AS `points` FROM `tb_point` 
+							WHERE `time` > '.$start_count_time.' AND `time` < '.$span);
+						$data['points'][$start_year+$i] = $row['points'];
+						$rows = $db->fetchAll('SELECT u.username,pt.uid,SUM(pt.point) AS `pts` 
+							FROM `tb_point` AS `pt`
+							LEFT JOIN `zjuhzv2_user`.`tb_base` AS `u` ON u.uid = pt.uid 
+							WHERE pt.time > '.$start_count_time.' AND pt.time < '.$span.' 
+							GROUP BY pt.uid ORDER BY SUM(pt.point) DESC LIMIT 6');
+						$data['rank'][$start_year+$i] = $rows;
+					}
+				break;
+				
+				case 'month' : //月
+					$start_this_month = strtotime($this_year.'-'.$this_month.'-1 00:00');
+					$months = ceil(($now - $div)/2628000); // 总月数
+					for ($i = 0; $i < $months; $i ++)
+					{
+						$start_count_time = $start_this_month - ($i*2628000);
+						if($i == 0) $span = $now;
+						else $span = $start_count_time + 2628000;
+						if($start_count_time < $div) $start_count_time = $div; // 避免冲破下线
 						$row = $db->fetchRow('SELECT SUM(`point`) AS `points` FROM `tb_point` 
 							WHERE `time` > '.$start_count_time.' AND `time` < '.$span);
 						$data['points'][] = $row['points'];
@@ -48,67 +71,56 @@
 							FROM `tb_point` AS `pt`
 							LEFT JOIN `zjuhzv2_user`.`tb_base` AS `u` ON u.uid = pt.uid 
 							WHERE pt.time > '.$start_count_time.' AND pt.time < '.$span.' 
-							GROUP BY pt.uid ORDER BY SUM(pt.point) DESC LIMIT 3');
-						$data['rank'][$i] = $rows;
-					}
-				break;
-				
-				case 'month' : //月
-					$div = strtotime($set_year.'-1-1 00:00');
-					$months = floor(($now - $div)/2628000); // 总月数
-					for ($i = 0; $i < $months; $i ++)
-					{
-						$span = $now - ($i+1)*2628000;
-						$row = $db->fetchRow('SELECT SUM(`point`) AS `points` FROM `tb_point` 
-							WHERE `time` > '.$span.' AND `time` < '.($span+2628000));
-						$data['points'][] = $row['points'];
-						$rows = $db->fetchAll('SELECT u.username,pt.uid,SUM(pt.point) AS `pts` 
-							FROM `tb_point` AS `pt`
-							LEFT JOIN `zjuhzv2_user`.`tb_base` AS `u` ON u.uid = pt.uid 
-							WHERE pt.time > '.$span.' AND pt.time < '.($span+2628000).' 
-							GROUP BY pt.uid ORDER BY SUM(pt.point) DESC LIMIT 3');
+							GROUP BY pt.uid ORDER BY SUM(pt.point) DESC LIMIT 6');
 						$data['rank'][$i] = $rows;
 					}
 				break;
 				
 				case 'week' : // 周
-					$div = strtotime($set_year.'-1-1 00:00');
-					$weeks = floor(($now - $div)/604800); // 总星期数
+					$weeks = ceil(($now - $div)/604800); // 总周数
+					$start_this_week = ($now - date('w', $now)*86400);
 					for ($i = 0; $i < $weeks; $i ++)
 					{
-						$span = $now - ($i+1)*604800;
+						$start_count_time = $start_this_week - ($i*604800);
+						if($i == 0) $span = $now;
+						else $span = $start_count_time + 604800;
+						if($start_count_time < $div) $start_count_time = $div; // 避免冲破下线
 						$row = $db->fetchRow('SELECT SUM(`point`) AS `points` FROM `tb_point` 
-							WHERE `time` > '.$span.' AND `time` < '.($span+604800));
+							WHERE `time` > '.$start_count_time.' AND `time` < '.$span);
 						$data['points'][] = $row['points'];
 						$rows = $db->fetchAll('SELECT u.username,pt.uid,SUM(pt.point) AS `pts` 
 							FROM `tb_point` AS `pt`
 							LEFT JOIN `zjuhzv2_user`.`tb_base` AS `u` ON u.uid = pt.uid 
-							WHERE pt.time > '.$span.' AND pt.time < '.($span+604800).' 
-							GROUP BY pt.uid ORDER BY SUM(pt.point) DESC LIMIT 3');
+							WHERE pt.time > '.$start_count_time.' AND pt.time < '.$span.' 
+							GROUP BY pt.uid ORDER BY SUM(pt.point) DESC LIMIT 6');
 						$data['rank'][$i] = $rows;
 					}
 				break;
 				
 				case 'day' : // 日
-					$days = 10;
-					$this->view->days = $days;
+					$days = ceil(($now - $div)/86400); // 总日数
+					$start_this_day = strtotime($this_year.'-'.$this_month.'-'.$this_day.' 00:00');
 					for ($i = 0; $i < $days; $i ++)
 					{
-						$span = $now - ($i+1)*86400;
+						$start_count_time = $start_this_day - ($i*86400);
+						if($i == 0) $span = $now;
+						else $span = $start_count_time + 86400;
+						if($start_count_time < $div) $start_count_time = $div; // 避免冲破下线
 						$row = $db->fetchRow('SELECT SUM(`point`) AS `points` FROM `tb_point` 
-							WHERE `time` > '.$span.' AND `time` < '.($span+86400));
+							WHERE `time` > '.$start_count_time.' AND `time` < '.$span);
 						$data['points'][] = $row['points'];
 						$rows = $db->fetchAll('SELECT u.username,pt.uid,SUM(pt.point) AS `pts` 
 							FROM `tb_point` AS `pt`
 							LEFT JOIN `zjuhzv2_user`.`tb_base` AS `u` ON u.uid = pt.uid 
-							WHERE pt.time > '.$span.' AND pt.time < '.($span+86400).' 
-							GROUP BY pt.uid ORDER BY SUM(pt.point) DESC LIMIT 3');
+							WHERE pt.time > '.$start_count_time.' AND pt.time < '.$span.' 
+							GROUP BY pt.uid ORDER BY SUM(pt.point) DESC LIMIT 6');
 						$data['rank'][$i] = $rows;
 					}
 				break;
 			}
 			$this->view->data = $data;
 			$this->view->range = $range;
+			$this->view->year = $set_year;
 		}
 		
 		/**

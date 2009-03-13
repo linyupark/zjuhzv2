@@ -235,7 +235,7 @@
 					AND bar.`group` != 0 
 					AND bar.`type` NOT IN ("events","vote") 
 				) 
-				ORDER BY bar.`rate`,bar.`reply`,bar.`replytime` DESC LIMIT 6');
+				ORDER BY bar.`pubtime` DESC, bar.`replytime` DESC LIMIT 8');
 			$this->view->bars = $rows;
 		}
 		

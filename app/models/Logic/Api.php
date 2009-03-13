@@ -8,6 +8,28 @@
 		}
 		
 		/**
+		 * 热心度总排行
+		 *
+		 * @param unknown_type $not_in 排除数组人员id
+		 */
+		public static function pointrank($not_in = null, $limit = 3)
+		{
+			$not_in_sql = '';
+			if(count($not_in) > 0)
+			{
+				foreach ($not_in as $uid)
+				{
+					$not_in_sql .= $uid.',';
+				}
+				$not_in_sql = substr($not_in_sql, 0, -1);
+			}
+			if($not_in_sql == '') $not_in_sql = '0';
+			$rows = parent::User()->fetchAll('SELECT `uid`,`point`,`username`,`sex` FROM `tb_base` 
+				WHERE `uid` NOT IN ('.$not_in_sql.') AND `point` > 0 ORDER BY RAND() LIMIT '.$limit);
+			return $rows;
+		}
+		
+		/**
 		 * 增加分数
 		 *
 		 * @param unknown_type $type

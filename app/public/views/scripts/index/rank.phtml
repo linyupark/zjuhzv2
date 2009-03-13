@@ -1,0 +1,28 @@
+<?php $cache = Logic_Cache::factory('Output', 900); ?>
+<?php if(!$cache->start('rand_rank')): ?>
+<?php if(count($this->rows) > 0):  ?>
+<table width="100%" class="table-dashed">
+<tr class="bcolor-z">
+	<td colspan="2">
+		<b>热心校友</b>
+	</td>
+	<td class="txtr">
+		<a href="/space_search/?for=user&range=all&key=&attr=username">&gt;&gt;更多</a>
+	</td>
+</tr>
+<?php foreach ($this->rows as $i => $r): ?>
+<?php if($i%3 == 0): ?><tr><?php endif; ?>
+	<td width="33%" class="txtc">
+		<a href="/space_home/?uid=<?= $r['uid'] ?>">
+			<img src="<?= Cmd::userhead($r['uid'], 40, $r['sex']) ?>" />
+		</a>
+		<br />
+		<a href="/space_home/?uid=<?= $r['uid'] ?>"><?= $r['username'] ?></a>
+		<span style="color:#D44848" class="f9">
+			<?= Logic_Api::percentpoint($r['point']) ?>&deg;c</span>
+	</td>
+<?php if($i%3 == 2): ?></tr><?php endif; ?>
+<?php endforeach; ?>
+</table>
+<?php endif; ?>
+<?php $cache->end(); endif; ?>

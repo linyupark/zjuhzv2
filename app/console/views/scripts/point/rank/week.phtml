@@ -1,5 +1,5 @@
 
-		<h3>年初到现在每周热心度增长：</h3>
+		<h3><?= $this->year ?>年到现在每周热心度增长：</h3>
 		<table class="table-dashed" width="100%">
 		<?php if(count($this->data['points']) > 0): foreach ($this->data['points'] as $i => $r): ?>
 		<tr <?= $i%2==0?'class="bcolor-g"':'' ?>>

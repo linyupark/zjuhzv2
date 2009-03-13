@@ -1,9 +1,9 @@
 
-		<h3>年热心度增长：</h3>
+		<h3 class="mgl10"><?= $this->year ?>年热心度增长：</h3>
 		<table class="table-dashed" width="100%">
 		<?php if(count($this->data['points']) > 0): foreach ($this->data['points'] as $i => $r): ?>
 		<tr <?= $i%2==0?'class="bcolor-g"':'' ?>>
-			<td class="txtr" width="80"><?= $i == 0 ? '本年度' : '前'.($i+1).'~'.($i).'年内' ?></td>
+			<td class="txtr" width="100"><?= ($i).'~'.($i+1).'年' ?></td>
 			<td><img src="<?= Alp_Url::img('v1/deg_b.gif') ?>" width="<?= round($r/50) ?>" height="6" />
 				<span class="quiet f9"><?= $r ?>pt</span>
 				<div class="a-span">

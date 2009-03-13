@@ -1,5 +1,5 @@
 
-		<h3>最近<?= $this->days ?>天热心度增长：</h3>
+		<h3><?= $this->year ?>年至今热心度增长：</h3>
 		<table class="table-dashed" width="100%">
 		<?php if(count($this->data['points']) > 0): foreach ($this->data['points'] as $i => $r): ?>
 		<tr <?= $i%2==0?'class="bcolor-g"':'' ?>>

@@ -235,7 +235,7 @@
 					AND bar.`group` != 0 
 					AND bar.`type` NOT IN ("events","vote") 
 				) 
-				ORDER BY bar.`pubtime` DESC, bar.`replytime` DESC LIMIT 8');
+				ORDER BY bar.`replytime` DESC LIMIT 8');
 			$this->view->bars = $rows;
 		}
 		
@@ -252,7 +252,7 @@
 					AND bar.`group` = 0 
 					AND bar.`type` IN ("topic","photo","share","video") 
 				) 
-				ORDER BY bar.`pubtime` DESC LIMIT 10');
+				ORDER BY bar.`pubtime` DESC LIMIT 8');
 			$this->view->bars = $rows;
 		}
 		
@@ -267,7 +267,7 @@
 				LEFT JOIN `tb_news` AS `news` ON news.`tid` = bar.`tid` 
 				LEFT JOIN `tb_news_sort` AS `s` ON s.`sort` = news.`sort` 
 				WHERE bar.`type` = "news" AND bar.`private` >= 3 
-				ORDER BY bar.`ding`DESC,bar.`pubtime` DESC LIMIT 7');
+				ORDER BY bar.`ding`DESC,bar.`pubtime` DESC LIMIT 8');
 			$this->view->news = $rows;
 		}
 	}

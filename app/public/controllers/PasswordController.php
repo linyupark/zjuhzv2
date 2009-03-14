@@ -12,6 +12,49 @@
 		}
 		
 		/**
+		 * 密码重新设定
+		 *
+		 */
+		function resetAction()
+		{
+			$params = $this->_getAllParams();
+			$sid = Alp_String::decrypt($params['code']);
+			if($sid != Zend_Session::getId())
+			{
+				$this->view->msg = '重设密码校验码错误，或者已经过期';
+				$this->render('failed');
+			}
+			else 
+			{
+				$email = Alp_String::decrypt($params['ml']);
+				$newpsw = Alp_String::decrypt($params['np']);
+				$row = DbModel::User()->fetchRow('SELECT c.`uid`,b.`account`  
+					FROM `tb_contact` AS c 
+					LEFT JOIN `tb_base` AS b ON b.uid = c.uid 
+					WHERE c.`email` = ?', $email);
+				if($row == false)
+				{
+					$this->view->msg = '重设密码的帐号并不存在';
+					$this->render('failed');
+				}
+				else 
+				{
+					Logic_User_Password::update(array('password' => $newpsw), $row['uid']);
+					if(Alp_Sys::getMsg() == null)
+					{
+						$this->view->account = $row['account'];
+						$this->view->psw = $newpsw;
+						$this->render('success');
+					} else { 
+						$this->view->msg = Alp_Sys::getMsg('exception');
+						$this->render('failed'); 
+					}
+				}
+			}
+		}
+		
+		
+		/**
 		 * 发送重置密码的邮件
 		 *
 		 */
@@ -33,7 +76,7 @@
 					$html = file_get_contents(HTMLROOT.'/template/resetpassword.html');
 					$html = str_replace('@uname@', $username, $html);
 					$html = str_replace('@link@', $link, $html);
-					$subject = 'zjuhz.com 系统邮件 - 重设密码';
+					$subject = DOMAIN.'系统邮件 - 重设密码';
 					
 					$set = Logic_Mail::config();
 					$m = new Zend_Mail('utf-8');

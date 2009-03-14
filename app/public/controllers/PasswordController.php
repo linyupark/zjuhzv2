@@ -39,7 +39,7 @@
 					$m = new Zend_Mail('UTF-8');
 					$m->setFrom($set['username'], $subject);
 					$m->addTo($email, $username);
-					$m->setBodyHtml($html, 'UTF-8', Zend_Mime::ENCODING_BASE64);
+					$m->setBodyHtml($html);
 					$m->setSubject("=?UTF-8?B?".base64_encode($subject)."?=");
 					$m->send(new Zend_Mail_Transport_Smtp($set['name'], $set));
 					echo 'success';

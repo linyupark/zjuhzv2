@@ -36,11 +36,11 @@
 					$subject = 'zjuhz.com 系统邮件 - 重设密码';
 					
 					$set = Logic_Mail::config();
-					$m = new Zend_Mail('UTF-8');
-					$m->setFrom($set['username'], $subject);
+					$m = new Zend_Mail('utf-8');
+					$m->setFrom($set['username'], 'zjuhz.com');
 					$m->addTo($email, $username);
-					$m->setBodyHtml($html);
-					$m->setSubject("=?UTF-8?B?".base64_encode($subject)."?=");
+					$m->setBodyHtml($html, 'utf-8');
+					$m->setSubject($subject);
 					$m->send(new Zend_Mail_Transport_Smtp($set['name'], $set));
 					echo 'success';
 				}

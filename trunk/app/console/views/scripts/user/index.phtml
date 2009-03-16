@@ -16,11 +16,11 @@
 			</tr>
 			<?php if(count($this->rows)): foreach($this->rows as $i => $r): ?>
 			<tr <?= ($i%2 == 1)? 'class="bcolor-g"':'' ?>>
-				<td width="180">
+				<td width="220">
 					<img height="20" src="<?= Cmd::userhead($r['uid'], 40, $r['sex']) ?>" />
 					<a class="f14" href="/space_home/?uid=<?= $r['uid'] ?>"><?= $r['username'] ?></a>
 					(<?= $r['account'] ?>)
-					Last login:<?= Alp_Date::normal($r['lastlogin']) ?>
+					<span class="f9 quiet"><?= Alp_Date::normal($r['lastlogin']) ?></span>
 				</td>
 				<td>
 					<a style="color:#666" href="javascript:detail(<?= $r['uid'] ?>)">[资料]</a>

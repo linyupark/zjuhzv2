@@ -245,6 +245,7 @@
 				WHERE (
 					bar.`private` IN(3,4) 
 					AND bar.`group` != 0 
+					AND bar.`deny` != 1 
 					AND bar.`type` NOT IN ("events","vote") 
 				) 
 				ORDER BY bar.`replytime` DESC LIMIT 8');

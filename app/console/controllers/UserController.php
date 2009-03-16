@@ -106,7 +106,7 @@
 				$select->limit($pagesize, Alp_Page::$offset);
 				$this->view->pagination = Alp_Page::$page_str;
 			}
-			$select->order('regtime DESC');
+			$select->order('lastlogin DESC');
 			$this->view->rows = $select->query()->fetchAll();
 			$this->view->numrows = $numrows;
 			$this->view->range = $range;

@@ -7,7 +7,7 @@
 	
 	date_default_timezone_set('Asia/Shanghai');					 
 	
-	define('DOMAIN', 'v2.zjuhz.com');
+	define('DOMAIN', 'www.zjuhz.com');
 	define('HTMLROOT', $_SERVER['DOCUMENT_ROOT']);
 	define('SQLITEROOT', '../db/sqlite/');
 	define('UPLOADROOT', $_SERVER['DOCUMENT_ROOT'].'/upload/');

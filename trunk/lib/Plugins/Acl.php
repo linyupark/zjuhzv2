@@ -20,6 +20,7 @@
             
             // 资源列表
             $acl->add(new Zend_Acl_Resource('public'));
+            $acl->add(new Zend_Acl_Resource('info'));
             $acl->add(new Zend_Acl_Resource('console'));
             $acl->add(new Zend_Acl_Resource('addon_vote'));
             $acl->add(new Zend_Acl_Resource('addon_partners'));

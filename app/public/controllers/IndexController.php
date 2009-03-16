@@ -239,8 +239,9 @@
 		 */
 		function groupbarsAction()
 		{
-			$rows = DbModel::Space()->fetchAll('SELECT bar.*  
+			$rows = DbModel::Space()->fetchAll('SELECT bar.*,g.`name` AS `gname` 
 				FROM `tb_tbar` AS `bar` 
+				LEFT JOIN `tb_group` AS `g` ON g.`gid` = bar.`group` 
 				WHERE (
 					bar.`private` IN(3,4) 
 					AND bar.`group` != 0 

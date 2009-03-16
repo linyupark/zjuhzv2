@@ -9,6 +9,7 @@
 <tr <?= $i%2==1?'class="bcolor-g"':'' ?>>
 	<td colspan="2">
 		<img class="vm" src="<?= Alp_Url::img('icon/1616/'.$this->icons[$b['type']]) ?>" />
+		<a style="color:#666" href="/space_group/home/?id=<?= $b['group'] ?>">[<?= Alp_String::utfSubStr($b['gname'], 6); ?>]</a>
 		<a href="/space_bar/<?= $b['type'] ?>/view?tid=<?= $b['tid'] ?>"><?= Alp_String::utfSubStr(stripcslashes($b['title']),39) ?></a>
 	</td>
 </tr>

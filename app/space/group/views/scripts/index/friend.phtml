@@ -1,5 +1,5 @@
 <div class="yui-g mgt10">
-	<div class="yui-u first" style="width:35%">
+	<div class="yui-u first" style="width:32%">
 	<?php
 		if(count($this->groups) > 0):
 		$gname = array();
@@ -8,13 +8,13 @@
 	?>
 	<table class="mgl10 table-dashed">
 		<tr>
-			<td width="40">
+			<td width="30">
 				<a href="/space_group/home/?id=<?= $g['gid'] ?>">
-					<img class="cccborder" src="<?= Cmd::groupicon($g['gid'], 40) ?>" />
+					<img width="30" class="cccborder" src="<?= Cmd::groupicon($g['gid'], 40) ?>" />
 				</a>
 			</td>
 			<td>
-				<a href="/space_group/home/?id=<?= $g['gid'] ?>" class="f14"><?= $g['name'] ?></a>
+				<a href="/space_group/home/?id=<?= $g['gid'] ?>"><b><?= $g['name'] ?></b></a>
 				<br />
 				<span class="quiet">加入:</span>
 				<a href="/space_home/?uid=<?= $g['uid'] ?>"><?= $g['uname'] ?></a>
@@ -28,16 +28,16 @@
 	<?php endif; ?>
 	</div>
 	
-	<div class="yui-u" style="width:64%;">
+	<div class="yui-u" style="width:68%;">
 	<?php if(count($this->bars) > 0) : ?>
 		<table class="table-dashed" width="100%">
-			<?php foreach ($this->bars as $b): ?>
-			<tr>
+			<?php foreach ($this->bars as $i => $b): ?>
+			<tr <?= $i%2==1?'class="bcolor-g"':'' ?>>
 				<td>
+					<img src="<?= Alp_Url::img('icon/1616/'.$this->icons[$b['type']]) ?>" />
 					<a style="color:#666" href="/space_group/home/?id=<?= $b['group'] ?>">
 						[<?= $gname[$b['group']] ?>]</a>
 					<a href="/space_bar/<?= $b['type'] ?>/view?tid=<?= $b['tid'] ?>">
-						<img src="<?= Alp_Url::img('icon/1616/'.$this->icons[$b['type']]) ?>" />
 						<?= stripslashes($b['title']) ?>
 					</a>
 					<?= Logic_Space_Bar::subpage($b); ?>

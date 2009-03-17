@@ -210,6 +210,18 @@
 		}
 		
 		/**
+		 * 帖子总数
+		 *
+		 */
+		public static function barnum()
+		{
+			$db = parent::Space();
+			$row = $db->fetchRow('SELECT COUNT(`tid`) AS `numrows` FROM `tb_tbar`');
+			$rerow = $db->fetchRow('SELECT COUNT(`id`) AS `numrows` FROM `tb_comment`');
+			return $row['numrows'] + $rerow['numrows'];
+		}
+		
+		/**
 		 * 返回指定uid的用户所有信息
 		 *
 		 * @param unknown_type $uid

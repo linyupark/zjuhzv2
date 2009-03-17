@@ -26,6 +26,14 @@
     		return self::getSess('profile', 'role');
     	}
     	
+    	public static function isMemeber()
+    	{
+    		$role = self::role();
+    		if($role == 'black' || $role == 'bench')
+    		return false;
+    		else return true;
+    	}
+    	
     	/**
     	 * 角色中文名
     	 *

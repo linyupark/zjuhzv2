@@ -108,7 +108,7 @@
 					'type' => 'flv',
 					'maxsize' => 49000,
 					'filename' => array($newname),
-					'overwrite' => true,
+					'overwrite' => false,
 					'path' => $path.'/'
 				));
 				if(!Alp_Upload::handle('video'))
@@ -117,6 +117,7 @@
 				}
 				else
 				{
+					$newname = str_replace(' ', '', $newname);
 					$url = Alp_Url::upload('video/'.$uid.'/'.$newname);
 					$html = '<object type="application/x-shockwave-flash" data="/player/vcastr3.swf" width="650" height="500" id="vcastr3"><param name="movie" value="/player/vcastr3.swf"/> <param name="allowFullScreen" value="true" /><param name="FlashVars" value="xml=<vcastr><channel><item><source>'.$url.'</source><duration></duration><title></title></item></channel><config></config><plugIns><logoPlugIn><url>/player/logoPlugIn.swf</url><logoText>zjuhz.com</logoText><logoTextAlpha>0.75</logoTextAlpha><logoTextFontSize>14</logoTextFontSize><logoTextLink></logoTextLink><logoTextColor>0xffffff</logoTextColor><textMargin>10 10 auto auto</textMargin></logoPlugIn></plugIns></vcastr>"/></object>';
 					echo '<script>parent.insert_html(\''.$html.'\')</script>';

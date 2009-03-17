@@ -138,7 +138,7 @@
 				if($numrows > $pagesize)
 				{
 					Alp_Page::create(array(
-						'href_open' => '<a href="?type=topic&order='.$order.'&where='.$where.'&p=%d">',
+						'href_open' => '<a href="?id='.$gid.'&type=topic&order='.$order.'&where='.$where.'&p=%d">',
 						'href_close' => '</a>',
 						'num_rows' => $numrows,
 						'cur_page' => $page

@@ -1,7 +1,8 @@
 <div style="background:url(<?= Alp_Url::img('v1/home.jpg') ?>) no-repeat top right; height:160px; width:665px;">
 	<div class="f14" style="padding:15px 0 10px 30px;">
 		欢迎您光临 <a href="/public/index/doc/of/aboutus"><b>杭州浙江大学校友会</b></a> 
-		已经有 <b style="color:#DE4A00"><?= Logic_Api::regnum() ?></b> 位校友入住本站！
+		已有 <b style="color:#DE4A00"><?= Logic_Api::regnum() ?></b> 位校友入住，
+		帖数累计 <b style="color:#0B90AF"><?= Logic_Api::barnum() ?></b> 条。
 	</div>
 	<?php $v = Alp_Url::img('icon/mix/v.gif'); ?>
 	<div class="yui-g" style="font-size:13px; padding-left:10px; color:#444;">

@@ -92,7 +92,7 @@
 					       ->joinLeft(array('u' => 'zjuhzv2_user.tb_base'), 'u.uid = m.uid', 
 					       			  array('uname' => 'u.username'))
 					       ->where('g.type != ?', 'close')->group('g.gid')
-					       ->limit(7);
+					       ->limit(10);
 				}
 				else $select->where('m.uid = 0');
 				       
@@ -108,7 +108,7 @@
 						if($i == 0) $select->where('bar.group = ?', $g['gid']);
 						else $select->orWhere('bar.group = ?', $g['gid']);
 					}
-					$select->order('replytime DESC')->limit(12);
+					$select->order('replytime DESC')->limit(20);
 					$this->view->bars = $select->query()->fetchAll();
 				}
 			}
@@ -135,7 +135,7 @@
 					if($i == 0) $select->where('bar.group = ?', $g['gid']);
 					else $select->orWhere('bar.group = ?', $g['gid']);
 				}
-				$select->order('replytime DESC')->limit(12);
+				$select->order('replytime DESC')->limit(20);
 				$this->view->bars = $select->query()->fetchAll();
 			}
 			$this->view->groups = $groups;

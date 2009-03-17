@@ -32,6 +32,7 @@
 				   ->where('m.role = "creater" OR m.role = "member" OR m.role = "manager"');
 				   
 			$select->joinLeft(array('g' => 'tb_group'), 'g.gid = m.gid');
+			$select->order('m.role ASC');
 			return  $select->query()->fetchAll();
 		}
 		

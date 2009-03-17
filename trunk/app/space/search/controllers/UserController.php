@@ -30,6 +30,7 @@
 			$select = DbModel::User()->select();
 			$select->from(array('ub'=>'tb_base'), 
 					          array('numrows' => new Zend_Db_Expr('COUNT(ub.uid)')))
+					          ->where('ub.role != "black"')
 					          ->order('ub.uid DESC');
 			
 			// 好友范围

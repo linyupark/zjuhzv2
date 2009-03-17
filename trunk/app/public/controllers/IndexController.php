@@ -79,7 +79,7 @@
 					AND e.`time` > '.$now.'  
 					AND (g.`type` IS NULL OR g.`type` != "close")
 				)  
-				ORDER BY e.`time` ASC LIMIT 5');
+				ORDER BY e.`time` ASC LIMIT 8');
 			$this->view->events = $rows;
 		}
 		
@@ -93,8 +93,7 @@
 				FROM `tb_tbar` AS `bar` 
 				WHERE (
 					bar.`private` IN(3,4) 
-					AND bar.`group` = 0 
-					AND bar.`type` = "vote"
+					AND bar.`type` = "vote" 
 				) 
 				ORDER BY bar.`replytime` DESC LIMIT 3');
 			$this->view->bars = $rows;

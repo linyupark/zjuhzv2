@@ -24,6 +24,30 @@
 		}
 		
 		/**
+		 * 群组帖子跟回复
+		 *
+		 */
+		static function gbar($gid)
+		{
+			$db = self::remoteDb('zjuhz_group');
+			// 抽取全部未重名的帖子id
+			$bars = $db->fetchAll('SELECT * FROM `tbl_group_topic` WHERE `group_id` = ?', $gid);
+			foreach ($bars as $i=>$b)
+			{
+				if(Logic_Space_Bar::unique($b['title']) != false)
+				unset($bars[$i]);
+			}
+			return $bars;
+		}
+		
+		static function greply($tid)
+		{
+			$db = self::remoteDb('zjuhz_group');
+			$rows = $db->fetchAll('SELECT * FROM `tbl_group_reply` WHERE `topic_id` = ?', $tid);
+			return $rows;
+		}
+		
+		/**
 		 * 好友数据
 		 *
 		 * @return unknown

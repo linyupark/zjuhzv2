@@ -76,6 +76,7 @@
 				WHERE (
 					bar.`private` IN(2,3,4) 
 					AND bar.`type` = "events" 
+					AND bar.`deny` = 0  
 					AND e.`time` > '.$now.'  
 					AND (g.`type` IS NULL OR g.`type` != "close")
 				)  
@@ -93,6 +94,7 @@
 				FROM `tb_tbar` AS `bar` 
 				WHERE (
 					bar.`private` IN(3,4) 
+					AND bar.`deny` = 0 
 					AND bar.`type` = "vote" 
 				) 
 				ORDER BY bar.`replytime` DESC LIMIT 3');
@@ -129,6 +131,7 @@
 				WHERE (
 					bar.`private` IN(2,3,4) 
 					AND bar.`group` = 0 
+					AND bar.`deny` = 0 
 					AND bar.`type` IN ("topic","photo","share","video") 
 				) 
 				ORDER BY bar.`pubtime` DESC LIMIT 8');
@@ -146,6 +149,7 @@
 				LEFT JOIN `tb_news` AS `news` ON news.`tid` = bar.`tid` 
 				LEFT JOIN `tb_news_sort` AS `s` ON s.`sort` = news.`sort` 
 				WHERE bar.`type` = "news" AND bar.`private` >= 3 
+				AND bar.`deny` = 0 
 				ORDER BY bar.`ding`DESC,bar.`pubtime` DESC LIMIT 8');
 			$this->view->news = $rows;
 		}

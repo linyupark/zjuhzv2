@@ -1,3 +1,4 @@
+<?php if(Cmd::isMemeber()): ?>
 <?= $this->render('user/range.phtml'); ?>
 <table class="mg5" width="100%">
 <?php if(count($this->rows) > 0): foreach ($this->rows as $i => $r): ?>
@@ -27,3 +28,6 @@
 </table>
 <div class="pg"><?= $this->pagination ?></div>
 <script>online_state();</script>
+<?php else: ?>
+<div class="notice">只有审核通过的校友可以使用该功能，请完善您的个人资料等待审核通过。</div>
+<?php endif; ?>

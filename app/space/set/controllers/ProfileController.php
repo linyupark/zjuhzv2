@@ -162,6 +162,7 @@
 			else 
 			{
 				$this->view->tab = 'contact';
+				$this->view->tip = $this->_getParam('tip');
 				$contact = DbModel::User()->fetchRow('SELECT * FROM `tb_contact` WHERE `uid` = ?', Cmd::uid());
 				$this->view->contact = $contact;
 			}

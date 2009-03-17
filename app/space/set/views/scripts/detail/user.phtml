@@ -1,3 +1,4 @@
+<?php if(Cmd::isMemeber()): ?>
 <table style="margin-left:30px" width="90%">
 <tr>
 	<td width="40" valign="top">
@@ -178,3 +179,6 @@
 	</td>
 </tr>
 </table>
+<?php else: ?>
+<div class="notice mg10">只有审核通过的校友可以使用该功能，请完善您的个人资料等待审核通过。</div>
+<?php endif; ?>

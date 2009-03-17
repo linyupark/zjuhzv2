@@ -41,7 +41,6 @@
 		function mvgroupAction()
 		{
 			$this->getHelper('viewRenderer')->setNoRender();
-			/*
 			$gid = $this->_getParam('gid');
 			if($gid)
 			{
@@ -73,7 +72,7 @@
 						'lastvisit' => $m['last_access']
 					));
 				}
-			}*/
+			}
 		}
 		
 		function v1tov2Action()

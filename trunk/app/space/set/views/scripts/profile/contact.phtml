@@ -2,6 +2,9 @@
 <?= $this->render('profile/tab.phtml') ?>
 
 <form method="post" id="contact_form" class="mg10" onsubmit="return set_contact()">
+<?php if($this->tip == 1): ?>
+<div class="notice">烦请完善您的联系方式(手机必要)，教育情况等一些个人资料，以方便我们的审核跟后续服务。</div>
+<?php endif; ?>
 <table class="mgl10 table-dashed" width="97%">
 	<tr>
 		<td class="txtr" width="18%">E-mail：</td>

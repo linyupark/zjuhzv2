@@ -26,6 +26,12 @@
                         		Alp_Sys::msg('goto', '/space_set/profile/edu?tip=1');
                         	}
                         	
+                        	// 检测其联系方式资料
+                        	if(!Cmd::getSess('profile', 'mobile'))
+                        	{
+                        		Alp_Sys::msg('goto', '/space_set/profile/contact?tip=1');
+                        	}
+                        	
 	                        // cookie 保存帐号密码
 	                        if($params['rememberme'] == 1)
 	                        setcookie(

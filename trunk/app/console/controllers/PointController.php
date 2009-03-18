@@ -203,7 +203,6 @@
 					{
 						Logic_Api::apoint('user', $uid, $point, $memo, $time);
 					}
-					
 					echo 'success';
 				}
 				else
@@ -292,7 +291,7 @@
 					}
 					if($in_uids != '')
 					$select->reset()->from(array('u' => 'zjuhzv2_user.tb_base'), 
-						array('point', 'uname' => 'u.username'))
+						array('point', 'uname' => 'u.username', 'uid'))
 						->where('u.uid IN ('.$in_uids.')');
 				}
 				// 有名字模糊查询

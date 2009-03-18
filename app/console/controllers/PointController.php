@@ -230,7 +230,6 @@
 			{
 				$select->from(array('g' => 'tb_group'),array('g.gid'))->where('g.name LIKE "%'.$keys[0].'%"');
 				$groups = $select->query()->fetchAll();
-				
 				if(count($groups) > 0)
 				{
 					$gids = '';

@@ -223,7 +223,7 @@
 		{
 			$key = trim(urldecode($this->_getParam('key')));
 			$key_arr = explode(':', $key);
-			$range = $key_arr[0]; $keys = explode(' ', $key_arr[1]);
+			$range = $key_arr[0]; $keys = explode(' ', trim($key_arr[1]));
 			$select = DbModel::Space()->select();
 			
 			if($range == 'group') // 群内搜索
@@ -276,7 +276,7 @@
 			
 			if($range == 'events') // 活动
 			{
-				$select->from('tb_tbar', array('tid'))->where('title LIKE "%'.$keys[0].'%"')->order('pubtime DESC');
+				$select->from('tb_tbar', array('tid'))->where('`title` LIKE "%'.$keys[0].'%" AND `type` = "events"')->order('pubtime DESC');
 				$events = $select->query()->fetchAll();
 				if(count($events)  > 0)
 				{
@@ -285,10 +285,13 @@
 					$select->from('tb_events', array('member'))->where('tid = '.$tid);
 					$members = $select->query()->fetchAll();
 					$members = unserialize($members[0]['member']);
-					if(count($members) > 0)
 					$in_uids = '';
-					foreach ($members as $uid => $m) $in_uids .= $uid.',';
-					$in_uids = substr($in_uids, 0, -1);
+					if(count($members) > 0)
+					{
+						foreach ($members as $uid => $m) $in_uids .= $uid.',';
+						$in_uids = substr($in_uids, 0, -1);
+					}
+					if($in_uids != '')
 					$select->reset()->from(array('u' => 'zjuhzv2_user.tb_base'), 
 						array('point', 'uname' => 'u.username'))
 						->where('u.uid IN ('.$in_uids.')');

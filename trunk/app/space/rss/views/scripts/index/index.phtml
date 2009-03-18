@@ -1,0 +1,71 @@
+<?= $this->render('tab.phtml') ?>
+<div class="notice mg5">
+	RSS是在线共享内容的一种简易方式。
+	网站提供RSS输出，有利于让用户获取网站内容的最新更新。
+	借助RSS聚合软件(Google阅读器：<a href="https://www.google.com/reader/m/">手机</a> / <a href="https://www.google.com/reader/">PC</a>)，方便用户订阅、收藏关注的信息。
+	本站遵循 RSS 2.0 版本规范。
+</div>
+<form id="rss_form">
+<table width="100%" class="table-dashed">
+  <tr>
+  	<td class="txtr"><b>新闻</b>
+  		<a href="javascript:sel('news')">全选</a>/
+  		<a href="javascript:unsel('news')">消</a>
+  	</td>
+  	<td>
+  		<?php foreach ($this->news_sort as $sort): ?>
+  		<input class="nob news" id="news_<?= $sort['sort'] ?>" type="checkbox" name="news[]" value="<?= $sort['sort'] ?>">
+  		<label for="news_<?= $sort['sort'] ?>"><?= $sort['name'] ?></label>&nbsp;&nbsp;&nbsp;
+  		<?php endforeach; ?>
+  	</td>
+  </tr>
+  <tr>
+  	<td class="txtr"><b>互助</b>
+  		<a href="javascript:sel('help')">全选</a>/
+  		<a href="javascript:unsel('help')">消</a>
+  	</td>
+  	<td>
+  		<?php foreach ($this->help_sort as $sort): ?>
+  		<input class="nob help" id="help_<?= $sort['sort'] ?>" type="checkbox" name="help[]" value="<?= $sort['sort'] ?>">
+  		<label for="help_<?= $sort['sort'] ?>"><?= $sort['name'] ?></label>&nbsp;&nbsp;&nbsp;
+  		<?php endforeach; ?>
+  	</td>
+  </tr>
+  <tr>
+  	<td class="txtr"><b>其他</b>
+  		<a href="javascript:sel('other')">全选</a>/
+  		<a href="javascript:unsel('other')">消</a>
+  	</td>
+  	<td>
+  		<input class="nob other" id="other_0" type="checkbox" name="t" value="on">
+  		<label for="other_0">其他帖子</label>&nbsp;&nbsp;&nbsp;
+  		<input class="nob other" id="other_1" type="checkbox" name="r" value="on">
+  		<label for="other_1">别人的回复</label>&nbsp;&nbsp;&nbsp;
+  	</td>
+  </tr>
+  <tr>
+  	<td class="txtr"><b>RSS地址：</b></td>
+  	<td>
+  		<input onclick="$(this).focus().select()" id="rss_url" type="text" size="60" />
+  		<input type="hidden" name="ucode" value="<?= $this->filter ?>" />
+  		<select name="limit">
+  			<option value="10">每项显示10条</option>
+  			<option value="20">每项显示20条</option>
+  			<option value="30">每项显示30条</option>
+  		</select>
+  		<input type="button" value="生成" class="btn" onclick="grss()" />
+  	</td>
+  </tr>
+</table>
+</form>
+<script>
+	function sel(cname) { $('.'+cname).attr('checked',true); } 
+	function unsel(cname) { $('.'+cname).attr('checked',false); }
+	function grss()
+	{
+		var mix = $('#rss_form').serialize();
+		$('#rss_url').val('http://<?= DOMAIN ?>/public/rss/?'+mix);
+	}
+	$('.nob').attr('checked',true);
+</script>
+<?= $this->render('sidebar.phtml') ?>

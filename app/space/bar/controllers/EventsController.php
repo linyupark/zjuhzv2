@@ -101,9 +101,7 @@
 			$select = DbModel::Space()->select()
 									  ->from(array('bar' => 'zjuhzv2_space.tb_tbar'), 
 											 array('numrows' => new Zend_Db_Expr('COUNT(bar.tid)')))
-									  ->where('bar.group = ?', 0)
-									  ->where('bar.deny = 0')
-									  ->where('bar.type = ?', 'events')
+									  ->where('bar.group = 0 AND bar.deny = 0 AND bar.type = "events"', 0)
 									  ->order('bar.ding DESC')->group('bar.tid');
 									  
 			$select->joinLeft(array('e' => 'zjuhzv2_space.tb_events'), 'bar.tid = e.tid');
@@ -197,7 +195,7 @@
 			{
 				Alp_Page::$pagesize = $pagesize;
 				Alp_Page::create(array(
-					'href_open' => '<a href="?type=news&order='.$order.'&where='.$where.'&sort='.$sort.'&p=%d">',
+					'href_open' => '<a href="?type=events&order='.$order.'&where='.$where.'&sort='.$sort.'&p=%d">',
 					'href_close' => '</a>',
 					'num_rows' => $row[0]['numrows'],
 					'cur_page' => $page

@@ -48,9 +48,10 @@
 		public static function generateChannel($channel)
 		{
 			$header = '<channel>';
+			$body = '';
 			foreach ($channel as $key => $val)
 			{
-				$channel .= "<{$key}>{$val}</{$key}>\n";
+				$body .= "<{$key}>{$val}</{$key}>\n";
 			}
 			if(count(self::$rss_items) > 0)
 			{
@@ -66,7 +67,7 @@
 				}
 			}
 			$footer = '</channel>';
-			return $header.$channel.$items.$footer;
+			return $header.$body.$items.$footer;
 		}
 	}
 ?>

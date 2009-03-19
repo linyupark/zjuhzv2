@@ -134,7 +134,7 @@
 					AND bar.`deny` = 0 
 					AND bar.`type` IN ("topic","photo","share","video","help") 
 				) 
-				ORDER BY bar.`pubtime` DESC LIMIT 8');
+				ORDER BY bar.`replytime` DESC LIMIT 8');
 			$this->view->bars = $rows;
 		}
 		

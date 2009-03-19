@@ -16,7 +16,6 @@
 			if(!Logic_User_Base::check($uid)) echo 'none data';
 			else // 有效用户开始进行内容获取
 			{
-				//$friends = Logic_Space_Friends::ids($uid);
 				$select = DbModel::Space()->select();
 				$limit = (int)$params['limit'] > 30 ? 30 : $params['limit']; // 限制最高上限
 				$data = array();
@@ -24,7 +23,7 @@
 				if(count($params['news']) > 0)
 				{
 					$select->from(array('t' => 'tb_tbar'))
-						   ->where('t.type = "news" AND t.private IN (2,3,4)')
+						   ->where('t.type = "news" AND t.private IN (3,4)')
 						   ->where('t.deny = 0')
 						   ->joinLeft(array('n' => 'tb_news'), 'n.tid = t.tid')
 						   ->joinLeft(array('s' => 'tb_news_sort'), 's.sort = n.sort')
@@ -40,7 +39,7 @@
 				{
 					$select->reset();
 					$select->from(array('t' => 'tb_tbar'))
-						   ->where('t.type = "help" AND t.private IN (2,3,4)')
+						   ->where('t.type = "help" AND t.private IN (3,4)')
 						   ->where('t.deny = 0')
 						   ->joinLeft(array('h' => 'tb_help'), 'h.tid = t.tid')
 						   ->joinLeft(array('s' => 'tb_help_sort'), 's.sort = h.sort')
@@ -69,12 +68,18 @@
 				{
 					$select->reset();
 					$tids = Logic_Space_Bar::ids($uid);
+					$join = Logic_Space_Bar::getJoin($uid);
+					$join = unserialize($join['tid']);
 					if(count($tids) > 0)
 					{
 						$in_tid = array();
 						foreach ($tids as $t)
 						{
 							$in_tid[] = $t['tid'];
+						}
+						foreach ($join as $jid => $jtime)
+						{
+							$in_tid[] = $jid;
 						}
 						$select->from(array('c' => 'tb_comment'))
 							   ->joinLeft(array('t' => 'tb_tbar'), 't.tid = c.tid', array('t.title','t.type'))
@@ -91,7 +96,6 @@
 				// 聚合为feed -------------------------------------
 				if(count($data) > 0)
 				{
-					$channel = '';
 					foreach ($data as $part => $rows)
 					{
 						if($part == 'news') // 新闻
@@ -154,7 +158,7 @@
 							}
 						}
 					}
-					$channel .= Alp_Feed::generateChannel(array(
+					$channel = Alp_Feed::generateChannel(array(
 						'title' => '杭州浙江大学校友会',
 						'link' => 'http://'.DOMAIN.'/',
 						'description' => '联络校友 . 团结互助 . 爱校荣校 . 建设杭州',

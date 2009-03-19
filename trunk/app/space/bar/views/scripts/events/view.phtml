@@ -19,12 +19,12 @@
 			<td rowspan="2" width="15%" valign="top" class="txtc">
 				<div class="head80">
 					<?php if($this->row['nicky']): ?>
-					<img class="mg10 pd10" src="<?= Cmd::userhead(0,80,Cmd::getSess('profile','sex')) ?>" />
+					<img class="mg10 pd10" src="<?= Cmd::userhead(0,80,$this->row['sex']) ?>" />
 					<img class="online_state" src="<?= Alp_Url::img('icon/1616/offline.gif') ?>" rel="<?= $this->row['puber'] ?>" />
 					<?= $this->row['unick'] ?>
 					<?php else: ?>
 					<a href="/space_home/?uid=<?= $this->row['puber'] ?>">
-					<img class="mg10 pd10" src="<?= Cmd::userhead($this->row['puber'],80) ?>" />
+					<img class="mg10 pd10" src="<?= Cmd::userhead($this->row['puber'],80,$this->row['sex']) ?>" />
 					</a>
 					<img class="online_state" src="<?= Alp_Url::img('icon/1616/offline.gif') ?>" rel="<?= $this->row['puber'] ?>" />
 					<a href="/space_home/?uid=<?= $this->row['puber'] ?>"><?= $this->row['uname'] ?></a>

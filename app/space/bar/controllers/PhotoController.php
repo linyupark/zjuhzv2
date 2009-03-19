@@ -52,7 +52,7 @@
 			$select = DbModel::Space()->select()
 									  ->from(array('bar' => 'zjuhzv2_space.tb_tbar'), 
 											 array('numrows' => new Zend_Db_Expr('COUNT(bar.tid)')))
-									  ->where('bar.group = 0')->where('bar.deny = 0')
+									  ->where('bar.group = 0 AND bar.type = "photo" AND bar.deny = 0')
 									  ->order('bar.ding DESC')->group('bar.tid');
 									  
 			$select->joinLeft(array('photo' => 'zjuhzv2_space.tb_photo'), 'bar.tid = photo.tid');
@@ -60,7 +60,6 @@
 			switch ($where)
 			{
 				case 'pub' : // 我发布的帖子
-					$select->where('bar.type = ?', 'photo');
 					$select->where('puber = ?', $myid);
 				break;
 				case 'join' : // 我参与的帖

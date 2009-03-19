@@ -10,7 +10,7 @@
     	<a href="javascript:next_item()"><img class="selector" src="<?= Alp_Url::img('v1/arr-r.gif'); ?>" /></a>
     </td>
     <td valign="top">
-  		<div class="txtc" style="height:500px; overflow:auto">
+  		<div class="txtc" style="height:400px; overflow:auto">
 		<?php foreach ($this->photos as $i => $p): ?>
 		<a href="javascript:this_item(<?= $i ?>)">
 			<?php if(file_exists(UPLOADROOT.'photo/'.$this->puber.'/'.Alp_String::appendFileName($p['file'], '_resize'))): ?>
@@ -26,7 +26,6 @@
   </tr>
 </table>
 <input type="hidden" id="cur_item" />
-<br />
 <div id="intro_box" class="pd10"></div>
 
 

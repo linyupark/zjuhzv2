@@ -14,7 +14,7 @@
 <input type="hidden" id="cur_item" />
 <div class="txtc" style="height:80px; overflow:auto">
 <?php foreach ($this->photos as $i => $p): ?>
-<a href="javascript:this_item(<?= $i ?>)" class="fleft">
+<a href="javascript:this_item(<?= $i ?>)">
 	<?php if(file_exists(UPLOADROOT.'photo/'.$this->puber.'/'.Alp_String::appendFileName($p['file'], '_resize'))): ?>
 	<img class="photo_item pd10" src="<?= Alp_Url::upload('photo/'.$this->puber.'/'.Alp_String::appendFileName($p['file'], '_resize')) ?>" width="80" />
 	<?php else: ?>
@@ -24,7 +24,7 @@
 <textarea class="hide" id="photo_intro_<?= $i ?>"><?= stripcslashes($p['intro']); ?></textarea>
 <?php endforeach; ?>
 </div>
-
+<br />
 <div id="intro_box" class="pd10" style="border:1px dashed #ccc; background:#f5f5f5;"></div>
 
 

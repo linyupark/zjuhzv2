@@ -101,7 +101,9 @@
 			$select = DbModel::Space()->select()
 									  ->from(array('bar' => 'zjuhzv2_space.tb_tbar'), 
 											 array('numrows' => new Zend_Db_Expr('COUNT(bar.tid)')))
-									  ->where('bar.group = ?', 0)->where('bar.deny = 0')
+									  ->where('bar.group = ?', 0)
+									  ->where('bar.deny = 0')
+									  ->where('bar.type = ?', 'events')
 									  ->order('bar.ding DESC')->group('bar.tid');
 									  
 			$select->joinLeft(array('e' => 'zjuhzv2_space.tb_events'), 'bar.tid = e.tid');
@@ -109,7 +111,6 @@
 			switch ($where)
 			{
 				case 'pub' : // 我发布的帖子
-					$select->where('bar.type = ?', 'events');
 					$select->where('bar.puber = ?', $myid);
 				break;
 				case 'join' : // 我参与的帖
@@ -153,7 +154,6 @@
 					else $select->where('e.tid = ?', 0);
 				break;
 				default: // 所有帖子
-					$select->where('bar.type = ?', 'events');
 				break;
 			}
 			

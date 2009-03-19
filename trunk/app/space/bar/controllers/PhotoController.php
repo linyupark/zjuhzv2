@@ -103,7 +103,6 @@
 					else $select->where('photo.tid = ?', 0);
 				break;
 				default: // 所有帖子
-					$select->where('bar.type = ?', 'photo');
 				break;
 			}
 			switch ($order)

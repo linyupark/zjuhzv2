@@ -54,8 +54,6 @@
 											 array('numrows' => new Zend_Db_Expr('COUNT(bar.tid)')))
 									  ->where('bar.group = 0 AND bar.type = "photo" AND bar.deny = 0')
 									  ->order('bar.ding DESC')->group('bar.tid');
-									  
-			$select->joinLeft(array('photo' => 'zjuhzv2_space.tb_photo'), 'bar.tid = photo.tid');
 			
 			switch ($where)
 			{
@@ -75,14 +73,14 @@
 								$in_tid .= $tid.',';
 							}
 							$in_tid = substr($in_tid, 0, -1);
-							$select->where('photo.tid IN ('.$in_tid.')');
+							$select->where('bar.tid IN ('.$in_tid.')');
 						}
-						else $select->where('photo.tid = ?', 0);
+						else $select->where('bar.tid = ?', 0);
 					}
-					else $select->where('photo.tid = ?', 0);
+					else $select->where('bar.tid = ?', 0);
 				break;
 				case 'fav' : // 我的收藏帖
-					$row = Logic_Space_Bar::getFav('photo', $myid);
+					$row = Logic_Space_Bar::getFav('bar', $myid);
 					if($row != false)
 					{
 						$tid_arr = unserialize($row['photo']);
@@ -96,11 +94,11 @@
 								$in_tid .= $id.',';
 							}
 							$in_tid = substr($in_tid, 0, -1);	
-							$select->where('photo.tid IN ('.$in_tid.')');
+							$select->where('bar.tid IN ('.$in_tid.')');
 						}
-						else $select->where('photo.tid = ?', 0);
+						else $select->where('bar.tid = ?', 0);
 					}
-					else $select->where('photo.tid = ?', 0);
+					else $select->where('bar.tid = ?', 0);
 				break;
 				default: // 所有帖子
 				break;

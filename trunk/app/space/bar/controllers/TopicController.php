@@ -114,7 +114,7 @@
 				$this->view->pagination = Alp_Page::$page_str;
 			}
 			$select->joinLeft(array('puser' => 'zjuhzv2_user.tb_base'), 'puser.uid = bar.puber', 
-							  array('pubname' => 'username', 'pubnick' => 'nickname', 'psex' => 'puser.sex'));
+							  array('pubname' => 'username', 'pubnick' => 'nickname'));
 			$select->joinLeft(array('ruser' => 'zjuhzv2_user.tb_base'), 'ruser.uid = bar.replyer', 
 							  array('replyname' => 'username', 'replynick' => 'nickname'));
 			$rows = $select->query()->fetchAll();

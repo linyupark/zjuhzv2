@@ -39,16 +39,18 @@
 				 $select->where('msg.sbox = 1 AND msg.sender = ?', $uid);
 			}
 			if($type == 'pm') $select->group('msg.parent'); // 计算对话组
+			
 			$row = $select->query()->fetchAll();
+			$numrows = $type == 'pm' ? count($row) : $row[0]['numrows'];
 			$select->reset(Zend_Db_Select::COLUMNS)->columns('*');
 			
-			if($row[0]['numrows'] > $pagesize)
+			if($numrows > $pagesize)
 			{
 				Alp_Page::$pagesize = $pagesize;
 				Alp_Page::create(array(
 					'href_open' => '<a href="/space_msg/?type='.$type.'&p=%d">',
 					'href_close' => '</a>',
-					'num_rows' => $row[0]['numrows'],
+					'num_rows' => $numrows,
 					'cur_page' => $page
 				));
 				$select->limit($pagesize, Alp_Page::$offset);

@@ -78,6 +78,7 @@
 						}
 						$select->from(array('c' => 'tb_comment'))
 							   ->joinLeft(array('t' => 'tb_tbar'), 't.tid = c.tid', array('t.title','t.type'))
+							   ->joinLeft(array('u' => 'zjuhzv2_user.tb_base'), 'u.uid = c.uid', array('username','nickname'))
 							   ->where('c.tid IN (?)', $in_tid)
 							   ->where('c.deny = 0')
 							   ->order('c.time DESC')
@@ -91,80 +92,74 @@
 				if(count($data) > 0)
 				{
 					$channel = '';
-					Zend_Debug::dump($data);
+					//Zend_Debug::dump($data);
 					foreach ($data as $part => $rows)
 					{
-						
-						if($part == 'news') // 新闻channel
+						if($part == 'news') // 新闻
 						{
 							foreach ($rows as $v)
 							{
 								Alp_Feed::addRssItem(array(
 									'title' => stripslashes($v['title']),
 									'link' => 'http://'.DOMAIN.'/space_bar/news/view?tid='.$v['tid'],
-									'description' => stripslashes($v['content'])
+									'description' => '<![CDATA['.stripslashes($v['content']).']]>'
 								));
 							}
-							$channel .= Alp_Feed::generateChannel(array(
-								'title' => '杭州浙江大学校友会 - 新闻频道',
-								'link' => 'http://'.DOMAIN.'/space_bar/?type=news',
-								'description' => ''
-							));
-							Alp_Feed::rest();
 						}
-						if($part == 'help') // 互助channel
+						if($part == 'help') // 互助
 						{
 							foreach ($rows as $v)
 							{
 								Alp_Feed::addRssItem(array(
 									'title' => stripslashes($v['name'].' - '.$v['title']),
 									'link' => 'http://'.DOMAIN.'/space_bar/help/view?tid='.$v['tid'],
-									'description' => stripslashes($v['content'])
+									'description' => '<![CDATA['.stripslashes($v['content']).']]>'
 								));
 							}
-							$channel .= Alp_Feed::generateChannel(array(
-								'title' => '杭州浙江大学校友会 - 互助频道',
-								'link' => 'http://'.DOMAIN.'/space_bar/?type=help',
-								'description' => ''
-							));
-							Alp_Feed::rest();
 						}
-						if($part == 't') // 其他帖子channel
+						if($part == 'bar') // 其他帖子
 						{
 							foreach ($rows as $v)
 							{
 								Alp_Feed::addRssItem(array(
 									'title' => stripslashes($v['title']),
 									'link' => 'http://'.DOMAIN.'/space_bar/'.$v['type'].'/view?tid='.$v['tid'],
-									'description' => '....'
+									'description' => '',
+									'pubDate' => Alp_Date::normal($v['time'])
 								));
 							}
-							$channel .= Alp_Feed::generateChannel(array(
-								'title' => '杭州浙江大学校友会 - 帖子',
-								'link' => 'http://'.DOMAIN.'/space_bar/?where=all&order=time&type=topic',
-								'description' => ''
-							));
-							Alp_Feed::rest();
 						}
-						if($part == 'r') // 其他帖子channel
+						if($part == 'reply') // 回复
 						{
+							$collection = array(); // 同一主题不重复显示title
 							foreach ($rows as $v)
 							{
+								$collection[$v['tid']][] = $v;
+							}
+							//Zend_Debug::dump($collection);
+							foreach ($collection as $tid => $bars)
+							{
+								$description = '';
+								foreach ($bars as $b)
+								{
+									$author = $b['nicky'] == 1 ? $b['nickname'] : $b['username'];
+									$description .= $author.'<![CDATA[：'.stripslashes($b['content']).']]>';
+								}
 								Alp_Feed::addRssItem(array(
-									'title' => stripslashes($v['title']),
-									'link' => 'http://'.DOMAIN.'/space_bar/'.$v['type'].'/view?tid='.$v['tid'],
-									'description' => stripslashes($v['content'])
+									'title' => stripslashes($bars[0]['title']),
+									'link' => 'http://'.DOMAIN.'/space_bar/'.$bars[0]['type'].'/view?tid='.$tid,
+									'description' => $description
 								));
 							}
-							$channel .= Alp_Feed::generateChannel(array(
-								'title' => '杭州浙江大学校友会 - 回帖',
-								'link' => 'http://'.DOMAIN.'/space_bar/?where=pub&order=rtime&type=topic',
-								'description' => ''
-							));
-							Alp_Feed::rest();
 						}
 					}
-					echo '<?xml version="1.0" encoding="UTF-8" ?><rss>'.$channel.'</rss>';
+					$channel .= Alp_Feed::generateChannel(array(
+						'title' => '杭州浙江大学校友会',
+						'link' => 'http://'.DOMAIN.'/',
+						'description' => '联络校友 . 团结互助 . 爱校荣校 . 建设杭州',
+						'image' => '<url>http://www.zjuhz.com/im/v1/logo.gif</url>'
+					));
+					echo '<?xml version="1.0" encoding="UTF-8" ?><rss version="2.0">'.$channel.'</rss>';
 				}
 			}
 		}

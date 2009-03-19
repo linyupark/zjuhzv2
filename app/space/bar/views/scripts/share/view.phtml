@@ -53,15 +53,15 @@
 					<table class="f12" width="80%">
 					<?php foreach ($this->items as $item): ?>
 					<tr class="section-sub">
-						<td class="txtr quiet" width="90">下载地址：</td>
+						<td class="txtr quiet" width="90">
+						<?php if($item['intro']): ?>
+						<?= stripslashes($item['intro']) ?>
+						<hr class="dashed" />
+						<?php endif; ?>
+						下载地址：
+						</td>
 						<td><a onclick="inc_download(<?= $item['id'] ?>)" href="<?= Alp_Url::upload('share/'.$this->row['puber'].'/'.$item['file']) ?>"><?= $item['file'] ?></a></td>
 					</tr>
-					<?php if($item['intro']): ?>
-					<tr>
-						<td class="txtr quiet">说明：</td>
-						<td><?= stripslashes($item['intro']) ?></td>
-					</tr>
-					<?php endif; ?>
 					<tr>
 						<td class="txtr quiet">已被下载：</td>
 						<td><span id="download_num"><?= $item['download'] ?></span>次</td>

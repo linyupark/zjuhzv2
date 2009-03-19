@@ -12,7 +12,7 @@
   </tr>
 </table>
 <input type="hidden" id="cur_item" />
-<div class="txtc">
+<div class="txtc" style="height:60px; overflow:auto">
 <?php foreach ($this->photos as $i => $p): ?>
 <a href="javascript:this_item(<?= $i ?>)">
 	<?php if(file_exists(UPLOADROOT.'photo/'.$this->puber.'/'.Alp_String::appendFileName($p['file'], '_resize'))): ?>

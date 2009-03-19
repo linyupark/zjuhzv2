@@ -116,6 +116,11 @@
 			parent::Space()->update('tb_msg', array($box => 0), 'mid = '.(int)$mid);
 		}
 		
+		public static function clearsb($uid)
+		{
+			parent::Space()->update('tb_msg', array('sbox' => 0), 'sender = '.(int)$uid.' AND isread = 1');
+		}
+		
 		/**
 		 * 发送站内信息
 		 *

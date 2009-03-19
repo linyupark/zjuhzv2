@@ -29,5 +29,12 @@
 	</tr>
 </table>
 <?php endforeach; ?>
-
+<p class="mgl10 quiet a-span">
+	共发送过<?= $this->numrows ?>条短消息 
+	<a href="javascript:clearSBox()">清空发件箱内已读信息</a>
+</p>
+<hr class="dashed" />
 <div class="pg"><?= $this->pagination ?></div>
+<script>
+	function clearSBox(){ $.post('/space_msg/index/clearsbox/',function(data){ if(data == 'success') history.go(0); else alert(data); }); }
+</script>

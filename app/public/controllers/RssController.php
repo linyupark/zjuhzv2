@@ -92,7 +92,6 @@
 				if(count($data) > 0)
 				{
 					$channel = '';
-					//Zend_Debug::dump($data);
 					foreach ($data as $part => $rows)
 					{
 						if($part == 'news') // 新闻
@@ -102,7 +101,8 @@
 								Alp_Feed::addRssItem(array(
 									'title' => stripslashes($v['title']),
 									'link' => 'http://'.DOMAIN.'/space_bar/news/view?tid='.$v['tid'],
-									'description' => '<![CDATA['.stripslashes($v['content']).']]>'
+									'description' => '<![CDATA['.stripslashes($v['content']).']]>',
+									'pubDate' => date('Y-m-d H:i', $v['pubtime'])
 								));
 							}
 						}
@@ -113,7 +113,8 @@
 								Alp_Feed::addRssItem(array(
 									'title' => stripslashes($v['name'].' - '.$v['title']),
 									'link' => 'http://'.DOMAIN.'/space_bar/help/view?tid='.$v['tid'],
-									'description' => '<![CDATA['.stripslashes($v['content']).']]>'
+									'description' => '<![CDATA['.stripslashes($v['content']).']]>',
+									'pubDate' => date('Y-m-d H:i', $v['pubtime'])
 								));
 							}
 						}
@@ -125,7 +126,7 @@
 									'title' => stripslashes($v['title']),
 									'link' => 'http://'.DOMAIN.'/space_bar/'.$v['type'].'/view?tid='.$v['tid'],
 									'description' => '',
-									'pubDate' => Alp_Date::normal($v['time'])
+									'pubDate' => date('Y-m-d H:i', $v['pubtime'])
 								));
 							}
 						}
@@ -136,7 +137,6 @@
 							{
 								$collection[$v['tid']][] = $v;
 							}
-							//Zend_Debug::dump($collection);
 							foreach ($collection as $tid => $bars)
 							{
 								$description = '';

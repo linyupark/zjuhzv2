@@ -50,9 +50,7 @@
 			$select = DbModel::Space()->select()
 									  ->from(array('bar' => 'zjuhzv2_space.tb_tbar'))
 									  ->where('bar.group = 0 AND bar.type = "share" AND bar.deny = 0')
-									  ->order('bar.ding DESC')->group('bar.tid');
-			
-			$select->joinLeft(array('share' => 'zjuhzv2_space.tb_share'), 'bar.tid = share.tid');						  
+									  ->order('bar.ding DESC')->group('bar.tid');		  
 									  
 			switch ($where)
 			{
@@ -72,11 +70,11 @@
 								$in_tid .= $tid.',';
 							}
 							$in_tid = substr($in_tid, 0, -1);
-							$select->where('share.tid IN ('.$in_tid.')');
+							$select->where('bar.tid IN ('.$in_tid.')');
 						}
-						else $select->where('share.tid = ?', 0);
+						else $select->where('bar.tid = ?', 0);
 					}
-					else $select->where('share.tid = ?', 0);
+					else $select->where('bar.tid = ?', 0);
 				break;
 				case 'fav' : // 我的收藏帖
 					$row = Logic_Space_Bar::getFav('share', $myid);
@@ -93,11 +91,11 @@
 								$in_tid .= $id.',';
 							}
 							$in_tid = substr($in_tid, 0, -1);	
-							$select->where('share.tid IN ('.$in_tid.')');
+							$select->where('bar.tid IN ('.$in_tid.')');
 						}
-						else $select->where('share.tid = ?', 0);
+						else $select->where('bar.tid = ?', 0);
 					}
-					else $select->where('share.tid = ?', 0);
+					else $select->where('bar.tid = ?', 0);
 				break;
 				default: // 所有帖子
 				break;
@@ -128,7 +126,7 @@
 			{
 				Alp_Page::$pagesize = $pagesize;
 				Alp_Page::create(array(
-					'href_open' => '<a href="?type=photo&order='.$order.'&where='.$where.'&p=%d">',
+					'href_open' => '<a href="?type=share&order='.$order.'&where='.$where.'&p=%d">',
 					'href_close' => '</a>',
 					'num_rows' => $row[0]['numrows'],
 					'cur_page' => $page

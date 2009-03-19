@@ -25,9 +25,7 @@
 			$page = $this->_getParam('p', 1); // 默认显示页
 			$select = DbModel::Space()->select()->from(array('bar' => 'tb_tbar'), 
 													   array('numrows' => new Zend_Db_Expr('COUNT(bar.tid)')))
-												->where('bar.group = 0')
-												->where('bar.deny = 0')
-												->where('bar.type = ?', 'video')
+												->where('bar.group = 0 AND bar.deny = 0 AND bar.type = "video"')
 												->order('ding DESC');
 			switch ($where)
 			{

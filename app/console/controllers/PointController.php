@@ -96,27 +96,6 @@
 						$data['rank'][$i] = $rows;
 					}
 				break;
-				
-				case 'day' : // 日
-					$days = ceil(($now - $div)/86400); // 总日数
-					$start_this_day = strtotime($this_year.'-'.$this_month.'-'.$this_day.' 00:00');
-					for ($i = 0; $i < $days; $i ++)
-					{
-						$start_count_time = $start_this_day - ($i*86400);
-						if($i == 0) $span = $now;
-						else $span = $start_count_time + 86400;
-						if($start_count_time < $div) $start_count_time = $div; // 避免冲破下线
-						$row = $db->fetchRow('SELECT SUM(`point`) AS `points` FROM `tb_point` 
-							WHERE `time` > '.$start_count_time.' AND `time` < '.$span);
-						$data['points'][] = $row['points'];
-						$rows = $db->fetchAll('SELECT u.username,pt.uid,SUM(pt.point) AS `pts` 
-							FROM `tb_point` AS `pt`
-							LEFT JOIN `zjuhzv2_user`.`tb_base` AS `u` ON u.uid = pt.uid 
-							WHERE pt.time > '.$start_count_time.' AND pt.time < '.$span.' 
-							GROUP BY pt.uid ORDER BY SUM(pt.point) DESC LIMIT 6');
-						$data['rank'][$i] = $rows;
-					}
-				break;
 			}
 			$this->view->data = $data;
 			$this->view->range = $range;

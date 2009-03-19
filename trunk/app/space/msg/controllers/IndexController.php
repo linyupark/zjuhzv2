@@ -17,6 +17,17 @@
 			}
 		}
 		
+		function clearsboxAction()
+		{
+			$this->getHelper('viewRenderer')->setNoRender();
+			if($this->getRequest()->isXmlHttpRequest())
+			{
+				Logic_Space_Msg::clearsb(Cmd::uid());
+				Logic_Space_Msg::del();
+				echo 'success';
+			}
+		}
+		
 		/**
 		 * 站内信息列表
 		 *
@@ -71,6 +82,7 @@
 				case 'sendbox' : // 发件箱
 					$select->joinLeft(array('iu' => 'zjuhzv2_user.tb_base'), 'iu.uid = msg.incept', 
 							array('iname' => 'iu.username', 'isex' => 'iu.sex'));
+					$this->view->numrows = $numrows;
 				break;
 				case 'pm' : // 收件箱
 					$select->columns(array('mid' => new Zend_Db_Expr('max(msg.mid)')));

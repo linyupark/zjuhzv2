@@ -140,6 +140,7 @@
 							foreach ($collection as $tid => $bars)
 							{
 								$description = '';
+								$bars = array_reverse($bars);
 								foreach ($bars as $b)
 								{
 									$author = $b['nicky'] == 1 ? $b['nickname'] : $b['username'];

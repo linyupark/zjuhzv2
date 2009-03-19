@@ -38,6 +38,7 @@
 			{
 				 $select->where('msg.sbox = 1 AND msg.sender = ?', $uid);
 			}
+			if($type == 'pm') $select->group('msg.parent'); // 计算对话组
 			$row = $select->query()->fetchAll();
 			$select->reset(Zend_Db_Select::COLUMNS)->columns('*');
 			

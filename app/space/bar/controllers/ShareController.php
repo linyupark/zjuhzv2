@@ -100,7 +100,6 @@
 					else $select->where('share.tid = ?', 0);
 				break;
 				default: // 所有帖子
-					$select->where('bar.type = ?', 'share');
 				break;
 			}
 			switch ($order)

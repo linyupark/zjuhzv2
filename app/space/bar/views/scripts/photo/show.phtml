@@ -12,9 +12,9 @@
   </tr>
 </table>
 <input type="hidden" id="cur_item" />
-<div class="txtc" style="height:60px; overflow:auto">
+<div class="txtc" style="height:80px; overflow:auto">
 <?php foreach ($this->photos as $i => $p): ?>
-<a href="javascript:this_item(<?= $i ?>)">
+<a href="javascript:this_item(<?= $i ?>)" class="fleft">
 	<?php if(file_exists(UPLOADROOT.'photo/'.$this->puber.'/'.Alp_String::appendFileName($p['file'], '_resize'))): ?>
 	<img class="photo_item pd10" src="<?= Alp_Url::upload('photo/'.$this->puber.'/'.Alp_String::appendFileName($p['file'], '_resize')) ?>" width="80" />
 	<?php else: ?>

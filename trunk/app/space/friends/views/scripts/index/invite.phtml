@@ -8,13 +8,9 @@
 			<span style='color:red'>注意：请尽量确认所邀请对象未注册过zjuhz.com</span>
 		</td>
 	</tr>
-	<tr>
-		<td width="180" class="txtr">默认邀请链接：</td>
-		<td><input id="u_0" onclick="ucopy(0)" size="70" type="text" value="http://<?= DOMAIN ?>/public/reg/?ucode=<?= $this->ucode ?>&scode=<?= Alp_String::encrypy(0) ?>" /></td>
-	</tr>
 	<?php foreach ($this->sorts as $id => $name): ?>
 	<tr>
-		<td class="txtr"><?= $name ?>专用邀请链接：</td>
+		<td class="txtr" width="150"><?= $name ?>专用邀请链接：</td>
 		<td><input id="u_<?= $id ?>" onclick="ucopy(<?= $id ?>)" size="70" type="text" value="http://<?= DOMAIN ?>/public/reg/?ucode=<?= $this->ucode ?>&scode=<?= Alp_String::encrypy($id) ?>" /></td>
 	</tr>
 	<?php endforeach; ?>

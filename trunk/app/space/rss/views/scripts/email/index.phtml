@@ -1,3 +1,15 @@
 <?= $this->render('tab.phtml') ?>
-
+<div class="notice mg5">
+	因本站原先使用的邮件群发经常会因为被邮件服务器认为是垃圾邮件而退回，
+	希望订阅本网站信息的校友请设置个人资料的电子邮箱后来本页进行订阅操作。
+	<a href="/space_set/profile/contact">点击此处更换有效邮箱</a>
+</div>
+<form action="http://groups.google.com/group/zjuhz/boxsubscribe" class="pd10">
+  <input name="hl" value="zh-CN" type="hidden" />
+  订阅杭州浙大校友会： 
+  <?php $email = Cmd::getSess('profile', 'email');  ?>
+  <input name="email" type="hidden" value="<?= $email ?>" />
+  <input size="30" disabled="disabled" name="check" type="text" value="<?= $email ?>" />
+  <input value="订阅" type="submit" class="btn" />
+</form>
 <?= $this->render('sidebar.phtml') ?>

@@ -1,6 +1,4 @@
 <p class="a-span pd5" style="border-bottom:1px dashed #ccc">
-	<a href="/space_friends/?type=list" 
-	<?= ($this->sort == 0)?'style="color:#333;text-decoration:underline"':'' ?>>全部</a>
 	<?php foreach ($this->sorts as $i => $s): ?>
 	<a href="/space_friends/?type=list&sort=<?= $i ?>" 
 	<?= ($this->sort == $i)?'style="color:#333;text-decoration:underline"':'' ?>><?= $s ?></a>

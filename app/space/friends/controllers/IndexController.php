@@ -25,7 +25,7 @@
 			$uid = Cmd::uid();
 			$sorts = Logic_Space_Friends::getSort($uid);
 			$this->view->sorts = $sorts;
-			$this->view->ucode = Alp_String::encrypy($uid);
+			$this->view->ucode = $uid;
 		}
 		
 		

@@ -29,7 +29,7 @@
 			$select = DbModel::Space()->select();
 			$select->from(array('m' => 'tb_group_member'))
 				   ->where('m.uid = ?', $uid)
-				   ->where('m.role = "creater" OR m.role = "member" OR m.role = "manager"');
+				   ->where('m.role IN ("creater","member","manager")');
 				   
 			$select->joinLeft(array('g' => 'tb_group'), 'g.gid = m.gid');
 			$select->order('m.role ASC');

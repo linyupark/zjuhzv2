@@ -20,14 +20,14 @@
 				$limit = (int)$params['limit'] > 30 ? 30 : $params['limit']; // 限制最高上限
 				$data = array();
 				// 新闻 -----------------------------------
-				if(count($params['news']) > 0)
+				if(count($params['n']) > 0)
 				{
 					$select->from(array('t' => 'tb_tbar'))
 						   ->where('t.type = "news" AND t.private IN (3,4)')
 						   ->where('t.deny = 0')
 						   ->joinLeft(array('n' => 'tb_news'), 'n.tid = t.tid')
 						   ->joinLeft(array('s' => 'tb_news_sort'), 's.sort = n.sort')
-						   ->where('n.sort IN (?)', $params['news'])
+						   ->where('n.sort IN (?)', $params['n'])
 						   ->order('t.pubtime DESC')
 						   ->limit($limit);
 					$result = $select->query()->fetchAll();
@@ -35,7 +35,7 @@
 					$data['news'] = $result;
 				}
 				// 互助 -----------------------------------
-				if(count($params['help']) > 0)
+				if(count($params['h']) > 0)
 				{
 					$select->reset();
 					$select->from(array('t' => 'tb_tbar'))
@@ -43,12 +43,27 @@
 						   ->where('t.deny = 0')
 						   ->joinLeft(array('h' => 'tb_help'), 'h.tid = t.tid')
 						   ->joinLeft(array('s' => 'tb_help_sort'), 's.sort = h.sort')
-						   ->where('h.sort IN (?)', $params['help'])
+						   ->where('h.sort IN (?)', $params['h'])
 						   ->order('t.pubtime DESC')
 						   ->limit($limit);
 					$result = $select->query()->fetchAll();
 					if(count($result) > 0)
 					$data['help'] = $result;
+				}
+				// 群组 -----------------------------------
+				if(count($params['g']) > 0)
+				{
+					$select->reset();
+					$select->from(array('t' => 'tb_tbar'))
+						   ->joinLeft(array('g' => 'tb_group'), 'g.gid = t.group', array('g.name'))
+						   ->where('t.private IN (2,3,4)')
+						   ->where('t.deny = 0')
+						   ->where('t.group IN (?)', $params['g'])
+						   ->order('t.pubtime DESC')
+						   ->limit($limit);
+					$result = $select->query()->fetchAll();
+					if(count($result) > 0)
+					$data['group'] = $result;
 				}
 				// 其他帖子 ---------------------------------
 				if($params['t'] == 'on')
@@ -56,7 +71,7 @@
 					$select->reset();
 					$select->from(array('t' => 'tb_tbar'))
 						   ->where('t.type NOT IN ("news","help") AND t.private IN (2,3,4)')
-						   ->where('t.deny = 0')
+						   ->where('t.deny = 0 AND t.group = 0')
 						   ->order('t.pubtime DESC')
 						   ->limit($limit);
 					$result = $select->query()->fetchAll();
@@ -118,6 +133,18 @@
 									'title' => stripslashes($v['name'].' - '.$v['title']),
 									'link' => 'http://'.DOMAIN.'/space_bar/help/view?tid='.$v['tid'],
 									'description' => '<![CDATA['.stripslashes($v['content']).']]>',
+									'pubDate' => date('Y-m-d H:i', $v['pubtime'])
+								));
+							}
+						}
+						if($part == 'group') // 群组
+						{
+							foreach ($rows as $v)
+							{
+								Alp_Feed::addRssItem(array(
+									'title' => stripslashes($v['name'].' - '.$v['title']),
+									'link' => 'http://'.DOMAIN.'/space_bar/'.$v['type'].'/view?tid='.$v['tid'],
+									'description' => '',
 									'pubDate' => date('Y-m-d H:i', $v['pubtime'])
 								));
 							}

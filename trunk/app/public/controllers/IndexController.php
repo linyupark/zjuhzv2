@@ -46,9 +46,10 @@
 		 */
 		function groupAction()
 		{
+			$limit = Cmd::role() == 'guest' ? 40 : 20;
 			$rows = DbModel::Space()->fetchAll('SELECT * FROM `tb_group`
 				WHERE `type` != "close" 
-				ORDER BY RAND() DESC LIMIT 20');
+				ORDER BY `point` DESC LIMIT '.$limit);
 			$this->view->groups = $rows;
 		}
 		

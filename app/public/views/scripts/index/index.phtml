@@ -1,6 +1,7 @@
 <div class="yui-main">
 	<div class="yui-b">
 	<?= Cmd::role() == 'guest' ? $this->render('index/start.phtml'):$this->render('index/welcome.phtml'); ?>
+	<?= $this->action('ftpage', 'index'); ?>
 	<?= $this->render('index/fresh.phtml'); ?>
 	</div>
 </div>

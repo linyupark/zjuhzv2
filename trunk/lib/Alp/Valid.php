@@ -159,7 +159,7 @@
         # 有效邮箱 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	    private function valid_email($name, $value, $alias)
 	    {
-	    	if (!ereg("^([a-zA-Z0-9_])+@([a-zA-Z0-9_])+((.)([a-zA-Z0-9_]))+", $value))
+	    	if (!ereg("^(.*)+@([a-zA-Z0-9_])+(\.)+([a-zA-Z0-9_])+", $value))
 	    	Alp_Sys::conv('valid_email', array($alias), $name);
 	    }
 	    

@@ -62,6 +62,26 @@
 		}
 		
 		/**
+		 * 消灭群组
+		 *
+		 */
+		function delAction()
+		{
+			$this->getHelper('viewRenderer')->setNoRender();
+			$gid = (int)$this->_getParam('gid');
+			$uid = Cmd::uid();
+			
+			if(Logic_Space_Group_Member::isCreater($gid, $uid) != false)
+			{
+				$db = DbModel::Space();
+				$db->delete('tb_group', 'gid = '.$gid); // 群组本体信息
+				$db->delete('tb_group_member', 'gid = '.$gid); // 群组成员信息
+				$db->delete('tb_tbar', 'group = '.$gid); // 群组帖子信息
+				echo 'success';
+			}
+		}
+		
+		/**
 		 * 指定id的群组首页
 		 *
 		 */

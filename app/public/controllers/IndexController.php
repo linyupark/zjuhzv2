@@ -58,7 +58,7 @@
 		 */
 		function rankAction()
 		{
-			$rows = Logic_Api::pointrank(array(2,3,4,5,6,41,493,488,24,35,20,89,7,1075,1130), 3);
+			$rows = Logic_Api::pointrank(array(1), 3);
 			$this->view->rows = $rows;
 		}
 		

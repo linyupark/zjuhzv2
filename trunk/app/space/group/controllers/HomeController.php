@@ -76,7 +76,7 @@
 				$db = DbModel::Space();
 				$db->delete('tb_group', 'gid = '.$gid); // 群组本体信息
 				$db->delete('tb_group_member', 'gid = '.$gid); // 群组成员信息
-				$db->delete('tb_tbar', 'group = '.$gid); // 群组帖子信息
+				$db->delete('tb_tbar', '`group` = '.$gid); // 群组帖子信息
 				echo 'success';
 			}
 		}

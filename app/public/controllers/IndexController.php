@@ -48,7 +48,7 @@
 		{
 			$rows = DbModel::Space()->fetchAll('SELECT * FROM `tb_group`
 				WHERE `type` != "close" 
-				ORDER BY `point` DESC LIMIT 6');
+				ORDER BY RAND() DESC LIMIT 20');
 			$this->view->groups = $rows;
 		}
 		

@@ -8,14 +8,13 @@
 		<a href="/space_group/?list=all">&gt;&gt;更多</a>
 	</td>
 </tr>
+<tr><td colspan="2">
+<div style="line-height:200%">
 <?php foreach ($this->groups as $i => $g): ?>
-<?php if($i%2 == 0): ?><tr><?php endif; ?>
-	<td width="50%" valign="top">
-		<b><a href="/space_group/home/?id=<?= $g['gid'] ?>"><?= stripslashes($g['name']) ?></a></b>
-		<br />
-		<p class="quiet"><?= $g['intro'] ?></p>
-	</td>
-<?php if($i%2 == 1): ?></tr><?php endif; ?>
+<a style="color:#<?= $i%2==0?'6A793E':'4B3F78' ?>" class="f12" href="/space_group/home/?id=<?= $g['gid'] ?>"><?= stripslashes($g['name']) ?></a>
+&nbsp;&nbsp;&nbsp;
 <?php endforeach; ?>
+</div>
+</td></tr>
 </table>
 <?php endif; ?>

@@ -31,7 +31,7 @@
 					   			  array('uname'=>'u.username', 'sex'=>'u.sex'));
 				
 				$select->where('gm.gid = ?', $gid)
-					   ->where('gm.role = "manager" OR gm.role = "member"');
+					   ->where('gm.role IN ("manager","member","creater")');
 
 				if($name != null)
 				{

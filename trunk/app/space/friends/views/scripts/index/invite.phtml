@@ -11,7 +11,7 @@
 	<?php foreach ($this->sorts as $id => $name): ?>
 	<tr>
 		<td class="txtr" width="150"><?= $name ?>专用邀请链接：</td>
-		<td><input id="u_<?= $id ?>" onclick="ucopy(<?= $id ?>)" size="70" type="text" value="http://<?= DOMAIN ?>/public/reg/?ucode=<?= $this->ucode ?>&scode=<?= Alp_String::encrypy($id) ?>" /></td>
+		<td><input id="u_<?= $id ?>" onclick="ucopy(<?= $id ?>)" size="70" type="text" value="http://<?= DOMAIN ?>/public/reg/?ucode=<?= $this->ucode ?>&scode=<?= $id ?>" /></td>
 	</tr>
 	<?php endforeach; ?>
 </table>

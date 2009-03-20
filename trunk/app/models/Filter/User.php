@@ -142,8 +142,8 @@
                 // 邀请是否为注册判断
                 if(!empty($params['ucode']) && !empty($params['scode']))
                 {
-                	$params['ucode'] = Alp_String::decrypt($params['ucode']);
-                	$params['scode'] = Alp_String::decrypt($params['scode']);
+                	$params['ucode'] = $params['ucode'];
+                	$params['scode'] = $params['scode'];
                 }
 			}
 			return $params;

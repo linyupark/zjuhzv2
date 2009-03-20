@@ -28,7 +28,7 @@
 		            		'key' => 'add_user'
 		            	));
 			            // 邀请注册好友关联
-			        	Logic_User_Reg::rel($uid, $params['ucode'], $params['scode']);
+			        	Logic_User_Reg::rel($uid, $params['ucode'], $params['scode'], $params['username']);
                 	}
                 }
             }

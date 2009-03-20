@@ -29,7 +29,7 @@
          * @param unknown_type $uid
          * @param unknown_type $fid
          */
-        public static function rel($uid, $fid, $sid)
+        public static function rel($uid, $fid, $sid, $uname)
         {
         	// 是否为有效邀请
 			if(self::isRegistered('uid', $fid) != false 
@@ -70,7 +70,7 @@
 				    'key' => 'add_friend'
 				));
 				// 邀请人加分
-				Logic_Api::apoint('user', $fid, 3, '邀请校友注册本站', time(), 0);
+				Logic_Api::apoint('user', $fid, 3, '邀请'.$uname.'校友注册本站', time(), 0);
 			}
         }
         

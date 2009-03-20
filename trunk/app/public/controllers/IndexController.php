@@ -127,6 +127,7 @@
 		 */
 		function barsAction()
 		{
+			$limit = Cmd::role() == 'guest' ? 20 : 8;
 			$rows = DbModel::Space()->fetchAll('SELECT bar.*  
 				FROM `tb_tbar` AS `bar` 
 				WHERE (
@@ -135,7 +136,7 @@
 					AND bar.`deny` = 0 
 					AND bar.`type` IN ("topic","photo","share","video","help") 
 				) 
-				ORDER BY bar.`replytime` DESC LIMIT 8');
+				ORDER BY bar.`replytime` DESC LIMIT '.$limit);
 			$this->view->bars = $rows;
 		}
 		

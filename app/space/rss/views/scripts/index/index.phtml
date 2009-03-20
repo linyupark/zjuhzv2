@@ -8,13 +8,13 @@
 <form id="rss_form">
 <table width="100%" class="table-dashed">
   <tr>
-  	<td class="txtr"><b>新闻</b>
+  	<td class="txtr" width="100"><b>新闻</b>
   		<a href="javascript:sel('news')">全选</a>/
   		<a href="javascript:unsel('news')">消</a>
   	</td>
   	<td>
   		<?php foreach ($this->news_sort as $sort): ?>
-  		<input class="nob news" id="news_<?= $sort['sort'] ?>" type="checkbox" name="news[]" value="<?= $sort['sort'] ?>">
+  		<input class="nob news" id="news_<?= $sort['sort'] ?>" type="checkbox" name="n[]" value="<?= $sort['sort'] ?>">
   		<label for="news_<?= $sort['sort'] ?>"><?= $sort['name'] ?></label>&nbsp;&nbsp;&nbsp;
   		<?php endforeach; ?>
   	</td>
@@ -26,8 +26,20 @@
   	</td>
   	<td>
   		<?php foreach ($this->help_sort as $sort): ?>
-  		<input class="nob help" id="help_<?= $sort['sort'] ?>" type="checkbox" name="help[]" value="<?= $sort['sort'] ?>">
+  		<input class="nob help" id="help_<?= $sort['sort'] ?>" type="checkbox" name="h[]" value="<?= $sort['sort'] ?>">
   		<label for="help_<?= $sort['sort'] ?>"><?= $sort['name'] ?></label>&nbsp;&nbsp;&nbsp;
+  		<?php endforeach; ?>
+  	</td>
+  </tr>
+  <tr>
+  	<td class="txtr"><b>群组</b>
+  		<a href="javascript:sel('group')">全选</a>/
+  		<a href="javascript:unsel('group')">消</a>
+  	</td>
+  	<td>
+  		<?php foreach ($this->groups as $g): ?>
+  		<input class="nob group" id="group_<?= $g['gid'] ?>" type="checkbox" name="g[]" value="<?= $g['gid'] ?>">
+  		<label for="group_<?= $g['gid'] ?>"><?= $g['name'] ?></label>&nbsp;&nbsp;&nbsp;
   		<?php endforeach; ?>
   	</td>
   </tr>

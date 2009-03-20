@@ -29,7 +29,7 @@
          * @param unknown_type $uid
          * @param unknown_type $fid
          */
-        public static function rel($uid, $fid, $sid, $uname)
+        public static function rel($uid, $fid, $sid)
         {
         	// 是否为有效邀请
 			if(self::isRegistered('uid', $fid) != false 

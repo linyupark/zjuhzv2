@@ -17,7 +17,7 @@
 			$this->view->groups = $groups;
 			$this->view->help_sort = $help_sort;
 			$this->view->news_sort = $news_sort;
-			$this->view->filter = Alp_String::encrypy($uid, 2);// 加密为2
+			$this->view->filter = Alp_String::encrypy($uid, 999);// 加密为2
 		}
 	}
 	

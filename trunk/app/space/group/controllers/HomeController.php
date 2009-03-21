@@ -71,7 +71,7 @@
 			$gid = (int)$this->_getParam('gid');
 			$uid = Cmd::uid();
 			
-			if(Logic_Space_Group_Member::isCreater($gid, $uid) != false)
+			if(Logic_Space_Group_Member::isCreater($gid, $uid) != false || Cmd::role() == 'master')
 			{
 				$db = DbModel::Space();
 				$db->delete('tb_group', 'gid = '.$gid); // 群组本体信息

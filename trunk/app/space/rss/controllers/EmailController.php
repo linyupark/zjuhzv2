@@ -9,7 +9,8 @@
 		
 		function indexAction()
 		{
-			
+			$uid = Cmd::uid();
+			$this->view->filter = Alp_String::encrypy($uid, 999);// 加密为2
 		}
 	}
 	

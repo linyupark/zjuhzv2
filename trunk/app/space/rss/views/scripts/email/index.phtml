@@ -1,8 +1,13 @@
 <?= $this->render('tab.phtml') ?>
 <div class="notice mg5">
-	因本站原先使用的邮件群发经常会因为被邮件服务器认为是垃圾邮件而退回，
-	希望订阅本网站信息的校友请设置个人资料的电子邮箱后来本页进行订阅操作。
-	<a href="/space_set/profile/contact">点击此处更换有效邮箱</a>
+	本站的邮件订阅尚未完善，直接由本站发送的邮件会有被拦截的情况，暂时推荐使用RSS订阅，
+	如需要以邮件的方式订阅，可将生成的RSS链接粘贴到输入框进行订阅操作。
 </div>
+<form method="get" action="http://www.feedblitz.com/f/f.fbz">
+<div class="bcolor-g pd10 mg10">
+	<input size="80" onclick="$(this).focus().select()" name="track" size="50" value="http://www.zjuhz.com/public/rss/?n%5B%5D=2&n%5B%5D=3&n%5B%5D=1&n%5B%5D=5&n%5B%5D=4&n%5B%5D=6&h%5B%5D=1&h%5B%5D=2&g%5B%5D=1&g%5B%5D=2&g%5B%5D=3&g%5B%5D=4&g%5B%5D=9&g%5B%5D=16&g%5B%5D=21&g%5B%5D=24&g%5B%5D=7&t=on&r=on&ucode=<?= urlencode($this->filter) ?>&limit=10" type="text" />
+	<input type="submit" value="前往订阅" class="btn" />
+</div>
+</form>
 
 <?= $this->render('sidebar.phtml') ?>

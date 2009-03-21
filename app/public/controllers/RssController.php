@@ -12,7 +12,7 @@
 			$this->getHelper('viewRenderer')->setNoRender();
 			
 			$params = $this->getRequest()->getParams();
-			$uid = Alp_String::decrypt($params['ucode'], 2);
+			$uid = Alp_String::decrypt($params['ucode'], 999);
 			if(!Logic_User_Base::check($uid)) echo 'none data';
 			else // 有效用户开始进行内容获取
 			{

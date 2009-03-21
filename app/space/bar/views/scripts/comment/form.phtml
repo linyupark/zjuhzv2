@@ -9,7 +9,7 @@
 			<tr>
 				<td><?= $this->render('pub/nicky.phtml') ?>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input id="submit" type="submit" value="回复帖子" class="btn" />
+					<input id="submit" type="submit" value="回复帖子(Ctrl+Enter)" class="btn" />
 					<input type="hidden" name="group" value="<?= $this->gid ?>" />
 					<input id="commentid" type="hidden" name="cid" value="0" />
 					<input id="curpage" type="hidden" name="page" value="<?= $this->page ?>" />
@@ -37,7 +37,7 @@
 				else
 				{
 					alert(data.result);
-					$('#submit').attr('disabled', false).val('回复帖子');
+					$('#submit').attr('disabled', false).val('回复帖子(Ctrl+Enter)');
 				}
 			},
 			'json'

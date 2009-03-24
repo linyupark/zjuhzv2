@@ -25,6 +25,8 @@
 			if($uids == null && $memo == null)
 			{
 				$uids = Logic_Space_Bar_Events::members($tid);
+				$e = Logic_Space_Bar_Events::view($tid);
+				$this->view->memo = $e[0]['title'];
 				$this->view->uids = $uids;
 				$this->view->tid = $tid;
 				

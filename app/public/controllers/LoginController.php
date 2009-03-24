@@ -10,7 +10,7 @@
             $params = $this->getRequest()->getParams();
             if($params['sid'] == Zend_Session::getId())
             {
-                $account = Alp_Valid::of($params['account'], 'account', '帐号', 'trim|aldash|str_between[3,16]');
+                $account = Alp_Valid::of($params['account'], 'account', '帐号', 'trim|aldash|str_between[2,16]');
                 $password = Alp_Valid::of($params['password'], 'password', '登录密码', 'trim|required');
                 if(Alp_Sys::getMsg() == null)
                 {

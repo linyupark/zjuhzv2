@@ -113,7 +113,7 @@
 		 */
 		public static function clear($mid, $box = 'ibox')
 		{
-			parent::Space()->update('tb_msg', array($box => 0), 'mid = '.(int)$mid);
+			parent::Space()->update('tb_msg', array($box => 0, 'isread' => 1), 'mid = '.(int)$mid);
 		}
 		
 		public static function clearsb($uid)

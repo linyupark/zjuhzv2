@@ -28,7 +28,7 @@
 			<td><a id="intro_slide" href="javascript:slide('intro')">展开</a></td>
 		</tr>
 		<?php endif; ?>
-		<?php if($v == 'contact'): ?>
+		<?php if($v == 'contact' && Cmd::role() != 'bench'): ?>
 		<tr>
 			<td class="txtr"><b>联系方式：</b></td>
 			<td><a id="contact_slide" href="javascript:slide('contact')">展开</a></td>

@@ -1,0 +1,30 @@
+<div class="pd10 f14 section-u">请勾选可加分的参加人员：<br />
+<span class="f12">参加活动统一加分为5pt，个别需要多加分的请站内信管理员</span>
+</div>
+<div class="pd10">
+<?php if(count($this->uids) > 0): ?>
+<form id="apt_form" method="post">
+	<?php foreach ($this->uids as $uid => $uname): ?>
+	<input checked="checked" class="nob" id="u_<?= $uid ?>" type="checkbox" name="uid[]" value="<?= $uid ?>" />
+	<label for="u_<?= $uid ?>"><?= $uname ?></label>
+	<?php endforeach; ?>
+	<br /><br /><span class="quiet">加分说明：</span>
+	<textarea name="memo" style="height:40px;width:100%"></textarea>
+	<input type="hidden" name="tid" value="<?= $this->tid ?>" />
+	<div class="pdt10 txtc"><input id="apt_btn" type="button" class="btn" onclick="doapt()" value="确定" /></div>
+</form>
+<span id="apt_tip"></span>
+<script>
+	function doapt()
+	{
+		$('#apt_btn').attr('disabled', true).val('加分提交中...');
+		$.post('/space_bar/events/apt/', $('#apt_form').serializeArray(), function(data){
+			if(data == 'success') { $('#apt_tip').css('color','green').html('加分成功'); history.go(0); }
+			else { $('#apt_tip').css('color','red').html(data); $('#apt_btn').attr('disabled', false).val('重新提交'); }
+		});
+	}
+</script>
+<?php else: ?>
+	没有可以加分的成员
+<?php endif; ?>
+</div>

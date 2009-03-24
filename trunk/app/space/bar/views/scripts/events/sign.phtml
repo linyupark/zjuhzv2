@@ -1,3 +1,4 @@
+<br />
 <?php if($this->time > time()): ?>
 	<?php if(!$this->limit || $this->limit > count($this->members) || isset($this->members[$this->myid])): ?>
 	<?php if(isset($this->members[$this->myid])){ $f = 0; $v = '取消报名'; $color = '#F9C0AA'; } else { $f = 1; $v = '我要报名'; $color = '#E3F9AA'; } ?>
@@ -6,7 +7,15 @@
 	<input id="sign_btn" class="btn" type="button" value="距活动开始还有<?= Alp_Date::timespan(time(), $this->time) ?>，报名人数已达上限" disabled="disabled" />
 	<?php endif; ?>
 <?php else: ?>
-	<input id="sign_btn" class="btn" type="button" value="活动报名已经结束" disabled="disabled" />
+	<?php if($this->apt == true): ?>
+	<a href="javascript:apt(<?= $this->tid ?>)">
+		<img src="<?= Alp_Url::img('icon/1616/heart.gif') ?>" />
+		给参加活动的校友增加热心度
+	</a>
+	<script>function apt(eid){ $.post('/space_bar/events/apt/', { tid:eid }, function(data){ $.facebox(data); }) }</script>
+	<?php else: ?>
+	<input id="sign_btn" class="btn" type="button" value="活动报名结束" disabled="disabled" />
+	<?php endif; ?>
 <?php endif; ?>
 <span id="sign_box"></span>
 <script type="text/javascript">

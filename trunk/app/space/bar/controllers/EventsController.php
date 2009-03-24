@@ -16,6 +16,33 @@
 			$this->view->members = Logic_Space_Bar_Events::members($tid);
 		}
 		
+		function aptAction()
+		{
+			$pt = 5;
+			$uids = $this->_getParam('uid');
+			$memo = strip_tags(trim($this->_getParam('memo')));
+			$tid = $this->_getParam('tid');
+			if($uids == null && $memo == null)
+			{
+				$uids = Logic_Space_Bar_Events::members($tid);
+				$this->view->uids = $uids;
+				$this->view->tid = $tid;
+				
+			} else { // 处理加分
+				$this->getHelper('viewRenderer')->setNoRender();
+				if(count($uids) > 0 && $memo != null)
+				{
+					foreach ($uids as $uid)
+					{
+						Logic_Api::apoint('user', $uid, $pt, $memo, time());
+					}
+					DbModel::Space()->update('tb_events', array('apted' => 1), 'tid = '.$tid);
+					echo 'success';
+				}
+				else echo '加分必要数据不全';
+			}
+		}
+		
 		/**
 		 * 导出excel
 		 *
@@ -39,6 +66,7 @@
 		function signAction()
 		{
 			$myid = Cmd::uid();
+			$role = Cmd::role();
 			$row = $this->_getParam('row');
 			$members = unserialize($row['member']);
 			if($members == false) $members = array();
@@ -59,6 +87,9 @@
 				
 				echo 'success';
 			}
+			// 允许进行加分操作
+			if($role == 'master' || $myid == $row['puber'])
+			$this->view->apt = $row['apted'] == 1 ? false : true;
 			$this->view->limit = $row['limit'];
 			$this->view->time = $row['time'];
 			$this->view->members = $members;

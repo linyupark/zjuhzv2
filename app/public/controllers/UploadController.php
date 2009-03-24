@@ -140,7 +140,7 @@
 				Alp_Upload::init(array(
 					'maxsize' => 2000,
 					'filename' => array($newname),
-					'overwrite' => true,
+					'overwrite' => false,
 					'path' => $path.'/'
 				));
 				if(!Alp_Upload::handle('pic'))

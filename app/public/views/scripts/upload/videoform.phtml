@@ -1,7 +1,7 @@
 <form target="video_frame" action="/public/upload/video" method="post" enctype="multipart/form-data" onsubmit="uping()">
 	<input type="file" name="video[]" />
 	<input id="vupbtn" type="submit" value="上传" class="btn" /> 
-	<span class="quiet">支持flv格式的视频(推荐尺寸:650*500),大小48MB以内</span>
+	<span class="quiet">支持flv格式的视频,大小48MB以内</span>
 </form>
 <script type="text/javascript">
 function uping(){$('#vupbtn').attr('disabled', true).val('上传中..');}

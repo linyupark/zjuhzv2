@@ -25,7 +25,7 @@
 			if(Logic_Space_Bar::unique($params['title']) != false)
 			Alp_Sys::msg('title', '您使用的标题或主题已经存在，请更换');
 			$params['type'] = Alp_Valid::of($params['type'], 'type', '帖子类型', 'trim|required');
-			$params['private'] = Alp_Valid::of($params['private'], 'private', '帖子开放权限', 'trim|required');
+			$params['private'] = Alp_Valid::of($params['private'], 'private', '帖子开放权限', 'trim|numeric');
 			return $params;
 		}
 		

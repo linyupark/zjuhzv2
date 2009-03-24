@@ -9,7 +9,7 @@
 	<label for="u_<?= $uid ?>"><?= $uname ?></label>
 	<?php endforeach; ?>
 	<br /><br /><span class="quiet">加分说明：</span>
-	<textarea name="memo" style="height:40px;width:100%"></textarea>
+	<textarea name="memo" style="height:40px;width:100%">参加<?= stripslashes($this->memo) ?></textarea>
 	<input type="hidden" name="tid" value="<?= $this->tid ?>" />
 	<div class="pdt10 txtc"><input id="apt_btn" type="button" class="btn" onclick="doapt()" value="确定" /></div>
 </form>

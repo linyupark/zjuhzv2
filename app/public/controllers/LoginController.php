@@ -35,7 +35,7 @@
 	                        // cookie 保存帐号密码
 	                        if($params['rememberme'] == 1)
 	                        setcookie(
-	                        	'zjuhz_remember', 
+	                        	'zjuhzv2_remember', 
 	                        	Alp_String::encrypy(serialize(array($account, $password))), 
 	                        	(time()+3600*24*7), '/'
 	                        );
@@ -59,8 +59,8 @@
         function outAction()
         {
         	Zend_Session::destroy();
-        	unset($_COOKIE['zjuhz_remember']);
-        	setcookie('zjuhz_remember', '', -100, '/');
+        	//unset($_COOKIE['zjuhz_remember']);
+        	setcookie('zjuhzv2_remember', null);
         	$this->_redirect('/');
         }
         

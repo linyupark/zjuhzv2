@@ -60,7 +60,7 @@
         {
         	Zend_Session::destroy();
         	unset($_COOKIE['zjuhzv2_remember']);
-        	setcookie('zjuhzv2_remember', "");
+        	setcookie('zjuhzv2_remember', null, time() - 3600, '/');
         	$this->_redirect('/');
         }
         

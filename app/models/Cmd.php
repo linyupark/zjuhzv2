@@ -26,7 +26,7 @@
     		return self::getSess('profile', 'role');
     	}
     	
-    	public static function isMemeber()
+    	public static function isMember()
     	{
     		$role = self::role();
     		if($role == 'black' || $role == 'bench')

@@ -59,8 +59,8 @@
         function outAction()
         {
         	Zend_Session::destroy();
-        	//unset($_COOKIE['zjuhz_remember']);
-        	setcookie('zjuhzv2_remember', null);
+        	unset($_COOKIE['zjuhzv2_remember']);
+        	setcookie('zjuhzv2_remember', "");
         	$this->_redirect('/');
         }
         

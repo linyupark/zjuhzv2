@@ -35,7 +35,7 @@
 			$uid = $this->_getParam('uid');
 			if(Logic_Space_Friends::hasFriend($uid, Cmd::uid()))
 			$this->view->rel = 1;
-			else $this->view->rel = 0;
+			else $this->view->rel = 10;
 			$this->view->data = Logic_Api::user($uid);
 			$this->view->uid = $uid;
 		}

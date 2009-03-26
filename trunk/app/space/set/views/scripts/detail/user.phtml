@@ -53,7 +53,7 @@
 				<td><?= $this->data[0]['hometown']?$this->data[0]['hometown']:'-'; ?></td>
 			</tr>
 			<?php endif; ?>
-			<?php if($access['city'] >= $this->rel): ?>
+			<?php if($access['city'] >= $this->rel): echo "{$access['city']}:{$this->rel}" ?>
 			<tr>
 				<td class="txtr quiet">现住地：</td>
 				<td><?= $this->data[0]['city']?$this->data[0]['city']:'-'; ?></td>

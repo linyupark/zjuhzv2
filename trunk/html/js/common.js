@@ -43,3 +43,10 @@ function newMsg(flag)
 	fmsg = setInterval(startNewMsg, 1000);
 	else clearInterval(fmsg);
 }
+
+function setCookie(c_name,value,expiredays)
+{
+	var exdate=new Date();
+	exdate.setDate(exdate.getDate()+expiredays);
+	document.cookie=c_name+ "=" +escape(value)+((expiredays==null) ? "" : ";expires="+exdate);
+}

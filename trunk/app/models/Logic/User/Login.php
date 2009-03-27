@@ -27,10 +27,9 @@
         		$str = '系统消息：<br />';
         		foreach ($rows as $r)
         		{
-        			$str .= '您所发布的活动"'.$r['title'].'"已经结束，
-        				现在可以为参加这次活动的成员增加热心度<br />
-        				地址：<a href="/space_bar/events/view?tid='.$r['tid'].'"></a>
-        				<br /><br />';
+        			$str .= '您所发布的活动"
+        				<a href="/space_bar/events/view?tid='.$r['tid'].'">'.$r['title'].'</a>"已经结束，
+        				现在可以为参加这次活动的成员增加热心度。<br />';
         		}
         		$str .= '活动中有什么感触么想跟大家分享么？
         		<a href="/space_bar/?pub=topic">发帖总结</a>下吧';

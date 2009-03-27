@@ -80,14 +80,22 @@
 				$username = Cmd::getSess('profile', 'username');
 				if($flag == 1) // 报名
 				{
-					Logic_Space_Bar_Events::sign($tid, $myid, $username);
-					// 记录
-					
+					if(!Cmd::getSess('profile', 'mobile'))
+                    {
+                        echo '您的资料里没有填写手机信息无法报名';
+                    }
+                    else
+                    {
+                    	Logic_Space_Bar_Events::sign($tid, $myid, $username);
+                    	// 记录
+                    	echo 'success';
+                    }
 				}
 				else 
-				Logic_Space_Bar_Events::unsign($tid, $myid);
-				
-				echo 'success';
+				{
+					Logic_Space_Bar_Events::unsign($tid, $myid);
+					echo 'success';
+				}
 			}
 			// 允许进行加分操作
 			if($role == 'master' || $myid == $row['puber'])

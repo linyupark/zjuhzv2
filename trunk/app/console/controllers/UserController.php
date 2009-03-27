@@ -18,6 +18,12 @@
 				$this->getHelper('viewRenderer')->setNoRender();
 				$params['password'] = trim($params['psw']);
 				Logic_User_Password::update($params, $params['uid']);
+				
+				// v1版本初始化(附加)
+				DbModel::getAdapter('zjuhz_user')->update('tbl_user', array(
+					'password' => md5($params['password'])
+				), 'uid = '.$params['uid']);
+				
 				if(Alp_Sys::getMsg() == null)
 				echo 'success';
 				else echo Alp_Sys::msg('exception');

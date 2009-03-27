@@ -1,0 +1,41 @@
+<?php 
+	$flag = $_COOKIE['dynameic_group'] == null ? 1:$_COOKIE['dynameic_group']; 
+	$str = '';
+?>
+<tr class="bcolor-z quiet">
+	<td>
+		<img src="<?= Alp_Url::img('icon/1616/group.gif') ?>" /> 
+		群组相关信息
+	</td>
+	<td class="txtr" width="80">
+		<a id="group_tab" href="javascript:htab(<?= $flag ?>,'group')">
+		<?= $flag == 1 ? '-折起':'+展开' ?>
+		</a>
+	</td>
+</tr>
+<?php 
+	foreach ($this->log as $log)
+	{
+		if($log['key'] == 'add_group' || $log['key'] == 'join_group')
+		{
+			$str .= '<img src="'.Alp_Url::img('icon/log/'.$log['key'].'.gif').'" /> '.
+					'<a href="/space_home/?uid='.$log['uid'].'">'.$log['uname'].'</a> '.
+					$this->event[$log['key']].
+					' <a href="/space_group/home/?id='.$log['gid'].'">“'.$log['gname'].'”</a>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+		}
+	}
+	if($str != ''):
+?>
+<tr class="dynameic_group">
+	<td class="quiet"><?= $str ?></td>
+</tr>
+<?php else: ?>
+<tr class="dynameic_group">
+	<td class="quiet">没有相关信息...</td>
+</tr>
+<?php endif; if($flag == 0) : ?>
+<script>
+	$('.dynameic_group').hide();
+</script>
+<?php endif; ?>

@@ -1,73 +1,32 @@
 <div class="yui-main">
-	<h3 class="section-u">
-		<img src="<?= Alp_Url::img('icon/1616/box.gif'); ?>" class="vm mgr10" />最新动态
-	</h3>
 	<table class="table-dashed" width="100%">
 	<?php if(count($this->log) > 0): ?>
-	<?php // 把加入本站信息跟加为好友信息集中显示
-		$reg = ''; $fri = array();	
-		foreach ($this->log as $i => $r)
-		{
-			if((int)$r['fid'] > 0) 
-			{
-				$fri[$r['uid']][] = array('uname' => $r['uname'], 
-					'f' => '<a href="/space_home/?uid='.$r['fid'].'">'.$r['fname'].'</a>');
-				unset($this->log[$i]);
-			}
-			if($r['key'] == 'add_user') 
-			{
-				$reg .= '<a href="/space_home/?uid='.$r['uid'].'">'.$r['uname'].'</a>,';
-				unset($this->log[$i]);
-			}
-		}
-	?>
-	<?php if($reg != ''): ?>
-	<tr>
-		<td width="40" valign="top" class="txtr">
-			<img src="<?= Alp_Url::img('icon/log/add_user.gif'); ?>" />
-		</td>
-		<td><?= $reg ?> <span class="quiet">加入本站</span></td>
-	</tr>
-	<?php endif; if(count($fri) > 0): foreach ($fri as $uid => $f): ?>
-	<tr>
-		<td width="40" valign="top" class="txtr">
-			<img src="<?= Alp_Url::img('icon/log/add_friend.gif'); ?>" />
-		</td>
-		<td>
-		<a href="/space_home/?uid=<?= $uid ?>"><?= $f[0]['uname'] ?></a> 将 
-		<?php foreach ($f as $data): ?> <?= $data['f'] ?>,<?php endforeach; ?>
-		<span class="quiet">加为好友</span></td>
-	</tr>
-	<?php endforeach; endif; ?>
-	<?php foreach($this->log as $i => $r): ?>
-	<tr>
-		<td width="40" valign="top" class="txtr">
-			<img src="<?= Alp_Url::img('icon/log/'.$r['key'].'.gif'); ?>" />
-		</td>
-		<td style="color:#333">
-			<a href="/space_home/?uid=<?= $r['uid'] ?>"><?= $r['uname'] ?></a>
-			<?= ((int)$r['fid'] > 0) ? ' 将 <a href="/space_home/?uid='.$r['fid'].'">'.$r['fname'].'</a>':'' ?>
-			<span class="quiet"><?= $this->event[$r['key']] ?></span>
-			<?php if($r['gid'] > 0): ?>
-			<a href="/space_group/home/?id=<?= $r['gid'] ?>">[<?= $r['gname'] ?>]</a>
-			<?php endif; ?>
-			<?php if($r['tid'] > 0): ?>
-				<a href="/space_bar/<?= $r['type'] ?>/view?tid=<?= $r['tid'] ?>"><?= $r['title'] ?></a>
-				<?= Logic_Space_Bar::subpage($r); ?>
-			<?php endif; ?>
-			<?php if($r['key'] == 'mod_ing'): ?>
-				<img src="<?= Alp_Url::img('icon/log/quote.gif'); ?>" /><?= $r['value'] ?>
-			<?php endif; ?>
-			<?php if($r['key'] == 'add_reply'): ?>
-				<div class="mg5"><img src="<?= Alp_Url::img('icon/log/quote.gif'); ?>" /><?= $r['value'] ?></div>
-			<?php endif; ?>
-		</td>
-		<td width="100" class="quiet txtr f9" valign="top"><?= date('Y-m-d H:i',$r['time']) ?></td>
-	</tr>
-	<?php endforeach; else: ?>
+	<?= $this->render('dynamic/adduser.phtml'); ?>
+	<?= $this->render('dynamic/addfriend.phtml'); ?>
+	<?= $this->render('dynamic/group.phtml'); ?>
+	<?= $this->render('dynamic/addbar.phtml'); ?>
+	<?= $this->render('dynamic/replybar.phtml'); ?>
+	<?php else: ?>
 	<tr>
 		<td class="quiet">尚未有关的信息动态</td>
 	</tr>
 	<?php endif; ?>
 	</table>
 </div>
+<script type="text/javascript">
+	function htab(flag, section)
+	{
+		if(flag == 1)
+		{
+			$('#'+section+'_tab').text('+展开').attr('href','javascript:htab(0,"'+section+'")');
+			$('.dynameic_'+section).hide();
+			setCookie('dynameic_'+section, 0, 7);
+		}
+		else
+		{
+			$('#'+section+'_tab').text('-折起').attr('href','javascript:htab(1,"'+section+'")');
+			$('.dynameic_'+section).show();
+			setCookie('dynameic_'+section, 1, 7);
+		}
+	}
+</script>

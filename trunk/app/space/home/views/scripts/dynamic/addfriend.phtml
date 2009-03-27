@@ -1,0 +1,39 @@
+<?php 
+	$flag = $_COOKIE['dynameic_addfriend'] == null ? 1:$_COOKIE['dynameic_addfriend']; 
+	$str = '';
+?>
+<tr class="bcolor-z quiet">
+	<td>
+		<img src="<?= Alp_Url::img('icon/log/add_friend.gif') ?>" /> 
+		加为好友信息
+	</td>
+	<td class="txtr" width="80">
+		<a id="addfriend_tab" href="javascript:htab(<?= $flag ?>,'addfriend')">
+		<?= $flag == 1 ? '-折起':'+展开' ?>
+		</a>
+	</td>
+</tr>
+<?php 
+	foreach ($this->log as $log)
+	{
+		if($log['key'] == 'add_friend')
+		{
+			$str .= '<a href="/space_home/?uid='.$log['uid'].'">'.$log['uname'].'</a>
+					将 <a href="/space_home/?uid='.$log['fid'].'">'.$log['fname'].'</a>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+		}
+	}
+	if($str != ''):
+?>
+<tr class="dynameic_addfriend">
+	<td class="quiet"><?= $str.$this->event['add_friend'] ?></td>
+</tr>
+<?php else: ?>
+<tr class="dynameic_addfriend">
+	<td class="quiet">没有相关信息...</td>
+</tr>
+<?php endif; if($flag == 0) : ?>
+<script>
+	$('.dynameic_addfriend').hide();
+</script>
+<?php endif; ?>

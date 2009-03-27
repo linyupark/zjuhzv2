@@ -48,7 +48,6 @@
 			}*/
 			// 开始筛选
 			$select->where('e.uid IN ('.substr($friend,0,-1).') AND e.fid != '.$uid);
-			//if($bar != '') $select->orWhere('e.tid IN ('.substr($bar,0,-1).')');
 			if($group != '') $select->orWhere('e.gid IN ('.substr($group,0,-1).') AND e.uid != '.$uid);
 			
 			$select->joinLeft(array('u' => 'zjuhzv2_user.tb_base'), 'u.uid = e.uid', 
@@ -61,8 +60,6 @@
 							  array('gname'=>'g.name'));
 							  
 			$select->order('time DESC')->limit($limit);
-			
-			//Zend_Debug::dump($select->__toString());
 			
 			return $select->query()->fetchAll();
 		}

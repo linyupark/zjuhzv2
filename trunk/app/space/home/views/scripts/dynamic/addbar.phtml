@@ -1,0 +1,33 @@
+<?php 
+	$flag = $_COOKIE['dynameic_addbar'] == null ? 1:$_COOKIE['dynameic_addbar']; 
+	$str = '';
+?>
+<tr class="bcolor-z quiet">
+	<td>
+		<img src="<?= Alp_Url::img('icon/1616/talk.gif') ?>" /> 
+		新帖信息
+	</td>
+	<td class="txtr" width="80">
+		<a id="addbar_tab" href="javascript:htab(<?= $flag ?>,'addbar')">
+		<?= $flag == 1 ? '-折起':'+展开' ?>
+		</a>
+	</td>
+</tr>
+<?php foreach ($this->log as $log): if($log['tid'] && $log['key'] != 'add_reply'): ?>
+<tr class="dynameic_addbar">
+	<td class="quiet">
+		<img src="<?= Alp_Url::img('icon/log/'.$log['key'].'.gif') ?>" /> 
+		<a href="/space_home/?uid=<?= $log['uid'] ?>"><?= $log['uname'] ?></a> 
+		<?= $this->event[$log['key']] ?> 
+		<?= $log['gname'] == null ? '':
+			'【<a href="/space_group/home/?id='.$log['gid'].'">'.$log['gname'].'</a>】' ?> 
+		<a class="f14" href="/space_bar/<?= $log['type'] ?>/view?tid=<?= $log['tid'] ?>"><?= $log['title'] ?></a>
+	</td>
+	<td class="quiet f9"><?= date('Y-m-d H:i', $log['time']) ?></td>
+</tr>
+<?php endif; endforeach; ?>
+<?php if($flag == 0) : ?>
+<script>
+	$('.dynameic_addbar').hide();
+</script>
+<?php endif; ?>

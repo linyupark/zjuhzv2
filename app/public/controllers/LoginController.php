@@ -39,6 +39,10 @@
 	                        	Alp_String::encrypy(serialize(array($account, $password))), 
 	                        	(time()+3600*24*7), '/'
 	                        );
+	                        
+	                        // 活动结束提示
+	                        Logic_User_Login::eventsnotice($row['uid']);
+	                        
 	                        Alp_Sys::msg('form_tip', 'success');
                         }
                     }

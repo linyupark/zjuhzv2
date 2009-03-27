@@ -13,6 +13,7 @@
 		
 		function indexAction()
 		{
+			// 一些短信息提示操作
 			
 		}
 		

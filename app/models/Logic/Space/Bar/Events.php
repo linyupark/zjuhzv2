@@ -2,6 +2,7 @@
 
 	class Logic_Space_Bar_Events extends DbModel
 	{	
+		
 		/**
 		 * 取消报名
 		 *

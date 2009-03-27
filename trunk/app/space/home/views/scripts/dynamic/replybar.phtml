@@ -30,7 +30,7 @@
 	<td class="quiet">
 		<a class="f14" href="/space_bar/<?= $logs[0]['type'] ?>/view?tid=<?= $tid ?>"><?= $logs[0]['title'] ?></a>
 		<hr />
-		<?php foreach ($logs as $v): ?>
+		<?php $logs = array_reverse($logs); foreach ($logs as $v): ?>
 		<a href="/space_home/?uid=<?= $v['uid'] ?>"><?= $v['uname'] ?></a> 
 		<span class="quiet f9"><?= date('Y-m-d H:i', $v['time']) ?></span>
 		<div class="pd5"><?= stripslashes($v['value']) ?></div>

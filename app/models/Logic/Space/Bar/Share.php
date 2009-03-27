@@ -34,7 +34,7 @@
 		 */
 		public static function items($tid)
 		{
-			return parent::Space()->fetchAll('SELECT * FROM `tb_share` WHERE `tid` = ?', $tid);
+			return parent::Space()->fetchAll('SELECT * FROM `tb_share` WHERE `tid` = ? ORDER BY id', $tid);
 		}
 		
 		/**

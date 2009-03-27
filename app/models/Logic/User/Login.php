@@ -18,9 +18,9 @@
         	$now = time();
         	$db = DbModel::Space();
         	$rows = $db->fetchAll('SELECT e.`tid`,b.`title` 
+        		FROM `tb_events` AS `e` 
         		LEFT JOIN `tb_tbar` AS `b` ON b.tid = e.tid 
-        		FROM `tb_events` AS `e`
-        		WHERE `time` <'.$now.' AND `apted` = 0'
+        		WHERE (e.`time` <'.$now.' AND e.`apted` = 0 AND b.`puber` = '.$uid.')'
         	);
         	if(count($rows) > 0)
         	{

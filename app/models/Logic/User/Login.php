@@ -5,7 +5,7 @@
         # 检查登录数据 ---------------------------------------------
         static function check($account, $password)
         {
-            return parent::User()->fetchRow('SELECT `uid` FROM `tb_base` WHERE `account` = ? AND `password` = ?', array($account, $password));
+            return parent::User()->fetchRow('SELECT `uid`,`lastlogin` FROM `tb_base` WHERE `account` = ? AND `password` = ?', array($account, $password));
         }
         
         /**

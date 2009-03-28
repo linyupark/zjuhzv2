@@ -43,6 +43,16 @@
 	                        // 活动结束提示
 	                        Logic_User_Login::eventsnotice($row['uid']);
 	                        
+	                        // 系统自动给新一天登陆的成员加分1pt
+	                        $point = 1;
+	                        $pre = date('Y-m-d', $row['lastlogin']);
+	                        $now = date('Y-m-d', time());
+	                        if($pre != $now) // 不是同一天
+	                        {
+	                        	DbModel::User()->update('tb_base', 
+								array('point' => new Zend_Db_Expr('point + '.$point)), 'uid = '.$row['uid']);
+		                        Cmd::setSess('apt_tip', array('login' => 1));
+	                        }
 	                        Alp_Sys::msg('form_tip', 'success');
                         }
                     }

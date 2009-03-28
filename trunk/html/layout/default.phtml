@@ -31,6 +31,13 @@
 </div>
 
 <script type="text/javascript">
+<?php 
+	$tips = Cmd::getSess('apt_tip');
+	if(count($tips) > 0):
+	$data = Zend_Json::encode($tips);
+?>
+$.post('/api_json/msg/apt', <?= $data ?>, function(data){ $.facebox(data) });
+<?php endif; ?>
 check_msgbox();
 var msgbox = window.setInterval("check_msgbox()", 30000);
 </script>

@@ -27,6 +27,18 @@
 			// 返回新信息数
 			echo Zend_Json::encode(array('result'=>Logic_Space_Msg::hasnew($uid)));
 		}
+		
+		/**
+		 * 自己在线触发的系统自动加分提示
+		 *
+		 */
+		function aptAction()
+		{
+			$this->getHelper('viewRenderer')->setNoRender(false);
+			$params = $this->getRequest()->getParams();
+			Cmd::setSess('apt_tip', null); // 提示后自动清空
+			$this->view->params = $params;
+		}
 	}
 
 ?>

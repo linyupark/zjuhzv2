@@ -2,7 +2,6 @@
 	
 	set_include_path('.' . PATH_SEPARATOR . get_include_path() 
 						 . PATH_SEPARATOR . '../lib'
-						 . PATH_SEPARATOR . '../app/sapce'
 						 . PATH_SEPARATOR . '../app/models');
 	
 	date_default_timezone_set('Asia/Shanghai');					 

@@ -24,7 +24,9 @@
 		 */
 		function summaryAction()
 		{
-			$point = Cmd::getSess('profile', 'point');
+			$uid = Cmd::uid();
+			$base = Logic_User_Base::get($uid);
+			$point = $base['point'];
 			$sum = Logic_Api::sumpoint('user');
 			$percent = Logic_Api::percentpoint($point, $sum);
 			$this->view->sumpoint = $sum;

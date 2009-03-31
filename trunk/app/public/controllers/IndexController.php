@@ -118,7 +118,7 @@
 					AND bar.`deny` != 1 
 					AND bar.`type` NOT IN ("events","vote") 
 				) 
-				ORDER BY bar.`replytime` DESC LIMIT 8');
+				ORDER BY bar.`replytime` DESC LIMIT 10');
 			$this->view->bars = $rows;
 		}
 		
@@ -128,7 +128,7 @@
 		 */
 		function barsAction()
 		{
-			$limit = Cmd::role() == 'guest' ? 20 : 8;
+			$limit = Cmd::role() == 'guest' ? 15 : 8;
 			$rows = DbModel::Space()->fetchAll('SELECT bar.*  
 				FROM `tb_tbar` AS `bar` 
 				WHERE (

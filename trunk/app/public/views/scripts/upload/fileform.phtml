@@ -1,7 +1,7 @@
 <form target="file_frame" action="/public/upload/file" method="post" enctype="multipart/form-data" onsubmit="uping()">
 	<input type="file" name="file[]" />
 	<input id="upbtn" type="submit" value="上传" class="btn" /> 
-	<span class="quiet">支持rar,zip,doc,xls,ppt,7z,mp3 | 文件上限8MB</span>
+	<span class="quiet">支持rar,zip,doc,xls,ppt,7z,mp3,pdf | 文件上限8MB</span>
 </form>
 <script type="text/javascript">
 function uping(){$('#upbtn').attr('disabled', true).val('上传中..');}

@@ -101,21 +101,12 @@
 				if($params['incept'] == '') // 从好友名字中获取id
 				{
 					$unames = explode(' ', $params['uname']);
-					$incept = Logic_User_Base::uid($unames);
-					/*
-					$friends = Logic_Space_Friends::ids($uid);
-					$fid = array();
-					foreach ($friends as $f)
+					$rows = Logic_User_Base::uid($unames);
+					$incept = array();
+					foreach ($rows as $r)
 					{
-						$fid[] = $f['friend'];
+						$incept[] = $r['uid'];
 					}
-					// 过滤非好友id
-					foreach ($incept as $i => $u)
-					{
-						if(!in_array($u['uid'], $fid))
-						unset($incept[$i]);
-					}
-					*/
 				}
 				else $incept = explode(',', $params['incept']);
 				if(count($incept) > 0)

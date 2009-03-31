@@ -7,6 +7,9 @@
 			<input name="uname" size="20" value="<?= $this->uname ?>" /> 
 			<input type="submit" class="btn" value="查找" />
 		</td>
+		<td class="txtr">
+			<a href="/api_export/excel/group?id=<?= $this->gid ?>"><img src="<?= Alp_Url::img('icon/1616/xls.gif') ?>" />导出Excel通讯录</a>
+		</td>
 	</tr>
 	<tr class="section-sub">
 		<td width="100">姓名</td>

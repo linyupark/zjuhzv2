@@ -17,6 +17,27 @@
 		}
 		
 		/**
+		 * 导出通讯录
+		 *
+		 */
+		function exportAction()
+		{
+			$uid = Cmd::uid();
+			if($this->getRequest()->isXmlHttpRequest())
+			{
+				$sort = $this->_getParam('s');
+				$friends = Logic_Space_Friends::fetch($uid, $sort);
+				$this->view->friends = $friends;
+				$this->render('prexp');
+			}
+			else 
+			{
+				$sorts = Logic_Space_Friends::getSort($uid);
+				$this->view->sorts = $sorts;
+			}
+		}
+		
+		/**
 		 * 邀请友注册
 		 *
 		 */

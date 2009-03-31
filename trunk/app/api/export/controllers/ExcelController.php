@@ -13,6 +13,96 @@
 		}
 		
 		/**
+		 * 群组通讯录
+		 *
+		 */
+		function groupAction()
+		{
+			$uid = Cmd::uid();
+			$gid = $this->_getParam('id');
+			$role = Logic_Space_Group_Member::role($gid, $uid);
+			if($role == 'manager' || $role == 'creater')
+			{
+				$rows = DbModel::Space()->fetchAll('SELECT `uid` FROM `tb_group_member` 
+					WHERE `gid` = '.$gid.' AND `role` IN ("member","manager","creater")');
+				
+				$objPHPExcel = new PHPExcel();
+	            $objPHPExcel->getProperties()->setCreator("zjuhz.com");
+	            $objPHPExcel->getProperties()->setLastModifiedBy("zjuhz.com");
+	            $objPHPExcel->getProperties()->setTitle('群组通讯录');
+	            $objPHPExcel->setActiveSheetIndex(0);
+	            $objPHPExcel->getActiveSheet()->SetCellValue('A1', '姓名');
+	            $objPHPExcel->getActiveSheet()->SetCellValue('B1', '手机');
+	            $objPHPExcel->getActiveSheet()->SetCellValue('C1', '电话');
+	            $objPHPExcel->getActiveSheet()->SetCellValue('D1', 'QQ');
+	            $objPHPExcel->getActiveSheet()->SetCellValue('E1', 'MSN');
+	            $objPHPExcel->getActiveSheet()->SetCellValue('F1', '邮箱');
+	            $objPHPExcel->getActiveSheet()->SetCellValue('G1', '所在城市');
+	            $objPHPExcel->getActiveSheet()->SetCellValue('H1', '地址');
+	            $row = 2;
+				foreach ($rows as $v)
+				{
+					$data = Logic_Api::user($v['uid']);
+	                $objPHPExcel->getActiveSheet()->SetCellValue('A'.$row, $data[0]['username']);
+	                $objPHPExcel->getActiveSheet()->SetCellValue('B'.$row, $data[0]['mobile']);
+	                $objPHPExcel->getActiveSheet()->SetCellValue('C'.$row, $data[0]['tel']);
+	                $objPHPExcel->getActiveSheet()->SetCellValue('D'.$row, $data[0]['qq']);
+	                $objPHPExcel->getActiveSheet()->SetCellValue('E'.$row, $data[0]['msn']);
+	                $objPHPExcel->getActiveSheet()->SetCellValue('F'.$row, $data[0]['email']);
+	                $objPHPExcel->getActiveSheet()->SetCellValue('G'.$row, $data[0]['city']);
+	                $objPHPExcel->getActiveSheet()->SetCellValue('H'.$row, $data[0]['address']);
+	                $row++;
+				}
+				$objPHPExcel->getActiveSheet()->setTitle('群组通讯录');
+           		$this->stream($objPHPExcel, 'group_contact_'.$gid);
+			}
+		}
+		
+		/**
+		 * 好友通讯录
+		 *
+		 */
+		function friendsAction()
+		{
+			$uid = Cmd::uid();
+			$sort = $this->_getParam('s');
+			$friends = Logic_Space_Friends::fetch($uid, $sort);
+			if(count($friends) > 0)
+			{
+				$objPHPExcel = new PHPExcel();
+	            $objPHPExcel->getProperties()->setCreator("zjuhz.com");
+	            $objPHPExcel->getProperties()->setLastModifiedBy("zjuhz.com");
+	            $objPHPExcel->getProperties()->setTitle('我的好友通讯录');
+	            $objPHPExcel->setActiveSheetIndex(0);
+	            $objPHPExcel->getActiveSheet()->SetCellValue('A1', '姓名');
+	            $objPHPExcel->getActiveSheet()->SetCellValue('B1', '手机');
+	            $objPHPExcel->getActiveSheet()->SetCellValue('C1', '电话');
+	            $objPHPExcel->getActiveSheet()->SetCellValue('D1', 'QQ');
+	            $objPHPExcel->getActiveSheet()->SetCellValue('E1', 'MSN');
+	            $objPHPExcel->getActiveSheet()->SetCellValue('F1', '邮箱');
+	            $objPHPExcel->getActiveSheet()->SetCellValue('G1', '所在城市');
+	            $objPHPExcel->getActiveSheet()->SetCellValue('H1', '地址');
+	            $row = 2;
+				foreach ($friends as $v)
+				{
+					$data = Logic_Api::user($v['friend']);
+					$access = unserialize($data[0]['access']);
+	                $objPHPExcel->getActiveSheet()->SetCellValue('A'.$row, $data[0]['username']);
+	                $objPHPExcel->getActiveSheet()->SetCellValue('B'.$row, $access['contact'] > 0 ? $data[0]['mobile'] : '保密');
+	                $objPHPExcel->getActiveSheet()->SetCellValue('C'.$row, $access['contact'] > 0 ? $data[0]['tel'] : '保密');
+	                $objPHPExcel->getActiveSheet()->SetCellValue('D'.$row, $access['contact'] > 0 ? $data[0]['qq'] : '保密');
+	                $objPHPExcel->getActiveSheet()->SetCellValue('E'.$row, $access['contact'] > 0 ? $data[0]['msn'] : '保密');
+	                $objPHPExcel->getActiveSheet()->SetCellValue('F'.$row, $access['contact'] > 0 ? $data[0]['email'] : '保密');
+	                $objPHPExcel->getActiveSheet()->SetCellValue('G'.$row, $access['city'] > 0 ? $data[0]['city'] : '保密');
+	                $objPHPExcel->getActiveSheet()->SetCellValue('H'.$row, $access['contact'] > 0 ? $data[0]['address'] : '保密');
+	                $row++;
+				}
+				$objPHPExcel->getActiveSheet()->setTitle('我的好友通讯录');
+           		$this->stream($objPHPExcel, 'friends_contact_'.$sort);
+			}
+		}
+		
+		/**
 		 * 活动名单
 		 *
 		 */

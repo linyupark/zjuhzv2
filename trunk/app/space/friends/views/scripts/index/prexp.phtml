@@ -1,0 +1,34 @@
+<div class="pd5" style="height:400px; width:800px; overflow:auto">
+<table class="table-dashed" width="100%">
+<tr class="section">
+	<td width="60">姓名</td>
+	<td width="80">手机</td>
+	<td width="80">电话</td>
+	<td width="80">QQ</td>
+	<td>MSN</td>
+	<td>邮箱</td>
+	<td width="50">所在城市</td>
+	<td>地址</td>
+</tr>
+<?php if(count($this->friends) > 0): foreach ($this->friends as $i => $v): ?>
+<?php 
+	$data = Logic_Api::user($v['friend']);
+	$access = unserialize($data[0]['access']);
+?>
+<tr <?= $i%2 == 1 ? 'class="bcolor-g"':'' ?>>
+	<td><?= $data[0]['username'] ?></td>
+	<td><?= $access['contact'] > 0 ? $data[0]['mobile'] : '保密' ?></td>
+	<td><?= $access['contact'] > 0 ? $data[0]['tel'] : '保密' ?></td>
+	<td><?= $access['contact'] > 0 ? $data[0]['qq'] : '保密' ?></td>
+	<td><?= $access['contact'] > 0 ? $data[0]['msn'] : '保密' ?></td>
+	<td><?= $access['contact'] > 0 ? $data[0]['email'] : '保密' ?></td>
+	<td><?= $access['city'] > 0 ? $data[0]['city'] : '保密' ?></td>
+	<td><?= $access['contact'] > 0 ? $data[0]['address'] : '保密' ?></td>
+</tr>
+<?php endforeach; else: ?>
+<tr>
+	<td colspan="8 quiet">没有相关用户资料</td>
+</tr>
+<?php endif; ?>
+</table>
+</div>

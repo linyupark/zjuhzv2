@@ -1,0 +1,27 @@
+<?php if(Cmd::isMember()): ?>
+<table class="mg10 table-dashed" width="50%">
+	<tr class="bcolor-g">
+		<td class="txtr"><b>分组</b></td>
+		<td></td>
+	</tr>
+	<?php foreach ($this->sorts as $i => $s): ?>
+	<tr <?= $i%2 == 1 ? 'class="bcolor-g"':'' ?>>
+		<td class="txtr"><?= $s ?></td>
+		<td class="a-span">
+			<a href="javascript:prexp(<?= $i ?>)">预览</a>
+			<a href="/api_export/excel/friends/?s=<?= $i ?>">
+				<img src="<?= Alp_Url::img('icon/1616/xls.gif') ?>" />Excel</a>
+		</td>
+	</tr>
+	<?php endforeach; ?>
+</table>
+<script>
+	function prexp(sid)
+	{
+		$.post('/space_friends/index/export/?s='+sid, 
+		function(data){ $.facebox(data) });
+	}
+</script>
+<?php else: ?>
+<div class="notice mg10">只有审核通过的校友可以使用该功能，请完善您的个人资料等待审核通过。</div>
+<?php endif; ?>

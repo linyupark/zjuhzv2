@@ -44,7 +44,13 @@
 			{
 				$select = $db->select();
 				$select->from('tb_base', 'uid');
-				foreach ($uname as $u) $select->orWhere('username = ?', $u);
+				$in = '';
+				foreach ($uname as $u)
+				{
+					$in .= '"'.$u.'",';
+				}
+				$in = substr($in, 0, -1);
+				$select->where('username IN ('.$in.')');
 				return $select->query()->fetchAll();
 			}
 			else return $db->fecthAll('SELECT `uid` FROM `tb_base` WHERE `username` = ?', $uname);

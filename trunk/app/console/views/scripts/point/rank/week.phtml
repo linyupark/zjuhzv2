@@ -4,7 +4,7 @@
 		<?php if(count($this->data['points']) > 0): foreach ($this->data['points'] as $i => $r): ?>
 		<tr <?= $i%2==0?'class="bcolor-g"':'' ?>>
 			<td width="80" class="txtr"><?= $i == 0 ? '本周内' : '前'.($i+1).'~'.($i).'周内' ?></td>
-			<td><img src="<?= Alp_Url::img('v1/deg_b.gif') ?>" width="<?= $r ?>" height="6" />
+			<td><img src="<?= Alp_Url::img('v1/deg_b.gif') ?>" width="<?= round($r/4) ?>" height="6" />
 				<span class="quiet f9"><?= $r ?>pt</span>
 				<div class="a-span">
 				<?php foreach ($this->data['rank'][$i] as $u): ?>

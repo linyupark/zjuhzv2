@@ -1,0 +1,38 @@
+<tr class="bcolor-g">
+	<td class="a-span">
+		<a href="javascript:cd('/')">根目录</a>
+		<?php if($this->dir != '/'): ?>
+		<?= $this->dir ?>
+		<?php endif; ?>
+	</td>
+	<td></td>
+</tr>
+<?php if(count($this->rows) > 0): foreach ($this->rows as $r): ?>
+<tr>
+	<td>
+	<?php if(is_dir($this->path.$r)): ?>
+	<a href="javascript:cd('/<?= $r ?>/')">
+		<img src="<?= Alp_Url::img('icon/1616/f_doc.gif') ?>" />
+		<?= $r ?>
+	</a>
+	<?php else: ?>
+	<a href="/upload/system/<?= $this->dir.$r ?>">
+		<img src="<?= Alp_Url::img('icon/1616/doc.gif') ?>" />
+		<?= $r ?>
+	</a>
+	<?php endif; ?>
+	</td>
+	<td class="quiet txtr">
+		<?= date('y-m-d H:i', filemtime($this->path.$r)) ?>
+		<?php if(is_dir($this->path.$r)): ?>
+			<a href="javascript:rmdir('<?= $r ?>')"><img src="<?= Alp_Url::img('icon/1616/rbs.gif') ?>" /></a>
+		<?php else: ?>
+			<a href="javascript:rm('<?= $this->dir.$r ?>')"><img src="<?= Alp_Url::img('icon/1616/rbs.gif') ?>" /></a>
+		<?php endif; ?>
+	</td>
+</tr>
+<?php endforeach; else: ?>
+<tr>
+	<td colspan="2">空</td>
+</tr>
+<?php endif; ?>

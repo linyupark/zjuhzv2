@@ -1,0 +1,37 @@
+<div class="mg10 memo">
+指定上传链接：
+	<?= htmlspecialchars('
+		http://'.DOMAIN.'/public/upload/form/?for=system&dir=文件夹英文_活动ID'
+	); ?>
+</div>
+<table class="table-dashed mglr10" id="ftb" width="95%">
+
+</table>
+<script>
+	function cd(dir)
+	{
+		$('#ftb').load('/console/mix/sysfile/?dir='+dir);
+	}
+	function rmdir(dir)
+	{
+		var c = confirm('确定要删除该文件夹以及其包含的所有文件吗？');
+		if(c == true)
+		{
+			$.post('/console/mix/sysfile/?rmdir='+dir, function(){ cd('/'); });
+		}
+	}
+	function rm(dir)
+	{
+		var c = confirm('确定要删除该文件吗？');
+		if(c == true)
+		{
+			$.post('/console/mix/sysfile/?rm='+dir, function()
+			{ 
+				var pos = dir.lastIndexOf('/');
+				var path = dir.substring(0,pos);
+				cd(path);
+			});
+		}
+	}
+	cd('/');
+</script>

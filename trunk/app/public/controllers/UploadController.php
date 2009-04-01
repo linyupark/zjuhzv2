@@ -4,9 +4,47 @@
 	{
 		function init()
 		{
-			if(Cmd::role() == 'guest') exit();
-			//Zend_Layout::getMvcInstance()->disableLayout();
+			$role = Cmd::role();
+			if($role == 'guest' || $role == 'black') exit();
 			$this->getHelper('viewRenderer')->setNoRender();
+		}
+		
+		/**
+		 * 系统指定上传点
+		 *
+		 */
+		function systemAction()
+		{
+			$uid = Cmd::uid();
+			$username = Cmd::getSess('profile', 'username');
+			$dir = $this->_getParam('dir');
+			$tail = strstr($dir, '_'); // 指定活动id
+			if($tail != false)
+			{
+				$tid = str_replace('_', '', $tail);
+				$uids = Logic_Space_Bar_Events::members($tid);
+				if(array_key_exists($uid, $uids) == false)
+				{
+					echo "<script>alert('请报名后再进行上传！');parent.upreload();</script>";
+					exit();
+				}
+			}
+			
+			$path = UPLOADROOT.'/system/'.$dir;
+			if(!file_exists($path)) mkdir($path, 0777);
+			$ext = Alp_String::stripFile($_FILES['file']['name'][0]);
+			$newname = Alp_Ext_Str2Pinyin::str2pinyin($username).'_'.$uid.'.'.$ext;
+			Alp_Upload::init(array(
+				'type' => 'rar|zip|doc|xls|ppt|7z|mp3|pdf',
+				'maxsize' => 2000,
+				'filename' => array($newname),
+				'overwrite' => true,
+				'path' => $path.'/'
+			));
+
+			if(!Alp_Upload::handle('file')) 
+			echo "<script>alert('".Alp_Sys::allMsg('',"")."');parent.upreload();</script>"; 
+			else echo "<script>alert('文件上传成功！')</script>"; 
 		}
 		
 		/**
@@ -222,6 +260,7 @@
 		function formAction()
 		{
 			$tpl = $this->getRequest()->getParam('for');
+			$this->view->params = $this->getRequest()->getParams();
 			$this->render($tpl.'form');
 		}
 	}

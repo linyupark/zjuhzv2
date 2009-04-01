@@ -153,7 +153,7 @@
 		}
 		
 		# 获取目录下的文件列表 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-		static function lsfile($dir)
+		static function lsfile($dir, $inc_dir = false)
 		{
 			if(is_dir($dir))
 			{
@@ -161,7 +161,12 @@
 				$tmp = array();
 				foreach ($arr as $i)
 				{
-					if(!is_dir($dir.'/'.$i) && $i != '.' && $i != '..')
+					if($i == '.' || $i == '..') continue;
+					
+					if($inc_dir == false)
+					{
+						if(!is_dir($dir.'/'.$i)) continue;
+					}
 					$tmp[] = $i;
 				}
 				return $tmp;

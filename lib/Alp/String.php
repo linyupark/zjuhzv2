@@ -62,6 +62,18 @@
 	        return join($new_str);
 	    }
 	    
+	    static function safeHTML($html)
+	    {
+    		$find = array(
+    			"'<script[^>]*?>.*?</script>'si",
+    			"'<link[^>]*?>.*?</link>'si",
+    			"'<meta[^>]*?>.*?</meta>'si",
+    			"'<body[^>]*?>.*?</body>'si",
+    		);
+    		$replace = array('','','');
+    		return preg_replace($find, $replace, $html);
+	    }
+	    
 	    # 清除文件名中的不安全元素 :::::::::::::::::::::::::::::::::::::::::::
 	    static function cleanFileName($filename)
 	    {

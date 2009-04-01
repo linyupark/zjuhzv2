@@ -16,6 +16,7 @@
 		{
 			$params['tid'] = Alp_Valid::of($params['tid'], 'tid', '指定帖子', 'trim|required');
 			$params['content'] = Alp_Valid::of($params['content'], 'content', '内容', 'trim|required');
+			$params['content'] = Alp_String::safeHTML($params['content']);
 			return $params;
 		}
 		
@@ -97,6 +98,7 @@
 			if($params['maxselect'] >= count($options))
 				Alp_Sys::msg('maxselect', '可选数不得大于等于选项总数');
 			$params['memo'] = trim($params['memo']);
+			$params['memo'] = Alp_String::safeHTML($params['memo']);
 			$params['options'] = $options;
 			$params['rates'] = $rates;
 			return $params;
@@ -111,6 +113,7 @@
 		{
 			$params = self::bar($params);
 			$params['content'] = Alp_Valid::of($params['content'], 'content', '内容', 'trim|required');
+			$params['content'] = Alp_String::safeHTML($params['content']);
 			if(!empty($params['limit']))
 			$params['limit'] = Alp_Valid::of($params['limit'], 'limit', '人数限制', 'trim|numeric');
 			else $params['limit'] = null;
@@ -136,6 +139,7 @@
 		{
 			$params = self::bar($params);
 			$params['content'] = Alp_Valid::of($params['content'], 'content', '内容', 'trim|required');
+			$params['content'] = Alp_String::safeHTML($params['content']);
 			$params['sort'] = Alp_Valid::of($params['sort'], 'sort', '归类', 'trim|required');
 			return $params;
 		}
@@ -150,6 +154,7 @@
 		{
 			$params = self::bar($params);
 			$params['content'] = Alp_Valid::of($params['content'], 'content', '内容', 'trim|required');
+			$params['content'] = Alp_String::safeHTML($params['content']);
 			$params['sort'] = Alp_Valid::of($params['sort'], 'sort', '归类', 'trim|required');
 			$tags = array();
 			foreach($params['tags'] as $v)
@@ -171,6 +176,7 @@
 		{
 			$params = self::bar($params);
 			$params['content'] = Alp_Valid::of($params['content'], 'content', '内容', 'trim|required');
+			$params['content'] = Alp_String::safeHTML($params['content']);
 			return $params;
 		}
 		
@@ -184,6 +190,7 @@
 		{
 			$params['title'] = Alp_Valid::of($params['title'], 'title', '标题主题', 'trim|strip_tags|str_between[3,40]');
 			$params['content'] = Alp_Valid::of($params['content'], 'content', '内容', 'trim|required');
+			$params['content'] = Alp_String::safeHTML($params['content']);
 			return $params;
 		}
 		
@@ -211,6 +218,7 @@
 		{
 			$params['title'] = Alp_Valid::of($params['title'], 'title', '主题', 'trim|strip_tags|str_between[3,40]');
 			$params['memo'] = trim($params['memo']);
+			$params['memo'] = Alp_String::safeHTML($params['memo']);
 			$options = array();
 			$rates = array();
 			if(count($params['options']) > 0)
@@ -232,6 +240,7 @@
 		{
 			$params['title'] = Alp_Valid::of($params['title'], 'title', '标题主题', 'trim|strip_tags|str_between[3,40]');
 			$params['content'] = Alp_Valid::of($params['content'], 'content', '内容', 'trim|required');
+			$params['content'] = Alp_String::safeHTML($params['content']);
 			if(!empty($params['limit']))
 			$params['limit'] = Alp_Valid::of($params['limit'], 'limit', '人数限制', 'trim|numeric');
 			else $params['limit'] = null;
@@ -251,6 +260,7 @@
 		{
 			$params['title'] = Alp_Valid::of($params['title'], 'title', '标题主题', 'trim|strip_tags|str_between[3,40]');
 			$params['content'] = Alp_Valid::of($params['content'], 'content', '内容', 'trim|required');
+			$params['content'] = Alp_String::safeHTML($params['content']);
 			$params['sort'] = Alp_Valid::of($params['sort'], 'sort', '归类', 'trim|required');
 			$tags = array();
 			foreach($params['tags'] as $v)

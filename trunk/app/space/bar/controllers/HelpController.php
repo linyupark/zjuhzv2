@@ -44,13 +44,13 @@
 			$state = $this->_getParam('state', 'unsolved');
 			$page = $this->_getParam('p', 1); // 默认显示页
 			$select = DbModel::Space()->select()
-									  ->from(array('bar' => 'zjuhzv2_space.tb_tbar'))
-									  ->where('bar.group = 0')
-									  ->where('bar.deny = 0')
+									  ->from(array('bar' => 'tb_tbar'), 
+											 array('numrows' => new Zend_Db_Expr('COUNT(bar.tid)')))
+									  ->where('bar.group = 0')->where('bar.deny = 0')
 									  ->where('bar.type = ?', 'help')
-									  ->order('bar.ding DESC')->group('bar.tid');
+									  ->order('bar.ding DESC');
 			
-			$select->joinLeft(array('help' => 'zjuhzv2_space.tb_help'), 'bar.tid = help.tid');
+			$select->joinLeft(array('help' => 'tb_help'), 'bar.tid = help.tid', array());
 			
 			switch ($state)
 			{

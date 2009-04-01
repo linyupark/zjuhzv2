@@ -140,12 +140,12 @@
 			$sort = $this->_getParam('sort', 'start');
 			$page = $this->_getParam('p', 1); // 默认显示页
 			$select = DbModel::Space()->select()
-									  ->from(array('bar' => 'zjuhzv2_space.tb_tbar'), 
+									  ->from(array('bar' => 'tb_tbar'), 
 											 array('numrows' => new Zend_Db_Expr('COUNT(bar.tid)')))
-									  ->where('bar.group = 0 AND bar.deny = 0 AND bar.type = "events"', 0)
-									  ->order('bar.ding DESC')->group('bar.tid');
+									  ->where('bar.group = 0 AND bar.deny = 0 AND bar.type = "events"')
+									  ->order('bar.ding DESC');
 									  
-			$select->joinLeft(array('e' => 'zjuhzv2_space.tb_events'), 'bar.tid = e.tid');
+			$select->joinLeft(array('e' => 'tb_events'), 'bar.tid = e.tid', array());
 			
 			switch ($where)
 			{
@@ -228,7 +228,7 @@
 					$select->order('bar.rate DESC');
 				break;
 			}
-
+			
 			$row = $select->query()->fetchAll();
 			$select->reset(Zend_Db_Select::COLUMNS)->columns(array('bar.*','e.*'));
 			$pagesize = 10;

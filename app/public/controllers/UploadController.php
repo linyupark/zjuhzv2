@@ -25,8 +25,8 @@
 				$uids = Logic_Space_Bar_Events::members($tid);
 				if(array_key_exists($uid, $uids) == false)
 				{
-					echo "<script>alert('请报名后再进行上传！');parent.upreload();</script>";
-					exit();
+					echo "<script>alert('请先报名');parent.upreload();</script>";
+					return false;
 				}
 			}
 			

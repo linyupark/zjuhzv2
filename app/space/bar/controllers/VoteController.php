@@ -90,12 +90,12 @@
 			$order = $this->view->order;
 			$page = $this->_getParam('p', 1); // 默认显示页
 			$select = DbModel::Space()->select()
-									  ->from(array('bar' => 'zjuhzv2_space.tb_tbar'), 
+									  ->from(array('bar' => 'tb_tbar'), 
 											 array('numrows' => new Zend_Db_Expr('COUNT(bar.tid)')))
 									  ->where('bar.group = 0 AND bar.deny = 0 AND bar.type = "vote"')
-									  ->order('bar.ding DESC')->group('bar.tid');
+									  ->order('bar.ding DESC');
 									  
-			$select->joinLeft(array('vote' => 'zjuhzv2_space.tb_vote'), 'bar.tid = vote.tid');						  
+			$select->joinLeft(array('vote' => 'tb_vote'), 'bar.tid = vote.tid', array());						  
 			
 			switch ($where)
 			{

@@ -161,7 +161,7 @@
 				$tmp = array();
 				foreach ($arr as $i)
 				{
-					if($i == '.' || $i == '..') continue;
+					if($i == '.' || $i == '..' || $i == '.svn') continue;
 					
 					if($inc_dir == false)
 					{

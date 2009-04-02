@@ -85,7 +85,7 @@
         function indexAction()
         {
         	$request = $this->getRequest();
-        	$this->view->remember = unserialize(stripslashes(Alp_String::decrypt($_COOKIE['zjuhz_remember'])));
+        	$this->view->remember = unserialize(stripslashes(Alp_String::decrypt($_COOKIE['zjuhzv2_remember'])));
             $this->view->account = $request->getParam('account');
             $this->view->relogin = $request->getParam('relogin');
         }

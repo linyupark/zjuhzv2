@@ -165,7 +165,7 @@
 					
 					if($inc_dir == false)
 					{
-						if(!is_dir($dir.'/'.$i)) continue;
+						if(is_dir($dir.'/'.$i)) continue;
 					}
 					$tmp[] = $i;
 				}

@@ -14,7 +14,7 @@
 	<tr class="section-sub">
 		<td width="100">姓名</td>
 		<td width="50">身份</td>
-		<td width="100">加入时间</td>
+		<td width="200">加入时间 / 最近登录</td>
 		<td class="txtc">操作</td>
 	</tr>
 	<?php if(count($this->rows) > 0): foreach ($this->rows as $r): ?>
@@ -50,8 +50,9 @@
 				echo $role;
 			?>
 		</td>
-		<td class="quiet">
-			<?= Alp_Date::normal($r['jointime']); ?>
+		<td class="quiet f9">
+			<?= date('y-m-d H:i', $r['jointime']) ?> / 
+			<?= date('y-m-d H:i', $r['lastlogin']) ?>
 		</td>
 		<td class="a-span txtc">
 			<?php if($this->role == 'creater' || 

@@ -22,10 +22,11 @@
 			$uids = $this->_getParam('uid');
 			$memo = strip_tags(trim($this->_getParam('memo')));
 			$tid = $this->_getParam('tid');
+			$e = Logic_Space_Bar_Events::view($tid);
+			$puber = $e[0]['puber'];
 			if($uids == null && $memo == null)
 			{
 				$uids = Logic_Space_Bar_Events::members($tid);
-				$e = Logic_Space_Bar_Events::view($tid);
 				$this->view->memo = $e[0]['title'];
 				$this->view->uids = $uids;
 				$this->view->tid = $tid;
@@ -39,6 +40,8 @@
 						Logic_Api::apoint('user', $uid, $pt, $memo, time());
 					}
 					DbModel::Space()->update('tb_events', array('apted' => 1), 'tid = '.$tid);
+					Logic_Api::apoint('user', $puber, 10, '成功发起活动'.$e[0]['title'], time());
+					$puber == Cmd::uid() ? Cmd::setSess('apt_tip', array('pubevents' => 10)) : '';
 					echo 'success';
 				}
 				else echo '加分必要数据不全';

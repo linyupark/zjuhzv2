@@ -127,7 +127,7 @@
 			
 			$row = $select->query()->fetchAll();
 			$select->joinLeft(array('u' => 'zjuhzv2_user.tb_base'), 'u.uid = gm.uid', 
-				   			  array('uname'=>'u.username', 'sex'=>'u.sex'));
+				   			  array('uname'=>'u.username', 'sex'=>'u.sex', 'u.lastlogin'));
 			$pagesize = 10;
 			if(count($row) > $pagesize)
 			{
@@ -141,7 +141,7 @@
 				$select->limit($pagesize, Alp_Page::$offset);
 				$this->view->pagination = Alp_Page::$page_str;
 			}
-			$select->order('gm.jointime DESC');
+			$select->order('u.lastlogin DESC');
 			$this->view->rows = $select->query()->fetchAll();
 			$this->view->role = Logic_Space_Group_Member::role($gid, Cmd::uid());
 		}

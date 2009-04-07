@@ -11,8 +11,11 @@
 		<table width="100%" class="table-dashed">
 			<tr class="bcolor-g">
 				<td class="quiet">找到<?= $this->numrows ?>人</td>
-				<td></td>
-				<td></td>
+				<td colspan="2" class="a-span quiet">导出(Excel)
+					<a href="/console/user/export?flag=1">非冻结</a>
+					<a href="/console/user/export?flag=2">校友</a>
+					<a href="/console/user/export?flag=3">成员</a>
+				</td>
 			</tr>
 			<?php if(count($this->rows)): foreach($this->rows as $i => $r): ?>
 			<tr <?= ($i%2 == 1)? 'class="bcolor-g"':'' ?>>
@@ -26,7 +29,7 @@
 					<a style="color:#666" href="javascript:detail(<?= $r['uid'] ?>)">[资料]</a>
 					<a style="color:#666" target="_blank" href="/space_msg/pm/?uid=<?= $r['uid'] ?>">[信]</a>
 				</td>
-				<td width="50%" class="a-span" id="toolbar_<?= $r['uid'] ?>">
+				<td width="40%" class="a-span" id="toolbar_<?= $r['uid'] ?>">
 					<?= $this->action('toolbar', 'user', 'console', array('row' => $r)); ?>
 				</td>
 			</tr>

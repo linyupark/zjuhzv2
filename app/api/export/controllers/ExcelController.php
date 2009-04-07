@@ -13,6 +13,70 @@
 		}
 		
 		/**
+		 * 用户数据导出
+		 *
+		 */
+		function userAction()
+		{
+			$uids = $this->_getParam('uids');
+			$objPHPExcel = new PHPExcel();
+			$objPHPExcel->getProperties()->setCreator("zjuhz.com");
+	        $objPHPExcel->getProperties()->setLastModifiedBy("zjuhz.com");
+	        $objPHPExcel->getProperties()->setTitle('用户资料');
+	        $objPHPExcel->setActiveSheetIndex(0);
+	        $objPHPExcel->getActiveSheet()->SetCellValue('A1', 'ID');
+	        $objPHPExcel->getActiveSheet()->SetCellValue('B1', '姓名');
+	        $objPHPExcel->getActiveSheet()->SetCellValue('C1', '性别');
+	        $objPHPExcel->getActiveSheet()->SetCellValue('D1', '出生日期');
+	        $objPHPExcel->getActiveSheet()->SetCellValue('E1', '教育信息');
+	        $objPHPExcel->getActiveSheet()->SetCellValue('F1', '工作信息');
+	        $objPHPExcel->getActiveSheet()->SetCellValue('G1', 'Email');
+	        $objPHPExcel->getActiveSheet()->SetCellValue('H1', 'QQ');
+	        $objPHPExcel->getActiveSheet()->SetCellValue('I1', 'MSN');
+	        $objPHPExcel->getActiveSheet()->SetCellValue('J1', '家庭住址');
+	        $objPHPExcel->getActiveSheet()->SetCellValue('K1', '电话');
+	        $objPHPExcel->getActiveSheet()->SetCellValue('L1', '手机');
+			foreach ($uids as $i => $r)
+			{
+				$row = $i + 1;
+				$data = Logic_Api::user($r['uid']);
+	            $objPHPExcel->getActiveSheet()->SetCellValue('A'.$row, $data[0]['uid']);
+	            $objPHPExcel->getActiveSheet()->SetCellValue('B'.$row, $data[0]['username']);
+	            $objPHPExcel->getActiveSheet()->SetCellValue('C'.$row, $data[0]['sex']);
+	            $objPHPExcel->getActiveSheet()->SetCellValue('D'.$row, $data[0]['birthyear'].'-'.$data[0]['birthmonth'].'-'.$data[0]['birthday']);
+	            $campus = '';
+	            if($data[0]['campus'] != null)
+	            {
+	            	for($edu_i = 0; $edu_i < count($data); $edu_i ++)
+	            	{
+	            		if($data[$edu_i]['campus'] != $data[($edu_i-1)]['campus'])
+	            		$campus .= ($edu_i+1).'.'.$data[$edu_i]['year'].'入学'.$data[$edu_i]['campus'].$data[$edu_i]['class'];
+	            	}
+	            }
+	            $objPHPExcel->getActiveSheet()->SetCellValue('E'.$row, $campus);
+				$company = '';
+	            if($data[0]['company'] != null)
+	            {
+	            	for($car_i = 0; $car_i < count($data); $car_i ++)
+	            	{
+	            		if($this->data[$car_i]['company'] != $this->data[($car_i-1)]['company'])
+	            		$company .= ($car_i+1).'.'.$data[$car_i]['company'].'('.$data[$car_i]['department'].')'.
+	            			$data[$car_i]['job'].'从'.date('y/m', $data[$car_i]['start']).' - '.$data[$car_i]['end']==0?'至今':date('y/m', $data[$car_i]['end']);
+	            	}
+	            }
+	            $objPHPExcel->getActiveSheet()->SetCellValue('F'.$row, $company);
+	            $objPHPExcel->getActiveSheet()->SetCellValue('G'.$row, $data[0]['email']);
+	            $objPHPExcel->getActiveSheet()->SetCellValue('H'.$row, $data[0]['qq']);
+	            $objPHPExcel->getActiveSheet()->SetCellValue('I'.$row, $data[0]['msn']);
+	            $objPHPExcel->getActiveSheet()->SetCellValue('J'.$row, $data[0]['address']);
+	            $objPHPExcel->getActiveSheet()->SetCellValue('K'.$row, $data[0]['tel']);
+	            $objPHPExcel->getActiveSheet()->SetCellValue('L'.$row, $data[0]['mobile']);
+			}
+			$objPHPExcel->getActiveSheet()->setTitle('群组通讯录');
+           	$this->stream($objPHPExcel, 'zjuhz_user');
+		}
+		
+		/**
 		 * 群组通讯录
 		 *
 		 */

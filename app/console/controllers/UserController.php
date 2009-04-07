@@ -7,6 +7,31 @@
 	class Console_UserController extends Zend_Controller_Action
 	{
 		/**
+		 * 数据导出
+		 *
+		 */
+		function exportAction()
+		{
+			$flag = $this->_getParam('flag');
+			$select = DbModel::User()->select();
+			$select->from('tb_base', array('uid'));
+			switch ($flag)
+			{
+				case 1 : // 非冻结
+					$select->where('role != "black"');
+				break;
+				case 2 : // 已审核校友
+					$select->where('role != "bench" AND role != "black"');
+				break;
+				case 3 : // 成员
+					$select->where('role = "power"');
+				break;
+			}
+			$uids = $select->query()->fetchAll();
+			$this->_forward('user', 'excel', 'api_export', array('uids' => $uids));
+		}
+		
+		/**
 		 * 初始用户密码
 		 *
 		 */

@@ -69,8 +69,9 @@
     			"'<link[^>]*?>.*?</link>'si",
     			"'<meta[^>]*?>.*?</meta>'si",
     			"'<body[^>]*?>.*?</body>'si",
+    			"'<style[^>]*?>.*?</style>'si",
     		);
-    		$replace = array('','','');
+    		$replace = array('','','','','');
     		return preg_replace($find, $replace, $html);
 	    }
 	    

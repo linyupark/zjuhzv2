@@ -8,6 +8,19 @@
 		}
 		
 		/**
+		 * 统计自从上次登录后的加分
+		 *
+		 * @param unknown_type $uid
+		 * @param unknown_type $lastlogin
+		 */
+		public static function spoint($uid, $lastlogin)
+		{
+			$row = parent::Log()->fetchRow('SELECT SUM(`point`) AS `spoint` FROM `tb_point` 
+				WHERE `time` > '.$lastlogin.' AND `uid` = '.$uid);
+			return $row['spoint'];
+		}
+		
+		/**
 		 * 热心度总排行
 		 *
 		 * @param unknown_type $not_in 排除数组人员id

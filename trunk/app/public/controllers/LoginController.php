@@ -51,7 +51,8 @@
 	                        {
 	                        	DbModel::User()->update('tb_base', 
 								array('point' => new Zend_Db_Expr('point + '.$point)), 'uid = '.$row['uid']);
-		                        Cmd::setSess('apt_tip', array('login' => 1));
+								$pts = Logic_Api::spoint($row['uid'], $row['lastlogin']);
+		                        Cmd::setSess('apt_tip', array('login' => $pts+1));
 	                        }
 	                        Alp_Sys::msg('form_tip', 'success');
                         }

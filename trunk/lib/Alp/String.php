@@ -66,8 +66,8 @@
 	    {
     		$find = array(
     			"'<script[^>]*?>.*?</script>'si",
-    			"'<link[^>]*?>.*?</link>'si",
-    			"'<meta[^>]*?>.*?</meta>'si",
+    			"'<link[^>]*?>'si",
+    			"'<meta[^>]*?>'si",
     			"'<body[^>]*?>.*?</body>'si",
     			"'<style[^>]*?>.*?</style>'si",
     		);

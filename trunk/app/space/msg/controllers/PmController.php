@@ -26,7 +26,6 @@
 					{
 						Logic_Space_Msg::clear($r['mid'], 'ibox');
 					}
-					Logic_Space_Msg::del();
 				}
 				echo 'success';
 			}

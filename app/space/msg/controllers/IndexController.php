@@ -12,7 +12,6 @@
 			{
 				$mid = (int)$this->_getParam('mid');
 				Logic_Space_Msg::clear($mid, 'sbox');
-				Logic_Space_Msg::del();
 				echo 'success';
 			}
 		}
@@ -23,7 +22,6 @@
 			if($this->getRequest()->isXmlHttpRequest())
 			{
 				Logic_Space_Msg::clearsb(Cmd::uid());
-				Logic_Space_Msg::del();
 				echo 'success';
 			}
 		}

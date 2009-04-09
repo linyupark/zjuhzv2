@@ -1,0 +1,76 @@
+<h2 class="section">杭州大学生实习联盟 - 实习岗位搜索</h2>
+<form method="get">
+	<p class="pd10">
+		地区：<select name="region">
+			<option value="">---</option>
+		<?php if(count($this->regions) > 0): foreach($this->regions as $r): ?>
+			<option value="<?= $r['region'] ?>" 
+			<?= $r['region'] == $this->params['region'] ? 'selected="selected"':'' ?>><?= $r['region'] ?></option>
+		<?php endforeach; endif; ?>
+		</select>
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		行业：<select name="trade">
+			<option value="">---</option>
+		<?php if(count($this->trades) > 0): foreach($this->trades as $t): ?>
+			<option value="<?= $t['trade'] ?>" 
+			<?= $t['trade'] == $this->params['trade'] ? 'selected="selected"':'' ?>><?= $t['trade'] ?></option>
+		<?php endforeach; endif; ?>
+		</select>
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		名称：
+		<input name="name" value="<?= stripcslashes($this->params['name']) ?>" size="50" />
+		<input class="btn" type="submit" value="搜索" />
+		<input type="button" class="btn" onclick="location.href='/addon_league/mana'" value="添加" />
+	</p>
+</form>
+
+<table class="table-dashed f14" width="100%">
+<tr class="bcolor-g">
+	<td>地区</td>
+	<td>行业</td>
+	<td>企业名称</td>
+	<td class="txtc">岗位名额 / 已报名数</td>
+	<td></td>
+</tr>
+<?php if(count($this->rows) > 0): foreach ($this->rows as $i => $r): ?>
+<tr id="c_<?= $r['corp_id'] ?>" <?= $i%2 == 1 ? 'class="bcolor-g"':'' ?>>
+	<td width="10%"><a href="/addon_league/?region=<?= urlencode($r['region']) ?>"><?= $r['region'] ?></a></td>
+	<td width="10%"><a href=""><?= $r['trade'] ?></a></td>
+	<td><a href=""><?= $r['name'] ?></a></td>
+	<?php $tid = explode('=', strstr($r['url'], 'tid=')); ?>
+	<td class="signbox txtc" rel="<?= $tid[1] ?>"></td>
+	<td class="a-span">
+		<a target="_blank" href="<?= $r['url'] ?>#sign_btn">报名</a>
+		<?php if(Cmd::role() == 'master'): ?>
+		<a href="/addon_league/mana/?mode=update&id=<?= $r['corp_id'] ?>">修改</a>
+		<a href="javascript:corp_del(<?= $r['corp_id'] ?>)">删除</a>
+		<?php endif; ?>
+	</td>
+</tr>
+<?php endforeach; else: ?>
+<tr>
+	<td class="quiet">没有找到符合的企业</td>
+</tr>
+<?php endif; ?>
+</table>
+<p class="quiet f12 pdl10">共找到<?= $this->numrows ?>条记录</p>
+<div class="pg"><?= $this->pagination ?></div>
+
+<script type="text/javascript">
+	$('.signbox').each(function(i){ 
+		var tid = $(this).attr('rel'); 
+		$(this).html('loading..');
+		$(this).load('/addon_league/index/signbox?tid='+tid); 
+	});
+	<?php if(Cmd::role() == 'master'): ?>
+	function corp_del(id)
+	{
+		var c = confirm('确定要删除么？');
+		if(c == true)
+		{
+			$.post('/addon_league/mana/docorp/?mode=delete&id='+id, 
+			function(){ $('#c_'+id).fadeOut(); });
+		}
+	}
+	<?php endif; ?>
+</script>

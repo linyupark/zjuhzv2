@@ -7,6 +7,22 @@
 	class Filter_Addon
 	{
 		/**
+		 * 联盟企业信息
+		 *
+		 * @param unknown_type $params
+		 */
+		public static function corp($params)
+		{
+			$params['name'] = Alp_Valid::of($params['name'], 'name', '企业名称', 'trim|strip_tags|required');
+			$params['uid'] = Alp_Valid::of($params['uid'], 'uid', '负责人ID', 'trim|numeric|required');
+			$params['region'] = Alp_Valid::of($params['region'], 'region', '地区', 'trim|strip_tags|required');
+			$params['trade'] = Alp_Valid::of($params['trade'], 'trade', '行业', 'trim|strip_tags|required');
+			$params['intro'] = Alp_Valid::of($params['intro'], 'intro', '介绍', 'trim|required');
+			$params['url'] = Alp_Valid::of($params['url'], 'url', '报名地址', 'trim|valid_url');
+			return  $params;
+		}
+		
+		/**
 		 * 过滤在线订票的各项数据
 		 *
 		 * @param unknown_type $params

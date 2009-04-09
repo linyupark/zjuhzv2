@@ -29,14 +29,19 @@
 	<td>地区</td>
 	<td>行业</td>
 	<td>企业名称</td>
+	<td class="txtc">联系人</td>
 	<td class="txtc">岗位名额 / 已报名数</td>
 	<td></td>
 </tr>
 <?php if(count($this->rows) > 0): foreach ($this->rows as $i => $r): ?>
 <tr id="c_<?= $r['corp_id'] ?>" <?= $i%2 == 1 ? 'class="bcolor-g"':'' ?>>
 	<td width="10%"><a href="/addon_league/?region=<?= urlencode($r['region']) ?>"><?= $r['region'] ?></a></td>
-	<td width="10%"><a href=""><?= $r['trade'] ?></a></td>
-	<td><a href=""><?= $r['name'] ?></a></td>
+	<td width="10%"><a href="/addon_league/?trade=<?= urlencode($r['trade']) ?>"><?= $r['trade'] ?></a></td>
+	<td>
+		<a target="_blank" href="<?= $r['web'] ?>"><?= $r['name'] ?></a>
+		<a style="color:#666" href="javascript:intro(<?= $r['corp_id'] ?>)">[简介]</a>
+	</td>
+	<td class="txtc"><?php $user = Logic_User_Base::get($r['uid']); echo '<a href="/space_set/detail/?uid='.$r['uid'].'">'.$user['username'].'</a>' ?></td>
 	<?php $tid = explode('=', strstr($r['url'], 'tid=')); ?>
 	<td class="signbox txtc" rel="<?= $tid[1] ?>"></td>
 	<td class="a-span">
@@ -62,6 +67,10 @@
 		$(this).html('loading..');
 		$(this).load('/addon_league/index/signbox?tid='+tid); 
 	});
+	function intro(id)
+	{
+		$.post('/addon_league/index/intro?id='+id, function(data){ $.facebox(data); });
+	}
 	<?php if(Cmd::role() == 'master'): ?>
 	function corp_del(id)
 	{

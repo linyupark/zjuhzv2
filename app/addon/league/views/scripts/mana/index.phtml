@@ -47,6 +47,7 @@
 	function corp()
 	{
 		$('#corp_submit').attr('disabled', true).val('保存中...');
+		$('#intro').val(FCKeditorAPI.GetInstance("intro").GetXHTML());
 		$.post('/addon_league/mana/docorp/', $('#corp_form').serializeArray(), function(data){
 			if(data == 'success')
 			{

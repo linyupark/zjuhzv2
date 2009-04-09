@@ -6,6 +6,13 @@
 	 */
 	class Addon_League_IndexController extends Zend_Controller_Action 
 	{
+		function introAction()
+		{
+			$row = DbModel::getSqlite('league.s3db')->fetchRow('
+				SELECT `name`,`intro` FROM `tb_corp` WHERE `corp_id` = ?', $this->_getParam('id'));
+			$this->view->row = $row;
+		}
+		
 		/**
 		 * 报名情况获取
 		 *

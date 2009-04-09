@@ -6,6 +6,8 @@
 	 */
 	class Addon_League_ManaController extends Zend_Controller_Action 
 	{
+		function init(){ if(Cmd::role() != 'master') exit(); }
+		
 		function indexAction()
 		{
 			$params = $this->getRequest()->getParams();

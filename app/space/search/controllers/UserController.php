@@ -27,6 +27,8 @@
 			$pagesize = 9;
 			$uid = Cmd::uid();
 			
+			$friends = Logic_Space_Friends::ids($uid);
+			
 			$select = DbModel::User()->select();
 			$select->from(array('ub'=>'tb_base'), 
 					          array('numrows' => new Zend_Db_Expr('COUNT(ub.uid)')))
@@ -36,7 +38,7 @@
 			// 好友范围
 			if($range == 'friend')
 			{
-				 $friends = Logic_Space_Friends::ids($uid);
+				 
 				 $in = '';
 				 if(count($friends) > 0)
 				 {
@@ -112,6 +114,14 @@
 			$this->view->numrows = $numrows;
 			$this->view->attr = $attr;
 			$this->view->range = $range;
+			
+			$temp = array();
+			foreach ($friends as $r)
+			{
+				$temp[] = $r['friend'];
+			}
+			
+			$this->view->friends = $temp;
 		}
 	}
 

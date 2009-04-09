@@ -14,7 +14,7 @@
 		 */
 		public static function ids($uid)
 		{
-			return parent::Space()->fetchAll('SELECT `friend` FROM `tb_friends` WHERE `uid` = '.$uid);
+			return parent::Space()->fetchAll('SELECT `friend` FROM `tb_friends` WHERE `uid` = ? AND `type` = "pass"', $uid);
 		}
 		
 		/**

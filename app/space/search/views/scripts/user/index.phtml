@@ -18,7 +18,9 @@
 				<a class="f14" href="/space_home/?uid=<?= $r['uid'] ?>"><?= $r['username'] ?></a>
 				<br />
 				<a href="/space_msg/pm/?uid=<?= $r['uid'] ?>">发信</a>
+				<?php if(array_search($r['uid'], $this->friends) == false && $r['uid'] != Cmd::uid()): ?>
 				<a href="javascript:friend_add(<?= $r['uid'] ?>)">加为好友</a>
+				<?php endif; ?>
 			</td>
 		</tr>
 	</table>

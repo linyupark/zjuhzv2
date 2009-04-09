@@ -1,0 +1,63 @@
+<h2 class="section"><a href="/addon_league/">杭州大学生实习联盟</a> - 企业</h2>
+<div class="bcolor-g pd10">
+	<form id="corp_form" method="post" onsubmit="return corp()">
+		<table>
+			<tr>
+				<td>地区：</td>
+				<td><input type="text" name="region" size="10" value="<?= $this->data['region'] ?>" /></td>
+				<td>行业：</td>
+				<td><input type="text" name="trade" value="<?= $this->data['trade'] ?>" /></td>
+			</tr>
+			<tr>
+				<td>企业名称：</td>
+				<td><input type="text" name="name" size="40" value="<?= stripslashes($this->data['name']) ?>" /></td>
+				<td>企业网站：</td>
+				<td><input type="text" name="web" size="50" value="<?= $this->data['web'] ?>" /></td>
+			</tr>
+			<tr>
+				<td>联系人ID：</td>
+				<td><input type="text" name="uid" size="5" value="<?= $this->data['uid'] ?>" /></td>
+				<td>报名地址：</td>
+				<td><input type="text" name="url" size="50" value="<?= $this->data['url'] ?>" /></td>
+			</tr>
+			<tr>
+				<td>介绍：</td>
+				<td colspan="3">
+					<p id="pic_upload"></p>
+					<?= Cmd::fck('intro', stripslashes($this->data['intro'])) ?>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="hidden" name="mode" value="<?= $this->mode ?>" />
+					<input type="hidden" name="id" value="<?= $this->data['corp_id'] ?>" />
+				</td>
+				<td colspan="3" class="txtc">
+					<input type="submit" id="corp_submit" class="btn" value="保存" />
+					<input type="reset" class="btn" value="重置" />
+				</td>
+			</tr>
+		</table>
+	</form>
+	<iframe name="pic_frame" class="hide" src="/public/upload/pic"></iframe>
+</div>
+<script type="text/javascript">
+	function insert_html(html){FCKeditorAPI.GetInstance("intro").InsertHtml(html);upreload();}
+	$('#pic_upload').load('/public/upload/form?for=pic');
+	function corp()
+	{
+		$('#corp_submit').attr('disabled', true).val('保存中...');
+		$.post('/addon_league/mana/docorp/', $('#corp_form').serializeArray(), function(data){
+			if(data == 'success')
+			{
+				$('#corp_submit').attr('disabled', false).val('保存成功');
+			}
+			else
+			{
+				$.facebox(data);
+				$('#corp_submit').attr('disabled', false).val('保存');
+			}
+		});
+		return false;
+	}
+</script>

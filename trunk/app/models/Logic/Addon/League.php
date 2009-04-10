@@ -27,6 +27,7 @@
 				'name' => $params['name'],
 				'web' => $params['web'],
 				'url' => $params['url'],
+				'attr' => $params['attr'],
 				'intro' => $params['intro']
 			), 'corp_id = '.$params['id']);
 		}
@@ -46,6 +47,7 @@
 				'name' => $params['name'],
 				'web' => $params['web'],
 				'url' => $params['url'],
+				'attr' => $params['attr'],
 				'intro' => $params['intro']
 			));
 		}

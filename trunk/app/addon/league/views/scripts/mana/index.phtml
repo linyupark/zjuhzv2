@@ -6,7 +6,13 @@
 				<td>地区：</td>
 				<td><input type="text" name="region" size="10" value="<?= $this->data['region'] ?>" /></td>
 				<td>行业：</td>
-				<td><input type="text" name="trade" value="<?= $this->data['trade'] ?>" /></td>
+				<td>
+					<input type="text" name="trade" value="<?= $this->data['trade'] ?>" />
+					性质：<select name="attr">
+						<option value="实习" <?= $this->data['attr'] == '实习' ? 'selected="selected"':'' ?>>实习</option>
+						<option value="培训" <?= $this->data['attr'] == '培训' ? 'selected="selected"':'' ?>>培训</option>
+					</select>
+				</td>
 			</tr>
 			<tr>
 				<td>企业名称：</td>

@@ -45,6 +45,8 @@
 			$select->where('trade LIKE "%'.$params['trade'].'%"');
 			if($params['name'])
 			$select->where('name LIKE "%'.$params['name'].'%"');
+			if($params['attr'])
+			$select->where('attr LIKE "%'.$params['attr'].'%"');
 				
 			$rows = $select->query()->fetchAll();
 			$numrows = count($rows);

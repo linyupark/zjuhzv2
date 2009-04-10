@@ -12,6 +12,54 @@
 		}
 		
 		/**
+		 * 友情链接，赞助企业
+		 *
+		 */
+		function linksAction()
+		{
+			if($this->getRequest()->isXmlHttpRequest())
+			{
+				$this->getHelper('viewRenderer')->setNoRender();
+				$params = $this->_getAllParams();
+				switch ($params['t'])
+				{
+					case 'update' :
+						$params = Filter_Mix::links($params);
+						if(Alp_Sys::getMsg() == null)
+						{
+							Logic_Mix::updatelink($params);
+							echo 'success';
+							return ;
+						}
+						else echo Alp_Sys::allMsg('* ', "\n");
+					break;
+						
+					case 'delete' :
+						Logic_Mix::dellink($params['id']);
+						echo 'success';
+					break;
+						
+					default : 
+						$params = Filter_Mix::links($params);
+						if(Alp_Sys::getMsg() == null)
+						{
+							Logic_Mix::addlink($params);
+							$params['result'] = 'success';
+							echo Zend_Json::encode($params);
+							return ;
+						}
+						else echo Zend_Json::encode(array('result' => Alp_Sys::allMsg('* ', "\n")));
+					break;
+				}
+			}
+			else 
+			{
+				$links = DbModel::getSqlite('mix.s3db')->fetchAll('SELECT * FROM `tb_links`');
+				$this->view->links = $links;
+			}
+		}
+		
+		/**
 		 * 内部文件上传、浏览
 		 *
 		 */

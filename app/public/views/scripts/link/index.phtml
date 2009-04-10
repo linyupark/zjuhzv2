@@ -1,0 +1,17 @@
+<h2 class="section">所有企业赞助&amp;友情链接</h2>
+<p class="quiet pd10">欢迎各地方校友会以及合作伙伴与我们交换链接</p>
+<table class="table-dashed" width="100%">
+<?php if(count($this->links) > 0): foreach ($this->links as $i => $lk): ?>
+	<?php if($i%5 == 0): ?><tr><?php endif; ?>
+		<td width="20%" class="txtc">
+			<?php if($lk['logo']): ?>
+			<a target="_blank" href="<?= $lk['url'] ?>"><img src="<?= $lk['logo'] ?>" title="<?= $lk['name'] ?>" /></a>
+			<?php else: ?>
+			<a target="_blank" href="<?= $lk['url'] ?>"><?= $lk['name'] ?></a>
+			<?php endif; ?>
+		</td>
+	<?php if($i%5 == 4): ?></tr><?php endif; ?>
+<?php endforeach; else: ?>
+
+<?php endif; ?>
+</table>

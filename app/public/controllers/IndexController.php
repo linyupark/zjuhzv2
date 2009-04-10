@@ -26,6 +26,15 @@
 		}
 		
 		/**
+		 * 首页赞助友情链接
+		 *
+		 */
+		function linksAction()
+		{
+			$this->view->links = DbModel::getSqlite('mix.s3db')->fetchAll('SELECT * FROM `tb_links` WHERE `home` = 1 ORDER BY `serid` ASC');
+		}
+		
+		/**
 		 * 网站头版新闻编辑
 		 *
 		 */

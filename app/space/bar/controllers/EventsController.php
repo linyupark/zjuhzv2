@@ -145,7 +145,7 @@
 			$select = DbModel::Space()->select()
 									  ->from(array('bar' => 'tb_tbar'), 
 											 array('numrows' => new Zend_Db_Expr('COUNT(bar.tid)')))
-									  ->where('bar.group = 0 AND bar.deny = 0 AND bar.type = "events"')
+									  ->where('bar.deny = 0 AND bar.type = "events"')
 									  ->order('bar.ding DESC');
 									  
 			$select->joinLeft(array('e' => 'tb_events'), 'bar.tid = e.tid', array());

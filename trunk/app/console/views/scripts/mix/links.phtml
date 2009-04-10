@@ -1,0 +1,80 @@
+<form id="link_form" class="mgt10" method="post" onsubmit="return add_link()">
+	<div class="bcolor-g pd10">
+		顺号 <input type="text" name="serid" size="1" />
+		LOGO(选) <input type="text" name="logo" size="10" />
+		名称 <input type="text" name="name" /> 
+		URL <input type="text" name="url" size="10" />
+		<input type="hidden" name="home" value="0" />
+		<input id="shome" type="checkbox" name="home" value="1" />
+		<label for="shome">首页</label> 
+		<input type="submit" value="添加" class="btn" />
+	</div>
+</form>
+
+<table id="link_list" class="table-dashed" width="100%">
+<?php if(count($this->links) > 0): foreach ($this->links as $lk): ?>
+<tr id="lr_<?= $lk['id'] ?>">
+	<td width="15%"><?php if($lk['logo']): ?><img src="<?= $lk['logo'] ?>" /><?php endif; ?></td>
+	<td>
+		<form id="l_<?= $lk['id'] ?>">
+		<input type="text" name="serid" size="1" value="<?= $lk['serid'] ?>" />
+		<input type="text" name="logo" size="10" value="<?= $lk['logo'] ?>" />
+		<input type="text" name="url" size="10" value="<?= $lk['url'] ?>" />
+		<input type="text" name="name" value="<?= $lk['name'] ?>" /> 
+		<input type="hidden" name="home" value="0" />
+		<input id="shome" type="checkbox" name="home" value="1" <?= ($lk['home'] == 1) ? 'checked="checked"':'' ?> />
+		<label for="shome">首页</label> 
+		</form>
+	</td>
+	<td class="a-span">
+		<a href="javascript:update_link(<?= $lk['id'] ?>)">修改</a>
+		<a href="javascript:delete_link(<?= $lk['id'] ?>)">删除</a>
+	</td>
+</tr>
+<?php endforeach; else: ?>
+<tr><td class="pd10 quiet">尚无添加链接记录</td></tr>
+<?php endif; ?>
+</table>
+
+<script type="text/javascript">
+	function delete_link(id)
+	{
+		$.post('/console/mix/links/?t=delete&id='+id, function(data){
+			if(data == 'success')
+			{
+				$('#lr_'+id).fadeOut();
+			}
+		});
+		return false;
+	}
+	function update_link(id)
+	{
+		$.post('/console/mix/links/?t=update&id='+id, $('#l_'+id).serializeArray(), function(data){
+			if(data == 'success')
+			{
+				alert('修改成功');
+			}
+			else 
+			{
+				alert(data);
+			}
+		});
+		return false;
+	}
+	function add_link()
+	{
+		$('input:submit').attr('disabled', true).val('添加中..');
+		$.post('/console/mix/links/', $('#link_form').serializeArray(), function(data){
+			if(data.result == 'success')
+			{
+				$('#link_list').prepend('<tr><td width="15%"><img src="'+data.logo+'" /></td><td><a href="'+data.url+'">'+data.name+'</a></td></tr>');
+			}
+			else 
+			{
+				alert(data.result);
+			}
+			$('input:submit').attr('disabled', false).val('添加');
+		}, 'json');
+		return false;
+	}
+</script>

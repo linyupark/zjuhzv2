@@ -1,0 +1,22 @@
+<table width="100%" class="table-dashed mgt10 oplink">
+<tr class="bcolor-z">
+	<td class="a-span">
+		<b>衷心鸣谢&amp;友情链接</b>
+	</td>
+	<td class="txtr"><a href="/public/link/">&gt;&gt;更多</a></td>
+</tr>
+<?php if(count($this->links) > 0): foreach ($this->links as $i => $lk): ?>
+<?php if($i%2 == 0): ?><tr><?php endif; ?>
+	<td>
+		<?php if($lk['logo']): ?>
+		<a target="_blank" href="<?= $lk['url'] ?>"><img src="<?= $lk['logo'] ?>" title="<?= $lk['name'] ?>" /></a>
+		<?php else: ?>
+		<a target="_blank" href="<?= $lk['url'] ?>"><?= $lk['name'] ?></a>
+		<?php endif; ?>
+	</td>
+<?php if($i%2 == 1): ?></tr><?php endif; ?>
+<?php endforeach; else : ?>
+<tr><td class="quiet pd10">尚未添加任何链接</td></tr>
+<?php endif; ?>
+</table>
+<script>oplink()</script>

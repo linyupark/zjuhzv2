@@ -84,7 +84,7 @@
 				LEFT JOIN `tb_group` AS `g` ON g.`gid` = bar.`group` 
 				LEFT JOIN `tb_events` AS `e` ON e.`tid` = bar.`tid` 
 				WHERE (
-					bar.`private` IN(2,3,4) 
+					bar.`private` IN(3,4) 
 					AND bar.`type` = "events" 
 					AND bar.`deny` = 0  
 					AND e.`time` > '.$now.'  

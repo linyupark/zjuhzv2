@@ -1,4 +1,4 @@
-<h2 class="section">杭州大学生实习联盟 - 实习岗位搜索</h2>
+<h2 class="section">杭州大学生实习联盟 - 实习岗位&amp;培训搜索</h2>
 <form method="get">
 	<p class="pd10">
 		地区：<select name="region">
@@ -17,6 +17,14 @@
 		<?php endforeach; endif; ?>
 		</select>
 		&nbsp;&nbsp;&nbsp;&nbsp;
+		性质：<select name="attr">
+			<option value="">---</option>
+			<option value="实习" 
+			<?= $this->params['attr'] == '实习' ? 'selected="selected"':'' ?>>实习</option>
+			<option value="培训" 
+			<?= $this->params['attr'] == '培训' ? 'selected="selected"':'' ?>>培训</option>
+		</select>
+		&nbsp;&nbsp;&nbsp;&nbsp;
 		名称：
 		<input name="name" value="<?= stripcslashes($this->params['name']) ?>" size="50" />
 		<input class="btn" type="submit" value="搜索" />
@@ -24,10 +32,11 @@
 	</p>
 </form>
 
-<table class="table-dashed f14" width="100%">
+<table class="table-dashed" width="100%">
 <tr class="bcolor-g">
 	<td>地区</td>
 	<td>行业</td>
+	<td>性质</td>
 	<td>企业名称</td>
 	<td class="txtc">联系人</td>
 	<td class="txtc">岗位名额 / 已报名数</td>
@@ -37,6 +46,7 @@
 <tr id="c_<?= $r['corp_id'] ?>" <?= $i%2 == 1 ? 'class="bcolor-g"':'' ?>>
 	<td width="10%"><a href="/addon_league/?region=<?= urlencode($r['region']) ?>"><?= $r['region'] ?></a></td>
 	<td width="10%"><a href="/addon_league/?trade=<?= urlencode($r['trade']) ?>"><?= $r['trade'] ?></a></td>
+	<td><a href="/addon_league/?attr=<?= urlencode($r['attr']) ?>"><?= $r['attr'] ?></a></td>
 	<td>
 		<a target="_blank" href="<?= $r['web'] ?>"><?= $r['name'] ?></a>
 		<a style="color:#666" href="javascript:intro(<?= $r['corp_id'] ?>)">[简介]</a>

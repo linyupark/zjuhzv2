@@ -5,7 +5,7 @@
 	 *
 	 */
 	class Filter_Addon
-	{
+	{	
 		/**
 		 * 联盟企业信息
 		 *

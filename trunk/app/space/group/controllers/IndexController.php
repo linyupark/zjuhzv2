@@ -102,7 +102,7 @@
 				if(count($groups) > 0)
 				{
 					$select->reset();
-					$select->from(array('bar' => 'tb_tbar'));
+					$select->from(array('bar' => 'tb_tbar'))->where('bar.deny = 0');
 					foreach ($groups as $i => $g)
 					{
 						if($i == 0) $select->where('bar.group = ?', $g['gid']);
@@ -129,7 +129,7 @@
 			if(count($groups) > 0)
 			{
 				$select = DbModel::Space()->select();
-				$select->from(array('bar' => 'tb_tbar'));
+				$select->from(array('bar' => 'tb_tbar'))->where('bar.deny = 0');
 				foreach ($groups as $i => $g)
 				{
 					if($i == 0) $select->where('bar.group = ?', $g['gid']);

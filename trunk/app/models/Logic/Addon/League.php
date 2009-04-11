@@ -21,13 +21,14 @@
 		{
 			$db = parent::getSqlite('league.s3db');
 			$db->update('tb_corp', array(
-				'uid' => $params['uid'],
+				'contacter' => $params['contacter'],
 				'region' => $params['region'],
 				'trade' => $params['trade'],
 				'name' => $params['name'],
 				'web' => $params['web'],
 				'url' => $params['url'],
-				'attr' => $params['attr'],
+				'func' => $params['func'],
+				'job' => $params['job'],
 				'intro' => $params['intro']
 			), 'corp_id = '.$params['id']);
 		}
@@ -41,13 +42,14 @@
 		{
 			$db = parent::getSqlite('league.s3db');
 			$db->insert('tb_corp', array(
-				'uid' => $params['uid'],
+				'contacter' => $params['contacter'],
 				'region' => $params['region'],
 				'trade' => $params['trade'],
 				'name' => $params['name'],
 				'web' => $params['web'],
 				'url' => $params['url'],
-				'attr' => $params['attr'],
+				'func' => $params['func'],
+				'job' => $params['job'],
 				'intro' => $params['intro']
 			));
 		}

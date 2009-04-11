@@ -24,6 +24,9 @@
 					$params['mode'] = 'new';
 				break;
 			}
+			$cf = new Zend_Config_Xml(CFROOT.'league.xml');
+			$this->view->trade = $cf->trade->item->toArray();
+			$this->view->func = $cf->func->item->toArray();
 			$this->view->mode = $params['mode'];
 		}
 		

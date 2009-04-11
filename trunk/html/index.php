@@ -9,6 +9,7 @@
 	define('DOMAIN', 'www.zjuhz.com');
 	define('HTMLROOT', $_SERVER['DOCUMENT_ROOT']);
 	define('SQLITEROOT', '../db/sqlite/');
+	define('CFROOT', '../db/');
 	define('UPLOADROOT', $_SERVER['DOCUMENT_ROOT'].'/upload/');
 						 
 	require_once 'Zend/Loader.php';

@@ -71,6 +71,11 @@
 			return parent::User()->fetchRow('SELECT * FROM `tb_base` WHERE `uid` = ?', $uid);
 		}
 		
+		static function getByAccount($account)
+		{
+			return parent::User()->fetchRow('SELECT `uid`,`username` FROM `tb_base` WHERE `account` = ?', $account);
+		}
+		
 		static function update($params, $uid)
 		{
 			$db = parent::User();

@@ -14,11 +14,14 @@
 		public static function corp($params)
 		{
 			$params['name'] = Alp_Valid::of($params['name'], 'name', '企业名称', 'trim|strip_tags|required');
-			$params['uid'] = Alp_Valid::of($params['uid'], 'uid', '负责人ID', 'trim|numeric|required');
+			$params['contacter'] = Alp_Valid::of($params['contacter'], 'contacter', '联系人帐号', 'trim|required');
 			$params['region'] = Alp_Valid::of($params['region'], 'region', '地区', 'trim|strip_tags|required');
 			$params['trade'] = Alp_Valid::of($params['trade'], 'trade', '行业', 'trim|strip_tags|required');
 			$params['intro'] = Alp_Valid::of($params['intro'], 'intro', '介绍', 'trim|required');
+			if($params['web'])
+			$params['web'] = Alp_Valid::of($params['web'], 'web', '企业网站', 'trim|valid_url');
 			$params['url'] = Alp_Valid::of($params['url'], 'url', '报名地址', 'trim|valid_url');
+			$params['job'] = trim($params['job']);
 			return  $params;
 		}
 		

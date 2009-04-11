@@ -1,34 +1,38 @@
 <h2 class="section">杭州大学生实习联盟 - 实习岗位&amp;培训搜索</h2>
 <form method="get">
 	<p class="pd10">
-		地区：<select name="region">
-			<option value="">---</option>
+		<select name="region">
+			<option value="">地区：</option>
 		<?php if(count($this->regions) > 0): foreach($this->regions as $r): ?>
 			<option value="<?= $r['region'] ?>" 
 			<?= $r['region'] == $this->params['region'] ? 'selected="selected"':'' ?>><?= $r['region'] ?></option>
 		<?php endforeach; endif; ?>
 		</select>
-		&nbsp;&nbsp;&nbsp;&nbsp;
-		行业：<select name="trade">
-			<option value="">---</option>
+
+		<select name="trade">
+			<option value="">行业：</option>
 		<?php if(count($this->trades) > 0): foreach($this->trades as $t): ?>
 			<option value="<?= $t['trade'] ?>" 
 			<?= $t['trade'] == $this->params['trade'] ? 'selected="selected"':'' ?>><?= $t['trade'] ?></option>
 		<?php endforeach; endif; ?>
 		</select>
-		&nbsp;&nbsp;&nbsp;&nbsp;
-		性质：<select name="attr">
-			<option value="">---</option>
-			<option value="实习" 
-			<?= $this->params['attr'] == '实习' ? 'selected="selected"':'' ?>>实习</option>
-			<option value="培训" 
-			<?= $this->params['attr'] == '培训' ? 'selected="selected"':'' ?>>培训</option>
+
+		<select name="func">
+			<option value="">职能：</option>
+			<?php foreach ($this->func as $fc): ?>
+			<option value="<?= $fc ?>" <?= $this->params['func'] == $fc ? 'selected="selected"':'' ?>><?= $fc ?></option>
+			<?php endforeach; ?>
 		</select>
 		&nbsp;&nbsp;&nbsp;&nbsp;
-		名称：
-		<input name="name" value="<?= stripcslashes($this->params['name']) ?>" size="50" />
+		岗位：
+		<input name="job" value="<?= stripcslashes($this->params['job']) ?>" size="5" />
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		企业：
+		<input name="name" value="<?= stripcslashes($this->params['name']) ?>" size="25" />
 		<input class="btn" type="submit" value="搜索" />
+		<?php if(Cmd::role() == 'master'): ?>
 		<input type="button" class="btn" onclick="location.href='/addon_league/mana'" value="添加" />
+		<?php endif; ?>
 	</p>
 </form>
 
@@ -36,7 +40,7 @@
 <tr class="bcolor-g">
 	<td>地区</td>
 	<td>行业</td>
-	<td>性质</td>
+	<td>职能</td>
 	<td>企业名称</td>
 	<td class="txtc">联系人</td>
 	<td class="txtc">岗位名额 / 已报名数</td>
@@ -44,14 +48,16 @@
 </tr>
 <?php if(count($this->rows) > 0): foreach ($this->rows as $i => $r): ?>
 <tr id="c_<?= $r['corp_id'] ?>" <?= $i%2 == 1 ? 'class="bcolor-g"':'' ?>>
-	<td width="10%"><a href="/addon_league/?region=<?= urlencode($r['region']) ?>"><?= $r['region'] ?></a></td>
-	<td width="10%"><a href="/addon_league/?trade=<?= urlencode($r['trade']) ?>"><?= $r['trade'] ?></a></td>
-	<td><a href="/addon_league/?attr=<?= urlencode($r['attr']) ?>"><?= $r['attr'] ?></a></td>
+	<td width="7%"><a href="/addon_league/?region=<?= urlencode($r['region']) ?>"><?= $r['region'] ?></a></td>
+	<td width="20%"><a href="/addon_league/?trade=<?= urlencode($r['trade']) ?>"><?= $r['trade'] ?></a></td>
+	<td><a href="/addon_league/?func=<?= urlencode($r['func']) ?>"><?= $r['func'] ?></a></td>
 	<td>
-		<a target="_blank" href="<?= $r['web'] ?>"><?= $r['name'] ?></a>
+		<a target="_blank" href="<?= $r['web'] ?>" class="f14"><?= $r['name'] ?></a>
 		<a style="color:#666" href="javascript:intro(<?= $r['corp_id'] ?>)">[简介]</a>
+		<br />
+		<span class="quiet">岗位：</span><?= stripslashes($r['job']) ?>
 	</td>
-	<td class="txtc"><?php $user = Logic_User_Base::get($r['uid']); echo '<a href="/space_set/detail/?uid='.$r['uid'].'">'.$user['username'].'</a>' ?></td>
+	<td class="txtc"><?php $user = Logic_User_Base::getByAccount($r['contacter']); echo '<a href="/space_set/detail/?uid='.$user['uid'].'">'.$user['username'].'</a>' ?></td>
 	<?php $tid = explode('=', strstr($r['url'], 'tid=')); ?>
 	<td class="signbox txtc" rel="<?= $tid[1] ?>"></td>
 	<td class="a-span">

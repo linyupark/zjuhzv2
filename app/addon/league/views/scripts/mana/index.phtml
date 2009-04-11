@@ -1,16 +1,16 @@
 <h2 class="section"><a href="/addon_league/">杭州大学生实习联盟</a> - 企业</h2>
 <div class="bcolor-g pd10">
 	<form id="corp_form" method="post" onsubmit="return corp()">
-		<table>
+		<table width="100%">
 			<tr>
 				<td>地区：</td>
-				<td><input type="text" name="region" size="10" value="<?= $this->data['region'] ?>" /></td>
+				<td><input type="text" name="region" value="<?= $this->data['region'] ?>" /></td>
 				<td>行业：</td>
 				<td>
-					<input type="text" name="trade" value="<?= $this->data['trade'] ?>" />
-					性质：<select name="attr">
-						<option value="实习" <?= $this->data['attr'] == '实习' ? 'selected="selected"':'' ?>>实习</option>
-						<option value="培训" <?= $this->data['attr'] == '培训' ? 'selected="selected"':'' ?>>培训</option>
+					<select name="trade">
+					<?php foreach ($this->trade as $td): ?>
+					<option value="<?= $td ?>" <?= $this->data['trade'] == $td ? 'selected="selected"':'' ?>><?= $td ?></option>
+					<?php endforeach; ?>
 					</select>
 				</td>
 			</tr>
@@ -21,10 +21,25 @@
 				<td><input type="text" name="web" size="50" value="<?= $this->data['web'] ?>" /></td>
 			</tr>
 			<tr>
-				<td>联系人ID：</td>
-				<td><input type="text" name="uid" size="5" value="<?= $this->data['uid'] ?>" /></td>
+				<td>联系人帐号：</td>
+				<td><input type="text" name="contacter" value="<?= $this->data['contacter'] ? $this->data['contacter'] : Cmd::getSess('profile', 'account') ?>" /></td>
 				<td>报名地址：</td>
 				<td><input type="text" name="url" size="50" value="<?= $this->data['url'] ?>" /></td>
+			</tr>
+			<tr>
+				<td>实习岗位：</td>
+				<td>
+					<input type="text" size="50" name="job" value="<?= $this->data['job'] ?>" />
+					<span class="quiet">(每个岗位用逗号分隔)</span>
+				</td>
+				<td>职能类别：</td>
+				<td>
+					<select name="func">
+					<?php foreach ($this->func as $fc): ?>
+					<option value="<?= $fc ?>" <?= $this->data['func'] == $fc ? 'selected="selected"':'' ?>><?= $fc ?></option>
+					<?php endforeach; ?>
+					</select>
+				</td>
 			</tr>
 			<tr>
 				<td>介绍：</td>

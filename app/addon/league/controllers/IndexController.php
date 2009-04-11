@@ -45,8 +45,10 @@
 			$select->where('trade LIKE "%'.$params['trade'].'%"');
 			if($params['name'])
 			$select->where('name LIKE "%'.$params['name'].'%"');
-			if($params['attr'])
-			$select->where('attr LIKE "%'.$params['attr'].'%"');
+			if($params['func'])
+			$select->where('func LIKE "%'.$params['func'].'%"');
+			if($params['job'])
+			$select->where('job LIKE "%'.$params['job'].'%"');
 				
 			$rows = $select->query()->fetchAll();
 			$numrows = count($rows);
@@ -54,7 +56,7 @@
 			{
 				Alp_Page::$pagesize = $pagesize;
 				Alp_Page::create(array(
-					'href_open' => '<a href="/addon_league/?region='.urlencode($params['region']).'&trade='.urlencode($params['trade']).'&name='.urlencode($params['name']).'&p=%d">',
+					'href_open' => '<a href="/addon_league/?region='.urlencode($params['region']).'&trade='.urlencode($params['trade']).'&func='.urlencode($params['func']).'&job='.urlencode($params['job']).'&name='.urlencode($params['name']).'&p=%d">',
 					'href_close' => '</a>',
 					'cur_page' => $page,
 					'num_rows' => $numrows
@@ -63,6 +65,8 @@
 				$this->view->pagination = Alp_Page::$page_str;
 			}
 			
+			$cf = new Zend_Config_Xml(CFROOT.'league.xml');
+			$this->view->func = $cf->func->item->toArray();
 			$this->view->numrows = $numrows;
 			$this->view->rows = $select->query()->fetchAll();
 			$this->view->regions = Logic_Addon_League::opt('region');

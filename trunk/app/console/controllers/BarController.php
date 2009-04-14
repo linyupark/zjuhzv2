@@ -147,11 +147,12 @@
 			$select->from(array('b'=>'tb_tbar'), array('numrows' => new Zend_Db_Expr('COUNT(b.tid)')));
 			
 			// 帖子显示范围
-			if($range != 'all' && $range != 'deny' && $range != 'ding')
+			if($range != 'all' && $range != 'deny' && $range != 'ding' && $range != 'group')
 			$select->where('b.type = ?', $range);
 			if($range == 'ding') $select->where('b.ding = 1');
 			if($range == 'deny') $select->where('b.deny = 1');
 			if($range != 'deny') $select->where('b.deny = 0');
+			if($range == 'group') $select->where('b.group > 0');
 			
 			// 如果有模糊查询
 			if(!empty($key))

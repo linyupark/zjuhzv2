@@ -11,6 +11,62 @@
 			$this->view->uid = $uid;
 		}
 		
+		function viewAction()
+		{
+			$uid = $this->_getParam('uid');
+			$resume = DbModel::getSqlite('league.s3db')->fetchRow('
+				SELECT * FROM `tb_resume` WHERE uid = ?', $uid);
+			$data = Logic_Api::user($uid);
+			$this->view->resume = $resume;
+			$this->view->data = $data;
+		}
+		
+		/**
+		 * 简历列表
+		 *
+		 */
+		function listAction()
+		{
+			if(Cmd::role() != 'master' && Cmd::role() != 'power') exit();
+			$db = DbModel::getSqlite('league.s3db');
+			$pagesize = 20;
+			$page = $this->_getParam('p', 1);
+			$row = $db->fetchRow('SELECT COUNT(`uid`) AS `numrows` FROM `tb_resume`');
+			
+			// 简历数据调用
+			if($row['numrows'] > $pagesize)
+			{
+				Alp_Page::$pagesize = $pagesize;
+				Alp_Page::create(array(
+					'href_open' => '<a href="">',
+					'href_close' => '</a>',
+					'num_rows' => $row['numrows'],
+					'cur_page' => $page
+				));
+				$this->view->pagination = Alp_Page::$page_str;
+				$rows = $db->fetchAll('SELECT `uid`,`major`,`grade` FROM `tb_resume` LIMIT '.Alp_Page::$offset.','.$pagesize);
+			}
+			else $rows = $db->fetchAll('SELECT `uid`,`major`,`grade` FROM `tb_resume`');
+			
+			// 用户基础数据调用
+			if(count($rows) > 0)
+			{
+				$uids = array();
+				foreach ($rows as $r)
+				{
+					$uids[] = $r['uid'];
+				}
+				$rows2 = DbModel::User()->fetchAll('
+					SELECT b.`username`,c.`mobile`,c.`email` 
+					FROM `tb_base` AS `b`
+					LEFT JOIN `tb_contact` AS `c` ON b.`uid` = c.`uid` 
+					WHERE b.`uid` IN ('.implode(',', $uids).')');
+			}
+			$this->view->rows = $rows;
+			$this->view->rows2 = $rows2;
+			$this->view->numrows = $row['numrows'];
+		}
+		
 		function saveAction()
 		{
 			$this->getHelper('viewRenderer')->setNoRender();

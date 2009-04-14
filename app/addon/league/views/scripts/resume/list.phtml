@@ -1,0 +1,47 @@
+<p class="pd5 quiet">
+	共找到<?= $this->numrows ?>条数据，
+	<a href="/addon_league/export/xls">导出excel</a>
+</p>
+<table class="table-dashed" width="100%">
+<tr class="bcolor-g quiet">
+	<td>姓名</td>
+	<td>专业</td>
+	<td>年级</td>
+	<td>手机</td>
+	<td>邮箱</td>
+	<td></td>
+</tr>
+<?php if(count($this->rows) > 0): foreach ($this->rows as $i => $r): ?>
+<tr id="r_<?= $r['uid'] ?>" <?= $i%2 == 1 ? 'class="bcolor-g"':'' ?>>
+	<td><a href="/space_home/?uid=<?= $r['uid'] ?>"><?= $this->rows2[$i]['username'] ?></a></td>
+	<td><?= $r['major'] ?></td>
+	<td><?= $r['grade'] ?></td>
+	<td><?= $this->rows2[$i]['mobile'] ?></td>
+	<td><?= $this->rows2[$i]['email'] ?></td>
+	<td class="a-span">
+		<a href="/addon_league/resume/view?uid=<?= $r['uid'] ?>" rel="facebox">查看详细</a>
+		<a href="javascript:del(<?= $r['uid'] ?>)">
+		<img src="/im/icon/mix/x.gif" /> 删除</a>
+	</td>
+</tr>
+<?php endforeach; else: ?>
+<tr><td colspan="6" class="quiet">还没有数据...</td></tr>
+<?php endif; ?>
+</table>
+<div class="pg"><?= $this->pagination ?></div>
+<script type="text/javascript">
+$(document).ready(function($){$('a[rel*=facebox]').facebox()});
+function del(uid)
+{
+	var c = confirm('确定要删除该实习生的简历？');
+	if(c == true)
+	{
+		$.post('/addon_league/mana/del?uid='+uid, function(data){
+			if(data == 'success')
+			$('#r_'+uid).fadeOut();
+			else
+			alert(data);
+		});
+	}
+}
+</script>

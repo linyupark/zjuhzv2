@@ -1,0 +1,124 @@
+<style type="text/css">
+.sub { background:#E4EDCF; }
+</style>
+<h3 class="section"><?= $this->data[0]['username'] ?>个人简历</h3>
+<table width="720">
+	<tr>
+		<td width="20%" valign="top" class="txtc">
+			<img class="pd5 mg5" style="border:1px dashed #ccc;" src="<?= Cmd::userhead($this->resume['uid'], 80, $this->data[0]['sex']) ?>" />
+		</td>
+		<td width="80%">
+			<table class="table-dashed" width="100%">
+				<tr class="sub">
+					<td class="bold">基本信息</td>
+					<td class="txtr"></td>
+				</tr>
+				<tr>
+					<td><span class="quiet">姓名：</span><?= $this->data[0]['username'] ?></td>
+					<td><span class="quiet">性别：</span><?= $this->data[0]['sex'] ?></td>
+				</tr>
+				<tr class="bcolor-g">
+					<td>
+						<span class="quiet">专业：</span>
+						<?= stripslashes($this->resume['major']) ?>
+					</td>
+					<td>
+						<span class="quiet">年级：</span>
+						<?= stripslashes($this->resume['grade']) ?>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span class="quiet">手机：</span>
+						<?= $this->data[0]['mobile'] ?>
+					</td>
+					<td>
+						<span class="quiet">电话：</span>
+						<?= $this->data[0]['tel'] ?>
+					</td>
+				</tr>
+				<tr class="bcolor-g">
+					<td>
+						<span class="quiet">邮箱：</span>
+						<?= $this->data[0]['email'] ?>
+					</td>
+					<td>
+						<span class="quiet">住址：</span>
+						<?= $this->data[0]['address'] ?>
+					</td>	
+				</tr>
+			</table>
+			<!-- 附加信息 -->
+			<table class="table-dashed" width="100%">
+				<tr class="sub">
+					<td class=" bold">教育背景（大学本科起）</td>
+					<td class="txtr"></td>
+				</tr>
+				<tr>
+					<td class="quiet" colspan="2">
+						<?= $this->resume['edu'] ?>
+					</td>
+				</tr>
+			</table>
+			<table class="table-dashed" width="100%">
+				<tr class="sub">
+					<td class=" bold">培训经历</td>
+					<td class="txtr"></td>
+				</tr>
+				<tr>
+					<td class="quiet" colspan="2">
+						<?= $this->resume['train'] ?>
+					</td>
+				</tr>
+			</table>
+			<table class="table-dashed" width="100%">
+				<tr class="sub">
+					<td class=" bold">实习(项目)经历</td>
+					<td class="txtr"></td>
+				</tr>
+				<tr>
+					<td class="quiet" colspan="2">
+						<?= $this->resume['internship'] ?>
+					</td>
+				</tr>
+			</table>
+			<table class="table-dashed" width="100%">
+				<tr class="sub">
+					<td class=" bold">获奖情况</td>
+					<td class="txtr"></td>
+				</tr>
+				<tr>
+					<td class="quiet" colspan="2">
+						<?= $this->resume['award'] ?>
+					</td>
+				</tr>
+			</table>
+			<table class="table-dashed" width="100%">
+				<tr class="sub">
+					<td class=" bold">其他信息</td>
+					<td class="txtr"></td>
+				</tr>
+				<tr>
+					<td class="quiet" colspan="2">
+						<b>个人描述：</b><br />
+						<?= $this->resume['intro'] ?>
+					</td>
+				</tr>
+				<tr>
+					<td class="quiet" colspan="2">
+						<br />
+						<b>你希望自己毕业后从事哪类工作？为了这一目标，你曾做过哪些准备，未来还会怎样努力以达成目标？</b><br />
+						<?= $this->resume['memo_1'] ?>
+					</td>
+				</tr>
+				<tr>
+					<td class="quiet" colspan="2">
+						<br />
+						<b>你希望通过参与本次活动，取得哪些收获？ </b><br />
+						<?= $this->resume['memo_2'] ?>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>

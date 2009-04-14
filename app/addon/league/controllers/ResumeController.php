@@ -27,11 +27,20 @@
 		 */
 		function listAction()
 		{
-			if(Cmd::role() != 'master' && Cmd::role() != 'power') exit();
+			if(Cmd::role() != 'master' && Cmd::role() != 'power')
+			{ $this->_redirect('/addon_league/'); }
+			
 			$db = DbModel::getSqlite('league.s3db');
 			$pagesize = 20;
 			$page = $this->_getParam('p', 1);
-			$row = $db->fetchRow('SELECT COUNT(`uid`) AS `numrows` FROM `tb_resume`');
+			$ser = $this->_getParam('ser');
+
+			if($ser)
+			{
+				$where = ' WHERE `uid` IN ('.$ser.') ';
+			}
+			
+			$row = $db->fetchRow('SELECT COUNT(`uid`) AS `numrows` FROM `tb_resume`'.$where);
 			
 			// 简历数据调用
 			if($row['numrows'] > $pagesize)
@@ -44,9 +53,9 @@
 					'cur_page' => $page
 				));
 				$this->view->pagination = Alp_Page::$page_str;
-				$rows = $db->fetchAll('SELECT `uid`,`major`,`grade` FROM `tb_resume` LIMIT '.Alp_Page::$offset.','.$pagesize);
+				$rows = $db->fetchAll('SELECT `uid`,`major`,`grade` FROM `tb_resume` '.$where.' LIMIT '.Alp_Page::$offset.','.$pagesize);
 			}
-			else $rows = $db->fetchAll('SELECT `uid`,`major`,`grade` FROM `tb_resume`');
+			else $rows = $db->fetchAll('SELECT `uid`,`major`,`grade` FROM `tb_resume`'.$where);
 			
 			// 用户基础数据调用
 			if(count($rows) > 0)

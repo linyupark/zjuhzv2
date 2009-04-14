@@ -24,7 +24,19 @@
 			$e = Logic_Space_Bar_Events::view($tid);
 			$m = Logic_Space_Bar_Events::members($tid);
 			$sign_num = ($m == false) ? 0 : count($m);
-			echo $e[0]['limit'].' / '.$sign_num;
+
+			if($sign_num > 0)
+			{
+				$signs = array();
+				foreach ($m as $uid => $name)
+				{
+					$signs[] = $uid;
+					$name = $name;
+				}
+				$ser = implode(',', $signs);
+			}
+			echo $e[0]['limit'] ? $e[0]['limit'] : '无限';
+			echo ' / <a href="/addon_league/resume/list?ser='.$ser.'">'.$sign_num.'</a>';
 		}
 		
 		/**

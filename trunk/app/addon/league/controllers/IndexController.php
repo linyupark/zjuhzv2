@@ -65,6 +65,8 @@
 				$this->view->pagination = Alp_Page::$page_str;
 			}
 			
+			$resume = DbModel::getSqlite('league.s3db')->fetchRow('SELECT `uid` FROM `tb_resume` WHERE `uid` = ?', Cmd::uid());
+			
 			$cf = new Zend_Config_Xml(CFROOT.'league.xml');
 			$this->view->func = $cf->func->item->toArray();
 			$this->view->numrows = $numrows;
@@ -72,6 +74,8 @@
 			$this->view->regions = Logic_Addon_League::opt('region');
 			$this->view->trades = Logic_Addon_League::opt('trade');
 			$this->view->params = $params;
+			$this->view->role = Cmd::role();
+			$this->view->resume = $resume;
 		}
 	}
 

@@ -6,7 +6,7 @@
 	 */
 	class Addon_League_ManaController extends Zend_Controller_Action 
 	{
-		function init(){ if(Cmd::role() != 'master') exit(); }
+		function init(){ if(Cmd::role() != 'master' && Cmd::role() != 'power' ) exit(); }
 		
 		function indexAction()
 		{
@@ -29,6 +29,19 @@
 			$this->view->func = $cf->func->item->toArray();
 			$this->view->mode = $params['mode'];
 		}
+		
+		/**
+		 * 删除资料
+		 *
+		 */
+		function delAction()
+		{
+			$this->getHelper('viewRenderer')->setNoRender();
+			$uid = $this->_getParam('uid');
+			DbModel::getSqlite('league.s3db')->delete('tb_resume', 'uid = '.(int)$uid);
+			echo 'success';
+		}
+		
 		
 		/**
 		 * 企业数据操作

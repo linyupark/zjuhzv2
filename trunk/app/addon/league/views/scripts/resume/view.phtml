@@ -56,7 +56,7 @@
 				</tr>
 				<tr>
 					<td class="quiet" colspan="2">
-						<?= $this->resume['edu'] ?>
+						<?= nl2br(stripslashes($this->resume['edu'])) ?>
 					</td>
 				</tr>
 			</table>
@@ -67,7 +67,7 @@
 				</tr>
 				<tr>
 					<td class="quiet" colspan="2">
-						<?= $this->resume['train'] ?>
+						<?= nl2br(stripslashes($this->resume['train'])) ?>
 					</td>
 				</tr>
 			</table>
@@ -78,7 +78,7 @@
 				</tr>
 				<tr>
 					<td class="quiet" colspan="2">
-						<?= $this->resume['internship'] ?>
+						<?= nl2br(stripslashes($this->resume['internship'])) ?>
 					</td>
 				</tr>
 			</table>
@@ -89,7 +89,7 @@
 				</tr>
 				<tr>
 					<td class="quiet" colspan="2">
-						<?= $this->resume['award'] ?>
+						<?= nl2br(stripslashes($this->resume['award'])) ?>
 					</td>
 				</tr>
 			</table>
@@ -101,21 +101,21 @@
 				<tr>
 					<td class="quiet" colspan="2">
 						<b>个人描述：</b><br />
-						<?= $this->resume['intro'] ?>
+						<?= nl2br(stripslashes($this->resume['intro'])) ?>
 					</td>
 				</tr>
 				<tr>
 					<td class="quiet" colspan="2">
 						<br />
 						<b>你希望自己毕业后从事哪类工作？为了这一目标，你曾做过哪些准备，未来还会怎样努力以达成目标？</b><br />
-						<?= $this->resume['memo_1'] ?>
+						<?= nl2br(stripslashes($this->resume['memo_1'])) ?>
 					</td>
 				</tr>
 				<tr>
 					<td class="quiet" colspan="2">
 						<br />
 						<b>你希望通过参与本次活动，取得哪些收获？ </b><br />
-						<?= $this->resume['memo_2'] ?>
+						<?= nl2br(stripslashes($this->resume['memo_2'])) ?>
 					</td>
 				</tr>
 			</table>

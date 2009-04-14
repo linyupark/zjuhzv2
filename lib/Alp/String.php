@@ -66,12 +66,11 @@
 	    {
     		$find = array(
     			"'<script[^>]*?>.*?</script>'si",
-    			"'<link[^>]*?>'si",
-    			"'<meta[^>]*?>'si",
+    			"'<link[^>]*?>.*?</link>'si",
+    			"'<meta[^>]*?>.*?</meta>'si",
     			"'<body[^>]*?>.*?</body>'si",
-    			"'<style[^>]*?>.*?</style>'si",
     		);
-    		$replace = array('','','','','');
+    		$replace = array('','','');
     		return preg_replace($find, $replace, $html);
 	    }
 	    
@@ -89,7 +88,8 @@
 		    "%24",  // $
 		    "%3f",  // ?
 		    "%3b",  // ;
-		    "%3d" // =
+		    "%3d", // =
+	    	"《","》","“","”","‘","’","，","。","-","【","】"
 		    );
 		    
 		    foreach($bad as $val)

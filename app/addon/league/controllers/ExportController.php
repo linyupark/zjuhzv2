@@ -15,7 +15,9 @@
 		 */
 		function xlsAction()
 		{
-			$rows = DbModel::getSqlite('league.s3db')->fetchAll('SELECT * FROM `tb_resume`');
+			$ser = $this->_getParam('ser');
+			if($ser) $where = ' WHERE `uid` IN ('.$ser.')';
+			$rows = DbModel::getSqlite('league.s3db')->fetchAll('SELECT * FROM `tb_resume`'.$where);
 			$objPHPExcel = new PHPExcel();
 			$objPHPExcel->getProperties()->setCreator("zjuhz.com大学生实习联盟");
 	        $objPHPExcel->getProperties()->setLastModifiedBy("zjuhz.com大学生实习联盟");

@@ -74,6 +74,7 @@
 			$this->view->rows = $rows;
 			$this->view->rows2 = $rows2;
 			$this->view->numrows = $row['numrows'];
+			$this->view->ser = $ser;
 		}
 		
 		function saveAction()

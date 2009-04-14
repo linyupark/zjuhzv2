@@ -8,7 +8,7 @@
 	<?php endif; ?>
 <?php else: ?>
 	<?php if($this->apt == true): ?>
-	<a href="javascript:apt(<?= $this->tid ?>)">
+	<a id="apt_link" href="javascript:apt(<?= $this->tid ?>)">
 		<img src="<?= Alp_Url::img('icon/1616/heart.gif') ?>" />
 		给参加活动的校友增加热心度
 	</a>

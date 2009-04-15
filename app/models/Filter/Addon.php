@@ -18,7 +18,7 @@
 			$params['region'] = Alp_Valid::of($params['region'], 'region', '地区', 'trim|strip_tags|required');
 			$params['trade'] = Alp_Valid::of($params['trade'], 'trade', '行业', 'trim|strip_tags|required');
 			$params['intro'] = Alp_Valid::of($params['intro'], 'intro', '介绍', 'trim|required');
-			if($params['web']!=''||$params['web']!='http://' )
+			if($params['web']!=''&&$params['web']!='http://' )
 			$params['web'] = Alp_Valid::of($params['web'], 'web', '企业网站', 'trim|valid_url');
 			$params['url'] = Alp_Valid::of($params['url'], 'url', '报名地址', 'trim|valid_url');
 			$params['job'] = trim($params['job']);

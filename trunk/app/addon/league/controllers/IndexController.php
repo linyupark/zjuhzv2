@@ -49,7 +49,7 @@
 			$page = (int)$params['p'] == 0 ? 1 : $params['p'];
 			$pagesize = 10;
 			$select = DbModel::getSqlite('league.s3db')->select();			
-			$select->from('tb_corp');
+			$select->from('tb_corp')->order('corp_id DESC');
 			
 			if($params['region']) // 筛选
 			$select->where('region LIKE "%'.$params['region'].'%"');

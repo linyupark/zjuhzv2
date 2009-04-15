@@ -47,7 +47,7 @@
 		{
 			$params = $this->getRequest()->getParams();
 			$page = (int)$params['p'] == 0 ? 1 : $params['p'];
-			$pagesize = 20;
+			$pagesize = 10;
 			$select = DbModel::getSqlite('league.s3db')->select();			
 			$select->from('tb_corp');
 			

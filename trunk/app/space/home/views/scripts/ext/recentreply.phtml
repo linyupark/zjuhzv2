@@ -1,0 +1,18 @@
+<table class="table-dashed" width="100%">
+<tr class="bcolor-z">
+	<td>最近回复过的帖子</td>
+	<td>回/点</td>
+</tr>
+<?php if(count($this->rows) > 0): foreach ($this->rows as $i => $r): ?>
+<tr <?= $i%2 == 1 ? 'class="bcolor-g"':'' ?>>
+	<td>
+		<a href="/space_bar/<?= $r['type'] ?>/view?tid=<?= $r['tid'] ?>"><?= stripcslashes($r['title']) ?></a>
+	</td>
+	<td class="quiet txtr"><?= $r['reply'] ?>/<?= $r['click'] ?></td>
+</tr>
+<?php endforeach; else: ?>
+<tr>
+	<td colspan="3" class="quiet">尚未发布任何帖子</td>
+</tr>
+<?php endif; ?>
+</table>

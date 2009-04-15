@@ -36,7 +36,7 @@
 			$this->view->guests = unserialize($row['guests']);
 			$this->view->friends = Logic_Space_Friends::fetch($uid,0,24);
 			$this->view->home = Logic_User_Privacy::getHome($uid);
-			$this->view->log = Logic_Log::home($uid,40);
+			$this->view->log = Logic_Log::home($uid,30);
 			$this->view->uid = $uid;
 			$this->view->event = Zend_Registry::get('config')->event_log->toArray();
 		}

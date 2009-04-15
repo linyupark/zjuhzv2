@@ -1,0 +1,15 @@
+<table class="table-dashed" width="100%">
+<tr class="bcolor-z">
+	<td colspan="2">我最近访问的群组</td>
+</tr>
+<?php if(count($this->rows) > 0): foreach ($this->rows as $i => $r): ?>
+<tr <?= $i%2 == 1 ? 'class="bcolor-g"':'' ?>>
+	<td width="20"><img class="cccborder" width="20" src="<?= Cmd::groupicon($r['gid'], 40); ?>" /></td>
+	<td><a href="/space_group/home/?id=<?= $r['gid'] ?>"><?= $r['name'] ?></a></td>
+</tr>
+<?php endforeach; else: ?>
+<tr>
+	<td class="quiet">没有相关信息</td>
+</tr>
+<?php endif; ?>
+</table>

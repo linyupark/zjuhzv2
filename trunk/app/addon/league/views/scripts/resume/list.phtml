@@ -16,8 +16,8 @@
 	<td><a href="/space_home/?uid=<?= $r['uid'] ?>"><?= $this->rows2[$i]['username'] ?></a></td>
 	<td><?= $r['major'] ?></td>
 	<td><?= $r['grade'] ?></td>
-	<td><?= $this->rows2[$i]['mobile'] ?></td>
-	<td><?= $this->rows2[$i]['email'] ?></td>
+	<td><?= $this->rows2[$r['uid']]['mobile'] ?></td>
+	<td><?= $this->rows2[$r['uid']]['email'] ?></td>
 	<td class="a-span">
 		<a href="/addon_league/resume/view?uid=<?= $r['uid'] ?>" rel="facebox">查看详细</a>
 		<a href="javascript:del(<?= $r['uid'] ?>)">

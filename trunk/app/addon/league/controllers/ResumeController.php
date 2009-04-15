@@ -31,7 +31,7 @@
 			{ $this->_redirect('/addon_league/'); }
 			
 			$db = DbModel::getSqlite('league.s3db');
-			$pagesize = 20;
+			$pagesize = 10;
 			$page = $this->_getParam('p', 1);
 			$ser = $this->_getParam('ser');
 

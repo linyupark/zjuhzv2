@@ -5,7 +5,8 @@
 	<?php else: ?>
 	<div class="success">你已完成简历信息的提交，如需要修改可以<a class="bold" href="/addon_league/resume/">点击此处</a></div>
 	<?php endif; ?>
-	<p class="pd10">
+	<p class="pd5">
+		<a href="/addon_league">显示全部</a>
 		<select name="region">
 			<option value="">地区：</option>
 		<?php if(count($this->regions) > 0): foreach($this->regions as $r): ?>

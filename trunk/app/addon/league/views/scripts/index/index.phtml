@@ -59,8 +59,8 @@
 	<td width="20%"><a href="/addon_league/?trade=<?= urlencode($r['trade']) ?>"><?= $r['trade'] ?></a></td>
 	<td><a href="/addon_league/?func=<?= urlencode($r['func']) ?>"><?= $r['func'] ?></a></td>
 	<td>
-		<a target="_blank" href="<?= $r['web'] ?>" class="f14"><?= $r['name'] ?></a>
-		<a style="color:#666" href="javascript:intro(<?= $r['corp_id'] ?>)">[简介]</a>
+		<a target="_blank" href="<?= $r['web'] ?>"><?= $r['name'] ?></a>
+		<a style="color:#666" href="/addon_league/index/intro?id=<?= $r['corp_id'] ?>" rel="facebox">[岗位简介]</a>
 		<br />
 		<span class="quiet">岗位：</span><?= stripslashes($r['job']) ?>
 	</td>
@@ -68,7 +68,7 @@
 	<?php $tid = explode('=', strstr($r['url'], 'tid=')); ?>
 	<td class="signbox txtc" rel="<?= $tid[1] ?>"></td>
 	<td class="a-span">
-		<a target="_blank" href="<?= $r['url'] ?>#sign_btn">报名</a>
+		<a class="f14 bold" target="_blank" href="<?= $r['url'] ?>#sign_btn">报名</a>
 		<?php if(Cmd::role() == 'master'): ?>
 		<a href="/addon_league/mana/?mode=update&id=<?= $r['corp_id'] ?>">修改</a>
 		<a href="javascript:corp_del(<?= $r['corp_id'] ?>)">删除</a>
@@ -90,10 +90,6 @@
 		$(this).html('loading..');
 		$(this).load('/addon_league/index/signbox?tid='+tid); 
 	});
-	function intro(id)
-	{
-		$.post('/addon_league/index/intro?id='+id, function(data){ $.facebox(data); });
-	}
 	<?php if(Cmd::role() == 'master'): ?>
 	function corp_del(id)
 	{
@@ -105,4 +101,5 @@
 		}
 	}
 	<?php endif; ?>
+	$(document).ready(function($){$('a[rel*=facebox]').facebox()});
 </script>

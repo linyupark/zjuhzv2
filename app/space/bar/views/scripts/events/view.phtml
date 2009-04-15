@@ -61,7 +61,17 @@
 						</tr>
 					</table>
 					<?= stripslashes($this->row['content']); ?>
-					<?= $this->action('sign', 'events', 'space_bar', array('row' => $this->row)); ?>
+					<?php 
+					// 附加大学生实习联盟插件
+					if(Logic_Addon_League::isLeague($this->row['tid']) == false): ?>
+						<?= $this->action('sign', 'events', 'space_bar', array('row' => $this->row)); ?>
+					<?php else: ?>
+						<?php if(Logic_Addon_League::isPostedResume(Cmd::uid())): ?>
+						<?= $this->action('sign', 'events', 'space_bar', array('row' => $this->row)); ?>
+						<?php else: ?>
+						<div class="error">系统检测到你还没有填写报名所需的<a class="bold" href="/addon_league/resume/">简历信息</a>，请先填写后再进行搜索报名操作~谢谢合作。</div>
+						<?php endif; ?>
+					<?php endif; ?>
 				</div>
 				<?= $this->render('toolbar.phtml'); ?>
 			</td>

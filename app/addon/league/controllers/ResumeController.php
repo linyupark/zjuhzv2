@@ -66,13 +66,18 @@
 					$uids[] = $r['uid'];
 				}
 				$rows2 = DbModel::User()->fetchAll('
-					SELECT b.`username`,c.`mobile`,c.`email` 
+					SELECT b.`uid`,b.`username`,c.`mobile`,c.`email` 
 					FROM `tb_base` AS `b`
 					LEFT JOIN `tb_contact` AS `c` ON b.`uid` = c.`uid` 
 					WHERE b.`uid` IN ('.implode(',', $uids).')');
 			}
+			$temp = array();
+			foreach ($rows2 as $r)
+			{
+				$temp[$r['uid']] = $r;
+			}
 			$this->view->rows = $rows;
-			$this->view->rows2 = $rows2;
+			$this->view->rows2 = $temp;
 			$this->view->numrows = $row['numrows'];
 			$this->view->ser = $ser;
 		}

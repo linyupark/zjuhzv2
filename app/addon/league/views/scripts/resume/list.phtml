@@ -13,7 +13,7 @@
 </tr>
 <?php if(count($this->rows) > 0): foreach ($this->rows as $i => $r): ?>
 <tr id="r_<?= $r['uid'] ?>" <?= $i%2 == 1 ? 'class="bcolor-g"':'' ?>>
-	<td><a href="/space_home/?uid=<?= $r['uid'] ?>"><?= $this->rows2[$i]['username'] ?></a></td>
+	<td><a href="/space_home/?uid=<?= $r['uid'] ?>"><?= $this->rows2[$r['uid']]['username'] ?></a></td>
 	<td><?= $r['major'] ?></td>
 	<td><?= $r['grade'] ?></td>
 	<td><?= $this->rows2[$r['uid']]['mobile'] ?></td>

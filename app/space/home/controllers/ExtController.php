@@ -8,12 +8,29 @@
 	{
 		private $uid;
 		private $db;
-		private $limit = 10;
+		private $limit = 5;
 		
 		function init()
 		{
 			$this->db = DbModel::Space();
 			$this->uid = $this->_getParam('uid', Cmd::uid());
+		}
+		
+		/**
+		 * 最近去过的我的群组
+		 *
+		 */
+		function recentgroupAction()
+		{
+			$rows = $this->db->fetchAll('
+				SELECT g.`name`,m.`gid` 
+				FROM `tb_group_member` AS `m` 
+				LEFT JOIN `tb_group` AS `g` ON g.`gid` = m.`gid` 
+				WHERE m.`uid` = ? 
+				ORDER BY `lastvisit` DESC 
+				LIMIT 5
+			', $this->uid);
+			$this->view->rows = $rows;
 		}
 		
 		/**
@@ -29,7 +46,6 @@
 				WHERE b.`puber` = ? AND b.`deny` = 0 
 				ORDER BY b.`pubtime` DESC 
 				LIMIT '.$this->limit, $this->uid);
-			
 			$this->view->rows = $rows;
 		}
 		
@@ -47,7 +63,6 @@
 				WHERE c.`uid` = ? AND c.`deny` = 0 
 				ORDER BY c.`time` DESC 
 				LIMIT '.$this->limit, $this->uid);
-			
 			$this->view->rows = $rows;
 		}
 		

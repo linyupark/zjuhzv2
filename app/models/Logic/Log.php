@@ -5,7 +5,7 @@
 	 *
 	 */
 	class Logic_Log extends DbModel 
-	{
+	{	
 		/**
 		 * 用户首页显示动态信息
 		 *

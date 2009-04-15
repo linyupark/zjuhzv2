@@ -4,6 +4,8 @@
 		<?php if(Cmd::role() != 'guest') echo $this->action(Cmd::role(), 'modnav'); ?>
 	</div>
 	<br />
+	<?= $this->action('recentpost', 'ext', 'space_home'); ?>
+	<?= $this->action('recentreply', 'ext', 'space_home'); ?>
 	<h3 class="section">最近来访</h3>
 		<?php if($this->guests): foreach($this->guests as $r): ?>
 		<table width="33%" class="fleft">
@@ -31,6 +33,7 @@
 		<?php else: ?>
 		<div class="quiet mg10">还没加任何好友</div>
 		<?php endif; ?>
+	
 </div>
 <script type="text/javascript">
 	$('.yui-d3f').addClass('yui-t6');

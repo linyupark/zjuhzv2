@@ -102,36 +102,43 @@
 			if(Alp_Sys::getMsg() == null)
 			{
 				$db = DbModel::getSqlite('league.s3db');
-				if($params['update']) // 更新
-				{
-					$db->update('tb_resume', array(
-						'major' => $params['major'],
-						'grade' => $params['grade'],
-						'edu' => $params['edu'],
-						'train' => $params['train'],
-						'internship' => $params['internship'],
-						'award' => $params['award'],
-						'intro' => $params['intro'],
-						'memo_1' => $params['memo_1'],
-						'memo_2' => $params['memo_2']
-					), 'uid = '.$params['update']);
+				$db->begintransaction();
+				try{
+					if($params['update']) // 更新
+					{
+						$db->update('tb_resume', array(
+							'major' => $params['major'],
+							'grade' => $params['grade'],
+							'edu' => $params['edu'],
+							'train' => $params['train'],
+							'internship' => $params['internship'],
+							'award' => $params['award'],
+							'intro' => $params['intro'],
+							'memo_1' => $params['memo_1'],
+							'memo_2' => $params['memo_2']
+						), 'uid = '.$params['update']);
+					}
+					else 
+					{
+						$db->insert('tb_resume', array(
+							'uid' => Cmd::uid(),
+							'major' => $params['major'],
+							'grade' => $params['grade'],
+							'edu' => $params['edu'],
+							'train' => $params['train'],
+							'internship' => $params['internship'],
+							'award' => $params['award'],
+							'intro' => $params['intro'],
+							'memo_1' => $params['memo_1'],
+							'memo_2' => $params['memo_2']
+						));
+					}
+					echo 'success';
+					$db->commit();
+				} catch (Exception $e) {
+					$db->rollback();
+					echo $e->getMessage();
 				}
-				else 
-				{
-					$db->insert('tb_resume', array(
-						'uid' => Cmd::uid(),
-						'major' => $params['major'],
-						'grade' => $params['grade'],
-						'edu' => $params['edu'],
-						'train' => $params['train'],
-						'internship' => $params['internship'],
-						'award' => $params['award'],
-						'intro' => $params['intro'],
-						'memo_1' => $params['memo_1'],
-						'memo_2' => $params['memo_2']
-					));
-				}
-				echo 'success';
 			}
 			else echo Alp_Sys::allMsg('* ', "\n");
 		}

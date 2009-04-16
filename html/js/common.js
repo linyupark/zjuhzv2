@@ -1,5 +1,6 @@
 document.write("<script type=\"text/javascript\" src=\"/js/jq/jquery.js\"></script>");
 document.write("<script type=\"text/javascript\" src=\"/js/jq/facebox.js\"></script>");
+document.write("<script type=\"text/javascript\" src=\"/js/jq/scrolltopcontrol.js\"></script>");
 //document.write("<script type=\"text/javascript\" src=\"/js/jq/jquery.fmsg.js\"></script>");
 //document.write("<script type=\"text/javascript\" src=\"/js/jq/jquery.hint.js\"></script>");
 function check_msgbox()

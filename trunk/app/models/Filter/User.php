@@ -87,14 +87,13 @@
 		public static function contact($params)
 		{
 			$params['email'] = Alp_Valid::of($params['email'], 'email', '邮箱', 'trim|valid_email');
+			$params['mobile'] = Alp_Valid::of($params['mobile'], 'mobile', '手机', 'trim|numeric');
 			if(!empty($params['address']))
 			$params['address'] = Alp_Valid::of($params['address'], 'address', '地址', 'trim');
 			if(!empty($params['zipcode']))
 			$params['zipcode'] = Alp_Valid::of($params['zipcode'], 'zipcode', '邮编', 'trim|numeric');
 			if(!empty($params['tel']))
 			$params['tel'] = Alp_Valid::of($params['tel'], 'tel', '电话', 'trim|numeric');
-			if(!empty($params['mobile']))
-			$params['mobile'] = Alp_Valid::of($params['mobile'], 'mobile', '手机', 'trim|numeric');
 			if(!empty($params['qq']))
 			$params['qq'] = Alp_Valid::of($params['qq'], 'qq', 'QQ', 'trim|numeric');
 			if(!empty($params['msn']))

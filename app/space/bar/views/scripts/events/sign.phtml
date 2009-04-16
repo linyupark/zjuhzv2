@@ -7,14 +7,16 @@
 	<input id="sign_btn" class="btn" type="button" value="距活动开始还有<?= Alp_Date::timespan(time(), $this->time) ?>，报名人数已达上限" disabled="disabled" />
 	<?php endif; ?>
 <?php else: ?>
-	<?php if($this->apt == true): ?>
+	<?php if($this->apt_m != 1 && $this->apt == false && count($this->members) > 0): ?>
+	<input style="background:#E7CA60" class="btn" type="button" value="报名结束，活动开展中或是活动等待加分中.." disabled="disabled" />
+	<?php endif; if($this->apt == true && count($this->members) > 0): ?>
 	<a id="apt_link" href="javascript:apt(<?= $this->tid ?>)">
 		<img src="<?= Alp_Url::img('icon/1616/heart.gif') ?>" />
 		给参加活动的校友增加热心度
 	</a>
 	<script>function apt(eid){ $.post('/space_bar/events/apt/', { tid:eid }, function(data){ $.facebox(data); }) }</script>
-	<?php else: ?>
-	<input id="sign_btn" class="btn" type="button" value="活动报名结束" disabled="disabled" />
+	<?php elseif($this->apt_m == 1 || count($this->members) == 0): ?>
+	<input id="sign_btn" class="btn" type="button" value="活动圆满结束" disabled="disabled" />
 	<?php endif; ?>
 <?php endif; ?>
 <span id="sign_box"></span>

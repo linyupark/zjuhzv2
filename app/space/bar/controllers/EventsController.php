@@ -103,6 +103,7 @@
 			// 允许进行加分操作
 			if($role == 'master' || $myid == $row['puber'])
 			$this->view->apt = $row['apted'] == 1 ? false : true;
+			$this->view->apt_m = $row['apted'];
 			$this->view->limit = $row['limit'];
 			$this->view->time = $row['time'];
 			$this->view->members = $members;

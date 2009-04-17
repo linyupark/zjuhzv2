@@ -34,6 +34,7 @@
 			$pagesize = 10;
 			$page = $this->_getParam('p', 1);
 			$ser = $this->_getParam('ser');
+			$tid = $this->_getParam('tid');
 
 			if($ser)
 			{
@@ -80,6 +81,7 @@
 			$this->view->rows2 = $temp;
 			$this->view->numrows = $row['numrows'];
 			$this->view->ser = $ser;
+			$this->view->tid = $tid;
 		}
 		
 		function saveAction()

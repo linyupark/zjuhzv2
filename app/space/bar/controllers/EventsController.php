@@ -70,7 +70,7 @@
 		 */
 		function signAction()
 		{
-			$myid = Cmd::uid();
+			$uid = $this->_getParam('uid', Cmd::uid());
 			$role = Cmd::role();
 			$row = $this->_getParam('row');
 			$members = unserialize($row['member']);
@@ -89,26 +89,26 @@
                     }
                     else
                     {
-                    	Logic_Space_Bar_Events::sign($tid, $myid, $username);
+                    	Logic_Space_Bar_Events::sign($tid, $uid, $username);
                     	// 记录
                     	echo 'success';
                     }
 				}
 				else 
 				{
-					Logic_Space_Bar_Events::unsign($tid, $myid);
+					Logic_Space_Bar_Events::unsign($tid, $uid);
 					echo 'success';
 				}
 			}
 			// 允许进行加分操作
-			if($role == 'master' || $myid == $row['puber'])
+			if($role == 'master' || $uid == $row['puber'])
 			$this->view->apt = $row['apted'] == 1 ? false : true;
 			$this->view->apt_m = $row['apted'];
 			$this->view->limit = $row['limit'];
 			$this->view->time = $row['time'];
 			$this->view->members = $members;
 			$this->view->tid = $row['tid'];
-			$this->view->myid = $myid;
+			$this->view->uid = $uid;
 		}
 		
 		

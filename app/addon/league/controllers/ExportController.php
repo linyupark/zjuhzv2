@@ -57,7 +57,7 @@
 	            $objPHPExcel->getActiveSheet()->SetCellValue('M'.$row, $v['intro']);
 	            $objPHPExcel->getActiveSheet()->SetCellValue('N'.$row, $v['memo_1']);
 	            $objPHPExcel->getActiveSheet()->SetCellValue('O'.$row, $v['memo_2']);
-	            $row++;
+	            $row ++;
 			}
 			$objPHPExcel->getActiveSheet()->setTitle('实习生资料表格');
 			$objWriter = new PHPExcel_Writer_Excel5($objPHPExcel);

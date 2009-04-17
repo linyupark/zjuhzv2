@@ -1,7 +1,7 @@
 <br />
 <?php if($this->time > time()): ?>
-	<?php if(!$this->limit || $this->limit > count($this->members) || isset($this->members[$this->myid])): ?>
-	<?php if(isset($this->members[$this->myid])){ $f = 0; $v = '取消报名'; $color = '#F9C0AA'; } else { $f = 1; $v = '我要报名'; $color = '#E3F9AA'; } ?>
+	<?php if(!$this->limit || $this->limit > count($this->members) || isset($this->members[$this->uid])): ?>
+	<?php if(isset($this->members[$this->uid])){ $f = 0; $v = '取消报名'; $color = '#F9C0AA'; } else { $f = 1; $v = '我要报名'; $color = '#E3F9AA'; } ?>
 	<input id="sign_btn" onclick="do_sign(<?= $f ?>)" class="btn pd10" type="button" value="距活动开始还有<?= Alp_Date::timespan(time(), $this->time).'，'.$v ?>" style="background:<?= $color ?>" />
 	<?php else: ?>
 	<input id="sign_btn" class="btn" type="button" value="距活动开始还有<?= Alp_Date::timespan(time(), $this->time) ?>，报名人数已达上限" disabled="disabled" />

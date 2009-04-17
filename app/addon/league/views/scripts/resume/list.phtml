@@ -21,7 +21,7 @@
 	<td class="a-span">
 		<a href="/addon_league/resume/view?uid=<?= $r['uid'] ?>" rel="facebox">查看详细</a>
 		<a href="javascript:del(<?= $r['uid'] ?>)">
-		<img src="/im/icon/mix/x.gif" /> 删除</a>
+		<img src="/im/icon/mix/x.gif" /> 取消其报名</a>
 	</td>
 </tr>
 <?php endforeach; else: ?>
@@ -33,15 +33,24 @@
 $(document).ready(function($){$('a[rel*=facebox]').facebox()});
 function del(uid)
 {
-	var c = confirm('确定要删除该实习生的简历？');
+	var c = confirm('确定要取消该学生报名？');
 	if(c == true)
 	{
+		$.post('/space_bar/events/sign?tid=<?= $this->tid ?>&f=0',
+		function(data){
+			if(data == 'success')
+			{
+				$('#r_'+uid).fadeOut();
+			}
+			else alert(data);
+		});
+		/*
 		$.post('/addon_league/mana/del?uid='+uid, function(data){
 			if(data == 'success')
 			$('#r_'+uid).fadeOut();
 			else
 			alert(data);
-		});
+		});*/
 	}
 }
 </script>

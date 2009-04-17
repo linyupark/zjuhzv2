@@ -38,7 +38,7 @@ function del(uid)
 	var c = confirm('确定要取消该学生报名？');
 	if(c == true)
 	{
-		$.post('/space_bar/events/sign?tid=<?= $this->tid ?>&f=0',
+		$.post('/space_bar/events/sign?tid=<?= $this->tid ?>&f=0&uid='+uid,
 		function(data){
 			if(data == 'success')
 			{

@@ -36,7 +36,7 @@
 				$ser = implode(',', $signs);
 			}
 			echo $e[0]['limit'] ? $e[0]['limit'] : '无限';
-			echo ' / <a href="/addon_league/resume/list?ser='.$ser.'">'.$sign_num.'</a>';
+			echo ' / <a href="/addon_league/resume/list?tid='.$tid.'&ser='.$ser.'">'.$sign_num.'</a>';
 		}
 		
 		/**

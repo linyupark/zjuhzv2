@@ -20,8 +20,10 @@
 	<td><?= $this->rows2[$r['uid']]['email'] ?></td>
 	<td class="a-span">
 		<a href="/addon_league/resume/view?uid=<?= $r['uid'] ?>" rel="facebox">查看详细</a>
+		<?php if($this->tid): ?>
 		<a href="javascript:del(<?= $r['uid'] ?>)">
 		<img src="/im/icon/mix/x.gif" /> 取消其报名</a>
+		<?php endif; ?>
 	</td>
 </tr>
 <?php endforeach; else: ?>

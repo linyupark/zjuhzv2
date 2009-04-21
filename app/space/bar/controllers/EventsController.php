@@ -16,6 +16,17 @@
 			$this->view->members = Logic_Space_Bar_Events::members($tid);
 		}
 		
+		function naptAction()
+		{
+			$this->getHelper('viewRenderer')->setNoRender();
+			if($this->getRequest()->isXmlHttpRequest())
+			{
+				$tid = $this->_getParam('tid');
+				DbModel::Space()->update('tb_events', array('apted' => 1), 'tid = '.$tid);
+				echo 'success';
+			}
+		}
+		
 		function aptAction()
 		{
 			$pt = 5;

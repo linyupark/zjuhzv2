@@ -14,7 +14,12 @@
 		<img src="<?= Alp_Url::img('icon/1616/heart.gif') ?>" />
 		给参加活动的校友增加热心度
 	</a>
-	<script>function apt(eid){ $.post('/space_bar/events/apt/', { tid:eid }, function(data){ $.facebox(data); }) }</script>
+	&nbsp;&nbsp;&nbsp;
+	<a class="f12" style="color:#666" href="javascript:napt(<?= $this->tid ?>)">[取消加分]</a>
+	<script type="text/javascript">
+		function apt(eid){ $.post('/space_bar/events/apt/', { tid:eid }, function(data){ $.facebox(data); }) }
+		function napt(eid){ var c = confirm('确定取消这次活动加分？'); if(c == true) $.post('/space_bar/events/napt/', { tid:eid }, function(data){ if(data == 'success') history.go(0); else $.facebox(data); }) }
+	</script>
 	<?php elseif($this->apt_m == 1 || count($this->members) == 0): ?>
 	<input id="sign_btn" class="btn" type="button" value="活动圆满结束" disabled="disabled" />
 	<?php endif; ?>

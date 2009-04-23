@@ -1,3 +1,67 @@
-<?php
-
-?>
+<div class="yui-main">
+	<div class="yui-b">
+		<div class="mg5 section yui-g">
+			<div class="yui-u first">
+				<img class="vm mgr10" src="<?= Alp_Url::img('icon/1616/talk.gif') ?>" /><b>我的话题</b>
+			</div>
+			<div class="yui-u txtr"><a href="javascript:history.back()">返回上一页</a></div>
+		</div>
+		<div class="mglr10 tb-box">
+			<a href="/space_home/ext/bar/?tab=pub" <?= ($this->tab == 'pub')?'class="tb-on"':'class="tb-of"' ?>>我发起的</a><span class="tb-rbg"></span>
+			<a href="/space_home/ext/bar/?tab=rep" <?= ($this->tab == 'rep')?'class="tb-on"':'class="tb-of"' ?>>我的回复</a><span class="tb-rbg"></span>
+		</div>
+		<table width="100%" class="mgt10 table-dashed">
+		<?php if(count($this->pubs) > 0): ?>
+		<tr class="bcolor-g bold quiet">
+			<td>（共找到<?= $this->numrows ?>条记录） 标题</td>
+			<td class="txtc">发布时间</td>
+			<td class="txtc">点击/回复</td>
+			<td></td>
+		</tr>
+		<?php foreach ($this->pubs as $i => $p): ?>
+		<tr <?= $i%2==1?'class="bcolor-g"':'' ?> id="t_<?= $p['tid'] ?>">
+			<td>
+			<img src="<?= Alp_Url::img('icon/1616/'.$this->icons[$p['type']]) ?>" />
+			<a class="f14" href="/space_bar/<?= $p['type'] ?>/view/?tid=<?= $p['tid'] ?>"><?= stripslashes($p['title']) ?></a></td>
+			<td class="txtc quiet f9"><?= date('y-m-d H:i', $p['pubtime']) ?></td>
+			<td class="txtc f9"><?= $p['click'] ?>/<?= $p['reply'] ?></td>
+			<td class="a-span">
+				<a href="/space_bar/mod/<?= $p['type'] ?>?tid=<?= $p['tid'] ?>&gp=<?= $p['group'] ?>">修改</a>
+				<a href="javascript:tdeny(<?= $p['tid'] ?>)">屏蔽</a>
+			</td>
+		</tr>
+		<?php endforeach; endif; ?>
+		
+		<?php if(count($this->reps) > 0): ?>
+		<tr class="bcolor-g bold quiet">
+			<td>共找到<?= $this->numrows ?>条记录</td>
+			<td class="txtc">回复时间</td>
+		</tr>
+		<?php foreach ($this->reps as $i => $p): ?>
+		<tr <?= $i%2==1?'class="bcolor-g"':'' ?>>
+			<td>
+			<img src="<?= Alp_Url::img('icon/1616/'.$this->icons[$p['type']]) ?>" />
+			<a class="f14" href="/space_bar/<?= $p['type'] ?>/view/?tid=<?= $p['tid'] ?>"><?= stripslashes($p['title']) ?></a>
+			<div class="pd5"><?= strip_tags(stripslashes($p['content'])) ?></div>
+			</td>
+			<td class="txtc quiet f9"><?= date('y-m-d H:i', $p['time']) ?></td>
+		</tr>
+		<?php endforeach; endif; ?>
+		</table>
+		<div class="pg"><?= $this->pagination ?></div>
+	</div>
+</div>
+<script type="text/javascript">
+	function tdeny(tid)
+	{
+		var c = confirm('确定要屏蔽该帖？');
+		if(c == true)
+		{
+			$.post('/space_home/ext/bardeny',{tid:tid}, function(data){
+				if(data == 'success') { $('#t_'+tid).fadeOut(); }
+				else alert(data);
+			});
+		}
+	}
+</script>
+<?= $this->render('sidebar.phtml'); ?>

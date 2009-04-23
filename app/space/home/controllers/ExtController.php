@@ -67,12 +67,96 @@
 		}
 		
 		/**
+		 * 屏蔽发布的帖子
+		 *
+		 */
+		function bardenyAction()
+		{
+			$this->getHelper('viewRenderer')->setNoRender();
+			if($this->getRequest()->isXmlHttpRequest())
+			{
+				$db = DbModel::Space();
+				$tid = $this->_getParam('tid');
+				$row = $db->fetchRow('SELECT `puber` FROM `tb_tbar` WHERE `puber` = ? AND `tid` = '.$tid, Cmd::uid());
+				if($row != false)
+				{
+					$db->update('tb_tbar', array('deny' => 1), 'tid = '.$tid);
+					echo 'success';
+				}
+				else echo '无权屏蔽';
+			}
+		}
+		
+		/**
 		 * 个人所有回复/帖子
 		 *
 		 */
 		function barAction()
 		{
+			$page = $this->_getParam('p', 1);
+			$pagesize = 20;
+			$uid = $this->_getParam('uid', Cmd::uid());
+			$tab = $this->_getParam('tab', 'pub');
+			// 发布
+			if($tab == 'pub'):
+			$tids = Logic_Space_Bar::ids($uid);
+			$numrows = count($tids);
+			if($numrows > $pagesize)
+			{
+				Alp_Page::$pagesize = $pagesize;
+				Alp_Page::create(array(
+					'href_open' => '<a href="/space_home/ext/bar/?tab='.$tab.'&p=%d">',
+					'href_close' => '</a>',
+					'num_rows' => $numrows,
+					'cur_page' => $page
+				));
+				$this->view->pagination = Alp_Page::$page_str;
+				$tids = array_slice($tids, Alp_Page::$offset, $pagesize);
+			}
+			if($numrows > 0)
+			{
+				$in = array();
+				foreach ($tids as $t)
+				{
+					$in[] = $t['tid'];
+				}
+				$rows = DbModel::Space()->fetchAll('SELECT * 
+					FROM `tb_tbar` WHERE `tid` IN ('.implode(',', $in).') 
+					AND `deny` = 0 
+					ORDER BY `replytime` DESC');
+				$this->view->pubs = $rows;
+			}
+			endif;
+			// 回复
+			if($tab == 'rep'):
+			$db = DbModel::Space();
+			$row = $db->fetchRow('SELECT COUNT(`id`) AS `numrows` FROM `tb_comment` WHERE `uid` = ?', $uid);
+			$numrows = $row['numrows'];
+			$select = $db->select()->from(array('c' => 'tb_comment'))->where('uid = '.$uid);
+			if($numrows > $pagesize)
+			{
+				Alp_Page::$pagesize = $pagesize;
+				Alp_Page::create(array(
+					'href_open' => '<a href="/space_home/ext/bar/?tab='.$tab.'&p=%d">',
+					'href_close' => '</a>',
+					'num_rows' => $numrows,
+					'cur_page' => $page
+				));
+				$select->limit($pagesize, Alp_Page::$offset);
+				$this->view->pagination = Alp_Page::$page_str;
+			}
+			if($numrows > 0)
+			{
+				$select->joinLeft(array('t' => 'tb_tbar'), 't.tid = c.tid', array('t.title','t.type'));
+				$select->order('c.time DESC');
+				$rows = $select->query()->fetchAll();
+				$this->view->reps = $rows;
+			}
+			endif;
 			
+			$this->view->numrows = $numrows;
+			$this->view->tab = $tab;
+			$this->view->icons = Zend_Registry::get('config')->bar_icon->toArray();
 		}
 	}
 

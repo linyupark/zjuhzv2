@@ -35,6 +35,7 @@
 					'nicky' => $params['nicky']
 				), 'tid = '.$tid);
 				
+				if(count($params['ids']) > 0)
 				foreach ($params['ids'] as $id)
 				{
 					$db->update('tb_photo', array(
@@ -42,8 +43,8 @@
 					), 'id ='.$id);
 				}
 				
-				if(isset($params['n_photo']))
-				foreach($params['n_photo'] as $k => $file)
+				if(isset($params['n_photos']))
+				foreach($params['n_photos'] as $k => $file)
 				{
 					$db->insert('tb_photo', array(
 						'tid' => $tid,

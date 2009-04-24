@@ -123,8 +123,18 @@
 			$params['hour'] = Alp_Valid::of($params['hour'], 'hour', '小时', 'trim|numeric');
 			$params['min'] = Alp_Valid::of($params['min'], 'min', '分钟', 'trim|numeric');
 			$time = strtotime($params['year'].'-'.$params['month'].'-'.$params['day'].' '.$params['hour'].':'.$params['min']);
-			if(!$time) Alp_Sys::msg('time', '活动时间无效，请检查格式');
+			if(!$time) Alp_Sys::msg('time', '活动开始时间无效，请检查格式');
 			else $params['time'] = $time;
+			
+			$params['eyear'] = Alp_Valid::of($params['eyear'], 'eyear', '年份', 'trim|numeric');
+			$params['emonth'] = Alp_Valid::of($params['emonth'], 'emonth', '月份', 'trim|numeric');
+			$params['eday'] = Alp_Valid::of($params['eday'], 'eday', '日', 'trim|numeric');
+			$params['ehour'] = Alp_Valid::of($params['ehour'], 'ehour', '小时', 'trim|numeric');
+			$params['emin'] = Alp_Valid::of($params['emin'], 'emin', '分钟', 'trim|numeric');
+			$etime = strtotime($params['eyear'].'-'.$params['emonth'].'-'.$params['eday'].' '.$params['ehour'].':'.$params['emin']);
+			if(!$etime) Alp_Sys::msg('end', '活动结束时间无效，请检查格式');
+			elseif($etime <= $time) Alp_Sys::msg('end', '活动结束时间不能比活动开始时间早，请更改');
+			else $params['end'] = $etime;
 			$params['address'] = Alp_Valid::of($params['address'], 'address', '活动地址', 'trim|required');
 			return $params;
 		}
@@ -252,6 +262,17 @@
 			$time = strtotime($params['year'].'-'.$params['month'].'-'.$params['day'].' '.$params['hour'].':'.$params['min']);
 			if(!$time) Alp_Sys::msg('time', '活动时间无效，请检查格式');
 			else $params['time'] = $time;
+			
+			$params['eyear'] = Alp_Valid::of($params['eyear'], 'eyear', '年份', 'trim|numeric');
+			$params['emonth'] = Alp_Valid::of($params['emonth'], 'emonth', '月份', 'trim|numeric');
+			$params['eday'] = Alp_Valid::of($params['eday'], 'eday', '日', 'trim|numeric');
+			$params['ehour'] = Alp_Valid::of($params['ehour'], 'ehour', '小时', 'trim|numeric');
+			$params['emin'] = Alp_Valid::of($params['emin'], 'emin', '分钟', 'trim|numeric');
+			$etime = strtotime($params['eyear'].'-'.$params['emonth'].'-'.$params['eday'].' '.$params['ehour'].':'.$params['emin']);
+			if(!$etime) Alp_Sys::msg('end', '活动结束时间无效，请检查格式');
+			elseif($etime <= $time) Alp_Sys::msg('end', '活动结束时间不能比活动开始时间早，请更改');
+			else $params['end'] = $etime;
+			
 			$params['address'] = Alp_Valid::of($params['address'], 'address', '活动地址', 'trim|required');
 			return $params;
 		}

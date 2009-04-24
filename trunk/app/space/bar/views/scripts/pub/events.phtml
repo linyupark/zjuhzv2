@@ -43,6 +43,24 @@
 				</td>
 			</tr>
 			<tr>
+				<td class="txtr">结束：</td>
+				<td>
+					<input type="text" name="eyear" value="<?= date('y',time()); ?>" size="2" /> 年
+					<input type="text" name="emonth" value="<?= date('m',time()); ?>" size="2" /> 月
+					<input type="text" name="eday" value="<?= date('d',time()+3600*24); ?>" size="2" /> 日
+					<select name="ehour">
+						<?php for($h=0;$h<=24;$h++): ?>
+						<option value="<?= $h ?>"><?= $h ?></option>
+						<?php endfor; ?>
+					</select> 点
+					<select name="emin">
+						<?php for($m=0;$m<=59;$m=$m+5): ?>
+						<option value="<?= $m ?>"><?= $m ?></option>
+						<?php endfor; ?>
+					</select> 分
+				</td>
+			</tr>
+			<tr>
 				<td class="txtr">地点：</td>
 				<td>
 					<input type="text" name="address" size="90" />

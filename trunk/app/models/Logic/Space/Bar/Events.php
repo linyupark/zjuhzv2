@@ -70,6 +70,7 @@
 					'modtime' => time(),
 					'limit' => $params['limit'],
 					'time' => $params['time'],
+					'end' => $params['end'],
 					'address' => $params['address']
 				), 'tid = '.$tid);
 				$db->commit();
@@ -123,6 +124,7 @@
 					'content' => $params['content'],
 					'limit' => $params['limit'],
 					'time' => $params['time'],
+					'end' => $params['end'],
 					'address' => $params['address']
 				));
 				$db->commit();

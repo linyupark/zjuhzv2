@@ -111,15 +111,29 @@
 					echo 'success';
 				}
 			}
+			
+			$now = time();
+			$e_state = 'wait'; // 活动状态
+			if($row['end'] && $row['end'] > $now && $row['time'] < $now)
+			{
+				$e_state = 'ing';
+			}
+			if((!$row['end'] && $row['time'] < $now) || $row['end'] < $now)
+			{
+				$e_state = 'end';
+			}
+			
 			// 允许进行加分操作
 			if($role == 'master' || $uid == $row['puber'])
 			$this->view->apt = $row['apted'] == 1 ? false : true;
 			$this->view->apt_m = $row['apted'];
 			$this->view->limit = $row['limit'];
-			$this->view->time = $row['time'];
 			$this->view->members = $members;
 			$this->view->tid = $row['tid'];
 			$this->view->uid = $uid;
+			$this->view->time = $row['time'];
+			$this->view->end = $row['end'];
+			$this->view->state = $e_state;
 		}
 		
 		

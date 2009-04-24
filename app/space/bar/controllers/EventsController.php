@@ -118,9 +118,13 @@
 			{
 				$e_state = 'ing';
 			}
-			if((!$row['end'] && $row['time'] < $now) || $row['end'] < $now)
+			if($row['end'])
 			{
-				$e_state = 'end';
+				if($row['end'] < $now) $e_state = 'end';
+			}
+			else
+			{
+				if($row['time'] < $now) $e_state = 'end';
 			}
 			
 			// 允许进行加分操作

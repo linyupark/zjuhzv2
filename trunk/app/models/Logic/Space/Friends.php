@@ -86,8 +86,7 @@
 				$db->update('tb_friends', array(
 					'type' => 'pass',
 					'time' => $params['time'],
-					'sort' => $params['sort'],
-				), 'uid = '.$params['uid'].' AND friend = '.$params['sender']);
+				), 'uid = '.$params['sender'].' AND friend = '.$params['uid']);
 				
 				// 给对方发送确认信息
 				if(Logic_Space_Msg::unique('friend', $params['uid'], $params['sender']) == false)	
@@ -98,6 +97,13 @@
 					'incept' => $params['sender'],
 					'time' => $params['time']
 				));
+				else // 重新设置为未读
+				{
+					$db->update('tb_msg', array(
+						'isread' => 0,
+						'time' => $params['time']
+					),'sender = '.$params['uid'].' AND incept = '.$params['sender']);
+				}
 				$db->commit();
 				
 			} catch (Exception $e) {
@@ -146,7 +152,7 @@
 		 * 直接成为朋友关系
 		 *
 		 */
-		public static function rel($uid_a, $uid_b)
+		public static function rel($uid_a, $uid_b, $sort = 0)
 		{
 			$db = parent::Space();
 			$db->beginTransaction();
@@ -155,7 +161,7 @@
 				$db->insert('tb_friends' ,array(
 					'uid' => $uid_a,
 					'friend' => $uid_b,
-					'sort' => 0,
+					'sort' => $sort,
 					'type' => 'pass',
 					'time' => time()
 				));

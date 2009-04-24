@@ -22,6 +22,7 @@
             $acl->add(new Zend_Acl_Resource('public'));
             $acl->add(new Zend_Acl_Resource('console'));
             $acl->add(new Zend_Acl_Resource('space_msg'));
+            $acl->add(new Zend_Acl_Resource('space_set'));
             $acl->add(new Zend_Acl_Resource('addon_vote'));
             $acl->add(new Zend_Acl_Resource('addon_partners'));
             $acl->add(new Zend_Acl_Resource('addon_console'));

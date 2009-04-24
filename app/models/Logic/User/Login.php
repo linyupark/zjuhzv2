@@ -20,7 +20,7 @@
         	$rows = $db->fetchAll('SELECT e.`tid`,b.`title` 
         		FROM `tb_events` AS `e` 
         		LEFT JOIN `tb_tbar` AS `b` ON b.tid = e.tid 
-        		WHERE (e.`time` <'.$now.' AND LENGTH(e.`member`) > 6 AND b.`deny` = 0 AND e.`apted` = 0 AND b.`puber` = '.$uid.')'
+        		WHERE (e.`end` <'.$now.' AND LENGTH(e.`member`) > 6 AND b.`deny` = 0 AND e.`apted` = 0 AND b.`puber` = '.$uid.')'
         	);
         	if(count($rows) > 0)
         	{

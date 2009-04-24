@@ -1,28 +1,32 @@
 <br />
-<?php if($this->time > time()): ?>
+<?php if($this->state == 'wait'): ?>
 	<?php if(!$this->limit || $this->limit > count($this->members) || isset($this->members[$this->uid])): ?>
 	<?php if(isset($this->members[$this->uid])){ $f = 0; $v = '取消报名'; $color = '#F9C0AA'; } else { $f = 1; $v = '我要报名'; $color = '#E3F9AA'; } ?>
 	<input id="sign_btn" onclick="do_sign(<?= $f ?>)" class="btn pd10" type="button" value="距活动开始还有<?= Alp_Date::timespan(time(), $this->time).'，'.$v ?>" style="background:<?= $color ?>" />
 	<?php else: ?>
 	<input id="sign_btn" class="btn" type="button" value="距活动开始还有<?= Alp_Date::timespan(time(), $this->time) ?>，报名人数已达上限" disabled="disabled" />
 	<?php endif; ?>
-<?php else: ?>
-	<?php if($this->apt_m != 1 && $this->apt == false && count($this->members) > 0): ?>
-	<input style="background:#E7CA60" class="btn" type="button" value="报名结束，活动开展中或是活动等待加分中.." disabled="disabled" />
-	<?php endif; if($this->apt == true && count($this->members) > 0): ?>
+<?php elseif($this->state == 'end'): ?>
+	<?php if($this->apt == true && count($this->members) > 0): ?>
 	<a id="apt_link" href="javascript:apt(<?= $this->tid ?>)">
 		<img src="<?= Alp_Url::img('icon/1616/heart.gif') ?>" />
 		给参加活动的校友增加热心度
 	</a>
-	&nbsp;&nbsp;&nbsp;
+	<?php if($this->apt == true): ?>
 	<a class="f12" style="color:#666" href="javascript:napt(<?= $this->tid ?>)">[取消加分]</a>
+	<?php endif; ?>
 	<script type="text/javascript">
 		function apt(eid){ $.post('/space_bar/events/apt/', { tid:eid }, function(data){ $.facebox(data); }) }
 		function napt(eid){ var c = confirm('确定取消这次活动加分？'); if(c == true) $.post('/space_bar/events/napt/', { tid:eid }, function(data){ if(data == 'success') history.go(0); else $.facebox(data); }) }
 	</script>
-	<?php elseif($this->apt_m == 1 || count($this->members) == 0): ?>
-	<input id="sign_btn" class="btn" type="button" value="活动圆满结束" disabled="disabled" />
 	<?php endif; ?>
+	<?php if($this->apt_m == 1): ?>
+	<input id="sign_btn" class="btn" type="button" value="活动圆满结束" disabled="disabled" />
+	<?php elseif($this->apt != true): ?>
+	<input id="sign_btn" class="btn" type="button" value="活动已结束等待发起者加分" disabled="disabled" />
+	<?php endif; ?>
+<?php elseif($this->state == 'ing'): ?>
+	<div class="notice">报名结束，活动正在进行中...结束时间为<?= date('y-m-d H:i', $this->end) ?></div>
 <?php endif; ?>
 <span id="sign_box"></span>
 <script type="text/javascript">

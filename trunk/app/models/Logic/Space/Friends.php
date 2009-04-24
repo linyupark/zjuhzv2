@@ -102,7 +102,7 @@
 					$db->update('tb_msg', array(
 						'isread' => 0,
 						'time' => $params['time']
-					),'sender = '.$params['uid'].' AND incept = '.$params['sender']);
+					),'sender = '.$params['uid'].' AND incept = '.$params['sender'].' AND type = "friend"');
 				}
 				$db->commit();
 				

@@ -48,7 +48,7 @@
 			$db = parent::Space();
 			$db->beginTransaction();
 			try{
-				$db->delete('tb_friends', 'uid = '.$params['sender']);
+				$db->delete('tb_friends', 'uid = '.$params['sender'].' AND friend = '.$params['uid']);
 				$db->delete('tb_msg', 'sender = '.$params['sender'].' AND incept = '.$params['uid'].' AND type = "friend"');
 				$db->commit();
 				

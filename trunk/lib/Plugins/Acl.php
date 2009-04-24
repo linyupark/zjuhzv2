@@ -41,7 +41,7 @@
             
             // 访问控制定义
             $acl->allow('guest', array('public','addon_vote','addon_partners','addon_console','addon_booking'));
-            $acl->allow('black', array('public','space_msg','addon_partners','addon_console','addon_booking'));
+            $acl->allow('black', array('public','space_msg','space_set','addon_partners','addon_console','addon_booking'));
             $acl->allow(array('bench','member'), null);
             $acl->deny(array('member','bench','power','black'), 'console');
             $acl->allow('master', null);

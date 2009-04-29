@@ -89,7 +89,8 @@
 				), 'uid = '.$params['sender'].' AND friend = '.$params['uid']);
 				
 				// 给对方发送确认信息
-				if(Logic_Space_Msg::unique('friend', $params['uid'], $params['sender']) == false)	
+				if(Logic_Space_Msg::unique('friend', $params['uid'], $params['sender']) != false)
+				$db->delete('tb_msg', 'sender = '.$params['uid'].' AND incept = '.$params['sender'].' AND type = "friend"');
 				$db->insert('tb_msg', array(
 					'type' => 'friend',
 					'content' => '系统提示：该用户已经同意了你的好友请求',
@@ -97,13 +98,6 @@
 					'incept' => $params['sender'],
 					'time' => $params['time']
 				));
-				else // 重新设置为未读
-				{
-					$db->update('tb_msg', array(
-						'isread' => 0,
-						'time' => $params['time']
-					),'sender = '.$params['uid'].' AND incept = '.$params['sender'].' AND type = "friend"');
-				}
 				$db->commit();
 				
 			} catch (Exception $e) {

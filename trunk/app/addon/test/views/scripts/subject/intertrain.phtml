@@ -1,0 +1,14 @@
+<?php if($this->row): ?>
+<div class="success txtc">你做的问卷得分为<b class="f14"><?= $this->row['result'] ?></b></div>
+<div class="txtc">
+<h2>现在可以开始观看培训视频：</h2>
+<object type="application/x-shockwave-flash" data="/player/vcastr3.swf" width="650" height="500" id="vcastr3"><param name="movie" value="/player/vcastr3.swf"/> <param name="allowFullScreen" value="true" /><param name="FlashVars" value="xml=<vcastr><channel>
+	<item><source><?= $this->video ?></source><duration></duration><title></title></item></channel><config></config><plugIns><logoPlugIn><url>/player/logoPlugIn.swf</url><logoText>zjuhz.com</logoText><logoTextAlpha>0.75</logoTextAlpha><logoTextFontSize>14</logoTextFontSize><logoTextLink></logoTextLink><logoTextColor>0xffffff</logoTextColor><textMargin>10 10 auto auto</textMargin></logoPlugIn></plugIns></vcastr>"/></object>
+</div>
+<br />
+<br />
+<div class="notice f14 txtc"><a href="/addon_test/pool/view/the/<?= urlencode($this->pool) ?>">看完视频，再做一次上面的测试看看有没有提高</a></div>
+<?php else: ?>
+<div class="notice">在进行网络培训前烦请完先成这份问卷</div>
+<?= $this->action('view', 'pool', 'addon_test', array('the' => urlencode($this->pool))) ?>
+<?php endif; ?>

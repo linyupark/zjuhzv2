@@ -1,0 +1,35 @@
+<h2 class="section">测试库添加问卷 :: <a href="/addon_test/pool/list">查看列表</a></h2>
+<div class="yui-gc">
+	<div class="yui-u first" id="pool_form">
+	</div>
+	<div class="yui-u bcolor-g">
+		<div class="bold f14 pd10">第一步、题库设置</div>
+		<form id="cp_form">
+		<table>
+			<tr>
+				<td class="txtr">问卷名称：</td>
+				<td><input type="text" name="pool" size="30" /></td>
+			</tr>
+			<tr>
+				<td class="txtr">题目数量：</td>
+				<td><input type="text" name="qnum" size="10" /></td>
+			</tr>
+			<tr>
+				<td colspan="2" class="txtc">
+					<input onclick="create_form()" type="button" value="生成表单" class="btn" />
+				</td>
+			</tr>
+		</table>
+		</form>
+	</div>
+</div>
+
+<script type="text/javascript">
+	function create_form()
+	{
+		$('#pool_form').html('<img src="<?= Alp_Url::img('icon/loading/v1.gif') ?>" />');
+		$.post('/addon_test/pool/addform', $('#cp_form').serializeArray(), function(data){
+			$('#pool_form').html(data);
+		});
+	}
+</script>

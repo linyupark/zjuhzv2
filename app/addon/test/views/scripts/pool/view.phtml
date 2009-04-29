@@ -1,0 +1,41 @@
+<?php if(count($this->rows) > 0): ?>
+<h2 class="section-u">问卷 - <?= stripslashes($this->rows[0]['pool']) ?></h2>
+<form id="answer_form" method="post" onsubmit="return post_answer()">
+<?php foreach ($this->rows as $index => $r): ?>
+<div class="mgb10 pd10">
+<div class="bold pdb10" style="font-size:18px"><?= stripslashes($r['question']) ?></div>
+<?php $opts = unserialize($r['option']); foreach ($opts as $i => $opt): ?>
+<?php 
+	$ans = unserialize($r['answer']);
+	$type = count($ans) > 1 ? 'checkbox':'radio';
+?>
+<p class="f14"><b><?= $i ?>.</b> 
+	<?= stripslashes($opt) ?> 
+	<input type="<?= $type ?>" name="ans_<?= ($index+1) ?>[]" value="选项<?= $i ?>" /></p>
+<?php endforeach; ?>
+</div>
+<hr />
+<?php endforeach; ?>
+<div class="txtc">
+	<input type="hidden" name="pool" value="<?= stripslashes($this->rows[0]['pool']) ?>" />
+	<input type="hidden" name="numrows" value="<?= count($this->rows) ?>" />
+	<input type="submit" value="提交答案" class="btn" />
+</div>
+</form>
+
+<script type="text/javascript">
+	function post_answer()
+	{
+		$('input:submit').attr('disabled', true).val('校对中...');
+		$.post('/addon_test/pool/view', $('#answer_form').serializeArray(), function(data){
+			alert(data);
+			if(data.indexOf('分') > 0) history.go(0);
+			else $('input:submit').attr('disabled', false).val('提交答案');
+			
+		});
+		return false;
+	}
+</script>
+<?php else: ?>
+<div class="notice">指定的问卷不存在！</div>
+<?php endif; ?>

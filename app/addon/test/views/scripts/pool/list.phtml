@@ -1,0 +1,9 @@
+<h2 class="section">入库问卷列表 :: <a href="/addon_test/pool/add">+添加</a></h2>
+<?php if(count($this->rows) > 0): foreach ($this->rows as $i => $r): ?>
+<a class="pd10 f14" href="/addon_test/pool/view/the/<?= urlencode($r['pool']) ?>"><?= stripslashes($r['pool']) ?></a>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<?php endforeach; else: ?>
+<div class="quiet">没有记录...</div>
+<?php endif ?>
+<br /><br />
+<span class="quiet">/addon_test/subject/intertrain/pool/{pool名称}</span>

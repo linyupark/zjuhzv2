@@ -1,0 +1,58 @@
+<?php if($this->params): ?>
+<form id="questions_pool" method="post" onsubmit="return post_pool()">
+	<?php for ($i = 1; $i <= $this->params['qnum']; $i++): ?>
+	<table width="100%" id="list_<?= $i ?>">
+		<tr class="bcolor-g bold quiet">
+			<td colspan="2">题目#<?= $i ?></td>
+		</tr>
+		<tr>
+			<td colspan="2"><textarea class="notice" name="question[]" style="width:90%;height:40px;"></textarea></td>
+		</tr>
+		<tr class="quiet opt_item">
+			<td class="txtr">选项1：</td>
+			<td><input type="text" name="opt_<?= $i ?>[]" size="80" />
+			<input type="checkbox" name="ans_<?= $i ?>[]" value="选项1" />
+			<label>正确答案</label>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>
+				<a href="javascript:append_opt(<?= $i ?>)">
+					<img class="vm" src="<?= Alp_Url::img('icon/mix/+.gif') ?>" /> 增加选项
+				</a>
+			</td>
+		</tr>
+	</table>
+	<hr />
+	<?php endfor; ?>
+	<input type="hidden" name="pool" value="<?= stripslashes($this->params['pool']) ?>" />
+	<div class="pd5 txtc"><input type="submit" value="创建测试题库" class="btn" /></div>
+</form>
+
+<script type="text/javascript">
+	function post_pool()
+	{
+		$('input:submit').attr('disabled', true).val('创建中...');
+		$.post('/addon_test/pool/add', $('#questions_pool').serializeArray(), function(data){
+			if(data == 'success') $('input:submit').val('创建成功'); 
+			else 
+			{
+				alert(data);
+				$('input:submit').attr('disabled', false).val('创建测试题库');
+			}
+		});
+		return false;
+	}
+
+	function append_opt(index)
+	{
+		var len = $('#list_'+index+' .opt_item').length;
+		var h = $('#list_'+index+' .opt_item:last').clone().html();
+		h = h.replace(new RegExp("(选项"+len+")","g"), "选项"+(len+1));
+		$('#list_'+index+' .opt_item:last').after('<tr class="quiet opt_item">'+h+'</tr>');
+	}
+</script>
+<?php else: ?>
+<div class="error"><?= Alp_Sys::allMsg() ?></div>
+<?php endif; ?>

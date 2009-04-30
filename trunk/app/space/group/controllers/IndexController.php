@@ -23,6 +23,20 @@
 		}
 		
 		/**
+		 * 群热TOP10
+		 *
+		 */
+		function hotAction()
+		{
+			$rows = DbModel::Space()->fetchAll('
+				SELECT `point`,`name`,`gid` 
+				FROM `tb_group` 
+				ORDER BY `point` DESC 
+				LIMIT 12');
+			$this->view->rows = $rows;
+		}
+		
+		/**
 		 * 所有
 		 *
 		 */

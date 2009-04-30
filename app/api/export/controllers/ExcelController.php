@@ -183,6 +183,7 @@
             $objPHPExcel->getActiveSheet()->SetCellValue('C1', '学院');
             $objPHPExcel->getActiveSheet()->SetCellValue('D1', '邮箱');
             $objPHPExcel->getActiveSheet()->SetCellValue('E1', '手机');
+            $objPHPExcel->getActiveSheet()->SetCellValue('F1', '入学年份');
             $row = 2;
             foreach($members as $uid => $uname)
             {
@@ -192,6 +193,7 @@
                 $objPHPExcel->getActiveSheet()->SetCellValue('C'.$row, $user[0]['campus']);
                 $objPHPExcel->getActiveSheet()->SetCellValue('D'.$row, $user[0]['email']);
                 $objPHPExcel->getActiveSheet()->SetCellValue('E'.$row, $user[0]['mobile']);
+                $objPHPExcel->getActiveSheet()->SetCellValue('F'.$row, $user[0]['year']);
                 $row++;
             }
             $objPHPExcel->getActiveSheet()->setTitle('活动参加人员联系方式');

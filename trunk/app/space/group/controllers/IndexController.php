@@ -32,7 +32,7 @@
 				SELECT `point`,`name`,`gid` 
 				FROM `tb_group` 
 				ORDER BY `point` DESC 
-				LIMIT 12');
+				LIMIT 15');
 			$this->view->rows = $rows;
 		}
 		

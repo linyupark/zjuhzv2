@@ -1,0 +1,23 @@
+<table class="mg5" width="100%">
+	<?php if(count($this->rows) > 0) : foreach ($this->rows as $i => $r): ?>
+	<?php if($i%3 == 0): ?><tr><?php endif; ?>
+	<td width="33%">
+		<table class="table-dashed">
+			<tr>
+				<td width="40">
+					<a href="/space_group/home/?id=<?= $r['gid'] ?>">
+				    	<img class="cccborder" src="<?= Cmd::groupicon($r['gid'], 40) ?>" />
+				    </a>
+				</td>
+				<td class="f14">
+					<?php if(($i+1) <= 3): ?><img src="<?= Alp_Url::img('icon/mix/top'.($i+1).'.gif')?>" ><?php endif; ?> 
+					<a href="/space_group/home/?id=<?= $r['gid'] ?>"><?= stripslashes($r['name']) ?></a>
+					<br />
+					<span class="f12 quiet">排名：<?= $i+1; ?></span>
+				</td>
+			</tr>
+		</table>
+	</td>
+	<?php if($i%3 == 2): ?></tr><?php endif; ?>
+	<?php endforeach; endif; ?>
+</table>

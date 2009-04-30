@@ -1,3 +1,10 @@
+<?php $cache = Logic_Cache::factory('Output', 3600); ?>
+<?php if(!$cache->start('group_'.$this->gid.'point')): ?>
+<div style="color:#D44848; padding:3px;">
+	<img src="/im/icon/1616/heart.gif" /> 群热度:<?= Logic_Space_Group::countpoint($this->gid) ?>
+</div>
+<?php $cache->end(); endif; ?>
+
 <?php if($this->type != 'close' && !$this->role): ?>
 	<a href="javascript:joinGroup()" class="blk"><img class="vm" src="<?= Alp_Url::img('icon/1616/door.gif') ?>" /> 加入该群</a>
 <?php endif; ?>

@@ -28,6 +28,8 @@
 		 */
 		function pointAction()
 		{
+			//$gid = $this->view->gid;
+			// 重新计算群组的热度
 			
 		}
 		

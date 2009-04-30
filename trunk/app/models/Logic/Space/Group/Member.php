@@ -138,6 +138,24 @@
 			return $row['numrow'];
 		}
 		
+		public static function ids($gid)
+		{
+			$rows = parent::Space()->fetchAll('SELECT `uid` FROM `tb_group_member` 
+				WHERE `gid` = ? AND (`role` = "member" OR `role` = "creater" OR `role` = "manager")', 
+			$gid);
+			
+			if(count($rows) > 0)
+			{
+				$temp = array();
+				foreach ($rows as $r)
+				{
+					$temp[] = $r['uid'];
+				}
+				return $temp;
+			}
+			else return false;
+		}
+		
 		/**
 		 * 罗列群组名单
 		 *

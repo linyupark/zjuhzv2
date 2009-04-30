@@ -7,6 +7,51 @@
 	class Logic_Space_Group extends DbModel 
 	{	
 		/**
+		 * 计算指定群组的热度
+		 *
+		 * @param unknown_type $gid
+		 */
+		public static function countpoint($gid)
+		{
+			$db = parent::Space();
+			// 主题1->2,回帖10->1,成员数量1->1 + 成员热心度总和/成员数量
+			$bars = $db->fetchAll('
+				SELECT `tid` 
+				FROM `tb_tbar` 
+				WHERE `group` = ? AND `deny` = 0', $gid);
+			$barnum = count($bars); // 主题数
+			if($barnum > 0)
+			{
+				$temp = array();
+				foreach ($bars as $v)
+				{
+					$temp[] =$v['tid'];
+				}
+				$in_tid = implode(',', $temp);
+			}
+			if($in_tid)
+			{
+				$reply = $db->fetchRow('
+					SELECT COUNT(`id`) AS `numrows` 
+					FROM `tb_comment` 
+					WHERE `tid` IN ('.$in_tid.')
+				');
+				$replynum = $reply['numrows']; // 回复数
+			}
+			$uids = Logic_Space_Group_Member::ids($gid);
+			$mnum = count($uids); // 成员数量
+			$row = $db->fetchRow('
+				SELECT SUM(`point`) AS `mtp` 
+				FROM zjuhzv2_user.`tb_base` 
+				WHERE `uid` IN ('.implode(',', $uids).') 
+			');
+			$mtp = $row['mtp']; // 成员热心度总和
+			$point =  $barnum*2 + round($replynum/10) + $mnum + round($mtp/$mnum);
+			$db->update('tb_group', array('point' => $point), 'gid = '.$gid);
+			return $point;
+		}
+		
+		/**
 		 * 我的群id
 		 *
 		 * @param unknown_type $uid

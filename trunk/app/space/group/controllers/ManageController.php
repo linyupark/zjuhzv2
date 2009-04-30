@@ -35,7 +35,7 @@
 		}
 		
 		/**
-		 * 奖励热心度(从群point中扣除)
+		 * 群组热心度操作
 		 *
 		 */
 		function pointAction()

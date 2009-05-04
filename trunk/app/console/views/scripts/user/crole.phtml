@@ -1,0 +1,5 @@
+<select name="role" onchange="javascript:crole(<?= $this->row['uid'] ?>,this.value)">
+	<?php foreach ($this->roles as $key => $name): ?>
+	<option value="<?= $key ?>" <?= $this->row['role'] == $key ? 'selected="selected"':'' ?>><?= $name ?></option>
+	<?php endforeach; ?>
+</select>

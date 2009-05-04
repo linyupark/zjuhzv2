@@ -31,6 +31,7 @@
 				</td>
 				<td width="40%" class="a-span" id="toolbar_<?= $r['uid'] ?>">
 					<?= $this->action('toolbar', 'user', 'console', array('row' => $r)); ?>
+					<a href="javascript:initpsw(<?= $r['uid'] ?>)">初始密码</a>
 				</td>
 			</tr>
 			<?php endforeach; endif; ?>
@@ -42,6 +43,6 @@
 
 <script type="text/javascript">
 function detail(uid) {$.post('/console/user/detail', {uid:uid}, function(data){ $.facebox(data); })}
-function crole(uid,role) { $.post('/console/user/crole', {uid:uid,role:role}, function(data){ $('#toolbar_'+uid).html(data);});}
+function crole(uid,role) { $.post('/console/user/crole', {uid:uid,role:role});}
 function initpsw(uid){ $.post('/console/user/initpsw', {uid:uid}, function(data){ $.facebox(data); }); }
 </script>

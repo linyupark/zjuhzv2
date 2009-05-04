@@ -130,7 +130,7 @@
 				$gid = $this->_getParam('gid');
 				if(Logic_Space_Group_Member::isMemeber($gid, $myid) == false)
 				Logic_Space_Group_Member::crole($gid, $myid, 'member', time());
-				Logic_Space_Msg::group($uid, $myid, $gid, '已经同意你的邀请，赶快去群组看看吧~');
+				if($uid) Logic_Space_Msg::group($uid, $myid, $gid, '已经同意你的邀请，赶快去群组看看吧~');
 				echo 'success';
 			}
 		}

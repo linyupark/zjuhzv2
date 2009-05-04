@@ -65,12 +65,11 @@
 		 */
 		function croleAction()
 		{
+			$this->getHelper('viewRenderer')->setNoRender();
 			if($this->getRequest()->isXmlHttpRequest())
 			{
 				$params = $this->getRequest()->getParams();
 				Logic_User_Base::crole($params['uid'], $params['role']);
-				$this->view->row = array('uid' => $params['uid']);
-				$this->render($params['role']);
 			}
 		}
 		
@@ -148,7 +147,8 @@
 		{
 			$row = $this->_getParam('row');
 			$this->view->row = $row;
-			$this->render($row['role']);
+			$this->view->roles = Zend_Registry::get('config')->user_role->toArray();
+			$this->render('crole');
 		}
 	}
 ?>

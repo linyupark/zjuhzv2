@@ -12,8 +12,8 @@
 	define('CFROOT', '../db/');
 	define('UPLOADROOT', $_SERVER['DOCUMENT_ROOT'].'/upload/');
 						 
-	require_once 'Zend/Loader.php';
-	Zend_Loader::registerAutoload();
+	require_once 'Zend/Loader/Autoloader.php';
+	Zend_Loader_Autoloader::getInstance()->setFallbackAutoloader(true);
 	Zend_Session::start();
 	Zend_Registry::set('sess', new Zend_Session_Namespace('zjuhz'));
 	

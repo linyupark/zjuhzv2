@@ -1,7 +1,6 @@
 <?php
 	
-	set_include_path('.' . PATH_SEPARATOR . get_include_path() 
-						 . PATH_SEPARATOR . '../lib'
+	set_include_path('.' . PATH_SEPARATOR . '../lib'
 						 . PATH_SEPARATOR . '../app/models');
 	
 	date_default_timezone_set('Asia/Shanghai');					 
@@ -12,8 +11,9 @@
 	define('CFROOT', '../db/');
 	define('UPLOADROOT', $_SERVER['DOCUMENT_ROOT'].'/upload/');
 						 
-	require_once 'Zend/Loader.php';
-	Zend_Loader::registerAutoload();
+	require_once 'Zend/Loader/Autoloader.php';
+    Zend_Loader_Autoloader::getInstance()->setFallbackAutoloader(true);
+    
 	Zend_Session::start();
 	Zend_Registry::set('sess', new Zend_Session_Namespace('zjuhz'));
 	

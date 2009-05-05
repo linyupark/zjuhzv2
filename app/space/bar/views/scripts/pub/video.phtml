@@ -54,6 +54,15 @@
 </div>
 <?= $this->render('sidebar.phtml'); ?>
 <script type="text/javascript">
+	function pub_hack(url, w, h)
+	{
+		var str = '<object type="application/x-shockwave-flash" data="/player/vcastr3.swf" width="'+w+'" height="'+h+'" id="vcastr3">'+
+					'<param name="movie" value="/player/vcastr3.swf"/>'+
+					'<param name="allowFullScreen" value="true" />'+
+					'<param name="FlashVars" value="xml=<vcastr>'+
+						'<channel><item><source>'+ url +'</source><duration></duration><title></title></item></channel><config></config><plugIns><logoPlugIn><url>/player/logoPlugIn.swf</url><logoText>zjuhz.com</logoText><logoTextAlpha>0.75</logoTextAlpha><logoTextFontSize>14</logoTextFontSize><logoTextLink></logoTextLink><logoTextColor>0xffffff</logoTextColor><textMargin>10 10 auto auto</textMargin></logoPlugIn></plugIns></vcastr>"/></object>';
+		insert_html(str);
+	}
 	function pub_video()
 	{
 		$('#submit').attr('disabled', true).val('正在发布帖子，请稍候...');

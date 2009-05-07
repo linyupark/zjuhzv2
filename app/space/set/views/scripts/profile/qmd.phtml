@@ -1,0 +1,25 @@
+<?= $this->render('header.phtml') ?>
+<?= $this->render('profile/tab.phtml') ?>
+
+<div class="notice mglr10">签名档信息将显示在您所发布帖子的尾部(支持[a href="链接"]链接名称[/a])</div>
+<form id="qmd_form" method="post" onsubmit="return upsign()">
+<textarea name="sign" style="width:95%;height:80px" class="mglr10"><?= stripslashes($this->sign) ?></textarea>
+<div class="txtc mgt10"><input type="submit" value="确定保存" class="btn" /></div>
+</form>
+<hr />
+<div class="bold">效果：</div>
+<div class="pd10 mg10" style="background:#eee;"><?php echo Cmd::b2h(stripslashes($this->sign)) ?></div>
+
+<script type="text/javascript">
+function upsign(){
+	$('input:submit').attr('disabled', true).val('保存中...');
+	$.post('/space_set/profile/qmd', $('#qmd_form').serializeArray(), 
+	function(data){ if(data == 'success'){
+		$('input:submit').attr('disabled', false).val('保存成功');
+		history.go(0);
+	} else { alert(data); $('input:submit').attr('disabled', false).val('确定保存'); } });
+	return false;
+}
+</script>
+
+<?= $this->render('sidebar.phtml') ?>

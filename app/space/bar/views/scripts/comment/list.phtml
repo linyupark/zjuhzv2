@@ -34,8 +34,14 @@
   </tr>
   <tr>
   	<td>
-  		<div id="comment_<?= $r['id'] ?>" style="line-height:150%;">
+  		<div id="comment_<?= $r['id'] ?>" style="line-height:150%; font-size:13px; color:#333">
   			<?= ($r['deny'] == 0) ? stripslashes($r['content']) : '<div class="quiet">****该回帖已被屏蔽****</div>'; ?>
+  			<?php if($r['sign']): ?>
+  			<div class="pd10">
+  				<img src="<?php echo Alp_Url::img('v1/sigline.gif')?>" />
+  				<div class="quiet f12 pd5"><?php echo Cmd::b2h(stripslashes($r['sign'])) ?></div>
+  			</div>
+  			<?php endif; ?>
 		</div>
 		<?= $this->action('toolbar', 'comment', 'space_bar', array('uid'=>$r['uid'],'cid'=>$r['id'])); ?>
   	</td>

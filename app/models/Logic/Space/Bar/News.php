@@ -44,7 +44,7 @@
 			$select->from(array('bar' => 'tb_tbar'))->where('bar.tid = ?', $tid);
 			$select->joinLeft(array('news' => 'tb_news'), 'bar.tid = news.tid');
 			$select->joinLeft(array('u'=>'zjuhzv2_user.tb_base'), 'bar.puber = u.uid', 
-							  array('uname'=>'u.username','unick'=>'u.nickname'));
+							  array('uname'=>'u.username','unick'=>'u.nickname','sign'));
 			$select->joinLeft(array('s'=>'zjuhzv2_space.tb_news_sort'), 'news.sort = s.sort', 
 							  array('sortname' => 's.name'));
 			return $select->query()->fetchAll();

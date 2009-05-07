@@ -29,6 +29,28 @@
 		}
 		
 		/**
+		 * 签名档
+		 *
+		 */
+		function qmdAction()
+		{
+			if($this->getRequest()->isXmlHttpRequest())
+			{
+				$this->getHelper('viewRenderer')->setNoRender();
+				$sign = strip_tags(trim($this->_getParam('sign')));
+				
+				DbModel::User()->update('tb_base', array('sign' => $sign), 'uid = '.Cmd::uid());
+				Cmd::setSess('profile', array('sign' => $sign));
+				echo 'success';
+			}
+			else 
+			{
+				$this->view->tab = 'qmd';
+				$this->view->sign = Cmd::getSess('profile', 'sign');
+			}
+		}
+		
+		/**
 		 * 基础信息 
 		 *
 		 */

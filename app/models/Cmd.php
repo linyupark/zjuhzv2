@@ -119,6 +119,13 @@
             }
         }
         
+        public static function b2h($str)
+        {
+        	return ereg_replace(
+					'\[a href=\"([^\"]*)\"\]([^\[]*)\[\/a\]', 
+					"<a href=\"\\1\">\\2</a>", $str);
+        }
+        
         /**
          * 获取sesssion
          *

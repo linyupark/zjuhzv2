@@ -4,6 +4,14 @@
 	if($gid) $grole = Logic_Space_Group_Member::role($gid, $uid);
 ?>
 
+<?php if($this->row['sign']): ?>
+<div class="pd10">
+  	<img src="<?php echo Alp_Url::img('v1/sigline.gif')?>" />
+  	<div class="quiet f12 pd5"><?php echo Cmd::b2h(stripslashes($this->row['sign'])) ?></div>
+</div>
+<?php endif; ?>
+
+
 <div class="txtr a-span">
 	<?php if($this->row['modtime']): ?>
 	<span class="quiet f14">***该帖最后编辑于<?= Alp_Date::normal($this->row['modtime']); ?>***</span>

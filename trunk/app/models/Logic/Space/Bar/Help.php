@@ -60,7 +60,7 @@
 			$select->from(array('bar' => 'tb_tbar'))->where('bar.tid = ?', $tid);
 			$select->joinLeft(array('help' => 'tb_help'), 'bar.tid = help.tid');
 			$select->joinLeft(array('u'=>'zjuhzv2_user.tb_base'), 'bar.puber = u.uid', 
-							  array('uname'=>'u.username','unick'=>'u.nickname','u.sex'));
+							  array('uname'=>'u.username','unick'=>'u.nickname','u.sex','sign'));
 			$select->joinLeft(array('s'=>'zjuhzv2_space.tb_help_sort'), 'help.sort = s.sort', 
 							  array('sortname' => 's.name'));
 			return $select->query()->fetchAll();

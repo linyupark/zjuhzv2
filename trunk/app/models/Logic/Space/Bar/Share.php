@@ -48,7 +48,7 @@
 			$select = parent::Space()->select();
 			$select->from(array('bar' => 'tb_tbar'))->where('bar.tid = ?', $tid);
 			$select->joinLeft(array('u'=>'zjuhzv2_user.tb_base'), 'bar.puber = u.uid', 
-							  array('uname'=>'u.username','unick'=>'u.nickname','u.sex'));
+							  array('uname'=>'u.username','unick'=>'u.nickname','u.sex','sign'));
 			return $select->query()->fetchAll();
 		}
 		

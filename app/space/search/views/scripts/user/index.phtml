@@ -13,9 +13,12 @@
 				</a>
 				</div>
 			</td>
-			<td style="line-height:180%">
+			<td style="line-height:140%">
 				<img class="online_state" src="<?= Alp_Url::img('icon/1616/offline.gif') ?>" rel="<?= $r['uid'] ?>" />
 				<a class="f14" href="/space_home/?uid=<?= $r['uid'] ?>"><?= $r['username'] ?></a>
+				<?php if($r['honor']): ?>
+				<br /><span class="quiet">[<?= $r['honor'] ?>]</span>
+				<?php endif; ?>
 				<br />
 				<a href="/space_msg/pm/?uid=<?= $r['uid'] ?>">发信</a>
 				<?php if(array_search($r['uid'], $this->friends) == false && $r['uid'] != Cmd::uid()): ?>

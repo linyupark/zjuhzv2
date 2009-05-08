@@ -39,21 +39,22 @@
 		 */
 		public static function isAllowed($private, $puber, $group = null)
 		{
-			if(Cmd::role() == 'master') return true;
+			$role = Cmd::role(); $uid = Cmd::uid();
+			if($role == 'master' || $role == 'power') return true;
 			switch ($private)
 			{
 				case 0 : //只有自己看
-					return $puber == Cmd::uid() ?  true : false;
+					return $puber == $uid ?  true : false;
 				break;
 				case 1 : // 好友
-					return (Logic_Space_Friends::hasFriend($puber, Cmd::uid()) == 1 || $puber == Cmd::uid()) ? 
+					return (Logic_Space_Friends::hasFriend($puber, $uid) == 1 || $puber == $uid) ? 
 					true : false;
 				break;
 				case 2 : // 群组
-					return Logic_Space_Group_Member::isMemeber($group, Cmd::uid());
+					return Logic_Space_Group_Member::isMemeber($group, $uid);
 				break;
 				case 3 : // 成员
-					return Cmd::uid();
+					return $uid;
 				break;
 				default: // 公开
 					return true;

@@ -7,6 +7,32 @@
 	class Logic_Space_Group extends DbModel 
 	{	
 		/**
+		 * 群组热度换算
+		 *
+		 * @param unknown_type $gid
+		 */
+		public static function degree($gid)
+		{
+			$db = parent::Space();
+			$row = $db->fetchRow('SELECT 
+				SUM(`point`) AS `total_pt`, 
+				COUNT(`gid`) AS `group_num`, 
+				MAX(`point`) AS `top_pt` FROM `tb_group`');
+			//$total_pt = $row['total_pt'];
+			//$group_num = $row['group_num'];
+			$top_pt = $row['top_pt'];
+			$row = $db->fetchRow('SELECT `point` FROM `tb_group` WHERE `gid` = ?', $gid);
+			$point = $row['point'];
+			$span = abs($top_pt - $point);
+			if($point < $top_pt)
+			{
+				$degree = 100 - round($span/$top_pt*100);
+			}
+			else $degree = 100;
+			return $degree;
+		}
+		
+		/**
 		 * 计算指定群组的热度
 		 *
 		 * @param unknown_type $gid

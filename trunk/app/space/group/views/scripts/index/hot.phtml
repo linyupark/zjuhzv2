@@ -15,7 +15,9 @@
 					<br />
 					<span class="quiet">排名：<?= $i+1; ?></span>
 					<br />
-					<span class="quiet">总热度：<?= $r['point']; ?></span>
+					<span class="quiet" style="color:#D44848;">
+						<?= Logic_Space_Group::degree($r['gid']).'°C' ?>
+					</span>
 				</td>
 			</tr>
 		</table>

@@ -1,7 +1,9 @@
 <?php $cache = Logic_Cache::factory('Output', 3600); $uid = Cmd::uid(); ?>
 <?php if(!$cache->start('group_'.$this->gid.'point')): ?>
 <div style="color:#D44848; padding:3px;">
-	<img src="/im/icon/1616/heart.gif" /> 群热度:<?= Logic_Space_Group::countpoint($this->gid) ?>
+	<img src="/im/icon/1616/heart.gif" /> 群热度:
+	<?php Logic_Space_Group::countpoint($this->gid); ?>
+	<?= Logic_Space_Group::degree($this->gid).'°C' ?>
 </div>
 <?php $cache->end(); endif; ?>
 
@@ -28,7 +30,7 @@ function invite_pass(gid)
 {
 	$.post('/space_group/member/ipass', {gid:gid}, function(data){ 
 		if(data == 'success') history.go(0);
-	}) 
+	});
 }
 </script>
 <?php endif; ?>

@@ -40,8 +40,8 @@
     		<td class="a-span5">
     			<p class="mgb5" style="height:18px;">
     				Hi~ <b><?= Cmd::getSess('profile', 'username') ?></b> 
-    				[<?= Cmd::rolename() ?>]
-    				<a style="color:#D44848" href="/public/point/"><img class="vm" src="<?= Alp_Url::img('/icon/1616/heart.gif') ?>" /><?= Logic_Api::percentpoint(Cmd::getSess('profile','point')) ?>&deg;</a>
+    				[<?= Cmd::honor() ?>]
+    				<a style="color:#D44848" href="/public/point/"><img class="vm" src="<?= Alp_Url::img('/icon/1616/heart.gif') ?>" /><?= Logic_Api::percentpoint(Cmd::getSess('profile','point')) ?>&deg;c</a>
     				<span id="logout">
     					<a href="javascript:logout(0)"><img class="vm" src="<?= Alp_Url::img('icon/1616/out.gif') ?>" />退出</a>
 	    			</span>

@@ -73,6 +73,16 @@
 			}
 		}
 		
+		function chonorAction()
+		{
+			$this->getHelper('viewRenderer')->setNoRender();
+			if($this->getRequest()->isXmlHttpRequest())
+			{
+				$params = $this->getRequest()->getParams();
+				Logic_User_Base::chonor($params['uid'], $params['honor']);
+			}
+		}
+		
 		/**
 		 * 用户详细信息
 		 *

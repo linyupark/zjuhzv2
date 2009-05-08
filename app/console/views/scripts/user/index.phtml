@@ -15,6 +15,7 @@
 					<a href="/console/user/export?flag=1">非冻结</a>
 					<a href="/console/user/export?flag=2">校友</a>
 					<a href="/console/user/export?flag=3">成员</a>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;头衔(10个字以内)
 				</td>
 			</tr>
 			<?php if(count($this->rows)): foreach($this->rows as $i => $r): ?>
@@ -25,12 +26,13 @@
 					(<?= $r['account'] ?>)
 					<span class="f9 quiet"><?= Alp_Date::normal($r['lastlogin']) ?></span>
 				</td>
-				<td>
+				<td width="100">
 					<a style="color:#666" href="javascript:detail(<?= $r['uid'] ?>)">[资料]</a>
 					<a style="color:#666" target="_blank" href="/space_msg/pm/?uid=<?= $r['uid'] ?>">[信]</a>
 				</td>
-				<td width="40%" class="a-span" id="toolbar_<?= $r['uid'] ?>">
+				<td class="a-span" id="toolbar_<?= $r['uid'] ?>">
 					<?= $this->action('toolbar', 'user', 'console', array('row' => $r)); ?>
+					<input value="<?= stripslashes($r['honor']) ?>" id="honor_<?= $r['uid'] ?>" type="text" size="5" onblur="chonor(<?= $r['uid'] ?>)" />
 					<a href="javascript:initpsw(<?= $r['uid'] ?>)">初始密码</a>
 				</td>
 			</tr>
@@ -42,6 +44,10 @@
 <?= $this->render('sidebar.phtml') ?>
 
 <script type="text/javascript">
+function chonor(uid){
+	var honor = $('#honor_'+uid).val(); 
+	$.post('/console/user/chonor',{uid:uid,honor:honor});
+}
 function detail(uid) {$.post('/console/user/detail', {uid:uid}, function(data){ $.facebox(data); })}
 function crole(uid,role) { $.post('/console/user/crole', {uid:uid,role:role});}
 function initpsw(uid){ $.post('/console/user/initpsw', {uid:uid}, function(data){ $.facebox(data); }); }

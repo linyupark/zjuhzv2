@@ -180,7 +180,7 @@
 			$select->joinLeft(array('g' => 'tb_group'), 'g.gid = b.group', 
 							  array('gname' => 'g.name', 'gtype' => 'g.type'));
 							  
-			$select->order('b.ding DESC')->order('b.pubtime DESC');
+			$select->order('b.pubtime DESC');
 			
 			$this->view->numrows = $numrows;
 			$this->view->range = $range;

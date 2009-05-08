@@ -17,6 +17,11 @@
 			parent::User()->update('tb_base', array('role' => $role), 'uid = '.$uid);
 		}
 		
+		static function chonor($uid, $honor)
+		{
+			parent::User()->update('tb_base', array('honor' => $honor), 'uid = '.$uid);
+		}
+		
 		/**
 		 * 热心度相邻排行校友
 		 *

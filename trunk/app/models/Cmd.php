@@ -35,6 +35,18 @@
     	}
     	
     	/**
+    	 * 头衔
+    	 *
+    	 * @return unknown
+    	 */
+    	public static function honor()
+    	{
+    		$honor = self::getSess('profile', 'honor');
+    		if(!$honor) return self::rolename();
+    		else return $honor;
+    	}
+    	
+    	/**
     	 * 角色中文名
     	 *
     	 * @return unknown

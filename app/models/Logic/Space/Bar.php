@@ -39,8 +39,11 @@
 		 */
 		public static function isAllowed($private, $puber, $group = null)
 		{
-			$role = Cmd::role(); $uid = Cmd::uid();
-			if($role == 'master' || $role == 'power') return true;
+			$role = Cmd::role(); $uid = Cmd::uid(); $honor = Cmd::honor();
+			if($role == 'master' || 
+				$honor == '理事' || 
+				$honor == '顾问' || 
+				$honor == '副会长') return true;
 			switch ($private)
 			{
 				case 0 : //只有自己看

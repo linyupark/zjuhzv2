@@ -21,6 +21,9 @@
 			<?= $r['unick'] ?>
 			<?php else: ?>
 			<a href="/space_home/?uid=<?= $r['uid'] ?>"><?= $r['uname'] ?></a>
+			<?php if($r['honor']): ?>
+				<span class="quiet">[<?= $r['honor'] ?>]</span>
+			<?php endif; ?>
 			<?php endif; ?>说道：
 		</div>
 		<div class="yui-u txtr" style="width:25%">

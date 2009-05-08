@@ -40,7 +40,7 @@
 		public static function countpoint($gid)
 		{
 			$db = parent::Space();
-			// 主题1->5,回帖5->1,成员数量1->2 + 成员热心度总和/成员数量
+			// 主题1->5,回帖5->1,成员数量1->3 + 成员热心度总和/成员数量
 			$bars = $db->fetchAll('
 				SELECT `tid` 
 				FROM `tb_tbar` 
@@ -72,7 +72,7 @@
 				WHERE `uid` IN ('.implode(',', $uids).') 
 			');
 			$mtp = $row['mtp']; // 成员热心度总和
-			$point =  $barnum*5 + round($replynum/5) + $mnum*2 + round($mtp/$mnum);
+			$point =  $barnum*5 + round($replynum/5) + $mnum*3 + round($mtp/$mnum);
 			$db->update('tb_group', array('point' => $point), 'gid = '.$gid);
 			return $point;
 		}

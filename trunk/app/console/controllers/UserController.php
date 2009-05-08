@@ -79,7 +79,7 @@
 			if($this->getRequest()->isXmlHttpRequest())
 			{
 				$params = $this->getRequest()->getParams();
-				Logic_User_Base::chonor($params['uid'], $params['honor']);
+				Logic_User_Base::chonor($params['uid'], trim($params['honor']));
 			}
 		}
 		

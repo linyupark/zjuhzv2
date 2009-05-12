@@ -1,0 +1,83 @@
+<div class="yui-main">
+	<div class="yui-b">
+		<div class="mg5 section yui-g">
+			<div class="yui-u first">
+				<img class="vm mgr10" src="<?= Alp_Url::img('icon/1616/gbook.gif') ?>" />
+				<b><?= stripslashes($this->group['name']); ?>小账本</b>
+			</div>
+			<div class="yui-u txtr a-span">
+				<a href="javascript:history.back()">返回上一页</a>
+			</div>
+		</div>
+		<?= $this->render('tab.phtml'); ?>
+		<form id="bill_form" class="mgt10 mgl10" method="post" onsubmit="return insert_bill()">
+		归类(捐助、赞助等) 
+		<?php if(count($this->sorts) > 0): ?>
+		<select name="sort" onchange="repinput(this.value)">
+		<option value="newoption">新归类</option>
+		<?php foreach ($this->sorts as $i => $t): ?>
+		<option value="<?php echo $t['sort']?>" <?= $i==0?'selected="selected"':''?>><?php echo $t['sort'] ?></option>
+		<?php endforeach; ?>
+		</select>
+		<?php else: ?>
+		<input type="text" name="sort" size="5" />
+		<?php endif; ?>
+		物资名称(资金、羽毛球等) <input type="text" name="item" size="10" />
+		数额 <input type="text" name="num" size="5" /> 
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		<select name="inout">
+			<option value="in">收入</option>
+			<option value="out">支出</option>
+		</select><br /><br />
+		备注 <input type="text" name="memo" size="80" />
+		<input type="submit" class="btn" value="添加" />
+		</form>
+		<br />
+		<!-- 
+		<div class="pd5 a-span">
+			<?php if(count($this->sorts) > 0): ?>
+			<?php foreach ($this->sorts as $t): ?>
+			<a href="/space_group/bill/?id=<?php echo $this->gid ?>&sort=<?php echo urlencode($t['sort'])?>"><?php echo $t['sort']?></a>
+			<?php endforeach; endif; ?>
+		</div>
+		 -->
+		<div id="bill_list"></div>
+	</div>
+</div>
+<div class="yui-b">
+	<div class="greybox">
+		<div class="greybox-top"></div>
+		<?php if(Cmd::role() != 'guest') echo $this->action(Cmd::role(), 'modnav'); ?>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$('.yui-d3f').addClass('yui-t6');
+	
+	function repinput(v)
+	{
+		if(v == 'newoption')
+		{
+			$('select[name="sort"]').replaceWith('<input type="text" name="sort" size="5" />');
+		}
+	}
+	
+	function insert_bill(){
+		$('input:submit').attr('disabled', true).val('添加中..');
+		$.post('/space_group/bill/additem/?gid=<?php echo $this->gid ?>', $('#bill_form').serializeArray(), function(data){
+			if(data == 'success') bill_list(1,'');
+			else $.facebox(data);
+			$('input:submit').attr('disabled', false).val('添加');
+		});
+		return false;
+	}
+	
+	function bill_list(page,sort){
+		$('#bill_list').fadeTo(200, 0.5);
+		$('#bill_list').load('/space_group/bill/list/?id=<?php echo $this->gid ?>&sort='+sort+'&p='+page, function(){
+			$('#bill_list').fadeTo(200, 1);
+		});
+	}
+	$('#bill_list').html('<h1 class="txtc">Loading...</h1>');
+	bill_list(1,'<?php echo $this->sort ?>');
+</script>

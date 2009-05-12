@@ -4,13 +4,14 @@
 			<a href="/space_group/home/?id=<?= $this->gid ?>" <?= ($this->tab == 'home')?'class="tb-on"':'class="tb-of"' ?>>群 首 页</a><span class="tb-rbg"></span>
 			<a href="/space_group/topic/?id=<?= $this->gid ?>" <?= ($this->tab == 'topic')?'class="tb-on"':'class="tb-of"' ?>>群 帖 区</a><span class="tb-rbg"></span>
 			<a href="/space_group/member/?id=<?= $this->gid ?>" <?= ($this->tab == 'member')?'class="tb-on"':'class="tb-of"' ?>>群 成 员</a><span class="tb-rbg"></span>
+			<a href="/space_group/bill/?id=<?= $this->gid ?>" <?= ($this->tab == 'bill')?'class="tb-on"':'class="tb-of"' ?>>小账本</a><span class="tb-rbg"></span>
 		</div>
 	</div>
 	<div class="yui-u txtr a-span" style="width:35%">
-		<?php if($this->tab != 'member'): ?>
+		<?php if($this->tab != 'member' && $this->tab !='bill'): ?>
 		<a href="/space_bar/?pub=topic&gp=<?= $this->gid ?>"><img class="vm" src="<?= Alp_Url::img('icon/mix/+.gif') ?>" /> 发布新帖</a>
 		<a href="/space_search/?for=bar&range=group"><img class="vm" src="<?= Alp_Url::img('icon/mix/search.gif') ?>" /> 搜索帖</a>
-		<?php else: ?>
+		<?php elseif($this->tab == 'member'): ?>
 		<form method="get">
 			<input type="hidden" name="id" value="<?= $this->gid ?>" />
 			<input name="uname" size="20" value="<?= $this->uname ?>" /> 

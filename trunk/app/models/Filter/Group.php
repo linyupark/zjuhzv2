@@ -7,6 +7,20 @@
 	class Filter_Group
 	{
 		/**
+		 * 群账单数据过滤
+		 *
+		 * @param unknown_type $params
+		 */
+		public static function bill($params)
+		{
+			$params['sort'] = Alp_Valid::of($params['sort'], 'sort', '归类', 'required');
+			$params['item'] = Alp_Valid::of($params['item'], 'item', '物资名称', 'trim|str_between[1,10]');
+			$params['num'] = Alp_Valid::of($params['num'], 'num', '数额', 'trim|numeric');
+			$params['memo'] = strip_tags(trim($params['memo']));
+			return $params;
+		}
+		
+		/**
 		 * 群信息
 		 *
 		 * @param unknown_type $params

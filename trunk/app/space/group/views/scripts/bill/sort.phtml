@@ -1,0 +1,6 @@
+<div class="pd5 a-span">
+<?php if(count($this->sorts) > 0): ?>
+<?php foreach ($this->sorts as $t): ?>
+<a href="/space_group/bill/?id=<?php echo $this->gid ?>&sort=<?php echo urlencode($t['sort'])?>"><?php echo $t['sort']?></a>
+<?php endforeach; endif; ?>
+</div>

@@ -12,6 +12,53 @@
 			$this->view->tab = $this->getRequest()->getControllerName();
 		}
 		
+		function domodAction()
+		{
+			$this->getHelper('viewRenderer')->setNoRender(true);
+			if($this->getRequest()->isXmlHttpRequest()):
+			$params = $this->getRequest()->getParams();
+			$params = Filter_Group::bill($params);
+			if(Alp_Sys::getMsg() == null)
+			{
+				Logic_Space_Group_Bill::mod($params);
+				echo 'success';
+				exit();
+			}
+			echo Alp_Sys::allMsg();
+			endif;
+		}
+		
+		function delAction()
+		{
+			$this->getHelper('viewRenderer')->setNoRender(true);
+			if($this->getRequest()->isXmlHttpRequest()):
+			DbModel::Space()->delete('tb_group_bill','id = '.(int)$this->_getParam('bid'));
+			echo 'success';
+			endif;
+		}
+		
+		/**
+		 * 修改
+		 *
+		 */
+		function modAction()
+		{
+			if($this->getRequest()->isXmlHttpRequest()):
+			$uid = Cmd::uid(); $gid = $this->view->gid; 
+			$grole = Logic_Space_Group_Member::role($gid, $uid);
+			if($grole == 'creater' || $grole == 'manager' || Cmd::role() == 'master')
+			{
+				$bid = $this->_getParam('bid');
+				$this->view->row = Logic_Space_Group_Bill::one($bid);
+			}
+			else 
+			{
+				$this->getHelper('viewRenderer')->setNoRender(true);
+				echo '当前的身份无法对账目进行改动';
+			}
+			endif;
+		}
+		
 		/**
 		 * 添加账目
 		 *

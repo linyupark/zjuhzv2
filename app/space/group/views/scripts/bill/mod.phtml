@@ -1,0 +1,38 @@
+<form id="bill_change_form" method="post" class="mgl10" onsubmit="return change_bill()">
+<p>归类 <input type="text" name="sort" value="<?php echo $this->row['sort'] ?>" /></p> 
+<p>名称 <input type="text" name="item" value="<?php echo $this->row['item'] ?>" /></p>
+<p>数额 <input type="text" name="num" value="<?php echo $this->row['num'] ?>" /></p>
+<p>收支 
+<?php $inout = $this->row['inout'] ?>
+<select name="inout">
+			<option value="in" <?php $inout == 'in'?'selected="selected"':'' ?>>收入</option>
+			<option value="out" <?php $inout == 'out'?'selected="selected"':'' ?>>支出</option>
+		</select></p>
+<p><textarea name="memo" style="width:250px;height:100px;"><?php echo $this->row['memo'] ?></textarea></p>
+<p class="a-span">
+	<input type="submit" class="btn" id="mod_bill_btn" value="保存修改" /> 
+	<a href="javascript:del(<?php echo $this->row['id'] ?>)">[删除]</a>
+</p>
+</form>
+<script type="text/javascript">
+function change_bill(){
+	$('#mod_bill_btn').attr('disabled',true).val('保存中..');
+	$.post('/space_group/bill/domod/?bid=<?php echo $this->row['id'] ?>', 
+	$('#bill_change_form').serializeArray(), function(data){
+		if(data == 'success')
+		{$('#mod_bill_btn').val('保存成功');$.facebox.close();bill_list(1,'<?php echo urlencode($this->row['sort']) ?>');}
+		else alert(data);
+		$('#mod_bill_btn').attr('disabled',false).val('保存修改');
+	});
+	return false;
+}
+
+function del(id){
+	var c = confirm('确定删除这条账目？');
+	if(c == true)
+	{
+		$.post('/space_group/bill/del/?bid='+id,
+		function(data){if(data='success') {$.facebox.close(); bill_list(1,'<?php echo urlencode($this->row['sort']) ?>'); }});
+	}
+}
+</script>

@@ -110,6 +110,14 @@
             		'mobile' => $data['mobile']
             	));
             	
+            	// 用户教育情况
+            	$User->insert('tb_edu', array(
+					'uid' => $self_uid,
+					'campus' => $data['campus'],
+					'year' => $data['year'],
+					'class' => $data['class']
+				));
+            	
             	$User->commit();
             	Alp_Sys::msg('form_tip', 'success');
             	Alp_Sys::msg('account', $data['account']);

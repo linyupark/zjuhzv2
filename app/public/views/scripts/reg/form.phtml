@@ -28,6 +28,34 @@
             </td>
         </tr>
         <tr>
+        	<td><b>院系</b></td>
+        	<td>
+        		<div style="position:relative">
+	        	<input size="30" onfocus="javascript:getcampus()" id="campus_input" type="text" name="campus" value="" />
+	        	<span id="campus_list" style="position:absolute;left:190px;top:0"></span>
+	        	<span class="valid_tip" id="campus"></span>
+	        	</div>
+        	</td>
+        </tr>
+        <tr>
+        	<td><b>班级</b></td>
+        	<td>
+        		<input onfocus="$('#campus_list').fadeOut();" type="text" name="class" value="" />
+        		<span class="valid_tip" id="class"></span>
+        	</td>
+        </tr>
+        <tr>
+        	<td><b>入学年份</b></td>
+        	<td><select name="year">
+				<option value="">----</option>
+				<?php for($y=date('Y',time());$y>=1897;$y--): ?>
+				<option value="<?= $y ?>"><?= $y ?></option>
+				<?php endfor; ?>
+			</select>
+			<span class="valid_tip" id="year"></span>
+			</td>
+        </tr>
+        <tr>
             <td><b>电子邮箱</b></td>
             <td>
                 <input size="30" type="text" name="email" maxlength="40" />
@@ -81,5 +109,30 @@ function reg_form()
         }, 'json'
     );
     return false;
+}
+function getcampus()
+{
+	$('#campus_list').show();
+	$('#campus_list').empty().css({
+		'height':'132px',
+		'width':'180px',
+		'padding':'0 5px',
+		'overflow':'auto',
+		'background':'#eee',
+		'border':'1px solid #ccc'
+	});
+	$.getJSON(
+		'/public/reg/getcampus',
+		null, function(data){
+			$.each(data, function(i, v){
+				$('#campus_list').append('<a href="javascript:setcampus(\''+v+'\')" style="padding:3px 0;display:block">'+v+'</a>');
+			});
+		}
+	);
+}
+function setcampus(v)
+{
+	$('#campus_input').val(v);
+	$('#campus_list').fadeOut();
 }
 </script>

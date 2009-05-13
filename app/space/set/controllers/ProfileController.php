@@ -18,17 +18,6 @@
 		}
 		
 		/**
-		 * json 获取学院名单
-		 *
-		 */
-		function getcampusAction()
-		{
-			$this->getHelper('viewRenderer')->setNoRender();
-			$campus = Zend_Registry::get('config')->campus->name->toArray();
-			echo Zend_Json::encode($campus);
-		}
-		
-		/**
 		 * 签名档
 		 *
 		 */

@@ -126,6 +126,9 @@
 			$params['account'] = Alp_Valid::of($params['account'], 'account', '帐号', 'trim|aldash|str_between[3,16]');
             $params['username'] = Alp_Valid::of($params['username'], 'username', '真实姓名', 'trim|str_between[2,4]');
             $params['password'] = Alp_Valid::of($params['password'], 'password', '登录密码', 'trim|required|matches[确认密码,'.$params['password2'].']');
+            $params['campus'] = Alp_Valid::of($params['campus'], 'campus', '院系名称', 'trim|strip_tags|required');
+			$params['class'] = Alp_Valid::of($params['class'], 'class', '班级名称', 'trim|strip_tags|required');
+			$params['year'] = Alp_Valid::of($params['year'], 'year', '入学年份', 'trim|strip_tags|numeric');
             $params['email'] = Alp_Valid::of($params['email'], 'email', '邮箱', 'trim|valid_email');
             $params['mobile'] = Alp_Valid::of($params['mobile'], 'mobile', '手机号码', 'trim|numeric|str_exact[11]');
 

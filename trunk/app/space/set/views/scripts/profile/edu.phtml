@@ -113,7 +113,7 @@ if($this->tip == 1): ?>
 			'border':'1px solid #ccc'
 		});
 		$.getJSON(
-			'/space_set/profile/getcampus',
+			'/public/reg/getcampus',
 			null, function(data){
 				$.each(data, function(i, v){
 					$('#campus_list').append('<a href="javascript:setcampus(\''+v+'\')" style="padding:3px 0;display:block">'+v+'</a>');

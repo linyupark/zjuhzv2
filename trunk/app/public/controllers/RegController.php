@@ -52,6 +52,17 @@
             $this->view->ucode = $this->_getParam('ucode'); // 邀请用户加密id
             $this->view->scode = $this->_getParam('scode'); // 加为好友后的分类id
         }
+        
+    	/**
+		 * json 获取学院名单
+		 *
+		 */
+		function getcampusAction()
+		{
+			$this->getHelper('viewRenderer')->setNoRender();
+			$campus = Zend_Registry::get('config')->campus->name->toArray();
+			echo Zend_Json::encode($campus);
+		}
     }
 
 ?>

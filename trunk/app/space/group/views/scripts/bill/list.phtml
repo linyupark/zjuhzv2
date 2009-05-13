@@ -12,13 +12,16 @@
 	<td><a href="/space_home/?uid=<?php echo $r['uid'] ?>"><?php echo $r['username']?></a></td>
 	<td>
 <a href="/space_group/bill/?id=<?php echo $r['gid'] ?>&sort=<?php echo urlencode($r['sort'])?>">	
-<?php echo $r['sort']?></a></td>
+<?php echo $r['sort'] ?></a></td>
 	<td><?php echo $r['item']?></td>
 	<td><?php echo $r['num']?></td>
 	<td><?php echo $r['inout']=='in'?'收入':'支出' ?></td>
 	<td class="quiet txtc f9">
 		<?php echo date('y-m-d H:i', $r['time']) ?>
 		<textarea class="hide"><?php echo $r['memo'] ?></textarea>
+		<a href="javascript:mod(<?php echo $r['id'] ?>)">
+			<img src="<?php echo Alp_Url::img('/icon/mix/tool.gif')?>" />
+		</a>
 	</td>
 </tr>
 <?php endforeach; else: ?>
@@ -27,6 +30,7 @@
 </table>
 <div class="pg"><?php echo $this->pagination ?></div>
 <script type="text/javascript">
+	function mod(id){$.post('/space_group/bill/mod/?bid='+id+'&id=<?php echo $this->gid ?>', function(data){$.facebox(data)})}
 	$('.hover').mouseover(function(e){$(this).css('background','#ffc')});
 	$('.hover').mouseout(function(e){$(this).css('background','#fff')});
 	$('.hover').click(function(e){$('.bill_memo').remove(); var h = $(this).find('.hide').html(); 

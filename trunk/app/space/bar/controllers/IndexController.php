@@ -16,7 +16,8 @@
 			if($gid > 0)
 			{
 				// 是否有资格群组发布
-				if(Logic_Space_Group_Member::isMemeber($gid, Cmd::uid()) == false)
+				if(Logic_Space_Group_Member::isMemeber($gid, Cmd::uid()) == false 
+					&& Cmd::role() != 'master')
 				{
 					// 无权发布群组话题
 					$this->_forward('deny', 'error', 'public', array('position'=>'space_group_bar'));

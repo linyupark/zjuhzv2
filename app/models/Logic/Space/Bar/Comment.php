@@ -1,7 +1,26 @@
 <?php
 	
 	class Logic_Space_Bar_Comment extends DbModel 
-	{		
+	{	
+		/**
+		 * 回复加分
+		 *
+		 * @param unknown_type $uid
+		 */
+		public static function apt($uid)
+		{
+			$count = Cmd::getSess('cmt_num');
+			if($count >= 5)
+			{
+				$point = 1;
+				$count -= 5;
+				Cmd::setSess('cmt_num', $count);
+				parent::User()->update('tb_base', 
+				array('point' => new Zend_Db_Expr('point + '.$point)), 'uid = '.$uid);
+				Cmd::setSess('apt_tip', array('comment' => $point));
+			}
+		}
+		
 		/**
 		 * 获取回帖总数
 		 *

@@ -101,6 +101,7 @@
 			if($tab == 'pub'):
 			$tids = Logic_Space_Bar::ids($uid);
 			$numrows = count($tids);
+			$offset = 0;
 			if($numrows > $pagesize)
 			{
 				Alp_Page::$pagesize = $pagesize;
@@ -111,19 +112,14 @@
 					'cur_page' => $page
 				));
 				$this->view->pagination = Alp_Page::$page_str;
-				$tids = array_slice($tids, Alp_Page::$offset, $pagesize);
+				$offset = Alp_Page::$offset;
 			}
 			if($numrows > 0)
 			{
-				$in = array();
-				foreach ($tids as $t)
-				{
-					$in[] = $t['tid'];
-				}
 				$rows = DbModel::Space()->fetchAll('SELECT * 
-					FROM `tb_tbar` WHERE `tid` IN ('.implode(',', $in).') 
+					FROM `tb_tbar` WHERE `puber` = '.$uid.' 
 					AND `deny` = 0 
-					ORDER BY `replytime` DESC');
+					ORDER BY `replytime` DESC LIMIT '.$offset.','.$pagesize);
 				$this->view->pubs = $rows;
 			}
 			endif;

@@ -14,11 +14,11 @@
 			{
 				$point = 1;
 				$count -= 5;
-				Cmd::setSess('cmt_num', $count);
 				parent::User()->update('tb_base', 
 				array('point' => new Zend_Db_Expr('point + '.$point)), 'uid = '.$uid);
 				Cmd::setSess('apt_tip', array('comment' => $point));
 			}
+			Cmd::setSess('cmt_num', $count+1);
 		}
 		
 		/**

@@ -68,10 +68,16 @@
 	<?php $tid = explode('=', strstr($r['url'], 'tid=')); ?>
 	<td class="signbox txtc" rel="<?= $tid[1] ?>"></td>
 	<td class="a-span">
-		<a class="f14 bold" target="_blank" href="<?= $r['url'] ?>#sign_btn">报名</a>
-		<?php if(Cmd::role() == 'master' || Cmd::role() == 'power'): ?>
+		<a class="f14 bold" target="_blank" href="<?= $r['url'] ?>#sign_btn">
+			<?php if(Logic_Space_Bar_Events::isign($tid[1], Cmd::uid())): ?>
+			<span style="color:#CC3366">取消报名</span>
+			<?php else: ?>
+			<span style="color:#669933">我要报名</span>
+			<?php endif; ?>
+		</a>
+		<?php if($this->role == 'master' || $this->role == 'power'): ?>
 		<a href="/addon_league/mana/?mode=update&id=<?= $r['corp_id'] ?>">修改</a>
-		<?php endif; if(Cmd::role() == 'master'): ?>
+		<?php endif; if($this->role == 'master'): ?>
 		<a href="javascript:corp_del(<?= $r['corp_id'] ?>)">删除</a>
 		<?php endif; ?>
 	</td>

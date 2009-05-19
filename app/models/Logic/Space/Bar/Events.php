@@ -50,6 +50,19 @@
 		}
 		
 		/**
+		 * 是否已经报名
+		 *
+		 * @param unknown_type $tid
+		 * @param unknown_type $uid
+		 */
+		public static function isign($tid, $uid)
+		{
+			$members = self::members($tid);
+			if($members == false) return false;
+			return array_key_exists($uid, $members);
+		}
+		
+		/**
 		 * 修改活动帖
 		 *
 		 */

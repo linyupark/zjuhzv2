@@ -24,7 +24,7 @@
 			$e = Logic_Space_Bar_Events::view($tid);
 			$m = Logic_Space_Bar_Events::members($tid);
 			$sign_num = ($m == false) ? 0 : count($m);
-
+			
 			if($sign_num > 0)
 			{
 				$signs = array();

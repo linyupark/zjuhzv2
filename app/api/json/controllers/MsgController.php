@@ -36,7 +36,6 @@
 		{
 			$this->getHelper('viewRenderer')->setNoRender(false);
 			$params = $this->getRequest()->getParams();
-			Cmd::setSess('apt_tip', null); // 提示后自动清空
 			$this->view->params = $params;
 		}
 	}

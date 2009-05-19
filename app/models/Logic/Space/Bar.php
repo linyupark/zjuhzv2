@@ -3,6 +3,19 @@
 	class Logic_Space_Bar extends DbModel 
 	{
 		/**
+		 * 给发帖的人增加热心度
+		 *
+		 * @param unknown_type $uid
+		 */
+		public static function pubapt($uid)
+		{
+			$point = 1;
+			parent::User()->update('tb_base', 
+			array('point' => new Zend_Db_Expr('point + '.$point)), 'uid = '.$uid);
+		    Cmd::setSess('apt_tip', array('pubbar' => $point));
+		}
+		
+		/**
 		 * 返回指定uid所发布的tids
 		 *
 		 */

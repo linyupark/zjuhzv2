@@ -89,6 +89,7 @@
 					{
 						if($params['cid'] == 0) // 新评论
 						{
+							Logic_Space_Bar_Comment::apt($params['uid']);
 							// 记录
 							Logic_Log::bar(array(
 								'uid' => $params['uid'],

@@ -30,6 +30,7 @@
 					$tid = Logic_Space_Bar_Topic::insert($params);
 					if(Alp_Sys::getMsg() == null)
 					{
+						Logic_Space_Bar::pubapt($params['uid']);
 						// 记录
 						Logic_Log::bar(array(
 							'uid' => $params['uid'],
@@ -63,6 +64,7 @@
 					$tid = Logic_Space_Bar_News::insert($params);
 					if(Alp_Sys::getMsg() == null)
 					{
+						Logic_Space_Bar::pubapt($params['uid']);
 						// 记录
 						Logic_Log::bar(array(
 							'uid' => $params['uid'],
@@ -96,6 +98,7 @@
 					$tid = Logic_Space_Bar_Help::insert($params);
 					if(Alp_Sys::getMsg() == null)
 					{
+						Logic_Space_Bar::pubapt($params['uid']);
 						// 记录
 						Logic_Log::bar(array(
 							'uid' => $params['uid'],
@@ -129,6 +132,7 @@
 					$tid = Logic_Space_Bar_Events::insert($params);
 					if(Alp_Sys::getMsg() == null)
 					{
+						Logic_Space_Bar::pubapt($params['uid']);
 						// 记录
 						Logic_Log::bar(array(
 							'uid' => $params['uid'],
@@ -162,6 +166,7 @@
 					$tid = Logic_Space_Bar_Vote::insert($params);
 					if(Alp_Sys::getMsg() == null)
 					{
+						Logic_Space_Bar::pubapt($params['uid']);
 						// 记录
 						Logic_Log::bar(array(
 							'uid' => $params['uid'],
@@ -195,6 +200,7 @@
 					$tid = Logic_Space_Bar_Video::insert($params);
 					if(Alp_Sys::getMsg() == null)
 					{
+						Logic_Space_Bar::pubapt($params['uid']);
 						// 记录
 						Logic_Log::bar(array(
 							'uid' => $params['uid'],
@@ -228,6 +234,7 @@
 					$tid = Logic_Space_Bar_Photo::insert($params);
 					if(Alp_Sys::getMsg() == null)
 					{
+						Logic_Space_Bar::pubapt($params['uid']);
 						// 记录
 						Logic_Log::bar(array(
 							'uid' => $params['uid'],
@@ -261,6 +268,7 @@
 					$tid = Logic_Space_Bar_Share::insert($params);
 					if(Alp_Sys::getMsg() == null)
 					{
+						Logic_Space_Bar::pubapt($params['uid']);
 						// 记录
 						Logic_Log::bar(array(
 							'uid' => $params['uid'],

@@ -2,20 +2,39 @@
 
 	$alias = array(
 		'login' => '从您上次登录到现在',
-		'pubevents' => '发起活动并给成员增加热心度'
+		'pubevents' => '发起活动并给成员增加热心度',
+		'pubbar' => '成功发布帖子'
 	);
 
 ?>
-<table class="pd5">
+<table class="pd5" width="100%">
 	<tr>
-		<td><img src="<?= Alp_Url::img('v1/degup.jpg') ?>" /></td>
+		<td width="20%" class="txtc"><img src="<?= Alp_Url::img('v1/degup.jpg') ?>" /></td>
 		<td>
 			<h2 style="color:#D44848">恭喜，您的热心度增加了^_^</h2>
-			<ul class="f14 quiet">
+			<ul class="quiet">
 			<?php foreach ($this->params as $key => $pt): if(isset($alias[$key])): ?>
 			<li><?= $alias[$key] ?>增加 <b style="color:#D44848"><?= $pt ?>pt</b></li>
 			<?php endif; endforeach; ?>
 			</ul>
+			<br />
+			<span class="quiet">
+				<input id="notip" type="checkbox" onclick="cTip()" /> 
+				<label for="notip">今天不再提醒我</label>
+			</span>
 		</td>
 	</tr>
 </table>
+<script type="text/javascript">
+function cTip(){
+	if($('#notip:checked').length > 0){
+		setCookie('apt_tip', 'no', 1);
+	}
+}
+function setCookie(c_name,value,expiredays){
+	var exdate=new Date()
+	exdate.setDate(exdate.getDate()+expiredays)
+	document.cookie=c_name+ "=" +escape(value)+
+	((expiredays==null) ? "" : ";expires="+exdate)
+}
+</script>

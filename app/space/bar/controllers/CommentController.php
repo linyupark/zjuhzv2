@@ -99,6 +99,11 @@
 								'value' => Alp_String::utfSubStr(strip_tags(trim($params['content'])), 200).'...'
 							));
 							$num = Logic_Space_Bar_Comment::num($params['tid']);
+							if($num%10 == 0 && $num > 0) // 10回帖发布人加分
+							{
+								$puber = DbModel::Space()->fetchRow('SELECT `puber` FROM `tb_tbar` WHERE `tid` = ?', $params['tid']);
+								DbModel::User()->update('tb_base', array('point' => new Zend_Db_Expr('point + 1')), 'uid = '.$puber['puber']);
+							}
 							$page = ceil($num / $this->pagesize);
 						}
 						else // 修改

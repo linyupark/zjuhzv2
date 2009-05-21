@@ -43,7 +43,7 @@
 					else $str .= '<a href="/space_bar/'.$row['type'].'/view?tid='.$row['tid'].'&p='.$cp.'">'.$cp.'</a>&nbsp;';
 				}
 			}
-			return $str;
+			return preg_replace('/([\.]{2})/', '.', $str);
 		}
 		
 		/**

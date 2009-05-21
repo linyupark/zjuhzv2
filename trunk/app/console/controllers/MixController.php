@@ -11,6 +11,32 @@
 			$this->view->tab = $this->_getParam('tab', 'player');
 		}
 		
+		function emailAction()
+		{
+			$this->view->addresses = Logic_Mail::address();
+		}
+		
+		function sendmailAction()
+		{
+			set_time_limit(0);
+			$this->getHelper('viewRenderer')->setNoRender(true);
+	
+			$params = $this->getRequest()->getParams();
+			if(!$address = trim($params['address']))
+			Alp_Sys::msg('mail_address', '请输入邮件地址');
+			if(!$body = trim($params['content']))
+			Alp_Sys::msg('mail_body', '请输入邮件内容');
+			$subject = $params['subject'] ? $params['subject'] : '杭州浙江大学校友会邮件信息';
+			if(Alp_Sys::getMsg() == null)
+			{
+				$address = explode(';', $address);
+				$result = Logic_Mail::batch($subject, stripslashes($body), $address);
+				if($result == true) echo '邮件发送成功';
+				else foreach ($result as $mail) echo '* '.$mail.' 发送失败<br />';
+			}
+			else echo Alp_Sys::allMsg();
+		}
+		
 		/**
 		 * 友情链接，赞助企业
 		 *

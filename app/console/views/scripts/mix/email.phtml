@@ -1,7 +1,7 @@
 <div class="pd10">
 	<form id="mail_form" method="post" onsubmit="return pub_mail()">
 	<p class="quiet">输入需要群发的邮件地址，用分号分隔</p>
-	<textarea name="address" style="width:100%; height:40px; overflow-x:hidden"><?php foreach ($this->addresses as $v) echo $v['email'].";" ?></textarea>
+	<textarea name="address" style="width:100%; height:40px; overflow-x:hidden"><?php foreach ($this->addresses as $v) echo stripcslashes($v['email']).";" ?></textarea>
 <div class="pd5">邮件主题：<input name="subject" type="text" size="100" /></div>	
 <?= Cmd::fck('content',null,'300px','640px') ?>
 	<div class="pd5 txtc"><input id="submit" type="submit" value="群发邮件" class="btn" /></div>

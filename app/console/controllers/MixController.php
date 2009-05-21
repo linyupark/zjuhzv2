@@ -22,7 +22,7 @@
 			$this->getHelper('viewRenderer')->setNoRender(true);
 	
 			$params = $this->getRequest()->getParams();
-			if(!$address = trim(stripcslashes($params['address'])))
+			if(!$address = trim($params['address']))
 			Alp_Sys::msg('mail_address', '请输入邮件地址');
 			if(!$body = trim($params['content']))
 			Alp_Sys::msg('mail_body', '请输入邮件内容');
@@ -30,6 +30,7 @@
 			if(Alp_Sys::getMsg() == null)
 			{
 				$address = explode(';', $address);
+				if(count($address) > 1) array_pop($address);
 				$result = Logic_Mail::batch($subject, stripslashes($body), $address);
 				if($result == true) echo '邮件发送成功';
 				else foreach ($result as $mail) echo '* '.$mail.' 发送失败<br />';

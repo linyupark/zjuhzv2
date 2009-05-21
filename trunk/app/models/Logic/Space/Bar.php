@@ -37,7 +37,11 @@
 			{
 				$str = '<img class="vm" src="'.Alp_Url::img('icon/mix/subpage.gif').'" />&nbsp;';
 				for($cp = 1;$cp <= $cpage;$cp ++)
-				$str .= '<a href="/space_bar/'.$row['type'].'/view?tid='.$row['tid'].'&p='.$cp.'">'.$cp.'</a>&nbsp;';
+				{
+					if($cp > 5 && $cp < ($cpage-5))
+					$str .= '.';
+					else $str .= '<a href="/space_bar/'.$row['type'].'/view?tid='.$row['tid'].'&p='.$cp.'">'.$cp.'</a>&nbsp;';
+				}
 			}
 			return $str;
 		}

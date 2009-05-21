@@ -38,7 +38,7 @@
 				$str = '<img class="vm" src="'.Alp_Url::img('icon/mix/subpage.gif').'" />&nbsp;';
 				for($cp = 1;$cp <= $cpage;$cp ++)
 				{
-					if($cp > 5 && $cp < ($cpage-5))
+					if($cp > 3 && $cp < ($cpage-3))
 					$str .= '.';
 					else $str .= '<a href="/space_bar/'.$row['type'].'/view?tid='.$row['tid'].'&p='.$cp.'">'.$cp.'</a>&nbsp;';
 				}

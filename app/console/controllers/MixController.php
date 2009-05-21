@@ -22,7 +22,7 @@
 			$this->getHelper('viewRenderer')->setNoRender(true);
 	
 			$params = $this->getRequest()->getParams();
-			if(!$address = trim($params['address']))
+			if(!$address = trim(stripslashes($params['address'])))
 			Alp_Sys::msg('mail_address', '请输入邮件地址');
 			if(!$body = trim($params['content']))
 			Alp_Sys::msg('mail_body', '请输入邮件内容');

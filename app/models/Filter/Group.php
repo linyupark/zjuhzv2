@@ -13,6 +13,7 @@
 		 */
 		public static function bill($params)
 		{
+			$params['handler'] = Alp_Valid::of($params['handler'], 'handler', '经手人', 'required');
 			$params['sort'] = Alp_Valid::of($params['sort'], 'sort', '归类', 'required');
 			$params['item'] = Alp_Valid::of($params['item'], 'item', '物资名称', 'trim|str_between[1,10]');
 			$params['num'] = Alp_Valid::of($params['num'], 'num', '数额', 'trim|numeric');

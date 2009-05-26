@@ -1,15 +1,7 @@
-<table class="table-dashed" width="100%">
-<tr class="quiet bold section-sub">
-	<td>操作人</td>
-	<td>归类</td>
-	<td>物资名称</td>
-	<td>数额</td>
-	<td>收支</td>
-	<td class="txtc">时间</td>
-</tr>
+<table class="table-dashed mg10" width="100%">
 <?php if(count($this->rows) > 0): foreach ($this->rows as $r): ?>
 <tr class="hover">
-	<td><a href="/space_home/?uid=<?php echo $r['uid'] ?>"><?php echo $r['username']?></a></td>
+	<td><?php echo $r['handler'] ?></td>
 	<td>
 <a href="/space_group/bill/?id=<?php echo $r['gid'] ?>&sort=<?php echo urlencode($r['sort'])?>">	
 <?php echo $r['sort'] ?></a></td>
@@ -18,7 +10,7 @@
 	<td><?php echo $r['inout']=='in'?'收入':'支出' ?></td>
 	<td class="quiet txtc f9">
 		<?php echo date('y-m-d H:i', $r['time']) ?>
-		<textarea class="hide"><?php echo $r['memo'] ?></textarea>
+		<textarea class="hide"><?php echo $r['memo'] ?>(添加账目人:<?php echo $r['username']?>)</textarea>
 		<a href="javascript:mod(<?php echo $r['id'] ?>)">
 			<img src="<?php echo Alp_Url::img('/icon/mix/tool.gif')?>" />
 		</a>
@@ -33,6 +25,6 @@
 	function mod(id){$.post('/space_group/bill/mod/?bid='+id+'&id=<?php echo $this->gid ?>', function(data){$.facebox(data)})}
 	$('.hover').mouseover(function(e){$(this).css('background','#ffc')});
 	$('.hover').mouseout(function(e){$(this).css('background','#fff')});
-	$('.hover').click(function(e){$('.bill_memo').remove(); var h = $(this).find('.hide').html(); 
-	$(this).after('<tr class="bill_memo section-sub"><td colspan="6" class="quiet">备注：'+h+'</td></tr>'); })
+	$('.hover').click(function(e){$('.bill_memo').remove(); var h = $(this).find('.hide').html();
+	$(this).after('<tr class="bill_memo section-sub"><td colspan="6" class="quiet">'+h+'</td></tr>'); })
 </script>

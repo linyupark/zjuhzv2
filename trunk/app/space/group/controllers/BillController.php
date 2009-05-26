@@ -12,6 +12,51 @@
 			$this->view->tab = $this->getRequest()->getControllerName();
 		}
 		
+		/**
+		 * 剩余物资统计
+		 *
+		 */
+		function restcountAction()
+		{
+			$gid = $this->view->gid;
+			$sort = Logic_Space_Group_Bill::getSort($gid);
+			if(count($sort) > 0)
+			{
+				foreach ($sort as $s)
+				{
+					$recount = Logic_Space_Group_Bill::recount($gid, $s['sort']);
+					// 收入归类
+					$income = '<div style="background:#E7FFCF" class="pd5">'.$s['sort'].'收入：';
+					foreach ($recount['in'] as $list)
+					{
+						$income .= $list['item']."({$list['income']}) ";
+					}
+					echo $income.'</div>';
+					
+					$output = '<div style="background:#FFEACF" class="pd5">'.$s['sort'].'支出：';
+					foreach ($recount['out'] as $list)
+					{
+						$output .= $list['item']."({$list['ouput']})";
+					}
+					echo $output.'</div>';
+					
+					$rest = '<div class="pd5">'.$s['sort'].'剩余：';
+					foreach ($recount['in'] as $list)
+					{
+						$last = (int)$list['income'];
+						foreach ($recount['out'] as $o)
+						{
+							if($o['item'] == $list['item'])
+							$last -= $o['output'];
+						}
+						$rest .= $list['item']."({$last})";
+					}
+					echo $rest.'</div>';
+					//Zend_Debug::dump($recount);
+				}
+			}
+		}
+		
 		function domodAction()
 		{
 			$this->getHelper('viewRenderer')->setNoRender(true);
@@ -89,6 +134,7 @@
 			$group = Logic_Space_Group::info($gid);
 			if(Logic_Space_Group::isAllowedVisit($gid, $uid))
 			{	
+				$this->view->handler = Cmd::getSess('profile','username');
 				$this->view->group = $group;
 				$this->view->sorts = Logic_Space_Group_Bill::getSort($gid);
 				$this->view->sort = $this->_getParam('sort');

@@ -36,7 +36,7 @@
 					$output = '<div style="background:#FFEACF" class="pd5">'.$s['sort'].'支出：';
 					foreach ($recount['out'] as $list)
 					{
-						$output .= $list['item']."({$list['ouput']})";
+						$output .= $list['item']."({$list['output']})";
 					}
 					echo $output.'</div>';
 					
@@ -52,7 +52,7 @@
 						$rest .= $list['item']."({$last})";
 					}
 					echo $rest.'</div>';
-					//Zend_Debug::dump($recount);
+					Zend_Debug::dump($recount);
 				}
 			}
 		}

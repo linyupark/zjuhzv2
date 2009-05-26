@@ -52,7 +52,7 @@
 						$rest .= $list['item']."({$last})";
 					}
 					echo $rest.'</div>';
-					Zend_Debug::dump($recount);
+					//Zend_Debug::dump($recount);
 				}
 			}
 		}

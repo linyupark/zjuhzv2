@@ -15,6 +15,17 @@
 			$this->view->tab = $this->_getParam('tab', 'user');
 		}
 		
+		function rankallAction()
+		{
+			$limit = $this->_getParam('limit', 30);
+			$rows = DbModel::User()->fetchAll('
+				SELECT `uid`,`point`,`username` FROM `tb_base` 
+				ORDER BY `point` DESC LIMIT '.$limit.'
+			');
+			$this->view->rows = $rows;
+			$this->view->limit = $limit;
+		}
+		
 		/**
 		 * 热心度增长排行
 		 *

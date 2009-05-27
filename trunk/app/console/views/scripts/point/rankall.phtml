@@ -1,0 +1,20 @@
+<div class="pd10 a-span" style="border-bottom:1px dashed #ccc">
+	<form method="get" action="/console/point/" class="pd10">
+	热心度前 <input type="text" name="limit" value="<?php echo (int)$this->limit ?>"> 位 
+	<input type="hidden" name="tab" value="rankall" />
+	<input type="submit" value="查看" class="btn">
+	</form>
+	<div class="yui-g">
+		<div class="yui-u first">
+			<div class="section-u">个人热心度排行</div>
+			<ol>
+			<?php if(count($this->rows) > 0): foreach ($this->rows as $r): ?>
+				<li><a href="javascript:detail(<?php echo $r['uid'] ?>)"><?php echo $r['username']?></a> : <span class="f9 quiet"><?php echo $r['point'] ?>pt</span></li>
+			<?php endforeach; endif; ?>
+			</ol>
+		</div>
+		<div class="yui-u"></div>
+	</div>
+</div>
+
+<script>function detail(uid) {$.post('/console/user/detail', {uid:uid}, function(data){ $.facebox(data); })}</script>

@@ -67,11 +67,13 @@
     		$find = array(
     			"'<script[^>]*?>.*?</script>'si",
     			"'<link[^>]*?>.*?</link>'si",
-    			"'<meta[^>]*?>.*?</meta>'si",
+    			"'<meta .* />'si",
+    			"'<style type=\"text/css\">.*</style>'si",
+    			"'<xml[^>]*?>.*?</xml>'si",
     			"'<body[^>]*?>.*?</body>'si",
+    			"'<\!\[endif\]-->'si",
     		);
-    		$replace = array('','','');
-    		return preg_replace($find, $replace, $html);
+    		return preg_replace($find, '', $html);
 	    }
 	    
 	    # 清除文件名中的不安全元素 :::::::::::::::::::::::::::::::::::::::::::

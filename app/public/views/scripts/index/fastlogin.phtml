@@ -35,7 +35,7 @@
 			$('#flsubmit').val('登录中..').attr('disabled', true);
 			$.post('/public/login/dologin', $('#fastlogin_form').serializeArray(), function(data){
 				if(data.form_tip != 'success') { $('#flsubmit').val('登录失败').attr('disabled', false); }
-				else {  $('#flsubmit').val('登录成功'); data.goto == null ? location.href = '/space_home/' : location.href = data.goto; }
+				else {  $('#flsubmit').val('登录成功'); data.goto == null ? location.href = '/' : location.href = data.goto; }
 			}, 'json');
 			return false;
 		}

@@ -49,7 +49,8 @@
 	            {
 	            	for($edu_i = 0; $edu_i < count($data); $edu_i ++)
 	            	{
-	            		if($data[$edu_i]['campus'] != $data[($edu_i-1)]['campus'])
+	            		if($data[$edu_i]['campus'] != $data[($edu_i-1)]['campus'] &&
+						   !strstr($campus, $data[$edu_i]['campus']))
 	            		$campus .= ($edu_i+1).'.'.$data[$edu_i]['year'].'入学'.$data[$edu_i]['campus'].$data[$edu_i]['class'];
 	            	}
 	            }
@@ -59,7 +60,8 @@
 	            {
 	            	for($car_i = 0; $car_i < count($data); $car_i ++)
 	            	{
-	            		if($this->data[$car_i]['company'] != $this->data[($car_i-1)]['company'])
+	            		if($data[$car_i]['company'] != $data[($car_i-1)]['company'] &&
+						   !strstr($company, $data[$car_i]['company']))
 	            		$company .= ($car_i+1).'.'.$data[$car_i]['company'].'('.$data[$car_i]['department'].')'.
 	            			$data[$car_i]['job'].'从'.date('y/m', $data[$car_i]['start']).' - '.$data[$car_i]['end']==0?'至今':date('y/m', $data[$car_i]['end']);
 	            	}

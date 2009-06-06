@@ -11,6 +11,12 @@
 			$this->view->icons = Zend_Registry::get('config')->bar_icon->toArray();
 		}
 		
+		function testAction()
+		{
+			$this->getHelper('viewRenderer')->setNoRender();
+			//Zend_Debug::dump(array_unique(Logic_Api::user(2)));
+		}
+		
 		function indexAction()
 		{
 			// 一些短信息提示操作

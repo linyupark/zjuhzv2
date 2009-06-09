@@ -115,17 +115,21 @@
 			</tr>
 			<?php 
 				  if($this->data[0]['campus'] != null):
-				  for($edu_i = 0; $edu_i < $index; $edu_i ++): 
-				  if($this->data[$edu_i]['campus'] != $this->data[($edu_i-1)]['campus']): ?>
+					$campus = array();
+					for($edu_i = 0; $edu_i < $index; $edu_i ++):
+						$campus[$edu_i] = $this->data[$edu_i]['campus'];
+					endfor;
+					$campus = array_unique($campus);
+					foreach($campus as $i => $v): ?>
 			<tr>
-				<td class="txtr quiet"><?= $edu_i+1 ?>.</td>
+				<td class="txtr quiet">* </td>
 				<td>
-					<?= $this->data[$edu_i]['year'] ?>入学
-					<?= $this->data[$edu_i]['campus'] ?>
-					<?= $this->data[$edu_i]['class'] ?>
+					<?= $this->data[$i]['year'] ?>入学
+					<?= $this->data[$i]['campus'] ?>
+					<?= $this->data[$i]['class'] ?>
 				</td>
 			</tr>
-			<?php endif; endfor; else: ?>
+			<?php endforeach; else: ?>
 			<tr><td></td><td>未填写</td></tr>
 			<?php endif; ?>
 			<tr>
@@ -135,17 +139,21 @@
 			</tr>
 			<?php 
 				  if($this->data[0]['company'] != null):
-				  for($car_i = 0; $car_i < $index; $car_i ++): 
-				  if($this->data[$car_i]['company'] != $this->data[($car_i-1)]['company']): ?>
+				  $company = array();
+				  for($car_i = 0; $car_i < $index; $car_i ++):
+					$company[$car_i] = $this->data[$car_i]['company'];
+				  endfor;
+				  $company = array_unique($company);
+				  foreach($company as $i => $v): ?>
 			<tr>
-				<td class="txtr quiet"><?= $car_i+1 ?>.</td>
+				<td class="txtr quiet">* </td>
 				<td>
-					<?= $this->data[$car_i]['company'] ?> (<?= $this->data[$car_i]['department'] ?>)
-					<?= $this->data[$car_i]['job'] ?>
-					从<?= date('y/m', $this->data[$car_i]['start']) ?> - <?= ($this->data[$car_i]['end']==0)?'至今':date('y/m', $this->data[$car_i]['end']) ?>
+					<?= $this->data[$i]['company'] ?> (<?= $this->data[$i]['department'] ?>)
+					<?= $this->data[$i]['job'] ?>
+					从<?= date('y/m', $this->data[$i]['start']) ?> - <?= ($this->data[$i]['end']==0)?'至今':date('y/m', $this->data[$i]['end']) ?>
 				</td>
 			</tr>
-			<?php endif; endfor; else: ?>
+			<?php endforeach; else: ?>
 			<tr><td></td><td>未填写</td></tr>
 			<?php endif; ?>
 			<tr>

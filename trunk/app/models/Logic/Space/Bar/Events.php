@@ -75,7 +75,8 @@
 				$db->update('tb_tbar', array(
 					'title' => $params['title'],
 					'private' => $params['private'],
-					'nicky' => $params['nicky']
+					'nicky' => $params['nicky'],
+					'group' => $params['group']
 				), 'tid = '.$tid);
 				
 				$db->update('tb_events', array(

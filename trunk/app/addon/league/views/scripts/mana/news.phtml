@@ -1,0 +1,35 @@
+<h2 class="section"><a href="/addon_league/">杭州大学生实习联盟</a> - 滚动新闻</h2>
+<div class="bcolor-g pd10">
+	<form id="news_form" method="post" onsubmit="return post_news()">
+        <textarea name="content" style="width:90%;height:300px"><?= stripslashes($this->news) ?></textarea>
+        <input type="submit" value="保存" class="btn" />
+	</form>
+</div>
+
+<div class="pd10">效果：
+    <div id="news_box" style="height:14px; overflow:hidden; font-size:14px; line-height:100%"></div>
+</div>
+
+<script>
+function load(){ $('#news_box').load('/addon_league/mana/news', function(){ setInterval('AutoScroll("#news_box")',5000);}); }
+load();
+function post_news()
+{
+    $('input:submit').attr('disabled', true).val('提交中');
+    $.post('/addon_league/mana/news', $('#news_form').serializeArray(),
+           function(data){
+                if(data =='success') load();
+                else alert(data);
+                $('input:submit').attr('disabled', false).val('保存');
+            });
+    return false;
+}
+function AutoScroll(obj){
+    $(obj).find("ul:first").animate({
+            marginTop:"-14px"
+    },500,function(){
+        $(this).css({marginTop:"0px"}).find("li:first").appendTo(this);
+    });
+}
+
+</script>

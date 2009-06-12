@@ -8,6 +8,34 @@
 	{
 		function init(){ if(Cmd::role() != 'master' && Cmd::role() != 'power' ) exit(); }
 		
+		function newsAction()
+		{
+			$request = $this->getRequest();
+			$file = CFROOT.'league_news';
+			if(!file_exists($file)) @touch($file);
+			$this->view->news = file_get_contents($file);
+			if($request->isXmlHttpRequest())
+			{
+				$this->getHelper('viewRenderer')->setNoRender();
+				if($request->isPost())
+				{
+					$news = $request->getParam('content');
+					@file_put_contents($file, stripslashes($news));
+					echo 'success';
+				}
+				else
+				{
+					$content = $this->view->news;
+					$arr = explode("\n", Cmd::b2h($content));
+					echo '<ul style="padding:0;margin:0">';
+					foreach($arr as $item){
+						if(trim($item)) echo "<li>{$item}</li>";
+					}
+					echo '</ul>';
+				}
+			}
+		}
+		
 		function indexAction()
 		{
 			$params = $this->getRequest()->getParams();

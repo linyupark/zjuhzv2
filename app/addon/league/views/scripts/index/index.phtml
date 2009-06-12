@@ -5,6 +5,7 @@
 	<?php else: ?>
 	<div class="success">你已完成简历信息的提交，如需要修改可以<a class="bold" href="/addon_league/resume/">点击此处</a></div>
 	<?php endif; ?>
+    <div id="news_box" style="height:14px; overflow:hidden; font-size:13px; line-height:130%; background:#ffc; padding:5px;"><img src="<?= Alp_Url::img('icon/loading/v3.gif') ?>" /></div>
 	<p class="pd5">
 		<a href="/addon_league">显示全部</a>
 		<select name="region">
@@ -108,5 +109,15 @@
 		}
 	}
 	<?php endif; ?>
-	$(document).ready(function($){$('a[rel*=facebox]').facebox()});
+	$(document).ready(function($){$('a[rel*=facebox]').facebox();
+					  $('#news_box').load('/addon_league/mana/news', function(){ setInterval('AutoScroll("#news_box")',5000);});
+					  });
+	
+	function AutoScroll(obj){
+    $(obj).find("ul:first").animate({
+            marginTop:"-14px"
+    },500,function(){
+        $(this).css({marginTop:"0px"}).find("li:first").appendTo(this);
+    });
+}
 </script>

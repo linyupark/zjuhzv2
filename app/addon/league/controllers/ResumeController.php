@@ -48,7 +48,7 @@
 			{
 				Alp_Page::$pagesize = $pagesize;
 				Alp_Page::create(array(
-					'href_open' => '<a href="/addon_league/resume/list?ser='.$ser.'&p=%d">',
+					'href_open' => '<a href="/addon_league/resume/list?ser='.$ser.'&tid='.$tid.'&p=%d">',
 					'href_close' => '</a>',
 					'num_rows' => $row['numrows'],
 					'cur_page' => $page

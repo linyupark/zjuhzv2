@@ -63,7 +63,7 @@
 				'num' => $params['num'],
 				'memo' => $params['memo'],
 				'inout' => $params['inout'],
-				'time' => time()
+				'time' => $params['time']
 			));
 		}
 		

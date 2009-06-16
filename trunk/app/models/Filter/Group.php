@@ -18,6 +18,9 @@
 			$params['item'] = Alp_Valid::of($params['item'], 'item', '物资名称', 'trim|str_between[1,10]');
 			$params['num'] = Alp_Valid::of($params['num'], 'num', '数额', 'trim|numeric');
 			$params['memo'] = strip_tags(trim($params['memo']));
+			$time = strtotime($params['time']);
+			if(!$time) Alp_Sys::msg('time', '时间格式错误');
+			$params['time'] = (int)$time;
 			return $params;
 		}
 		

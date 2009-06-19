@@ -55,6 +55,7 @@
             $('#talk_form').serializeArray(),
             function(){
                 load_chat(); scrollLog();
+                $('#talk').val('');
                 $('input:submit').val('发送').attr('disabled',  false);
             }
         );

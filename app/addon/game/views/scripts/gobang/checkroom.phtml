@@ -1,0 +1,33 @@
+<table style="border:1px solid #ccc; margin:10px;">
+    <tr class="section-sub"><td colspan="3" class="txtc"><?= $this->num ?>号桌</td></tr>
+<?php
+$room_ico = '<img src="/im/gobang/room.gif" />';          
+if($this->state == 'wait'): ?>
+    <tr>
+        <td><a href="javascript:join(<?= $this->num ?>)">入座</a></td>
+        <td><?= $room_ico ?></td>
+        <td><a href="javascript:join(<?= $this->num ?>)">入座</a></td>
+    </tr>
+<?php elseif($this->state == 'wait p2'): ?>
+    <tr>
+        <td>
+            <img src="<?= Cmd::userhead($this->p1) ?>" width="25" /><br />
+            <a href="/space_home/?uid=<?= $this->p1 ?>"><?= Logic_Game_Gobang::playername($this->p1) ?></a>
+        </td>
+        <td><?= $room_ico ?></td>
+        <td><a href="javascript:join(<?= $this->num ?>)">入座</a></td>
+    </tr>
+<?php elseif($this->state =='playing'): ?>
+    <tr>
+        <td>
+            <img src="<?= Cmd::userhead($this->p1) ?>" width="25" /><br />
+            <a href="/space_home/?uid=<?= $this->p1 ?>"><?= Logic_Game_Gobang::playername($this->p1) ?></a>
+        </td>
+        <td><?= $room_ico ?></td>
+        <td>
+            <img src="<?= Cmd::userhead($this->p2) ?>" width="25" /><br />
+            <a href="/space_home/?uid=<?= $this->p2 ?>"><?= Logic_Game_Gobang::playername($this->p2) ?></a>
+        </td>
+    </tr>
+<?php endif; ?>
+</table>

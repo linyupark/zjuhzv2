@@ -2,10 +2,11 @@
 	<div class="yui-b">
         <div class="mg5 section yui-g">
 			<div class="yui-u first" style="width:80%">
-				<b>五子棋大厅</b>
+				<img src="<?= Alp_Url::img('icon/1616/gobang.gif') ?>" class="vm" /> <b>五子棋大厅</b>
 			</div>
 			<div class="yui-u txtr" style="width:20%"><a href="javascript:history.back()">返回上一页</a></div>
 		</div>
+        <div class="notice">如遇到无法进入的情况请刷新本页，10分钟不进行游戏操作会自动返回大厅。</div>
         <div style="width:650px;">
         <?php for ($i = 1; $this->rooms >= $i; $i ++): ?>
         <div class="room_box" id="room_box_<?= $i ?>" style="float:left"></div>

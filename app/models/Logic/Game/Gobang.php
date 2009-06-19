@@ -2,7 +2,7 @@
 
     class Logic_Game_Gobang
     {
-        public static $timeout = 300; #5分钟超时房间自动清理
+        public static $timeout = 600; #10分钟超时房间自动清理
         
         # 初始化新玩家数据
         static function init_player()

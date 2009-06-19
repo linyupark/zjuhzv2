@@ -1,0 +1,41 @@
+<style>
+    #state_tb{ background:#EFB85A; font-weight:bold; font-size:14px; border:3px solid #333}
+    #state_tb td{ border:1px solid #333; color:#5E3F0B; }
+</style>
+
+<?php
+    $state = $this->state;
+    $p1_name = Logic_Game_Gobang::playername($this->players['p1']);
+    if($state != 'waiting')
+    $p2_name = Logic_Game_Gobang::playername($this->players['p2']);
+?>
+
+<table id="state_tb" width="100%">
+    <tr>
+        <td width="30"><img src="/im/gobang/w.gif" /></td>
+        <td class="txtl">P1: <?= $p1_name ?></td>
+    </tr>
+    <tr>
+        <td><img src="/im/gobang/b.gif" /></td>
+        <td class="txtl">P2: <?= $p2_name ? $p2_name : '等待加入' ?></td>
+    </tr>
+    <tr>
+        <td colspan="2" class="txtc">
+            <?php if($state == 'p1 turn') : ?>
+            轮到白子下
+            <script>parent.gobang(<?= $this->players['p1'] ?>)</script>
+            <?php endif; if($state == 'p2 turn') : ?>
+            轮到黑子下
+            <script>parent.gobang(<?= $this->players['p2'] ?>)</script>
+            <?php endif; ?>
+        </td>
+    </tr>
+</table>
+
+    <script type="text/javascript">
+    <?php if($state == 'focus leave'): ?>
+        alert('有人离开，或是长时间没有动静。游戏结束，返回至大厅!');
+        location.href="/addon_game/index/gobang";
+    <?php endif ?>
+    </script>
+    

@@ -1,0 +1,158 @@
+<style>
+    #gobangbox{ width:482px; background:#EFB85A; padding:10px; float:left; border:3px solid #333; }
+    .bx{ height:30px; width:30px; display:block; border:1px solid #333; float:left; }
+    #chatbox{ height:200px; background:#eee; border:1px solid #ccc; padding:5px; overflow:auto; }
+</style>
+<div class="yui-g" style="width:750px;">
+    <div class="yui-u first" style="width:70%;">
+        <div id="gobangbox">
+            <?php for($y = 1; $y <= 15 ; $y ++): ?>
+                <?php for($x = 1; $x <= 15 ; $x ++): ?>
+                <div class="bx" id="bx_<?= $x.'_'.$y ?>" x="<?= $x ?>" y="<?= $y ?>"></div>
+                <?php endfor; ?>
+            <?php endfor; ?>
+        </div>
+    </div>
+    <div class="yui-u" style="width:30%">
+        <div id="gamestate"></div>
+        <div id="result" style="color:red;" class="f14 bold"></div>
+        <button onclick="leaveGame()" class="btn">退出游戏</button>
+        <h3>聊天记录</h3>
+        <form id="talk_form" method="post" onsubmit="return post_chat()">
+            <div id="chatbox"></div>
+            <br />
+            <input type="text" name="talk" id="talk" />
+            <input type="submit" value="发送" class="btn" />
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    <!-- Hide
+    function killErrors() {
+    return true;
+    }
+    window.onerror = killErrors;
+    // -->
+    
+    function scrollLog()
+    {
+        var e=document.getElementById("chatbox");
+        if(e) e.scrollTop=e.scrollHeight;
+    }
+    
+    function load_chat()
+    {
+        $('#chatbox').load('/addon_game/gobang/chatlog/room/<?= $this->room ?>',
+            function(){ scrollLog(); }
+        );      
+    }
+    
+    function post_chat()
+    {
+        $('input:submit').val('发送中..').attr('disabled', true);
+        $.post('/addon_game/gobang/chat/room/<?= $this->room ?>',
+            $('#talk_form').serializeArray(),
+            function(){
+                load_chat(); scrollLog();
+                $('input:submit').val('发送').attr('disabled',  false);
+            }
+        );
+        return false;
+    }
+    
+    var gobangx = 0; // 避免重复载入
+    
+    // 中途离开
+    function leaveGame()
+    {
+        $('.btn').attr('disabled', true).val('退出处理中');
+        $.post('/addon_game/gobang/leavegame', {room:<?= $this->room ?>});
+    }
+    
+    // 加载棋子
+    function load_points()
+    {
+        load_gamestate();
+        
+        // 出胜负
+        if($('#result').html() != '')
+        {
+            alert('游戏结束，返回至大厅!');
+            leaveGame();
+        }
+        
+        $.post('/addon_game/gobang/gobangbox/',
+        {room:<?= $this->room ?>},
+        function(data){
+            
+            $.each(data.p1, function(i, item){
+                $('#bx_'+item).html('<img src="/im/gobang/w.gif" />');
+            });
+            $.each(data.p2, function(i, item){
+                $('#bx_'+item).html('<img src="/im/gobang/b.gif" />');
+            });
+            
+            if(data.winner)
+            {
+                $('.bx').unbind("click", go);
+                gobangx = 1;
+                var wincolor = '';
+                if(data.winner == 'p1') wincolor = '白子';
+                if(data.winner == 'p2') wincolor = '黑子';
+                $('#result').html(wincolor+'获胜');
+            }
+            
+        }, 'json');
+    }
+    
+    function load_gamestate()
+    {
+        $('#gamestate').load('/addon_game/gobang/gamestate/room/<?= $this->room ?>');
+    }
+    
+    // 落子控制
+    function gobang(turner)
+    {
+        if(turner == <?= $this->i ?> && gobangx == 0)
+        {
+            <?php if($this->players['p1'] == $this->i): ?>
+            var color = 'white';
+            <?php else: ?>
+            var color = 'black';
+            <?php endif; ?>
+            
+            $('.bx').css('cursor','crosshair');
+            $('.bx').mouseover(function(){
+                $(this).css('background', color);
+            });
+            $('.bx').mouseout(function(){
+                $(this).css('background', 'none');
+            });
+            $('.bx').bind("click", go);
+        }
+        else{
+            $('.bx').css('cursor','wait');
+            $('.bx').mouseover(function(){$(this).css('background', 'none');});
+            $('.bx').unbind("click", go);
+            gobangx = 0;
+        }
+    }
+    
+    // 落子
+    function go(){
+        var x = $(this).attr('x');
+        var y = $(this).attr('y');
+        var point = x+'_'+y;
+        $.post('/addon_game/gobang/go',
+        {point:point, room:<?= $this->room ?>},
+        function(data){
+            if(data == 'success')
+            { gobang(); load_points(); gobangx = 1; }
+            else alert(data);
+        });
+    }
+
+    load_points(); load_chat();
+    var gamelistener = window.setInterval("load_points(); load_chat();",5000); // 触发
+</script>

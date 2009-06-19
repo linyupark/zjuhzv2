@@ -1,0 +1,41 @@
+<div class="yui-main">
+	<div class="yui-b">
+        <div class="mg5 section yui-g">
+			<div class="yui-u first" style="width:80%">
+				<b>五子棋大厅</b>
+			</div>
+			<div class="yui-u txtr" style="width:20%"><a href="javascript:history.back()">返回上一页</a></div>
+		</div>
+        <div style="width:650px;">
+        <?php for ($i = 1; $this->rooms >= $i; $i ++): ?>
+        <div class="room_box" id="room_box_<?= $i ?>" style="float:left"></div>
+        <?php endfor; ?>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('.yui-d3f').addClass('yui-t6');
+    
+    $('.room_box').each(function(i){
+        $('#room_box_'+(i+1)).load('/addon_game/gobang/checkroom/ref_num/'+(i+1));
+        
+    });
+
+    function join(num){
+        $.post('/addon_game/gobang/join',
+            {room:num}, function(data){
+            if(data == 'success') {
+                alert('成功加入'+num+'号房间');
+                location.href="/addon_game/gobang/room/?n="+num
+            } else { alert(data); }
+        });
+    }
+</script>
+
+<div class="yui-b">
+	<div class="greybox mgb10">
+		<div class="greybox-top"></div>
+		<?php if(Cmd::role() != 'guest') echo $this->action(Cmd::role(), 'modnav'); ?>
+	</div>
+</div>

@@ -1,0 +1,7 @@
+<?php foreach($this->logs as $v): ?>
+<b><?= $v['object'] ?>:</b>
+<?= stripslashes($v['content']) ?>
+<p style="font-size:9px; color:#ccc">
+----------------------<?= date('H:i:s', $v['time']) ?>----------------------
+</p>
+<?php endforeach; ?>

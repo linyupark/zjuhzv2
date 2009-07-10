@@ -46,3 +46,6 @@
 	
 	$controller->throwExceptions(true);
 	$controller->dispatch();
+	
+	
+	

@@ -68,7 +68,13 @@
 		{
 			if(self::isUploaded($key)) // 确保有文件上传
 			{
+				if(is_array($_FILES[$key]['name']))
 				self::$filename = $_FILES[$key]['name']; // 存放原始文件名,祛除重复文件
+				else
+				{
+					self::$filename = array($_FILES[$key]['name']);
+					$_FILES[$key]['tmp_name'] = array($_FILES[$key]['tmp_name']);
+				}
 				
 				if(self::validPath() && self::validExt($key) && self::validSize($key)) // 校验通过
 				{
@@ -153,7 +159,9 @@
 		static function validSize($key)
 		{
 			$conifg_size = self::$config['maxsize']*1000; // 转换成字节
+			if(is_array($_FILES[$key]['size']))
 			$size_array = $_FILES[$key]['size']; // 上传文件的大小数组
+			else $size_array = array($_FILES[$key]['size']);
 			
 			foreach($size_array as $size)
 			{
@@ -170,7 +178,7 @@
 		# 上传文件的类型符合要求否 ::::::::::::::::::::::::::::::::::::::
 		static function validExt($key) 
 		{
-			$name_array = $_FILES[$key]['name']; // 选择文件名数组
+			$name_array = self::$filename; // 选择文件名数组
 			$allowed_type = self::$config['type'];
 			$type_array = explode('|', $allowed_type); // 允许上传文件类型数组
 			

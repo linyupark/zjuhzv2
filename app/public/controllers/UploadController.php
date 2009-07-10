@@ -4,8 +4,11 @@
 	{
 		function init()
 		{
-			$role = Cmd::role();
-			if($role == 'guest' || $role == 'black') exit();
+			if(!$this->_getParam('uid'))
+			{
+				$role = Cmd::role();
+				if($role == 'guest' || $role == 'black') exit();
+			}
 			$this->getHelper('viewRenderer')->setNoRender();
 		}
 		
@@ -206,22 +209,24 @@
 		
 		function photoAction()
 		{
+			Zend_Layout::getMvcInstance()->disableLayout();
 			if($_FILES)
 			{
-				$uid = Cmd::uid();
+				$uid = Cmd::uid() ? Cmd::uid() : $this->_getParam('uid');
 				$path = UPLOADROOT.'/photo/'.$uid;
 				if(!file_exists($path)) mkdir($path, 0777);
-				$filename = $_FILES['photo']['name'][0];
+				$filename = $_FILES['photo']['name'];
 				$ext = Alp_String::stripFile($filename);
-				$newname = md5($_FILES['photo']['name'][0]);
+				$newname = md5($_FILES['photo']['name']);
 				Alp_Upload::init(array(
 					'filename' => array($newname.'.'.$ext),
 					'maxsize' => 5000,
 					'path' => $path.'/'
 				));
+				
 				if(!Alp_Upload::handle('photo'))
 				{
-					echo "<script>alert('".Alp_Sys::allMsg('',"")."');parent.upreload();</script>";
+					//echo "<script>alert('".Alp_Sys::allMsg('',"")."');parent.upreload();</script>";
 				}
 				else
 				{
@@ -234,7 +239,8 @@
 						$h = $height*(600/$width);
 						$im->resize($newname.'_resize', 600, $h, $ext);
 					}
-					echo '<script>parent.create_item('.$uid.',"'.$newname.'.'.$ext.'");parent.upreload();</script>';
+					//echo '<script>parent.create_item('.$uid.',"'.$newname.'.'.$ext.'");parent.upreload();</script>';
+					echo $newname.'.'.$ext;
 				}
 			}
 		}

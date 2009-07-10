@@ -1,10 +1,12 @@
 <?php
 	
-	set_include_path('.' . PATH_SEPARATOR . '../lib'
-						 . PATH_SEPARATOR . '../app/models');
+	set_include_path('.' . PATH_SEPARATOR . '../lib/'
+						 . PATH_SEPARATOR . '../app/models/'
+						 . get_include_path());
 	
-	date_default_timezone_set('Asia/Shanghai');					 
-	
+	date_default_timezone_set('Asia/Shanghai');
+        
+
 	define('DOMAIN', 'www.zjuhz.com');
 	define('HTMLROOT', $_SERVER['DOCUMENT_ROOT']);
 	define('SQLITEROOT', '../db/sqlite/');
@@ -12,7 +14,7 @@
 	define('UPLOADROOT', $_SERVER['DOCUMENT_ROOT'].'/upload/');
 						 
 	require_once 'Zend/Loader/Autoloader.php';
-    Zend_Loader_Autoloader::getInstance()->setFallbackAutoloader(true);
+        Zend_Loader_Autoloader::getInstance()->setFallbackAutoloader(true);
     
 	Zend_Session::start();
 	Zend_Registry::set('sess', new Zend_Session_Namespace('zjuhz'));
@@ -42,5 +44,5 @@
 	
 	$controller->setDefaultModule('public');
 	
-	$controller->throwExceptions(false);
+	$controller->throwExceptions(true);
 	$controller->dispatch();

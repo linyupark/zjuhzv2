@@ -17,12 +17,12 @@
 		public static function batch($subject, $body, $mailaddess)
 		{
 			Zend_Loader::loadFile('Swift/swift_required.php');
-			$transport = Swift_SmtpTransport::newInstance('smtp.gmail.com', 465, 'ssl')
-					   ->setUsername('service@zjuhz.com')
-					   ->setPassword('89988185-service_zjuhz_com');
+			$transport = Swift_SmtpTransport::newInstance('zjuem.zju.edu.cn')
+					   ->setUsername('zjuhz')
+					   ->setPassword('18970521');
 			$mailer = Swift_Mailer::newInstance($transport);
 			$message = Swift_Message::newInstance($subject, $body, 'text/html')
-					 ->setFrom(array('service@zjuhz.com' => '杭州浙江大学校友会'))
+					 ->setFrom(array('zjuhz@zju.edu.cn' => '杭州浙江大学校友会'))
 					 ->setTo($mailaddess);
 			
 			if($mailer->batchSend($message, $faildaddress))
@@ -39,7 +39,7 @@
 		{
 			if($set == null)
 			return array(
-				'name' => 'smtp.gmail.com',
+				'name' => 'smtp.gmail.com', // p:465 , ssl
 				'username' => 'service@zjuhz.com',
 				'password' => '89988185-service_zjuhz_com',
 				'auth' => 'login',

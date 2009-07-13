@@ -146,7 +146,7 @@
 				if(!file_exists($path)) mkdir($path, 0777);
 				$filename = $_FILES['video']['name'][0];
 				$ext = Alp_String::stripFile($filename);
-				$newname = md5($_FILES['video']['name'][0]);
+				$newname = md5(date('Y-m-d/H:i:s').$_FILES['video']['name'][0]);
 				Alp_Upload::init(array(
 					'type' => 'flv',
 					'maxsize' => 49000,
@@ -180,7 +180,7 @@
 				if(!file_exists($path)) mkdir($path, 0777);
 				$filename = $_FILES['pic']['name'][0];
 				$ext = Alp_String::stripFile($filename);
-				$newname = md5($_FILES['pic']['name'][0]);
+				$newname = md5(date('Y-m-d/H:i:s').$_FILES['pic']['name'][0]);
 				Alp_Upload::init(array(
 					'maxsize' => 2000,
 					'filename' => array($newname.'.'.$ext),
@@ -217,11 +217,12 @@
 				if(!file_exists($path)) mkdir($path, 0777);
 				$filename = $_FILES['photo']['name'];
 				$ext = Alp_String::stripFile($filename);
-				$newname = md5($_FILES['photo']['name']);
+				$newname = md5(date('Y-m-d/H:i:s').$_FILES['photo']['name']);
 				Alp_Upload::init(array(
 					'filename' => array($newname.'.'.$ext),
 					'maxsize' => 5000,
-					'path' => $path.'/'
+					'path' => $path.'/',
+					'overwrite' => true,
 				));
 				
 				if(!Alp_Upload::handle('photo'))

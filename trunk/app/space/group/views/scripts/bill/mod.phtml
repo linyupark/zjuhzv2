@@ -3,6 +3,7 @@
 <p>归类 <input type="text" name="sort" value="<?php echo $this->row['sort'] ?>" /></p> 
 <p>名称 <input type="text" name="item" value="<?php echo $this->row['item'] ?>" /></p>
 <p>数额 <input type="text" name="num" value="<?php echo $this->row['num'] ?>" /></p>
+<p>时间 <input type="text" name="time" value="<?php echo date('Y-m-d H:i:s', $this->row['time']) ?>" /></p>
 <p>收支 
 <?php $inout = $this->row['inout'] ?>
 <select name="inout">

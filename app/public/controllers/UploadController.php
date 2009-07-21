@@ -144,7 +144,7 @@
 				$uid = Cmd::uid();
 				$path = UPLOADROOT.'/video/'.$uid;
 				if(!file_exists($path)) mkdir($path, 0777);
-				$filename = $_FILES['video']['name'][0];
+				$filename = strtolower($_FILES['video']['name'][0]);
 				$ext = Alp_String::stripFile($filename);
 				$newname = md5(date('Y-m-d/H:i:s').$_FILES['video']['name'][0]);
 				Alp_Upload::init(array(
@@ -178,7 +178,7 @@
 				$uid = Cmd::uid();
 				$path = UPLOADROOT.'/users/pic/'.$uid;
 				if(!file_exists($path)) mkdir($path, 0777);
-				$filename = $_FILES['pic']['name'][0];
+				$filename = strtolower($_FILES['pic']['name'][0]);
 				$ext = Alp_String::stripFile($filename);
 				$newname = md5(date('Y-m-d/H:i:s').$_FILES['pic']['name'][0]);
 				Alp_Upload::init(array(
@@ -215,7 +215,7 @@
 				$uid = Cmd::uid() ? Cmd::uid() : $this->_getParam('uid');
 				$path = UPLOADROOT.'/photo/'.$uid;
 				if(!file_exists($path)) mkdir($path, 0777);
-				$filename = $_FILES['photo']['name'];
+				$filename = strtolower($_FILES['photo']['name']);
 				$ext = Alp_String::stripFile($filename);
 				$newname = md5(date('Y-m-d/H:i:s').$_FILES['photo']['name']);
 				Alp_Upload::init(array(

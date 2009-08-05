@@ -155,6 +155,13 @@
             if($value != $result)
             Alp_Sys::conv('valid_num_equal', array($alias, $result), $name);
         }
+	
+	# 中文校验 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	private function chinese($name, $value, $alias)
+        {
+	    if(!preg_match("/^[\x7f-\xff]+$/", $value))
+	    Alp_Sys::conv('valid_chinese', array($alias), $name);
+        }
 	    
         # 有效邮箱 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	    private function valid_email($name, $value, $alias)

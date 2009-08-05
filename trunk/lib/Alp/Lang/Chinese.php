@@ -19,6 +19,7 @@
 			'valid_str_exact' 			=> '%0%字符长度必须为%1%',
 			'valid_num_between' 		=> '%0%的数值应该在%1%到%2%之间',
 			'valid_num_equal' 			=> '%0%的值应该为%1%',
+                        'valid_chinese' => '%0%必须为中文',
             'valid_matches' 			=> '%0%的值必须与%1%相同',
             'date_year'					=> '年',
 			'date_years'				=> '年',

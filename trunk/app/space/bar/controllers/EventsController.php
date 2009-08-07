@@ -95,15 +95,19 @@
 				if($flag == 1) // 报名
 				{
 					if(!Cmd::getSess('profile', 'mobile'))
-                    {
-                        echo '您的资料里没有填写手机信息无法报名';
-                    }
-                    else
-                    {
-                    	Logic_Space_Bar_Events::sign($tid, $uid, $username);
-                    	// 记录
-                    	echo 'success';
-                    }
+					{
+					    echo '您的资料里没有填写手机信息无法报名';
+					}
+					elseif(Cmd::role() == 'bench')
+					{
+					    echo '待审核校友无法进行报名，请进入设置后完善必要的个人信息等待工作人员审核';
+					}
+					else
+					{
+					    Logic_Space_Bar_Events::sign($tid, $uid, $username);
+					    // 记录
+					    echo 'success';
+					}
 				}
 				else 
 				{

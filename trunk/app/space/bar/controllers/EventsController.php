@@ -54,8 +54,8 @@
 					DbModel::Space()->update('tb_events', array('apted' => 1), 'tid = '.$tid);
 					$pt2puber = 1;
 					if($join_num > 2 && $join_num < 6) $pt2puber = 3;
-					if($join_num > 6 && $join_num < 10) $pt2puber = 5;
-					if($join_num > 10) $pt2puber = 10;
+					if($join_num >= 6 && $join_num < 10) $pt2puber = 5;
+					if($join_num >= 10) $pt2puber = 10;
 					Logic_Api::apoint('user', $puber, $pt2puber, '成功发起活动'.$e[0]['title'], time());
 					$puber == Cmd::uid() ? Cmd::setSess('apt_tip', array('pubevents' => $pt2puber)) : '';
 					echo 'success';

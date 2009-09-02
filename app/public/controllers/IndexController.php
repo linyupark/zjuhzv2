@@ -97,7 +97,20 @@
 					AND (g.`type` IS NULL OR g.`type` != "close")
 				)  
 				ORDER BY e.`time` ASC LIMIT 8');
+			$rows_recent = DbModel::Space()->fetchAll('SELECT bar.*,e.`time` AS `starttime` 
+				FROM `tb_tbar` AS `bar` 
+				LEFT JOIN `tb_group` AS `g` ON g.`gid` = bar.`group` 
+				LEFT JOIN `tb_events` AS `e` ON e.`tid` = bar.`tid` 
+				WHERE (
+					bar.`private` IN(3,4) 
+					AND bar.`type` = "events" 
+					AND bar.`deny` = 0 
+					AND e.`time` < '.$now.'  
+				)  
+				ORDER BY e.`time` DESC LIMIT 8');
+			
 			$this->view->events = $rows;
+			$this->view->events_recent = $rows_recent;
 		}
 		
 		/**

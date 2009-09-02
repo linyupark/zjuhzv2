@@ -72,3 +72,5 @@ a.tb-on{ color:#333; }
 a.blk{ display:block; width:140px; padding:3px; border-bottom:1px solid #eee; text-decoration:none;  }
 a.blk:hover{ border-bottom:1px solid #999; text-decoration:none; }
 
+.smalltab{ color:#333; background:#fff; padding:3px 6px 8px 6px; font-weight:bold; }
+

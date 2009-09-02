@@ -56,15 +56,15 @@
 	{
 		$('.nostart_events').show();
 		$('.recent_events').hide();
-		$('a[href*="notsartyet"]').css({fontWeight:'bold', background:'#fff', padding:'2px 6px 8px 6px'});
-		$('a[href*="recentend"]').css({fontWeight:'normal', background:'none', padding:'2px 6px 8px 6px'});
+		$('a[href*="notsartyet"]').addClass('smalltab');
+		$('a[href*="recentend"]').removeClass('smalltab');
 	}
 	function recentend()
 	{
 		$('.nostart_events').hide();
 		$('.recent_events').show();
-		$('a[href*="recentend"]').css({fontWeight:'bold', background:'#fff', padding:'2px 6px 8px 6px'});
-		$('a[href*="notsartyet"]').css({fontWeight:'normal', background:'none', padding:'2px 6px 8px 6px'});
+		$('a[href*="recentend"]').addClass('smalltab');
+		$('a[href*="notsartyet"]').removeClass('smalltab');
 	}
 	notsartyet();
 </script>

@@ -56,15 +56,15 @@
 	{
 		$('.nostart_events').show();
 		$('.recent_events').hide();
-		$('a[href*="notsartyet"]').css('font-weight','bold');
-		$('a[href*="recentend"]').css('font-weight','normal');
+		$('a[href*="notsartyet"]').css({fontWeight:'bold', background:'#fff', padding:'2px 6px 8px 6px'});
+		$('a[href*="recentend"]').css({fontWeight:'normal', background:'none', padding:'2px 6px 8px 6px'});
 	}
 	function recentend()
 	{
 		$('.nostart_events').hide();
 		$('.recent_events').show();
-		$('a[href*="recentend"]').css('font-weight','bold');
-		$('a[href*="notsartyet"]').css('font-weight','normal');
+		$('a[href*="recentend"]').css({fontWeight:'bold', background:'#fff', padding:'2px 6px 8px 6px'});
+		$('a[href*="notsartyet"]').css({fontWeight:'normal', background:'none', padding:'2px 6px 8px 6px'});
 	}
 	notsartyet();
 </script>

@@ -36,6 +36,8 @@
 	        $objPHPExcel->getActiveSheet()->SetCellValue('J1', '家庭住址');
 	        $objPHPExcel->getActiveSheet()->SetCellValue('K1', '电话');
 	        $objPHPExcel->getActiveSheet()->SetCellValue('L1', '手机');
+		$objPHPExcel->getActiveSheet()->SetCellValue('M1', '最后登录时间');
+		$objPHPExcel->getActiveSheet()->SetCellValue('N1', '热心度');
 			foreach ($uids as $i => $r)
 			{
 				$row = $i + 1;
@@ -73,6 +75,8 @@
 	            $objPHPExcel->getActiveSheet()->SetCellValue('J'.$row, $data[0]['address']);
 	            $objPHPExcel->getActiveSheet()->SetCellValue('K'.$row, $data[0]['tel']);
 	            $objPHPExcel->getActiveSheet()->SetCellValue('L'.$row, $data[0]['mobile']);
+		    $objPHPExcel->getActiveSheet()->SetCellValue('M'.$row, date('y-m-d', $data[0]['lastlogin']));
+	            $objPHPExcel->getActiveSheet()->SetCellValue('N'.$row, $data[0]['point']);
 			}
 			$objPHPExcel->getActiveSheet()->setTitle('群组通讯录');
            	$this->stream($objPHPExcel, 'zjuhz_user');

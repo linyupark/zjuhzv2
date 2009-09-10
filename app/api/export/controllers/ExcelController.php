@@ -59,12 +59,12 @@
 	            if($data[0]['company'] != null)
 	            {
 	            	for($car_i = 0; $car_i < count($data); $car_i ++)
-	            	{
-	            		if($data[$car_i]['company'] != $data[($car_i-1)]['company'] &&
-						   !strstr($company, $data[$car_i]['company']))
-	            		$company .= ($car_i+1).'.'.$data[$car_i]['company'].'('.$data[$car_i]['department'].')'.
-	            			$data[$car_i]['job'].'从'.date('y/m', $data[$car_i]['start']).' - '.$data[$car_i]['end']==0?'至今':date('y/m', $data[$car_i]['end']);
-	            	}
+			    {
+				$end = ($data[$car_i]['end']==0)?'至今':date('y/m', $data[$car_i]['end']);
+				    if($data[$car_i]['company'] != $data[($car_i-1)]['company'] && !strstr($company, $data[$car_i]['company']))
+				    $company .= ($car_i+1).'.'.$data[$car_i]['company'].'('.$data[$car_i]['department'].')'.$data[$car_i]['job'].
+				    '从'.date('y/m', $data[$car_i]['start']).' - '.$end;
+			    }
 	            }
 	            $objPHPExcel->getActiveSheet()->SetCellValue('F'.$row, $company);
 	            $objPHPExcel->getActiveSheet()->SetCellValue('G'.$row, $data[0]['email']);

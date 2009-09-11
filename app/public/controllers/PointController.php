@@ -63,12 +63,48 @@
 		}
 		
 		/**
-		 * 赠送热心度
+		 * 申请热心度
 		 *
 		 */
 		function awardAction()
 		{
-			
+            if($this->getRequest()->isXmlHttpRequest())
+            {
+                $this->getHelper('viewRenderer')->setNoRender();
+                $params = $this->getRequest()->getParams();
+                $uid = Cmd::uid();
+                if(!$params['auid'] || (int)$params['point'] == 0 || trim($params['memo']) == '')
+                {
+                    echo '输入的数据有问题，请完整输入';
+                }
+                else
+				{
+						$params['uid'] = $uid;
+						Logic_Log::apoint($params);
+						echo 'done';
+				}
+            }
+		}
+		
+		/**
+		 * 申请热心度
+		 *
+		 */
+		function alogAction()
+		{
+			$uid = Cmd::uid();
+			if($this->getRequest()->isXmlHttpRequest())
+			{
+				$this->getHelper('viewRenderer')->setNoRender();
+				$id = $this->_getParam('id');
+				DbModel::Log()->delete('tb_apoint', 'apid = '.(int)$id.' AND uid = '.$uid);
+				echo 'done';
+			}
+			else
+			{
+				$rows = DbModel::Log()->fetchAll('SELECT * FROM `tb_apoint` WHERE `uid` = ? ORDER BY `time` DESC', $uid);
+				$this->view->rows = $rows;
+			}
 		}
 	}
 

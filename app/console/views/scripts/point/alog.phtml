@@ -1,0 +1,55 @@
+<table class="table-dashed mg10" width="98%">
+<tr class="bcolor-g quiet">
+    <td width="50">申请人</td>
+	<td width="100">替谁申请</td>
+    <td width="40">分值</td>
+	<td>缘由</td>
+	<td width="100">时间</td>
+    <td width="100">状态</td>
+</tr>
+<?php if(count($this->rows) > 0): foreach ($this->rows as $r): ?>
+<tr id="r_<?= $r['apid'] ?>">
+    <td>
+        <a href=""><?= $r['username'] ?></a>
+    </td>
+	<td>
+        <div style="width:100px; height:16px; overflow:hidden">
+        <a href="javascript:void(0)" onclick='$.facebox($(this).html())'>
+        <?php foreach(Logic_User_Base::in_uid($r['auid']) as $u) echo $u['username'].' '; ?>
+        </a>
+        </div>
+    </td>
+    <td style="color: rgb(212, 72, 72);"><?= $r['point'] ?><span class="f9">pt</span></td>
+    <td>
+        <div style="height:16px; overflow:hidden">
+        <a href="javascript:void(0)" onclick='$.facebox($(this).html())'><?= $r['memo'] ?></a>
+        </div>
+    </td>
+    <td class="quiet"><small><?= date('y-m-d H:i', $r['time']) ?></small></td>
+    <td><?php
+        if($r['is_finish'] == 0)
+        {
+            echo '<span style="color:gray">等待处理</span> ';
+            echo '<a href="javascript:handler('.$r['apid'].',1)">Ok</a> / 
+                  <a href="javascript:handler('.$r['apid'].',2)">No</a>';
+        }
+        if($r['is_finish'] == 1) echo '<span style="color:green">批准加分</span>';
+        if($r['is_finish'] == 2) echo '<span style="color:red">不予加分</span>'
+    ?>
+    </td>
+</tr>
+<?php endforeach; else: ?>
+<tr>
+	<td colspan="4">没有相关记录..</td>
+</tr>
+<?php endif; ?>
+</table>
+<div class="pg"><?= $this->pagination ?></div>
+
+<script>
+    function handler(id, flag)
+    {
+        $.post('/console/point/alog', {id:id, flag:flag},
+               function(data){ history.go(0); });
+    }
+</script>

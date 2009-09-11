@@ -6,6 +6,12 @@
 	 */
 	class Logic_User_Base extends DbModel
 	{
+		static function in_uid($uids)
+		{
+			return parent::User()->fetchAll('
+				SELECT `username` FROM `tb_base` WHERE `uid` IN ('.$uids.')');
+		}
+		
 		/**
 		 * 改变用户身份
 		 *

@@ -1,0 +1,50 @@
+<form id="apoint_form" method="post" onsubmit="return apoint()">
+	<table width="90%" class="mg10">
+		<tr>
+			<td class="txtr">为谁申请：</td>
+			<td>
+				<div id="incept_box" style="position:relative;">
+				<input name="uname" id="uname_box" type="text" value="" size="70" /> 
+				<a href="javascript:friends_box()">选择对象</a> | 
+				<a href="javascript:myself()">为自己</a>
+					<span id="friends_box"></span>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td class="txtr">申请分值：</td>
+			<td>
+				<input name="point" type="text" value="" size="10" /> 
+			</td>
+		</tr>
+		<tr>
+			<td class="txtr">缘由：</td>
+			<td>
+				<textarea name="memo" style="width:380px; height:200px"></textarea>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" class="txtc">
+				<input class="btn" type="submit" value="确定申请" />
+			</td>
+		</tr>
+	</table>
+	<input id="incepter" type="hidden" name="auid" value="<?= $_GET['uid'] ?>" />
+</form>
+	
+<script type="text/javascript">
+	function apoint(){
+		$('input:submit').val('发送中..').attr('disabled', true);
+		$.post('/public/point/award',
+			   $('#apoint_form').serializeArray(),
+			   function(data){
+			if(data != 'done'){ alert(data); $('input:submit').val('重新申请').attr('disabled', false); }
+			else { $('input:submit').val('申请成功'); location.href='/public/point/?tab=alog'; }
+		});
+		return false;
+	}
+	function myself(){
+		$('#incepter').val(<?= Cmd::uid(); ?>);
+		$('#uname_box').val('<?= Cmd::getSess('profile', 'username') ?>');  }
+	function friends_box(){ $('#friends_box').load('/space_msg/pm/friends'); }
+</script>

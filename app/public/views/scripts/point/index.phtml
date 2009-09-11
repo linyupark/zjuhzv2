@@ -10,7 +10,8 @@
 		<div class="tb-box">
 			<a href="/public/point/?tab=summary" <?= ($this->tab == 'summary')?'class="tb-on"':'class="tb-of"' ?>>基本摘要</a><span class="tb-rbg"></span>
 			<a href="/public/point/?tab=log" <?= ($this->tab == 'log')?'class="tb-on"':'class="tb-of"' ?>>增长记录</a><span class="tb-rbg"></span>
-			<a href="/public/point/?tab=award" <?= ($this->tab == 'award')?'class="tb-on"':'class="tb-of"' ?>>赠送</a><span class="tb-rbg"></span>
+			<a href="/public/point/?tab=award" <?= ($this->tab == 'award')?'class="tb-on"':'class="tb-of"' ?>>申请</a><span class="tb-rbg"></span>
+		<a href="/public/point/?tab=alog" <?= ($this->tab == 'alog')?'class="tb-on"':'class="tb-of"' ?>>申请记录</a><span class="tb-rbg"></span>
 		</div>
 		<?= $this->action($this->tab, 'point', 'public'); ?>
 		</div>

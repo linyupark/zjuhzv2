@@ -26,6 +26,55 @@
 			$this->view->limit = $limit;
 		}
 		
+		# 申请加分处理
+		function alogAction()
+		{
+			$db = DbModel::Log();
+			
+			if($this->getRequest()->isXmlHttpRequest())
+			{
+				$this->getHelper('viewRenderer')->setNoRender();
+				$params = $this->getRequest()->getParams();
+				$id = (int)$params['id'];
+				$row = $db->fetchRow('SELECT * FROM `tb_apoint` WHERE `apid` = ?', $id);
+				if($params['flag'] == '1' && $row['is_finish'] == 0) // 批准
+				{
+					$uids = explode(',', $row['auid']);
+					foreach($uids as $uid)
+					{
+						Logic_Api::apoint('user', $uid, $row['point'], $row['memo'], time(), $row['uid']);
+					}
+					$db->update('tb_apoint', array('is_finish'=>1), 'apid = '.$id);
+				}
+				if($params['flag'] == '2' && $row['is_finish'] == 0)
+				{
+					$db->update('tb_apoint', array('is_finish'=>2), 'apid = '.$id);
+				}
+			}
+			$pagesize = 10;
+			$page = $this->_getParam('p',1);
+			$select = $db->select();
+			$counter = array('numrows' => 'COUNT(`apid`)');
+			$select->from(array('ap' => 'tb_apoint'), $counter);
+			$numrows = $db->fetchOne($select);
+			//var_dump($numrows);
+			//var_dump($page);
+			Alp_Page::$pagesize = $pagesize;
+			$pagination = Alp_Page::create(array(
+				'href_open' => '<a href="/console/point/?tab=alog&p=%d">',
+				'href_close' => '</a>',
+				'num_rows' => $numrows,
+				'cur_page' => $page
+			));
+			$select->reset(Zend_Db_Select::COLUMNS)->columns(array('ap.*','u.username'));
+			$select->joinLeft(array('u'=>'zjuhzv2_user.tb_base'), 'u.uid = ap.uid',null);
+			$select->order('time DESC')->limit($pagesize, Alp_Page::$offset);
+			//echo $select->__toString();
+			//var_dump($pagination);
+			$this->view->rows = $db->fetchAll($select);
+			$this->view->pagination = $pagination;
+		}
+		
 		/**
 		 * 热心度增长排行
 		 *

@@ -5,7 +5,22 @@
 	 *
 	 */
 	class Logic_Log extends DbModel 
-	{	
+	{
+		/**
+		 * 用户申请加分
+		 * */
+		public static function apoint($params)
+		{
+			parent::Log()->insert('tb_apoint',
+			array(
+				'uid' => $params['uid'],
+				'auid' => $params['auid'],
+				'memo' => $params['memo'],
+				'time' => time(),
+				'point' => $params['point'],
+			));
+		}
+		
 		/**
 		 * 用户首页显示动态信息
 		 *

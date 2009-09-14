@@ -3,12 +3,9 @@
 		<tr>
 			<td class="txtr">为谁申请：</td>
 			<td>
-				<div id="incept_box" style="position:relative;">
-				<input name="uname" id="uname_box" type="text" value="" size="70" /> 
-				<a href="javascript:friends_box()">选择对象</a> | 
+				<div id="ps_box" class="pd5 quiet">输入想要申请人的姓名，多个姓名请用英文半角空格分隔</div>
+				<input onkeypress="ref_list()" name="uname" id="uname_box" type="text" value="" size="70" /> 
 				<a href="javascript:myself()">为自己</a>
-					<span id="friends_box"></span>
-				</div>
 			</td>
 		</tr>
 		<tr>
@@ -29,10 +26,12 @@
 			</td>
 		</tr>
 	</table>
+	<input id="checkflag" type="hidden" value="0" />
 	<input id="incepter" type="hidden" name="auid" value="<?= $_GET['uid'] ?>" />
 </form>
 	
 <script type="text/javascript">
+	var t = 0;
 	function apoint(){
 		$('input:submit').val('发送中..').attr('disabled', true);
 		$.post('/public/point/award',
@@ -43,8 +42,22 @@
 		});
 		return false;
 	}
+	function ref_list()
+	{
+		t = 0;
+		setTimeout('show_names()', 500);
+	}
+	function show_names()
+	{
+		var v = $('#uname_box').val();
+		if(t == 0)
+		{
+			t++;
+			$('#ps_box').load('/public/point/forwho', {uname:v});
+		}
+	}
 	function myself(){
 		$('#incepter').val(<?= Cmd::uid(); ?>);
-		$('#uname_box').val('<?= Cmd::getSess('profile', 'username') ?>');  }
-	function friends_box(){ $('#friends_box').load('/space_msg/pm/friends'); }
+		$('#uname_box').val('<?= Cmd::getSess('profile', 'username') ?>');
+	}
 </script>

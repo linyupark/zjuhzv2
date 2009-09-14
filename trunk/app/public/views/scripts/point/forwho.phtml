@@ -1,0 +1,29 @@
+<?php
+    if(count($this->rows) > 0): foreach($this->rows as $i => $v):
+?>
+<input onclick="ref_incepter()" id="u_<?= $i ?>" name="suser[]" type="checkbox" value="<?= $v['uid'] ?>" checked="checked" />
+<label for='u_<?= $i ?>'><a target="_blank" href="/space_home/?uid=<?= $v['uid'] ?>"><?= $v['username'] ?></a></label>
+<?php endforeach; ?>
+<script type="text/javascript">
+    function ref_incepter()
+    {
+        var o = $('input[name="suser[]"]:checked');
+        var onum = o.length;
+        var v = '';
+        if(onum == 1) v = o.eq(0).val();
+        else
+        {
+            o.each(function(i){
+                if((i+1)!=onum)
+                    v += this.value+',';
+                else
+                    v += this.value;
+            });
+        }
+        $('#incepter').val(v);
+    }
+    ref_incepter();
+</script>
+<?php else: ?>
+输入想要申请人的姓名，多个姓名请用英文半角空格分隔
+<?php endif; ?>

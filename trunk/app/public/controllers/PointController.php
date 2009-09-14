@@ -86,6 +86,29 @@
             }
 		}
 		
+		function forwhoAction()
+		{
+			if($this->getRequest()->isXmlHttpRequest())
+			{
+				//$this->getHelper('viewRenderer')->setNoRender();
+				
+				$names = explode(' ', $this->_getParam('uname'));
+				if(count($names) > 0)
+				{
+					$in = '';
+					foreach($names as $v)
+					{
+						$in .= '"'.$v.'",';
+					}
+					$in = substr($in, 0, -1);
+					$db = DbModel::User();
+					$rows = $db->fetchAll('SELECT `username`,`uid`,`point`
+								  FROM `tb_base` WHERE `username` IN ('.$in.')');
+					$this->view->rows = $rows;
+				}
+			}
+		}
+		
 		/**
 		 * 申请热心度
 		 *

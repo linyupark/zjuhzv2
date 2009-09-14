@@ -10,14 +10,18 @@
 ?>
 <table class="pd5" width="100%">
 	<tr>
-		<td width="20%" class="txtc"><img src="<?= Alp_Url::img('v1/degup.jpg') ?>" /></td>
+		<td width="20%" class="txtc">
+			<img src="<?= Alp_Url::img('v1/degup.jpg') ?>" /><br />
+			  排名:<b style="font-size:18px;"><?= Logic_Api::rankpoint(Cmd::getSess('profile','point')) ?></b>
+			  <br />
+			  <a style="color:red;" href="/public/point/?tab=award">申请加分</a>
+		</td>
 		<td>
 			<h2 style="color:#D44848">恭喜，您的热心度增加了^_^</h2>
 			<ul class="quiet">
 			<?php foreach ($this->params as $key => $pt): if(isset($alias[$key])): ?>
 			<li><?= $alias[$key] ?>增加 <b style="color:#D44848"><?= $pt ?>pt</b></li>
 			<?php endif; endforeach; ?>
-			<li><a style="color:red;" href="/public/point/?tab=award">申请加分</a></li>
 			</ul>
 			<br />
 			<span class="quiet">

@@ -73,9 +73,9 @@
                 $this->getHelper('viewRenderer')->setNoRender();
                 $params = $this->getRequest()->getParams();
                 $uid = Cmd::uid();
-                if(!$params['auid'] || (int)$params['point'] == 0 || trim($params['memo']) == '')
+                if(!$params['auid'] || (int)$params['point'] > 10 || (int)$params['point'] == 0 || trim($params['memo']) == '')
                 {
-                    echo '输入的数据有问题，请完整输入';
+                    echo '分值最高不能超过10分,所有选项都必须填写，请重新审查申请表单~';
                 }
                 else
 				{

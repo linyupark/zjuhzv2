@@ -8,6 +8,7 @@
 	{
 		function init()
 		{
+            ini_set('memory_limit', '-1');
             set_time_limit(0);
 			Zend_Layout::getMvcInstance()->disableLayout();
 			$this->getHelper('viewRenderer')->setNoRender();

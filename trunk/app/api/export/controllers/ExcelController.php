@@ -8,6 +8,7 @@
 	{
 		function init()
 		{
+            set_time_limit(0);
 			Zend_Layout::getMvcInstance()->disableLayout();
 			$this->getHelper('viewRenderer')->setNoRender();
 		}

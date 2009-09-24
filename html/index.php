@@ -5,7 +5,6 @@
 						 . PATH_SEPARATOR . get_include_path());
 	
 	date_default_timezone_set('Asia/Shanghai');
-        
 
 	define('DOMAIN', 'www.zjuhz.com');
 	define('HTMLROOT', $_SERVER['DOCUMENT_ROOT']);

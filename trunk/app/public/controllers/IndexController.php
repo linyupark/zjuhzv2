@@ -14,6 +14,7 @@
 		function testAction()
 		{
 			$this->getHelper('viewRenderer')->setNoRender();
+            echo phpinfo();
 			//Zend_Debug::dump(array_unique(Logic_Api::user(2)));
 		}
 		

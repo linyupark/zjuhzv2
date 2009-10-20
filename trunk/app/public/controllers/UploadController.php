@@ -117,7 +117,7 @@
 				if(!file_exists($path)) mkdir($path, 0777);
 				Alp_Upload::init(array(
 					'type' => 'rar|zip|doc|xls|ppt|7z|mp3|pdf',
-					'maxsize' => 8000,
+					'maxsize' => 12000,
 					'random' => true,
 					'path' => $path.'/'
 				));

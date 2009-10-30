@@ -54,5 +54,7 @@ var pageTracker = _gat._getTracker("UA-399951-3");
 pageTracker._trackPageview();
 } catch(err) {}</script>
 
+
+<?php setcookie("crossid", session_id(), time()+3600, "/", ".zjuhz.com"); ?>
 </body>
 </html>

@@ -8,8 +8,9 @@
 			<?php if(count($this->rows)): foreach($this->rows as $i => $r): ?>
 			<tr <?= $i%2==1?'class="bcolor-g"':'' ?>>
 				<td>
-                    <?php if($r['group'] > 0): ?>
+                    <?php if($r['type'] != 'news' && $r['type'] != 'help'): ?>
                     <select onchange="changegroup(<?= $r['tid'] ?>, this.value)">
+                        <option value="0">无群组</option>
                         <?php foreach($this->groups as $group): ?>
                         <option value="<?= $group['gid'] ?>" 
                         <?php if($group['gid'] == $r['group']): ?>selected="selected"<?php endif; ?>><?= $group['name'] ?></option>

@@ -8,6 +8,14 @@
 			<?php if(count($this->rows)): foreach($this->rows as $i => $r): ?>
 			<tr <?= $i%2==1?'class="bcolor-g"':'' ?>>
 				<td>
+                    <?php if($r['group'] > 0): ?>
+                    <select onchange="changegroup(<?= $r['tid'] ?>, this.value)">
+                        <?php foreach($this->groups as $group): ?>
+                        <option value="<?= $group['gid'] ?>" 
+                        <?php if($group['gid'] == $r['group']): ?>selected="selected"<?php endif; ?>><?= $group['name'] ?></option>
+                        <?php endforeach; ?>
+                    </select><br />
+                    <?php endif; ?>
 					<img src="<?= Alp_Url::img('icon/1616/'.$this->icons[$r['type']]) ?>" />
 					<a <?= $r['ding'] == 1?'style="color:red"':'' ?> target="_blank" href="/space_bar/<?= $r['type'] ?>/view?tid=<?= $r['tid'] ?>">
 						<?= stripslashes($r['title']); ?>
@@ -35,6 +43,10 @@
 		</table>
 	<div class="pg"><?= $this->pagination ?></div>
 <script type="text/javascript">
+function changegroup(tid, gid)
+{
+    $.post('/console/bar/mgroup', {tid:tid,gid:gid});
+}
 function ptime(tid){
 	var v = $('#ptime_'+tid).val();
 	$.post('/console/bar/mtime', {pubtime:v,tid:tid}, function(data){

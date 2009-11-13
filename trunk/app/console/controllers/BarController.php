@@ -72,6 +72,20 @@
 			}
 			else echo '时间格式错误';
 		}
+
+		/**
+		 * 改所属群组
+		 *
+		 */
+		function mgroupAction()
+		{
+			$this->getHelper('viewRenderer')->setNoRender();
+			$gid = $this->_getParam('gid');
+			$tid = $this->_getParam('tid');
+			DbModel::Space()->update('tb_tbar',
+				array('group' => $gid),
+				'tid = '.$tid);
+		}
 		
 		/**
 		 * 修改类名
@@ -181,11 +195,14 @@
 							  array('gname' => 'g.name', 'gtype' => 'g.type'));
 							  
 			$select->order('b.pubtime DESC');
-			
+
+            $groups = DbModel::Space()->fetchAll('SELECT `name`,`gid` FROM `tb_group`');
+
 			$this->view->numrows = $numrows;
 			$this->view->range = $range;
 			$this->view->key = $key;
 			$this->view->rows = $select->query()->fetchAll();
+            $this->view->groups = $groups;
 			$this->view->icons = Zend_Registry::get('config')->bar_icon->toArray();
 		}
 		

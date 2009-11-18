@@ -139,7 +139,7 @@
 			if($row[0]['numrows'] > $pagesize)
 			{
 				Alp_Page::create(array(
-					'href_open' => '<a href="?type=news&order='.$order.'&where='.$where.'&sort='.$sort.'&state='.$state.'&p=%d">',
+					'href_open' => '<a href="?type=help&order='.$order.'&where='.$where.'&sort='.$sort.'&state='.$state.'&p=%d">',
 					'href_close' => '</a>',
 					'num_rows' => $row[0]['numrows'],
 					'cur_page' => $page

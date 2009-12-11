@@ -51,7 +51,7 @@
 	            {
 	                $objPHPExcel->getActiveSheet()->SetCellValue('A'.$row, $m['rname']);
 	                $objPHPExcel->getActiveSheet()->SetCellValue('B'.$row, $m['tnum']);
-	                $objPHPExcel->getActiveSheet()->SetCellValue('C'.$row, Zend_Registry::get('config')->campus->name->$m['college'].$m['major'].'('.$m['year'].'年)');
+	                $objPHPExcel->getActiveSheet()->SetCellValue('C'.$row, Zend_Registry::get('config')->campus->name->$m['campus'].$m['class'].'('.$m['year'].'年)');
 	                $objPHPExcel->getActiveSheet()->SetCellValue('D'.$row, $m['mobile']);
 	                $objPHPExcel->getActiveSheet()->SetCellValue('E'.$row, '');
 	                $row++;
@@ -94,6 +94,7 @@
 					}
 				}
 				$this->view->list = $list;
+                //var_dump($list);
 				$this->view->tickets = $tickets;
 			}
 			$this->view->station = Logic_Addon_Booking::getStation($pid, $id);

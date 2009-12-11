@@ -45,6 +45,7 @@
 				$this->view->party = $party;
 				$this->view->pid = $this->params['id'];
 			}
+            //var_dump($_SESSION);
 		}
 		
 		/**
@@ -115,12 +116,22 @@
 			$this->view->party = $party;
 			$this->view->pid = $this->params['id'];
 			$this->view->uid = $this->params['uid'];
+            /*
 			// v1版本基本信息
 			$this->view->rname = $this->params['realName'];
 			$this->view->year = $this->params['year'];
 			$this->view->college = $this->params['college'];
 			$this->view->major = $this->params['major'];
-			$this->view->mobile = $this->params['mobile'];
+			$this->view->mobile = $this->params['mobile'];*/
+
+            $user_profile = Cmd::getSess('profile');
+            $user_edu = Logic_User_Edu::get($user_profile['uid']);
+            $this->view->rname = $user_profile['username'];
+			$this->view->year = $user_edu[0]['year'];
+			$this->view->college = $user_edu[0]['campus'];
+			$this->view->major = $user_edu[0]['class'];
+			$this->view->mobile = $user_profile['mobile'];
+            //var_dump($user_edu);
 		}
 		
 		/**

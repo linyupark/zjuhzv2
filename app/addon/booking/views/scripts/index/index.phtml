@@ -33,22 +33,12 @@
 <script type="text/javascript">
 function booking_box()
 {
-	// v1
 	$('#booking_box').html('<td></td><td colspan="2"><img src="<?= Alp_Url::img('icon/loading/v3.gif') ?>" /></td>');
-	$.getJSON(
-		'http://www.zjuhz.com/group/api/?jsoncallback=?',null,
-		function(data)
-		{
-			if(data.result == 'success')
-			{
-				$('#booking_box').load('/addon_booking/index/bookingform?id=<?= $this->pid ?>', data);
-			}
-			else
-			{
-				$('#booking_box').html('您尚未登录本站无法进行在线订票，<a style="text-decoration:underline" href="http://www.zjuhz.com/member/login">请先登录网站</a>');
-			};
-		}
-	);
+    <?php if(Cmd::uid()): ?>
+    $('#booking_box').load('/addon_booking/index/bookingform?id=<?= $this->pid ?>');
+    <?php else: ?>
+    $('#booking_box').html('您尚未登录本站无法进行在线订票，<a style="text-decoration:underline" href="/">请先登录网站</a>');
+    <?php endif; ?>
 }
 function countor()
 {

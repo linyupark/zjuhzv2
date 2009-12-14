@@ -33,6 +33,7 @@ function login_form()
 {
     $('.valid_tip').empty();
     $('#submit').val('登录中..').attr('disabled', true);
+    //$.post('/public/login/dologin', $('#login_form').serializeArray(), function(data){ alert(data) });
     $.getJSON(
         '/public/login/dologin',
         $('#login_form').serializeArray(),
@@ -43,11 +44,19 @@ function login_form()
                     $('#'+name).html(value);
                 });
         	}
+            else{
         	<?php if($this->relogin): ?>
-        	else data.goto == null ? history.go(0) : location.href=data.goto;
+                if(data.goto == undefined)
+                    history.go(0);
+                else
+                    location.href=data.goto;
         	<?php else: ?>
-            else data.goto == null ? location.href='/' : location.href=data.goto;
+                if(data.goto == undefined)
+                    location.href='/';
+                else
+                    location.href=data.goto;
             <?php endif; ?>
+            }
             $('#submit').val('登录').attr('disabled', false);
         }
     );

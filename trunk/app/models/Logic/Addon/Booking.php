@@ -73,7 +73,8 @@
 					'ticket' => $params['ticket'],
 					'left' => $params['ticket'],
 					'password' => $params['password'],
-					'limit' => $params['limit']
+					'limit' => $params['limit'],
+                    'degree' => $params['degree'],
 				));
 				$id = $db->lastInsertId();
 				foreach($params['address'] as $address)
@@ -139,7 +140,8 @@
 					'ticket' => $params['ticket'],
 					'password' => $params['password'],
 					'limit' => $params['limit'],
-					'left' => $left
+					'left' => $left,
+                    'degree' => $params['degree'],
 				), 'id='.$pid);
 				foreach($params['address'] as $aid => $address)
 				{

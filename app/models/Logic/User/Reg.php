@@ -97,7 +97,8 @@
             		'username' => $data['username'],
             		'sex' => $data['sex'],
             		'role' => $data['role'],
-            		'regtime' => time()
+            		'regtime' => time(),
+                    'lastlogin' => time(),
             	));
             	
             	// 获取注册后的个人id

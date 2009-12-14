@@ -72,6 +72,21 @@
 					Alp_Sys::msg('error', '只剩下'.$left.'张票，请减少订票数');
 					$left = $left - $this->params['tnum'];
 				}
+
+                // 热心度不到要求
+                $degree_limit = (int)$party['degree'];
+                $degree = Logic_Api::percentpoint(Cmd::getSess('profile','point'));
+                if($degree_limit > $degree)
+                {
+                    Alp_Sys::msg('error', '您的热心度没有达到'.$degree_limit.'度，很遗憾您不能订票');
+                }
+
+                // 手机号码必须填写
+                if((int)$this->params['mobile'] == 0)
+                {
+                    Alp_Sys::msg('error', '请前往<a href="/space_set/profile/contact">完善您的个人信息</a>（手机必填）');
+                }
+
 				$member[$this->params['uid']] = array('tnum'=>$this->params['tnum'],
 														'address'=>$this->params['address'],
 														'rname'=>$this->params['rname'],

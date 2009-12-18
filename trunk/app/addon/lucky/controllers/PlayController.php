@@ -57,18 +57,18 @@ class Addon_Lucky_PlayController extends Zend_Controller_Action
         $user_profile = Cmd::getSess('profile');
         $uid = Cmd::uid();
         $this->getHelper('viewRenderer')->setNoRender();
-        if( ! isset($_COOKIE['lucky_try_num']))
+        if( ! Cmd::getSess('lucky_try'))
         {
-            setcookie('lucky_try_num', 0);
+            Cmd::setSess('lucky_try', 0);
         }
-        $try_num = (int)$_COOKIE['lucky_try_num'];
+        $try_num = (int)Cmd::getSess('lucky_try');
         // 防止直接javascript刷
         if($try_num >= 3)
         {
             echo '超过指定次数';
             exit;
         }
-        setcookie('lucky_try_num', $try_num+1);
+        Cmd::setSess('lucky_try', $try_num+1);
 
         if($user_profile['role'] == 'bench')
         {

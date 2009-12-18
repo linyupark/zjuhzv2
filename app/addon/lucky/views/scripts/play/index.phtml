@@ -1,0 +1,39 @@
+<div class="yui-main">
+    <div class="mg5 section yui-g">
+		<div class="yui-u first" style="width:80%">
+            <b><?= $this->party['name'] ?></b>
+		</div>
+		<div class="yui-u txtr" style="width:20%">
+			<a href="javascript:history.back()">返回上一页</a>
+		</div>
+	</div>
+    <h1 class="txtc">
+        剩余名额 
+        <span style="color:yellow; background:#000; padding:2px"><?= $this->party['lucky_num'] - count($this->luckymen) ?></span>
+        快来试试手气吧~
+        【<a href="/addon_lucky/play/luckymen?id=<?= $this->party['id'] ?>">幸运者名单</a>】
+    </h1>
+    <div class="txtc"><?= $this->party['content'] ?></div>
+    <hr />
+    <div class="txtc">
+    <?php for($i=0;$i<3;$i++): ?>
+    <a id="card_<?= $i ?>" href="javascript:roll(<?= $i ?>)"
+       style="
+       text-decoration:none;
+       width:33%;
+       display:block;
+       padding:30px 0;
+       float:left;"><img src="/im/lucky/roll_stop.jpg" /></a>
+    <?php endfor; ?>
+    </div>
+</div>
+<img style="display:none" src="/im/lucky/roll.gif" />
+<img style="display:none" src="/im/lucky/nolucky.gif" />
+<img style="display:none" src="/im/lucky/bingo.jpg" />
+<?php //Zend_Debug::dump($_SESSION); ?>
+<script type="text/javascript">
+function roll(i){
+    $('#card_'+i).html('<img src="/im/lucky/roll.gif" />');
+    $('#card_'+i).load('/addon_lucky/play/roll?id=<?= $this->party['id'] ?>');
+}
+</script>

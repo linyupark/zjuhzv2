@@ -1,0 +1,37 @@
+<div class="yui-main">
+    <div class="mg5 section yui-g">
+		<div class="yui-u first" style="width:80%">
+            <b>中奖名单</b>
+		</div>
+		<div class="yui-u txtr" style="width:20%">
+			<a href="javascript:history.back()">返回上一页</a>
+		</div>
+	</div>
+    <div class="txtc"><img src="/im/lucky/bingo.jpg" /></div>
+    <h1 class="txtc">【中奖名单】【<a href="/addon_lucky/play?id=<?= $_GET['id'] ?>">返回抽奖页面</a>】</h1>
+    <hr />
+    <?php if(count($this->luckymen) == 0): ?>
+    <b>第一位幸运儿还没诞生</b>
+    <?php else: ?>
+    <table id="lucky_tb" width="100%">
+        <?php
+            foreach($this->luckymen as $man):
+            $info = explode('/', $man['info']);
+        ?>
+        <tr>
+            <td>
+                <?= $info[0] ?>[id:<?= $man['id'] ?>]
+                <?php if(Cmd::role() == 'master'): ?>
+                【管理员可见：<?= $man['info'] ?>】
+                <?php endif; ?>
+            </td>
+            <td><?= $man['got_at'] ?></td>
+        </tr>
+        <?php endforeach ?>
+    </table>
+    <?php endif ?>
+</div>
+
+<script type="text/javascript">
+    $('#lucky_tb tr:odd').css('background', '#eee');
+</script>

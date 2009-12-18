@@ -5,7 +5,27 @@
 	 *
 	 */
 	class Filter_Addon
-	{	
+	{
+        public static function lucky($params)
+        {
+            $params['name'] = Alp_Valid::of($params['name'], 'name', '抽奖活动名称', 'trim|strip_tags|required');
+            $params['content'] = Alp_Valid::of($params['content'], 'content', '活动介绍', 'trim|required');
+            $params['lucky_num'] = Alp_Valid::of($params['lucky_num'], 'lucky_num', '总中奖数', 'trim|numeric');
+            $params['lucky_rate'] = Alp_Valid::of($params['lucky_rate'], 'lucky_rate', '中奖几率', 'trim|numeric');
+            $params['lucky_limit'] = Alp_Valid::of($params['lucky_limit'], 'lucky_limit', '每人中奖上限', 'trim|numeric');
+            $params['start_at'] = trim($params['start_at']);
+            $params['stop_at'] = trim($params['stop_at']);
+            $start_at = strtotime($params['start_at']);
+            $stop_at = strtotime($params['stop_at']);
+            if( ! $start_at)
+            Alp_Sys::msg('start_at', '开始时间格式有错误');
+            if( ! $stop_at)
+            Alp_Sys::msg('stop_at', '结束时间格式有错误');
+            if($start_at >= $stop_at)
+            Alp_Sys::msg('stop_at', '结束时间过早');
+            return $params;
+        }
+
 		/**
 		 * 联盟企业信息
 		 *

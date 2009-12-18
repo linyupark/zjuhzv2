@@ -37,6 +37,7 @@ class Addon_Lucky_PlayController extends Zend_Controller_Action
         }
         elseif(Logic_Addon_Lucky::isPlayed($id, $uid))
         {
+            $this->view->party = $this->party;
             $this->render('played');
         }
         elseif(Logic_Addon_Lucky::luckyLimit($id, $uid, $this->party['lucky_limit']))

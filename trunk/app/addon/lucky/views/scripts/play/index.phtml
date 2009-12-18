@@ -33,6 +33,7 @@
 <?php //Zend_Debug::dump($_SESSION); ?>
 <script type="text/javascript">
 function roll(i){
+    $('#card_'+i).attr('href', '');
     $('#card_'+i).html('<img src="/im/lucky/roll.gif" />');
     $('#card_'+i).load('/addon_lucky/play/roll?id=<?= $this->party['id'] ?>');
 }

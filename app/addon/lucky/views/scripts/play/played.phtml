@@ -7,11 +7,16 @@
 			<a href="javascript:history.back()">返回上一页</a>
 		</div>
 	</div>
+    <h1 class="txtc">
+        剩余名额
+        <span style="color:yellow; background:#000; padding:2px"><?= $this->party['lucky_num'] - count($this->luckymen) ?></span>
+        快来试试手气吧~
+        【<a href="/addon_lucky/play/luckymen?id=<?= $this->party['id'] ?>">幸运者名单</a>】
+    </h1>
     <div class="txtc"><img src="/im/lucky/nochance.gif" /></div>
-
+    
     <h1 class="txtc">
         今天你已经玩过了哦~明天再来吧
-        【<a href="/addon_lucky/play/luckymen?id=<?= @$_GET['id'] ?>">幸运者名单</a>】
     </h1>
 
 </div>

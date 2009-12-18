@@ -117,20 +117,24 @@
 		{
 			$party = Logic_Addon_Booking::getParty($this->params['id']);
 			$stations = Logic_Addon_Booking::getStations($this->params['id']);
+            // v1
+            //$uid = $this->params['uid'];
+            // v2
+            $uid = Cmd::uid();
 			// 已经报名名单
 			$members = unserialize($party['member']);
-			if(isset($members[$this->params['uid']]))
+			if(isset($members[$uid]))
 			{
 				// 更改订票数据
-				$this->view->ticket = $members[$this->params['uid']]['tnum'];
-				$this->view->address = $members[$this->params['uid']]['address'];
+				$this->view->ticket = $members[$uid]['tnum'];
+				$this->view->address = $members[$uid]['address'];
 				$this->view->save = '保存修改';
 			}
 			//Zend_Debug::dump($this->params);
 			$this->view->stations = $stations;
 			$this->view->party = $party;
 			$this->view->pid = $this->params['id'];
-			$this->view->uid = $this->params['uid'];
+			$this->view->uid = $uid;
             /*
 			// v1版本基本信息
 			$this->view->rname = $this->params['realName'];
@@ -140,7 +144,7 @@
 			$this->view->mobile = $this->params['mobile'];*/
 
             $user_profile = Cmd::getSess('profile');
-            $user_edu = Logic_User_Edu::get($user_profile['uid']);
+            $user_edu = Logic_User_Edu::get($uid);
             $this->view->rname = $user_profile['username'];
 			$this->view->year = $user_edu[0]['year'];
 			$this->view->college = $user_edu[0]['campus'];

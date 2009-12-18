@@ -8,14 +8,14 @@
 	<div class="pdlr10">
 		<table class="table-dashed" width="100%">
 			<tr>
-				<td width="100"><a href="/addon_booking/station/?pid=<?= $this->pid ?>">状态</a></td>
+				<td width="100"><a href="/addon_booking/station/?pid=<?= $this->pid ?>">得票人员名单</a></td>
 				<?php if($this->party['left'] > 0): ?>
 				<td width="580" class="txtl">
 					<div class="rate_bg"><div class="rate_1" style="width:<?= 580*($this->party['left']/$this->party['ticket'])  ?>px"></div></div>
 				</td>
 				<td>
 				<b class="f14">
-					(<?= $this->party['left'] .'/'. $this->party['ticket'] ?>)
+					(剩余：<?= $this->party['left'] .'/ 总数：'. $this->party['ticket'] ?>)
 				</b>
 				</td>
 				<?php else: ?>

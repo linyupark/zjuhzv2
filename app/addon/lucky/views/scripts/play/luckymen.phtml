@@ -8,7 +8,7 @@
 		</div>
 	</div>
     <div class="txtc"><img src="/im/lucky/bingo.jpg" /></div>
-    <h1 class="txtc">【中奖名单】【<a href="/addon_lucky/play?id=<?= $_GET['id'] ?>">返回抽奖页面</a>】</h1>
+    <h1 class="txtc">【中奖名单】【<a href="/addon_lucky/play?id=<?= @$_GET['id'] ?>">返回抽奖页面</a>】</h1>
     <hr />
     <?php if(count($this->luckymen) == 0): ?>
     <b>第一位幸运儿还没诞生</b>
@@ -23,6 +23,7 @@
                 <?= $info[0] ?>[id:<?= $man['id'] ?>]
                 <?php if(Cmd::role() == 'master'): ?>
                 【管理员可见：<?= $man['info'] ?>】
+                【<a href="?id=<?= @$_GET['id'] ?>&uid=<?= $man['id'] ?>">删除</a>】
                 <?php endif; ?>
             </td>
             <td><?= $man['got_at'] ?></td>

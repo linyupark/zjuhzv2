@@ -15,7 +15,12 @@ class Addon_Lucky_PlayController extends Zend_Controller_Action
 
     function luckymenAction()
     {
-        $format = $this->_getParam('format', 'open');
+        $uid = $this->_getParam('uid');
+        if($uid && Cmd::role() == 'master')
+        {
+            DbModel::getSqlite(Logic_Addon_Lucky::DBNAME)
+            ->delete('luckyman', 'id = '.(int)$uid);
+        }
         $luckymen = Logic_Addon_Lucky::getLuckymen($this->party['id']);
         $this->view->luckymen = $luckymen;
     }

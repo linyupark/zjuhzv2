@@ -1,0 +1,82 @@
+<?php $party = @$this->party; ?>
+<div class="yui-main">
+    <div class="mg5 section yui-g">
+		<div class="yui-u first" style="width:80%">
+            <b><?= $this->title ?></b>
+            <a href="/addon_lucky/set">返回列表</a>
+		</div>
+		<div class="yui-u txtr" style="width:20%">
+			<a href="javascript:history.back()">返回上一页</a>
+		</div>
+	</div>
+    <form id="lucky_party_form" onsubmit="return lucky_form()" method="post">
+        <table width="80%">
+            <tr>
+                <td>抽奖名称</td>
+                <td><input size="80" type="text" name="name" value="<?= $party['name'] ?>" /></td>
+            </tr>
+            <tr>
+                <td>中奖名额</td>
+                <td><input size="10" type="text" name="lucky_num" value="<?= $party['lucky_num'] ?>" /></td>
+            </tr>
+            <tr>
+                <td>中奖几率</td>
+                <td><input size="10" type="text" name="lucky_rate" value="<?= $party['lucky_rate'] ?>" /> 之一 ( 数值越大中奖率越低 )</td>
+            </tr>
+            <tr>
+                <td>每人中奖上限</td>
+                <td><input size="10" type="text" name="lucky_limit" value="<?= $party['lucky_num'] ?>" /> 次</td>
+            </tr>
+            <tr>
+                <td>开始时间</td>
+                <td><input size="20" type="text" name="start_at" value="<?= $party['start_at'] ? $party['start_at'] : date('Y-m-d H:i:s') ?>" /></td>
+            </tr>
+            <tr>
+                <td>结束时间</td>
+                <td><input size="20" type="text" name="stop_at" value="<?= $party['stop_at'] ? $party['stop_at'] : date('Y-m-d H:i:s') ?>" /></td>
+            </tr>
+            <tr>
+                <td class="txtr">上传图片：</td>
+                <td id="upload_form"></td>
+            </tr>
+            <tr>
+                <td>介绍</td>
+                <td>
+                    <?= Cmd::fck('content',$party['content'],'450px','99%','Default') ?>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="hidden" name="id" value="<?= $party['id'] ?>"</td>
+                <td><input id="submit" type="submit" value="<?= $this->title ?>" class="btn" /></td>
+            </tr>
+        </table>
+    </form>
+    <iframe name="pic_frame" src="/addon_console/booking/upload" class="hide"></iframe>
+</div>
+
+<script type="text/javascript">
+	function lucky_form()
+	{
+		$('#submit').attr('disabled', true).val('waiting...');
+		$('#content').val(FCKeditorAPI.GetInstance("content").GetXHTML());
+		$.post(
+			'/addon_lucky/set/post',
+			$('#lucky_party_form').serializeArray(),
+			function(data){
+				if(data == 'success')
+				{
+					$('#submit').val('<?= $this->title ?>成功');
+				}
+				else
+				{
+					alert(data);
+					$('#submit').val('<?= $this->title ?>');
+				}
+                $('#submit').attr('disabled', false);
+			}
+		);
+		return false;
+	}
+	function insert_html(html){FCKeditorAPI.GetInstance("content").InsertHtml(html);upreload();}
+	$('#upload_form').load('/addon_console/booking/uploadform');
+</script>

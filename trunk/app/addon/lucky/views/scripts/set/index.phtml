@@ -1,0 +1,26 @@
+<div class="yui-main">
+    <div class="mg5 section yui-g">
+		<div class="yui-u first" style="width:80%">
+            <b>抽奖活动列表</b>
+		</div>
+		<div class="yui-u txtr" style="width:20%">
+			<a href="javascript:history.back()">返回上一页</a>
+		</div>
+	</div>
+    <table class="table-dashed" width="100%">
+        <tr>
+            <td><input onclick="location.href='/addon_lucky/set/form'" type="button" class="btn" value="创建新抽奖" /></td>
+        </tr>
+        <?php if(count($this->partys) > 0): ?>
+        <?php foreach($this->partys as $party): ?>
+        <tr>
+            <td><a href="/addon_lucky/play/?id=<?= $party['id'] ?>"><?= $party['name'] ?></a></td>
+            <td>
+                <a href="/addon_lucky/set/form/?id=<?= $party['id'] ?>">修改</a>
+                <!-- <a href="/addon_lucky/set/del/?id=<?= $party['id'] ?>">删除</a> -->
+            </td>
+        </tr>
+        <?php endforeach; ?>
+        <?php endif; ?>
+    </table>
+</div>

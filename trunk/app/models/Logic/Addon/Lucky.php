@@ -60,12 +60,12 @@
         static function isPlayed($id, $uid)
         {
             $row = parent::getSqlite(self::DBNAME)
-            ->fetchRow('SELECT * FROM `log` WHERE `user_id` = ? AND `party_id` = ?', array($uid, $id));
+            ->fetchOne('SELECT `play_at` FROM `log` WHERE `user_id` = ? AND `party_id` = ? ORDER BY `play_at` DESC', array($uid, $id));
             if( ! $row) return false;
             else
             {
                 $today = date('Y-m-d');
-                if(strstr($row['play_at'], $today))
+                if(strstr($row, $today))
                 return true;
                 else return false;
             }

@@ -29,6 +29,8 @@ class Addon_Lucky_PlayController extends Zend_Controller_Action
     {
         $id = $this->party['id'];
         $uid = Cmd::uid();
+        $this->view->party = $this->party;
+        $this->view->luckymen = Logic_Addon_Lucky::getLuckymen($id);
         if(strtotime($this->party['start_at']) > time() || strtotime($this->party['stop_at']) < time())
         {
             $this->view->start_at = $this->party['start_at'];
@@ -37,17 +39,12 @@ class Addon_Lucky_PlayController extends Zend_Controller_Action
         }
         elseif(Logic_Addon_Lucky::isPlayed($id, $uid))
         {
-            $this->view->party = $this->party;
+            
             $this->render('played');
         }
         elseif(Logic_Addon_Lucky::luckyLimit($id, $uid, $this->party['lucky_limit']))
         {
             $this->render('toogreed');
-        }
-        else
-        {
-            $this->view->luckymen = Logic_Addon_Lucky::getLuckymen($id);
-            $this->view->party = $this->party;
         }
     }
 

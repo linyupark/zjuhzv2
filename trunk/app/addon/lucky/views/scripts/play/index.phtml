@@ -8,7 +8,8 @@
 		</div>
 	</div>
     <h1 class="txtc">
-        剩余名额 
+        今天共有<?= $this->today_player_num ?>位校友参加了抽奖。
+        目前剩余名额
         <span style="color:yellow; background:#000; padding:2px"><?= $this->party['lucky_num'] - count($this->luckymen) ?></span>
         快来试试手气吧~
         【<a href="/addon_lucky/play/luckymen?id=<?= $this->party['id'] ?>">幸运者名单</a>】

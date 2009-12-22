@@ -4,6 +4,12 @@
     {
         const DBNAME = 'lucky.s3db';
 
+        static function getPlayerNum()
+        {
+            return parent::getSqlite(self::DBNAME)
+            ->fetchOne('SELECT COUNT(id) FROM `log` WHERE `play_at` LIKE "'.date('Y-m-d').'%"');
+        }
+
         static function getPartyList()
         {
             return parent::getSqlite(self::DBNAME)

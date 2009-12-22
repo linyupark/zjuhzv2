@@ -29,6 +29,7 @@ class Addon_Lucky_PlayController extends Zend_Controller_Action
     {
         $id = $this->party['id'];
         $uid = Cmd::uid();
+        $this->view->today_player_num = Logic_Addon_Lucky::getPlayerNum();
         $this->view->party = $this->party;
         $this->view->luckymen = Logic_Addon_Lucky::getLuckymen($id);
         if(strtotime($this->party['start_at']) > time() || strtotime($this->party['stop_at']) < time())

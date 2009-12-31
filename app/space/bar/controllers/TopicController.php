@@ -22,7 +22,7 @@
 			$myid = Cmd::uid();
 			$where = $this->_getParam('where', 'all');
 			$order = $this->view->order;
-			$page = $this->_getParam('p', 1); // 默认显示页
+            $page = $this->_getParam('p', 1); // 默认显示页
 			$select = DbModel::Space()->select()->from(array('bar' => 'tb_tbar'), 
 													   array('numrows' => new Zend_Db_Expr('COUNT(bar.tid)')))
 												->where('bar.group = 0')->where('bar.deny = 0')
@@ -95,7 +95,7 @@
 					$select->order('bar.click DESC');
 				break;
 				default : // 被顶数
-                    $select->order('bar.reply DESC');
+                    $select->order('bar.replytime DESC');
 					//$select->order('bar.rate DESC');
 				break;
 			}

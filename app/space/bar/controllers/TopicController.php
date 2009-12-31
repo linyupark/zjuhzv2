@@ -95,7 +95,8 @@
 					$select->order('bar.click DESC');
 				break;
 				default : // 被顶数
-					$select->order('bar.rate DESC');
+                    $select->order('bar.reply DESC');
+					//$select->order('bar.rate DESC');
 				break;
 			}
 			$row = $select->query()->fetchAll();

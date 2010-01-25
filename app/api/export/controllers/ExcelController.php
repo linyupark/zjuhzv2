@@ -111,6 +111,7 @@
 	            $objPHPExcel->getActiveSheet()->SetCellValue('F1', '邮箱');
 	            $objPHPExcel->getActiveSheet()->SetCellValue('G1', '所在城市');
 	            $objPHPExcel->getActiveSheet()->SetCellValue('H1', '地址');
+                $objPHPExcel->getActiveSheet()->SetCellValue('I1', '工作信息');
 	            $row = 2;
 				foreach ($rows as $v)
 				{
@@ -123,6 +124,18 @@
 	                $objPHPExcel->getActiveSheet()->SetCellValue('F'.$row, $data[0]['email']);
 	                $objPHPExcel->getActiveSheet()->SetCellValue('G'.$row, $data[0]['city']);
 	                $objPHPExcel->getActiveSheet()->SetCellValue('H'.$row, $data[0]['address']);
+                    $company = '';
+                    if($data[0]['company'] != null)
+                    {
+                        for($car_i = 0; $car_i < count($data); $car_i ++)
+                    {
+                    $end = ($data[$car_i]['end']==0)?'至今':date('y/m', $data[$car_i]['end']);
+                        if($data[$car_i]['company'] != $data[($car_i-1)]['company'] && !strstr($company, $data[$car_i]['company']))
+                        $company .= ($car_i+1).'.'.$data[$car_i]['company'].'('.$data[$car_i]['department'].')'.$data[$car_i]['job'].
+                        '从'.date('y/m', $data[$car_i]['start']).' - '.$end;
+                    }
+                    }
+                    $objPHPExcel->getActiveSheet()->SetCellValue('I'.$row, $company);
 	                $row++;
 				}
 				$objPHPExcel->getActiveSheet()->setTitle('群组通讯录');

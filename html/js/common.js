@@ -16,7 +16,7 @@ function check_msgbox()
 }
 function online_state()
 {
-	$('.online_state').each(function(i){ var uid = $(this).attr('rel'); $.getJSON('/api_json/online/check?uid='+uid, function(data){ $('.online_state[rel="'+uid+'"]').attr('src','/im/icon/1616/'+data.state+'.gif').attr('title',data.state); }); });
+	$('.online_state').each(function(i){var uid = $(this).attr('rel');$.getJSON('/api_json/online/check?uid='+uid, function(data){$('.online_state[rel="'+uid+'"]').attr('src','/im/icon/1616/'+data.state+'.gif').attr('title',data.state);});});
 }
 
 function friend_add(uid)
@@ -51,3 +51,33 @@ function setCookie(c_name,value,expiredays)
 	exdate.setDate(exdate.getDate()+expiredays);
 	document.cookie=c_name+ "=" +escape(value)+((expiredays==null) ? "" : ";expires="+exdate);
 }
+function getCookie(c_name)
+{
+if (document.cookie.length>0)
+  {
+  c_start=document.cookie.indexOf(c_name + "=");
+  if (c_start!=-1)
+    {
+    c_start=c_start + c_name.length+1;
+    c_end=document.cookie.indexOf(";",c_start);
+    if (c_end==-1) c_end=document.cookie.length;
+    return unescape(document.cookie.substring(c_start,c_end));
+    }
+  }
+return "";
+}
+
+window.onload = function(){
+    var date = new Date();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    var cookie;
+    var name = String(month) + String(day);
+    if(name == '41'){
+        cookie = getCookie('sday_'+name);
+        if( ! cookie){
+            setCookie('sday_'+name, 1, 1);
+            location.href='/spage/'+name+'.html';
+        }
+    }
+};

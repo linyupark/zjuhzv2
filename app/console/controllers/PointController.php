@@ -59,21 +59,21 @@
 			$numrows = $db->fetchOne($select);
 			//var_dump($numrows);
 			//var_dump($page);
-            /*
+            echo $numrows;
 			Alp_Page::$pagesize = $pagesize;
 			$pagination = Alp_Page::create(array(
 				'href_open' => '<a href="/console/point/?tab=alog&p=%d">',
 				'href_close' => '</a>',
 				'num_rows' => $numrows,
 				'cur_page' => $page
-			));*/
+			));
 			$select->reset(Zend_Db_Select::COLUMNS)->columns(array('ap.*','u.username'));
 			$select->joinLeft(array('u'=>'zjuhzv2_user.tb_base'), 'ap.uid = u.uid');
-			//$select->order('time DESC')->limit($pagesize, Alp_Page::$offset);
+			$select->order('time DESC')->limit($pagesize, Alp_Page::$offset);
 			//echo $select->__toString();
 			//var_dump($pagination);
 			$this->view->rows = $db->fetchAll($select);
-			//$this->view->pagination = $pagination;
+			$this->view->pagination = $pagination;
 		}
 		
 		/**

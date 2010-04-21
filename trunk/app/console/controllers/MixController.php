@@ -30,9 +30,7 @@
 			if(Alp_Sys::getMsg() == null)
 			{
 				$address = explode(';', $address);
-                foreach($address as $i=>$add){
-                    if(!$add) unset($address[$i]);
-                }
+                $address = array_filter($address);
 				$result = Logic_Mail::batch($subject, stripslashes($body), $address);
 				if($result == true) echo '邮件发送成功';
 				else foreach ($result as $mail) echo '* '.$mail.' 发送失败<br />';

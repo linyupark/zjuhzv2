@@ -9,8 +9,8 @@
 
 html{ background:#CFE1ED }
 body{ background:#CFE1ED url(/im/v1/bg-top.gif) repeat-x top; padding-top:10px; font-size:12px }
+html{filterrogidXImageTransform.Microsoft.BasicImage(grayscale=1);}
 table td{ border:none; }
-
 hr.dashed{ height:1px; border:none; border-bottom:1px dashed #ccc; margin:5px; }
 
 #hd{ background:#fff; background:url(/im/v1/top.gif) repeat-x left top; height:80px; overflow:hidden; }

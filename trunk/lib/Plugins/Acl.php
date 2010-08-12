@@ -22,6 +22,7 @@
             $acl->add(new Zend_Acl_Resource('public'));
             $acl->add(new Zend_Acl_Resource('console'));
             $acl->add(new Zend_Acl_Resource('space_msg'));
+            $acl->add(new Zend_Acl_Resource('space_bar'));
             $acl->add(new Zend_Acl_Resource('space_set'));
             $acl->add(new Zend_Acl_Resource('addon_vote'));
             $acl->add(new Zend_Acl_Resource('addon_partners'));
@@ -41,7 +42,7 @@
             $acl->addRole(new Zend_Acl_Role('master')); // 管理员
             
             // 访问控制定义
-            $acl->allow('guest', array('public','addon_vote','addon_partners','addon_console','addon_booking'));
+            $acl->allow('guest', array('public','addon_vote','addon_partners','addon_console','addon_booking','space_bar'));
             $acl->allow('black', array('public','space_msg','space_set','addon_partners','addon_console','addon_booking'));
             $acl->allow(array('bench','member'), null);
             $acl->deny(array('member','bench','power','black'), 'console');

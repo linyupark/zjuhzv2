@@ -76,6 +76,10 @@
 				case 3 : // 成员
 					return $uid;
 				break;
+
+                                case 4 :
+                                    return true;
+                                break;
 				default: // 公开
 					return true;
 				break;

@@ -205,6 +205,7 @@
             $objPHPExcel->getActiveSheet()->SetCellValue('D1', '邮箱');
             $objPHPExcel->getActiveSheet()->SetCellValue('E1', '手机');
             $objPHPExcel->getActiveSheet()->SetCellValue('F1', '入学年份');
+            $objPHPExcel->getActiveSheet()->SetCellValue('G1', '工作信息');
             $row = 2;
             foreach($members as $uid => $uname)
             {
@@ -215,6 +216,18 @@
                 $objPHPExcel->getActiveSheet()->SetCellValue('D'.$row, $user[0]['email']);
                 $objPHPExcel->getActiveSheet()->SetCellValue('E'.$row, $user[0]['mobile']);
                 $objPHPExcel->getActiveSheet()->SetCellValue('F'.$row, $user[0]['year']);
+                $company = '';
+	            if($user[0]['company'] != null)
+	            {
+	            	for($car_i = 0; $car_i < count($user); $car_i ++)
+			    {
+				$end = ($user[$car_i]['end']==0)?'至今':date('y/m', $user[$car_i]['end']);
+				    if($user[$car_i]['company'] != $user[($car_i-1)]['company'] && !strstr($company, $user[$car_i]['company']))
+				    $company .= ($car_i+1).'.'.$user[$car_i]['company'].'('.$user[$car_i]['department'].')'.$user[$car_i]['job'].
+				    '从'.date('y/m', $user[$car_i]['start']).' - '.$end;
+			    }
+	            }
+	            $objPHPExcel->getActiveSheet()->SetCellValue('G'.$row, $company);
                 $row++;
             }
             $objPHPExcel->getActiveSheet()->setTitle('活动参加人员联系方式');

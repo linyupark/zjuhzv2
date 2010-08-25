@@ -168,7 +168,7 @@
 			$tid = $this->_getParam('tid');
 			$row = Logic_Space_Bar_Help::view($tid);
 			if(!$row[0]) // 无效帖子
-			$this->_forward('error', 'error', 'public');
+			$this->_forward('index', 'index', 'public');
 			if(!Logic_Space_Bar::isAllowed($row[0]['private'], $row[0]['puber'])) // 有对应帖子判断阅读权限
 			$this->_forward('deny', 'error', 'public', 
 					array('position' => 'space_bar', 'private' => $row[0]['private']));

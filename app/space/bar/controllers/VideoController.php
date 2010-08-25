@@ -135,7 +135,7 @@
 			$tid = $this->params['tid'];
 			$row = Logic_Space_Bar_Video::view($tid);
 			if(!$row[0] || $row[0]['deny'] == 1) // 无效帖子
-			$this->_forward('error', 'error', 'public');
+			$this->_forward('index', 'index', 'public');
 			// 有对应帖子判断阅读权限
 			if(!Logic_Space_Bar::isAllowed($row[0]['private'], $row[0]['puber'], $row[0]['group'])) 
 			$this->_forward('deny', 'error', 'public', 

@@ -169,7 +169,7 @@
 			$page = $this->_getParam('p', 1);
 			$tid = $this->_getParam('tid');
 			$row = Logic_Space_Bar_News::view($tid);
-			if(!$row[0]) // 无效帖子
+			if(!$row[0] || $row[0]['deny'] == 1) // 无效帖子
 			$this->_forward('error', 'error', 'public');
 			if(!Logic_Space_Bar::isAllowed($row[0]['private'], $row[0]['puber'])) // 有对应帖子判断阅读权限
 			$this->_forward('deny', 'error', 'public', 

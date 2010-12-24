@@ -11,12 +11,10 @@
 			$this->getHelper('viewRenderer')->setNoRender();
 			$key = md5($this->getRequest()->getParam('key'));
                         $rkey = Zend_Registry::get('config')->addon_console->key;
-                        echo $rkey;
-			if($key == $rkey)
+			if(trim($rkey) == $key)
 			{
-                                echo 'go';
-				//Cmd::setSess('addon_master', $key);
-				//$this->_redirect('/addon_console/panel');
+				Cmd::setSess('addon_master', trim($rkey));
+				$this->_redirect('/addon_console/panel');
 			}
 		}
 	}

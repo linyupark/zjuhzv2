@@ -1,50 +1,73 @@
-	<form id="comment_form" onsubmit="return comment()">
-		<table class="mgl10 table-dashed" width="97%">
-			<tr>
-				<td id="pic_upload"></td>
-			</tr>
-			<tr>
-				<td><?= Cmd::fck('content',null,'200px','99%') ?></td>
-			</tr>
-			<tr>
-				<td><?= $this->render('pub/nicky.phtml') ?>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input id="submit" type="submit" value="回复帖子(Ctrl+Enter)" class="btn" />
-					<input type="hidden" name="group" value="<?= $this->gid ?>" />
-					<input id="commentid" type="hidden" name="cid" value="0" />
-					<input id="curpage" type="hidden" name="page" value="<?= $this->page ?>" />
-				</td>
-			</tr>
-		</table>
-	</form>
+<script type="text/javascript" src="/ke/init.js"></script>	
+<form id="comment_form" onsubmit="return comment()">
+    <table class="mgl10 table-dashed" width="97%">
+        <!--
+            <tr>
+                    <td id="pic_upload"></td>
+			</tr>-->
+        <tr>
+            <td>
+                <?php // Cmd::fck('content',null,'200px','99%') ?>
+                <textarea name="content" id="content"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td><?= $this->render('pub/nicky.phtml') ?>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input id="submit" type="submit" value="回复帖子" class="btn" />
+                <input type="hidden" name="group" value="<?= $this->gid ?>" />
+                <input id="commentid" type="hidden" name="cid" value="0" />
+                <input id="curpage" type="hidden" name="page" value="<?= $this->page ?>" />
+            </td>
+        </tr>
+    </table>
+</form>
+<script type="text/javascript">
+    KE.show({
+        id: 'content',
+        height: '180px',
+        width: '100%',
+        allowUpload: "1",
+        skinsPath: '/ke/skins/',
+        pluginsPath: '/ke/plugins/',
+        imageUploadJson: '/ke/upload_json.php',
+        items: ['plainpaste', 'wordpaste', 'fontsize', 'bold', 'textcolor',
+            'italic', 'underline', 'removeformat', '|', 'image',
+            'flash', 'media', 'emoticons', 'link', 'unlink']
+    });
+</script>
 <iframe name="pic_frame" class="hide" src="/public/upload/pic"></iframe>
 <script type="text/javascript">
-	function comment()
-	{
-		$('#submit').attr('disabled', true).val('正在执行，请稍候...');
-		$('#content').val(FCKeditorAPI.GetInstance("content").GetXHTML());
-		$.post(
-			'/space_bar/comment/post?tid=<?= $this->row['tid'] ?>&uid=<?= Cmd::uid() ?>',
-			$('#comment_form').serializeArray(),
-			function(data)
-			{
-				if(data.result == 'success')
-				{
-					set_html('');
-					$('#submit').attr('disabled', false).val('回复成功');
-					$('#commentid').val(0);load_comment(data.page);
-				}
-				else
-				{
-					alert(data.result);
-					$('#submit').attr('disabled', false).val('回复帖子(Ctrl+Enter)');
-				}
-			},
-			'json'
-		);
-		return false;
-	}
-	function insert_html(html){FCKeditorAPI.GetInstance("content").InsertHtml(html);upreload();}
-	function set_html(html){FCKeditorAPI.GetInstance("content").SetHTML(html);}
-	$('#pic_upload').load('/public/upload/form?for=pic');
+    function comment()
+    {
+        $('#submit').attr('disabled', true).val('正在执行，请稍候...');
+        //$('#content').val(FCKeditorAPI.GetInstance("content").GetXHTML());
+        $('#content').val(KE.html("content"));
+        $.post(
+        '/space_bar/comment/post?tid=<?= $this->row['tid'] ?>&uid=<?= Cmd::uid() ?>',
+        $('#comment_form').serializeArray(),
+        function(data)
+        {
+            if(data.result == 'success')
+            {
+                set_html('');
+                $('#submit').attr('disabled', false).val('回复成功');
+                $('#commentid').val(0);load_comment(data.page);
+            }
+            else
+            {
+                alert(data.result);
+                $('#submit').attr('disabled', false).val('回复帖子');
+            }
+        },
+        'json'
+    );
+        return false;
+    }
+    //function insert_html(html){FCKeditorAPI.GetInstance("content").InsertHtml(html);upreload();}
+    function insert_html(html){KE.html('content', html);upreload();}
+    function set_html(html){KE.html('content', html);}
+    //function set_html(html){FCKeditorAPI.GetInstance("content").SetHTML(html);}
+    //$('#pic_upload').load('/public/upload/form?for=pic');
+
 </script>

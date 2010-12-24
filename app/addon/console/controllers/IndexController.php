@@ -22,6 +22,8 @@
 				Cmd::setSess('addon_master', $key);
 				$this->_redirect('/addon_console/panel');
 			}
+                        var_dump($_SESSION);
+                        var_dump(Zend_Registry::get('config')->addon_console->key);
 		}
 	}
 

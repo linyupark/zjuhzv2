@@ -21,8 +21,8 @@
 			if($key == $this->key)
 			{
                                 echo 'go';
-				Cmd::setSess('addon_master', $key);
-				$this->_redirect('/addon_console/panel');
+				//Cmd::setSess('addon_master', $key);
+				//$this->_redirect('/addon_console/panel');
 			}
 		}
 	}

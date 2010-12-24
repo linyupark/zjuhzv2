@@ -11,6 +11,7 @@
 			$this->getHelper('viewRenderer')->setNoRender();
 			$key = md5($this->getRequest()->getParam('key'));
                         $rkey = Zend_Registry::get('config')->addon_console->key;
+                        echo $rkey;
 			if($key == $rkey)
 			{
                                 echo 'go';

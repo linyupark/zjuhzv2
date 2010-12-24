@@ -13,8 +13,9 @@
                         $rkey = Zend_Registry::get('config')->addon_console->key;
 			if(trim($rkey) == $key)
 			{
+                            echo 'go';
 				Cmd::setSess('addon_master', trim($rkey));
-				$this->_redirect('/addon_console/panel');
+				//$this->_redirect('/addon_console/panel');
 			}
 		}
 	}

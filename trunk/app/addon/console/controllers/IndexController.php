@@ -17,6 +17,7 @@
 		{
 			$this->getHelper('viewRenderer')->setNoRender();
 			$key = md5($this->getRequest()->getParam('key'));
+                        echo $key.':'.$this->key;
 			if($key == $this->key)
 			{
                                 echo 'go';

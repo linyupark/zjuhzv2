@@ -2,7 +2,6 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="verify-v1" content="ZGUEnxQZ/X/BNNiS9oEW+nBoAAIgE0bnomsFgREbpoE=" />
     <meta http-equiv="X-UA-Compatible" content="IE=7" />
     <?= $this->headTitle('杭州浙江大学校友会_zjuhz.com')->setSeparator('_'); ?>
     <script type="text/javascript" src="/js/common.js"></script>
@@ -46,17 +45,6 @@ $.post('/api_json/msg/apt', <?= $data ?>, function(data){ $.facebox(data) });
 check_msgbox();
 var msgbox = window.setInterval("check_msgbox()", 30000);
 </script>
-
-
-<script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-try {
-var pageTracker = _gat._getTracker("UA-399951-3");
-pageTracker._trackPageview();
-} catch(err) {}</script>
 
 
 <?php //setcookie("crossid", session_id(), time()+3600, "/", ".zjuhz.com"); ?>

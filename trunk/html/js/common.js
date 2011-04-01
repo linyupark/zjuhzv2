@@ -66,18 +66,3 @@ if (document.cookie.length>0)
   }
 return "";
 }
-
-window.onload = function(){
-    var date = new Date();
-    var month = date.getMonth() + 1;
-    var day = date.getDate();
-    var cookie;
-    var name = String(month) + String(day);
-    if(name == '41'){
-        cookie = getCookie('sday_'+name);
-        if( ! cookie){
-            setCookie('sday_'+name, 1, 1);
-            location.href='/spage/'+name+'.html';
-        }
-    }
-};
